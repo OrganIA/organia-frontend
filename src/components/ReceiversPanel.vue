@@ -1,0 +1,547 @@
+<template>
+  <div id="main">
+    <nav id="navbar">
+      <header>
+        <h1>
+          <a href="/">
+            <img
+              src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
+            />
+          </a>
+        </h1>
+      </header>
+      <div id="navlinks">
+        <div id="navbox">
+          <a class="active" href="/receivers">
+            <i class="fa fa-file-alt"></i>
+            <span class="nav-text">Link 1</span>
+          </a>
+          <a>
+            <i class="fa fa-desktop"></i>
+          </a>
+          <a>
+            <i class="fa fa-map-marker-alt"></i>
+          </a>
+          <a>
+            <i class="fa fa-user"></i>
+          </a>
+          <a>
+            <i class="fa fa-chart-line"></i>
+          </a>
+          <a>
+            <i class="fa fa-comment-dots"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <div id="context-menu">
+        <div id="login-menu">
+          <a class="button" href="/login">Se connecter</a>
+          <a class="button" href="/register">S'inscrire</a>
+        </div>
+        <div id="extra-buttons">
+          <a class="button" href="/cpanel">Panel administrateur</a>
+        </div>
+        <ul id="flash-messages"></ul>
+      </div>
+      <h1>Liste d&#39;attente</h1>
+      <p>
+        <a href="/receivers/add" class="button">Ajouter</a>
+      </p>
+      <div class="tabs-section">
+        <div class="tabs">
+          <a class="tab-title active" href="/receivers"> Receveurs </a>
+          <a class="tab-title" href="/donors"> Donneurs </a>
+        </div>
+        <div class="side-container">
+          <div class="side-actions">
+            <input type="text" placeholder="Rechercher" />
+            <a class="button filters-toggle"
+              ><i class="fa fa-filter"></i> Filtrer</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="filters">
+        <div class="filter-input">
+          <button class="checkbox">Filtre 1</button>
+        </div>
+        <div class="filter-input">
+          <button class="checkbox active">Filtre 2</button>
+        </div>
+        <div class="filter-input">
+          <button class="checkbox">Filtre 3</button>
+        </div>
+        <div class="filter-input">
+          <label for="text1">Filtre texte 1</label>
+          <input type="text" id="text1" />
+        </div>
+        <div class="filter-input">
+          <label for="number1">Filtre nombre 1</label>
+          <input type="number" id="number1" />
+        </div>
+        <div class="filter-input">
+          <label for="select1">Filtre select 1</label>
+          <select id="select1">
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+        </div>
+      </div>
+      <table class="table-list">
+        <thead>
+          <tr>
+            <th>Prénom</th>
+            <th>Nom de famille</th>
+            <th>Date de naissance</th>
+            <th>Sexe</th>
+            <th>ABO</th>
+            <th>Organe</th>
+            <th>Arrivée</th>
+            <th>action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="receiver in receivers" :key="receiver">
+            <td>{{ receiver.name }}</td>
+            <td>{{ receiver.last_name }}</td>
+            <td>{{ receiver.birth_date }}</td>
+            <td>{{ receiver.gender }}</td>
+            <td>{{ receiver.blood_type }}</td>
+            <td>{{ receiver.organ }}</td>
+            <td>{{ receiver.created_at }}</td>
+            <td>
+              <a href="/receivers/delete/1"><i class="fas fa-trash-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</template>
+
+<script>
+import http from "../http";
+
+export default {
+  data() {
+    return {
+      receivers: {},
+    };
+  },
+  created() {
+    http
+      .get("/users")
+      .then((response) => {
+        response.data.forEach((element) => {
+          element.created_at = (new Date(element.created_at)).toDateString();
+        });
+        this.receivers = response.data;
+      })
+      .catch((error) => {
+        console.log(error.data);
+      });
+  },
+};
+</script>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
+
+:root {
+  --blue: #498afe;
+  --dark-blue: #071f49;
+  --sky-blue: #97a0b8;
+  --white: #fbfcff;
+  --red: #ff5b5b;
+  --gray: #8e8e8e;
+  --green: #a4ea98;
+  --yellow: #eff269;
+  --light-gray: #eff2f8;
+
+  --logo-dark-blue: #0f2c59;
+  --logo-light-blue: #29abe2;
+
+  --bg-color: var(--white);
+  --fg-color: var(--dark-blue);
+  --border-color: #e3e9f6;
+
+  --font-immense: 38px;
+  --font-big: 21px;
+  --font-normal: 16px;
+  --font-small: 12px;
+  --font-regular: 400;
+  --font-medium: 500;
+
+  --rounding: 0.75em;
+
+  --anim-time: 0.25s;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--fg-color);
+  font-size: var(--font-normal);
+  font-weight: var(--font-regular);
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+a,
+a:visited,
+a:active {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button:hover,
+.button:hover {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+.fa-filter {
+  font-size: 0.9em;
+}
+
+input,
+button,
+select,
+.button,
+.button:visited {
+  padding: 0.3em 1em;
+  border: 1px solid var(--sky-blue);
+  border-radius: var(--rounding);
+  background-color: white;
+  transition: var(--anim-time) linear;
+  text-decoration: none;
+  color: inherit;
+}
+
+#navbar header {
+  background-color: var(--logo-dark-blue);
+  color: white;
+  padding: 0 0.5em;
+  text-align: center;
+}
+
+#navbar header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  width: 100%;
+  padding: 2em;
+  overflow-y: auto;
+}
+
+.filters {
+  padding: 1em;
+  margin-top: -1em;
+  margin-bottom: 1em;
+  background-color: white;
+  /* display: flex; */
+  flex-flow: wrap row;
+  align-items: flex-end;
+
+  /* visibility: hidden; */
+  /* position: absolute; */
+  /* top: -100px; */
+  /* transition: var(--anim-time) ease; */
+  /* z-index: -1; */
+  display: none;
+}
+
+.filters.active {
+  /* visibility: visible; */
+  /* position: relative; */
+  /* top: 0; */
+  display: flex;
+}
+
+.filter-input {
+  margin: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.show-requireds .form-input.required label::after {
+  content: " *";
+  color: var(--red);
+}
+
+.required-notice {
+  display: none;
+  color: var(--red);
+}
+
+.show-requireds .required-notice {
+  display: block;
+}
+
+input[type="number"] {
+  min-width: 4em;
+}
+
+button.active,
+.button.active,
+[type="submit"] {
+  background-color: var(--blue);
+  color: white;
+}
+
+#main {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+}
+
+#context-menu {
+  display: flex;
+  flex-flow: wrap row;
+  align-items: center;
+}
+
+#current-user {
+  font-size: var(--font-small);
+  background-color: var(--light-gray);
+  display: inline-block;
+  padding: 0.5em 1.5em;
+  border-radius: var(--rounding);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 0 0 auto;
+  text-decoration: none;
+  color: inherit;
+}
+
+#current-user > * {
+  margin: 0 0.5em;
+}
+
+#current-user .caret {
+  color: var(--gray);
+}
+
+#current-user .avatar {
+  width: 2em;
+  height: 2em;
+  object-fit: contain;
+}
+
+#navbar {
+  display: flex;
+  flex-direction: column;
+}
+
+#navbar header img {
+  max-width: 120px;
+}
+
+#navlinks {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-big);
+}
+
+#navbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--light-gray);
+  border-radius: var(--rounding);
+  padding: 0.5em;
+  /* width: min-content; */
+  flex: 0 0 auto;
+}
+
+#navlinks .nav-text {
+  display: none;
+}
+
+#navbox > * {
+  border-radius: var(--rounding);
+  padding: 0.5em;
+  color: var(--sky-blue);
+}
+
+#navbox > .active {
+  background-color: var(--blue);
+  color: white;
+}
+
+.tabs-section {
+  border-bottom: 1px solid var(--sky-blue);
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1em;
+}
+
+.tab-title,
+.side-actions {
+  padding-bottom: 0.5em;
+}
+
+.tab-title,
+.tab-title:visited {
+  display: inline-block;
+  margin: 0 0.5em;
+  color: var(--sky-blue);
+  text-decoration: none;
+}
+
+.tab-title.active {
+  color: var(--dark-blue);
+  border-bottom: 2px solid var(--blue);
+}
+
+table {
+  /* border-collapse: collapse; */
+  border-spacing: 0 0.3em;
+  width: 100%;
+}
+
+table .fa {
+  margin: 0 0.5em;
+}
+
+th {
+  color: var(--sky-blue);
+  font-size: var(--font-small);
+  text-transform: capitalize;
+}
+
+td {
+  background-color: white;
+  padding: 1em;
+  border-top: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
+  text-align: center;
+}
+
+tr td:first-child {
+  border-left: 2px solid var(--border-color);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+tr td:last-child {
+  border-right: 2px solid var(--border-color);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#flash-messages {
+  width: 100%;
+}
+
+#flash-messages li {
+  background-color: var(--dark-blue);
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: var(--rounding);
+}
+
+form {
+  max-width: 700px;
+  margin: auto;
+  padding: 2em;
+  background-color: white;
+  box-shadow: var(--shadow);
+}
+
+.form-fields {
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: space-between;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 0;
+  width: 100%;
+}
+
+.form-input.small {
+  width: calc(50% - 1em);
+}
+
+.form-input.mini {
+  width: calc(33% - 1em);
+}
+
+.form-error {
+  font-size: small;
+  color: var(--red);
+}
+
+#donor-info {
+  background-color: var(--blue);
+  color: white;
+  border-radius: var(--rounding);
+  padding: 1em;
+  display: inline-block;
+}
+
+#donor-image {
+  margin-right: 1em;
+}
+
+#donor-text p {
+  margin-top: 0;
+}
+
+.loading-icon {
+  text-align: center;
+  font-size: 64px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.hide {
+  display: none;
+}
+</style>
