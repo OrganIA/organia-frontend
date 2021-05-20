@@ -105,13 +105,13 @@
         </thead>
         <tbody>
           <tr v-for="receiver in receivers" :key="receiver">
-            <td>receiver.first_name</td>
-            <td>receiver.last_name</td>
-            <td>receiver.birth_date</td>
-            <td>receiver.gender</td>
-            <td>receiver.blood_type</td>
-            <td>receiver.organ</td>
-            <td>receiver.admission_date</td>
+            <td>{{ receiver.name }}</td>
+            <td>{{ receiver.last_name }}</td>
+            <td>{{ receiver.birth_date }}</td>
+            <td>{{ receiver.gender }}</td>
+            <td>{{ receiver.blood_type }}</td>
+            <td>{{ receiver.organ }}</td>
+            <td>{{ receiver.created_at }}</td>
             <td>
               <a href="/receivers/delete/1"><i class="fas fa-trash-alt"></i></a>
             </td>
@@ -123,11 +123,26 @@
 </template>
 
 <script>
+import http from "../http";
+
 export default {
   data() {
     return {
       receivers: {},
     };
+  },
+  created() {
+    http
+      .get("/users")
+      .then((response) => {
+        response.data.forEach((element) => {
+          element.created_at = (new Date(element.created_at)).toDateString();
+        });
+        this.receivers = response.data;
+      })
+      .catch((error) => {
+        console.log(error.data);
+      });
   },
 };
 </script>
