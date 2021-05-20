@@ -6,6 +6,8 @@ services:
       - 8080:8080
     build:
       context: .
+      target: install-deps
     volumes:
-      - ./:/app:z
+      - ./src:/app/src:z
+      - ./public:/app/public:z
     command: sh -c "npm install --no-save @vue/cli-service && npm run serve"
