@@ -17,6 +17,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped src="../styles/shared.css">
+#flash-messages {
+  width: 100%;
+}
+
+#flash-messages li {
+  background-color: var(--dark-blue);
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: var(--rounding);
+}
 
 </style>
