@@ -12,23 +12,12 @@
     <div id="navlinks">
       <div id="navbox">
         <a class="active" href="/receivers">
-          <i class="fa fa-file-alt"></i>
-          <span class="nav-text">Link 1</span>
+          <i class="fa fa-address-card"></i>
+          <span class="nav-text">Receveurs</span>
         </a>
         <a>
-          <i class="fa fa-desktop"></i>
-        </a>
-        <a>
-          <i class="fa fa-map-marker-alt"></i>
-        </a>
-        <a>
-          <i class="fa fa-user"></i>
-        </a>
-        <a>
-          <i class="fa fa-chart-line"></i>
-        </a>
-        <a>
-          <i class="fa fa-comment-dots"></i>
+          <i class="fa fa-address-card" aria-hidden="true"></i>
+          <span class="nav-text">Donneurs</span>
         </a>
       </div>
     </div>
@@ -48,9 +37,14 @@ img {
 }
 
 #navbar header {
+  background-color: var(--logo-dark-blue);
+  border-radius: 30px;
   color: white;
   padding: 0 0.5em;
   text-align: center;
+  align-content: center;
+  width: 80%;
+  margin: 20px auto auto;
 }
 
 #navbar header a {
@@ -59,9 +53,9 @@ img {
 }
 
 #navbar {
-  background-color: var(--logo-dark-blue);
   display: flex;
   flex-direction: column;
+  width: 300px;
 }
 
 #navbar header img {
@@ -73,8 +67,7 @@ img {
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: center;
-  align-items: center;
+  margin: 20px;
   font-size: var(--font-big);
 }
 
@@ -84,30 +77,34 @@ img {
   align-items: center;
   background-color: var(--light-gray);
   border-radius: var(--rounding);
-  padding: 0.5em;
+  padding: 1em;
   /* width: min-content; */
   flex: 0 0 auto;
 }
 
 #navlinks .nav-text {
-  display: none;
 }
 
 #navbox > * {
   border-radius: var(--rounding);
   padding: 0.5em;
   color: var(--sky-blue);
-  width: 100px;
-  height: 100px;
-}
-
-#navbox > a > i {
-  font-size: 2em;
-  margin-top: 25%;
+  width: 100%;
+  height: 50px;
 }
 
 #navbox > a {
+  display: flex;
+  flex-direction: row;
   text-align: center;
+}
+
+#navbox > a > i {
+  font-size: 1.5em;
+  margin-right: 20px;
+}
+#navbox > a > * {
+  margin-top: 5%;
 }
 
 #navbox > .active {

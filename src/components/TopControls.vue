@@ -19,18 +19,17 @@ export default {
 <style scoped>
 
 #context-menu {
-  background-color: var(--logo-dark-blue);
   max-height: 80px;
   width: 100%;
 }
 
 #menu-subcontainer {
   margin-top: 25px;
-  margin-left: 20px;
+  margin-left: -500px;
 }
 
 #menu-subcontainer > * {
-  margin: 50px;
+  margin: 20px;
 }
 
 #flash-messages {
@@ -38,7 +37,6 @@ export default {
 }
 
 #flash-messages li {
-  background-color: var(--dark-blue);
   color: white;
   padding: 0.5em 1em;
   border-radius: var(--rounding);
