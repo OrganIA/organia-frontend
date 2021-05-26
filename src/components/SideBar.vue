@@ -48,7 +48,6 @@ img {
 }
 
 #navbar header {
-  background-color: var(--logo-dark-blue);
   color: white;
   padding: 0 0.5em;
   text-align: center;
@@ -60,16 +59,14 @@ img {
 }
 
 #navbar {
+  background-color: var(--logo-dark-blue);
   display: flex;
-  flex-direction: row;
-  flex: 1;
-  width: 15%;
-  height: 100vh;
+  flex-direction: column;
 }
 
 #navbar header img {
-  max-height: 120px;
-  max-width: 120px;
+  max-height: 180px;
+  max-width: 180px;
 }
 
 #navlinks {
@@ -100,6 +97,8 @@ img {
   border-radius: var(--rounding);
   padding: 0.5em;
   color: var(--sky-blue);
+  width: 100px;
+  height: 100px;
 }
 
 #navbox > .active {

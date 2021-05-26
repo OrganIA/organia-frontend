@@ -1,21 +1,36 @@
 <template>
-  <side-bar></side-bar>
-  <top-controls></top-controls>
+  <div class="main-container">
+    <side-bar></side-bar>
+    <top-controls></top-controls>
+  </div>
 </template>
 
 <script>
 import TopControls from "./components/TopControls";
 import SideBar from "./components/SideBar";
+
 export default {
   name: "App",
   components: {SideBar, TopControls}
 }
 </script>
 
+<style scoped>
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+}
+
+</style>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
+
 
 :root {
   --blue: #498afe;
