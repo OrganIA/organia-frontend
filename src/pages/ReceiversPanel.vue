@@ -1,7 +1,6 @@
 <template>
   <div id="main">
-    <side-bar></side-bar>
-    <top-controls></top-controls>
+    <main-container></main-container>
     <main>
       <h1>Liste d&#39;attente</h1>
       <p>
@@ -82,11 +81,10 @@
 
 <script>
 import http from "../http";
-import SideBar from "../components/SideBar";
-import TopControls from "../components/TopControls";
+import MainContainer from "../components/MainContainer";
 
 export default {
-  components: {TopControls, SideBar},
+  components: {MainContainer},
   data() {
     return {
       receivers: {},
@@ -188,12 +186,6 @@ button.active,
 [type="submit"] {
   background-color: var(--blue);
   color: white;
-}
-
-#context-menu {
-  display: flex;
-  flex-flow: wrap row;
-  align-items: center;
 }
 
 #current-user {

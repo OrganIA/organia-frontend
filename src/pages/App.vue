@@ -1,31 +1,16 @@
 <template>
-  <div class="main-container">
-    <side-bar></side-bar>
-    <top-controls></top-controls>
-  </div>
+  <main-container></main-container>
 </template>
 
 <script>
-import TopControls from "../components/TopControls";
-import SideBar from "../components/SideBar";
+import MainContainer from "../components/MainContainer";
 
 export default {
   name: "App",
-  components: {SideBar, TopControls}
+  components: {MainContainer}
 }
 </script>
 
-<style scoped>
-
-.main-container {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  width: 100%;
-  height: 100vh;
-}
-
-</style>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css");
