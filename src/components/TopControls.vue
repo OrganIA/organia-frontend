@@ -18,6 +18,13 @@ export default {
 </script>
 
 <style scoped>
+
+#context-menu {
+  background-color: var(--logo-dark-blue);
+  max-height: 80px;
+  width: 100%;
+}
+
 #flash-messages {
   width: 100%;
 }
