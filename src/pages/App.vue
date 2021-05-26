@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import TopControls from "./components/TopControls";
-import SideBar from "./components/SideBar";
+import TopControls from "../components/TopControls";
+import SideBar from "../components/SideBar";
 
 export default {
   name: "App",
