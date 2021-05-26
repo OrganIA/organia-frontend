@@ -1,13 +1,12 @@
 <template>
   <div id="context-menu">
-    <div id="login-menu">
-      <a class="button" href="/login">Se connecter</a>
-      <a class="button" href="/register">S'inscrire</a>
+    <div id="menu-subcontainer">
+        <a class="button" href="/login">Se connecter</a>
+        <a class="button" href="/register">S'inscrire</a>
+        <a class="button" href="/cpanel">Panel administrateur</a>
+        <ul id="flash-messages"></ul>
     </div>
-    <div id="extra-buttons">
-      <a class="button" href="/cpanel">Panel administrateur</a>
-    </div>
-    <ul id="flash-messages"></ul>
+
   </div>
 </template>
 
@@ -23,6 +22,15 @@ export default {
   background-color: var(--logo-dark-blue);
   max-height: 80px;
   width: 100%;
+}
+
+#menu-subcontainer {
+  margin-top: 25px;
+  margin-left: 20px;
+}
+
+#menu-subcontainer > * {
+  margin: 50px;
 }
 
 #flash-messages {
@@ -41,8 +49,8 @@ button,
 select,
 .button,
 .button:visited {
-  padding: 0.3em 1em;
-  border: 1px solid var(--sky-blue);
+  padding: 0.6em 5em;
+  border: 1px solid black;
   border-radius: var(--rounding);
   background-color: white;
   transition: var(--anim-time) linear;
