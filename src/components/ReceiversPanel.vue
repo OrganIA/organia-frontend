@@ -1,50 +1,6 @@
 <template>
   <div id="main">
-    <nav id="navbar">
-      <header>
-        <h1>
-          <a href="/">
-            <img
-              src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
-            />
-          </a>
-        </h1>
-      </header>
-      <div id="navlinks">
-        <div id="navbox">
-          <a class="active" href="/receivers">
-            <i class="fa fa-file-alt"></i>
-            <span class="nav-text">Link 1</span>
-          </a>
-          <a>
-            <i class="fa fa-desktop"></i>
-          </a>
-          <a>
-            <i class="fa fa-map-marker-alt"></i>
-          </a>
-          <a>
-            <i class="fa fa-user"></i>
-          </a>
-          <a>
-            <i class="fa fa-chart-line"></i>
-          </a>
-          <a>
-            <i class="fa fa-comment-dots"></i>
-          </a>
-        </div>
-      </div>
-    </nav>
     <main>
-      <div id="context-menu">
-        <div id="login-menu">
-          <a class="button" href="/login">Se connecter</a>
-          <a class="button" href="/register">S'inscrire</a>
-        </div>
-        <div id="extra-buttons">
-          <a class="button" href="/cpanel">Panel administrateur</a>
-        </div>
-        <ul id="flash-messages"></ul>
-      </div>
       <h1>Liste d&#39;attente</h1>
       <p>
         <a href="/receivers/add" class="button">Ajouter</a>
