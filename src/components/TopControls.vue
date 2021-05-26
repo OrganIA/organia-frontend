@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style scoped src="../styles/shared.css">
+<style scoped>
 #flash-messages {
   width: 100%;
 }
@@ -27,6 +27,20 @@ export default {
   color: white;
   padding: 0.5em 1em;
   border-radius: var(--rounding);
+}
+
+input,
+button,
+select,
+.button,
+.button:visited {
+  padding: 0.3em 1em;
+  border: 1px solid var(--sky-blue);
+  border-radius: var(--rounding);
+  background-color: white;
+  transition: var(--anim-time) linear;
+  text-decoration: none;
+  color: inherit;
 }
 
 </style>

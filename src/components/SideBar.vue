@@ -42,7 +42,6 @@ export default {
 </script>
 
 <style scoped>
-@import '/src/styles/shared.css';
 
 #navbar header {
   background-color: var(--logo-dark-blue);
