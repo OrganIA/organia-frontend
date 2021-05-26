@@ -3,7 +3,7 @@
     <header>
       <h1>
         <a href="/">
-          <img
+          <img id="navbar-logo"
               src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
           />
         </a>
@@ -43,6 +43,10 @@ export default {
 
 <style scoped>
 
+img {
+  max-width: 100%;
+}
+
 #navbar header {
   background-color: var(--logo-dark-blue);
   color: white;
@@ -57,10 +61,14 @@ export default {
 
 #navbar {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex: 1;
+  width: 15%;
+  height: 100vh;
 }
 
 #navbar header img {
+  max-height: 120px;
   max-width: 120px;
 }
 
