@@ -43,4 +43,60 @@ export default {
 
 <style scoped>
 
+#navbar header {
+  background-color: var(--logo-dark-blue);
+  color: white;
+  padding: 0 0.5em;
+  text-align: center;
+}
+
+#navbar header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#navbar {
+  display: flex;
+  flex-direction: column;
+}
+
+#navbar header img {
+  max-width: 120px;
+}
+
+#navlinks {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-big);
+}
+
+#navbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--light-gray);
+  border-radius: var(--rounding);
+  padding: 0.5em;
+  /* width: min-content; */
+  flex: 0 0 auto;
+}
+
+#navlinks .nav-text {
+  display: none;
+}
+
+#navbox > * {
+  border-radius: var(--rounding);
+  padding: 0.5em;
+  color: var(--sky-blue);
+}
+
+#navbox > .active {
+  background-color: var(--blue);
+  color: white;
+}
+
 </style>
