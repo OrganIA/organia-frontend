@@ -4,7 +4,7 @@
       <h1>
         <a href="/">
           <img id="navbar-logo"
-              src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
+               src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
           />
         </a>
       </h1>
@@ -66,7 +66,7 @@ img {
 
 #navbar header img {
   max-height: 180px;
-  max-width: 180px;
+  max-width: 200px;
 }
 
 #navlinks {
@@ -99,6 +99,15 @@ img {
   color: var(--sky-blue);
   width: 100px;
   height: 100px;
+}
+
+#navbox > a > i {
+  font-size: 2em;
+  margin-top: 25%;
+}
+
+#navbox > a {
+  text-align: center;
 }
 
 #navbox > .active {
