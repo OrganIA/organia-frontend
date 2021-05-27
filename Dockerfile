@@ -4,6 +4,6 @@ WORKDIR /app
 COPY package.json .
 RUN npm install
 
-FROM node:alpine as build
+FROM install-deps as build
 COPY . .
-RUN npm run build
+CMD npm run build -- --no-clean
