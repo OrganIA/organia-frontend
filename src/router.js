@@ -5,5 +5,6 @@ export default createRouter({
     routes: [
         { path: "/", component: () => import("./pages/App.vue") },
         { path: "/receivers", component: () => import("./pages/ReceiversPanel.vue") },
+        { path: "/donors", component: () => import("./pages/DonorsPanel.vue") },
     ],
 });

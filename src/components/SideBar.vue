@@ -11,11 +11,11 @@
     </header>
     <div id="navlinks">
       <div id="navbox">
-        <a class="active" href="/receivers">
+        <a href="/receivers"  @click="link_clicked()">
           <i class="fa fa-address-card"></i>
           <span class="nav-text">Receveurs</span>
         </a>
-        <a>
+        <a href="/donors"  @click="link_clicked()">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text">Donneurs</span>
         </a>
@@ -26,7 +26,13 @@
 
 <script>
 export default {
-  name: "SideBar"
+  name: "SideBar",
+  props: ["WhoIsActive"],
+  methods: {
+    link_clicked: function() {
+      console.log("oui")
+    },
+},
 }
 </script>
 
