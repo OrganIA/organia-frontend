@@ -1,6 +1,5 @@
 <template>
   <div id="main">
-    <main-container></main-container>
     <main>
       <h1>Liste d&#39;attente</h1>
       <p>
@@ -81,10 +80,9 @@
 
 <script>
 import http from "../http";
-import MainContainer from "../components/MainContainer";
 
 export default {
-  components: {MainContainer},
+  components: {},
   data() {
     return {
       receivers: {},

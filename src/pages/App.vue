@@ -1,13 +1,32 @@
 <template>
-  <main-container></main-container>
+  <div class="main-container">
+    <side-bar></side-bar>
+    <top-controls></top-controls>
+  </div>
+  <donors-panel  v-if="CurrentPanel === 'Donors' "></donors-panel>
+  <receivers-panel v-if="CurrentPanel === 'Receivers' "></receivers-panel>
 </template>
 
 <script>
-import MainContainer from "../components/MainContainer";
+import SideBar from "../components/SideBar";
+import TopControls from "../components/TopControls";
+import DonorsPanel from "../components/DonorsPanel";
+import ReceiversPanel from "../components/ReceiversPanel";
+
 
 export default {
   name: "App",
-  components: {MainContainer}
+  components: {ReceiversPanel, DonorsPanel, SideBar, TopControls},
+  methods: {
+    DebugFunction: function () {
+      console.log(this.$data.CurrentPanel)
+    },
+  },
+  data: function () {
+    return {
+      CurrentPanel: "Donors"
+    }
+  }
 }
 </script>
 
@@ -54,5 +73,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
 }
 </style>
