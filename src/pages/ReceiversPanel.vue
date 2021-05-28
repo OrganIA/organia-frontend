@@ -1,50 +1,7 @@
 <template>
   <div id="main">
-    <nav id="navbar">
-      <header>
-        <h1>
-          <a href="/">
-            <img
-              src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
-            />
-          </a>
-        </h1>
-      </header>
-      <div id="navlinks">
-        <div id="navbox">
-          <a class="active" href="/receivers">
-            <i class="fa fa-file-alt"></i>
-            <span class="nav-text">Link 1</span>
-          </a>
-          <a>
-            <i class="fa fa-desktop"></i>
-          </a>
-          <a>
-            <i class="fa fa-map-marker-alt"></i>
-          </a>
-          <a>
-            <i class="fa fa-user"></i>
-          </a>
-          <a>
-            <i class="fa fa-chart-line"></i>
-          </a>
-          <a>
-            <i class="fa fa-comment-dots"></i>
-          </a>
-        </div>
-      </div>
-    </nav>
+    <main-container></main-container>
     <main>
-      <div id="context-menu">
-        <div id="login-menu">
-          <a class="button" href="/login">Se connecter</a>
-          <a class="button" href="/register">S'inscrire</a>
-        </div>
-        <div id="extra-buttons">
-          <a class="button" href="/cpanel">Panel administrateur</a>
-        </div>
-        <ul id="flash-messages"></ul>
-      </div>
       <h1>Liste d&#39;attente</h1>
       <p>
         <a href="/receivers/add" class="button">Ajouter</a>
@@ -124,8 +81,10 @@
 
 <script>
 import http from "../http";
+import MainContainer from "../components/MainContainer";
 
 export default {
+  components: {MainContainer},
   data() {
     return {
       receivers: {},
@@ -148,58 +107,6 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
-
-:root {
-  --blue: #498afe;
-  --dark-blue: #071f49;
-  --sky-blue: #97a0b8;
-  --white: #fbfcff;
-  --red: #ff5b5b;
-  --gray: #8e8e8e;
-  --green: #a4ea98;
-  --yellow: #eff269;
-  --light-gray: #eff2f8;
-
-  --logo-dark-blue: #0f2c59;
-  --logo-light-blue: #29abe2;
-
-  --bg-color: var(--white);
-  --fg-color: var(--dark-blue);
-  --border-color: #e3e9f6;
-
-  --font-immense: 38px;
-  --font-big: 21px;
-  --font-normal: 16px;
-  --font-small: 12px;
-  --font-regular: 400;
-  --font-medium: 500;
-
-  --rounding: 0.75em;
-
-  --anim-time: 0.25s;
-
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Roboto", sans-serif;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: var(--bg-color);
-  color: var(--fg-color);
-  font-size: var(--font-normal);
-  font-weight: var(--font-regular);
-}
-
 a,
 button {
   cursor: pointer;
@@ -221,44 +128,8 @@ button:hover,
   text-decoration: none;
 }
 
-img {
-  max-width: 100%;
-}
-
 .fa-filter {
   font-size: 0.9em;
-}
-
-input,
-button,
-select,
-.button,
-.button:visited {
-  padding: 0.3em 1em;
-  border: 1px solid var(--sky-blue);
-  border-radius: var(--rounding);
-  background-color: white;
-  transition: var(--anim-time) linear;
-  text-decoration: none;
-  color: inherit;
-}
-
-#navbar header {
-  background-color: var(--logo-dark-blue);
-  color: white;
-  padding: 0 0.5em;
-  text-align: center;
-}
-
-#navbar header a {
-  color: inherit;
-  text-decoration: none;
-}
-
-main {
-  width: 100%;
-  padding: 2em;
-  overflow-y: auto;
 }
 
 .filters {
@@ -317,20 +188,6 @@ button.active,
   color: white;
 }
 
-#main {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  width: 100%;
-  height: 100vh;
-}
-
-#context-menu {
-  display: flex;
-  flex-flow: wrap row;
-  align-items: center;
-}
-
 #current-user {
   font-size: var(--font-small);
   background-color: var(--light-gray);
@@ -357,50 +214,6 @@ button.active,
   width: 2em;
   height: 2em;
   object-fit: contain;
-}
-
-#navbar {
-  display: flex;
-  flex-direction: column;
-}
-
-#navbar header img {
-  max-width: 120px;
-}
-
-#navlinks {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  font-size: var(--font-big);
-}
-
-#navbox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--light-gray);
-  border-radius: var(--rounding);
-  padding: 0.5em;
-  /* width: min-content; */
-  flex: 0 0 auto;
-}
-
-#navlinks .nav-text {
-  display: none;
-}
-
-#navbox > * {
-  border-radius: var(--rounding);
-  padding: 0.5em;
-  color: var(--sky-blue);
-}
-
-#navbox > .active {
-  background-color: var(--blue);
-  color: white;
 }
 
 .tabs-section {
