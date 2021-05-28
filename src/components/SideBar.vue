@@ -11,11 +11,11 @@
     </header>
     <div id="navlinks">
       <div id="navbox">
-        <a href="/receivers"  @click="link_clicked()">
+        <a @click="DisplayReceivers()">
           <i class="fa fa-address-card"></i>
           <span class="nav-text">Receveurs</span>
         </a>
-        <a href="/donors"  @click="link_clicked()">
+        <a @click="DisplayDonors()">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text">Donneurs</span>
         </a>
@@ -29,10 +29,19 @@ export default {
   name: "SideBar",
   props: ["WhoIsActive"],
   methods: {
-    link_clicked: function() {
-      console.log("oui")
+    DisplayReceivers () {
+      console.log("Panel changed to receivers")
+      this.$parent.$data.CurrentPanel = "Receivers";
     },
-},
+    DisplayDonors () {
+      console.log("Panel changed to donors")
+      this.$parent.$data.CurrentPanel = "Donors"
+    },
+  },
+  data: function () {
+    return {
+    }
+  }
 }
 </script>
 
@@ -109,6 +118,7 @@ img {
   font-size: 1.5em;
   margin-right: 20px;
 }
+
 #navbox > a > * {
   margin-top: 5%;
 }

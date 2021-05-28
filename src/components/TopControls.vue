@@ -1,9 +1,10 @@
 <template>
   <div id="context-menu">
     <div id="menu-subcontainer">
-        <a class="button" href="/login">Se connecter</a>
-        <a class="button" href="/register">S'inscrire</a>
-        <a class="button" href="/cpanel">Panel administrateur</a>
+        <a class="button">Se connecter</a>
+        <a class="button">S'inscrire</a>
+        <a class="button">Panel administrateur</a>
+        <a class="button">Debug</a>
         <ul id="flash-messages"></ul>
     </div>
 
@@ -12,7 +13,12 @@
 
 <script>
 export default {
-  name: "TopControls"
+  name: "TopControls",
+  methods: {
+    Debug() {
+      this.$parent.methods.DebugFunction();
+    }
+  }
 }
 </script>
 
@@ -25,7 +31,7 @@ export default {
 
 #menu-subcontainer {
   margin-top: 25px;
-  margin-left: -500px;
+  margin-left: -400px;
 }
 
 #menu-subcontainer > * {
