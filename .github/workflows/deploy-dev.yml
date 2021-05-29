@@ -1,19 +1,19 @@
-name: CD to prod server
+name: Deploy dev
 on:
   workflow_dispatch:
-  release:
-    types: [ published ]
+  push:
+    branches: [ master ]
 
 jobs:
   update:
-    name: Push to production
+    name: Push to dev
     runs-on: ubuntu-latest
     steps:
-      - name: Restart production server
+      - name: Restart dev server
         uses: appleboy/ssh-action@master
         with:
           username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.PROD_HOST }}
           script: |
-            sudo systemctl restart organia-prod
+            sudo systemctl restart organia-dev
