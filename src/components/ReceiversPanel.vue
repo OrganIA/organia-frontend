@@ -69,7 +69,7 @@
             <td>{{ receiver.organ }}</td>
             <td>{{ receiver.created_at }}</td>
             <td>
-              <a href="/receivers/delete/1"><i class="fas fa-trash-alt"></i></a>
+              <a @click="loadEdit(receiver.id)"><i class="fas fa-trash-alt"></i></a>
             </td>
           </tr>
         </tbody>
@@ -83,6 +83,7 @@ import http from "../http";
 
 export default {
   components: {},
+  name: "ReceiversPanel",
   data() {
     return {
       receivers: {},
@@ -101,6 +102,11 @@ export default {
         console.log(error.data);
       });
   },
+  methods: {
+    loadEdit(userID) {
+      this.$parent.$data.CurrentPanel = `Edit/${userID}`;
+    }
+  }
 };
 </script>
 

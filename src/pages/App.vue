@@ -3,8 +3,8 @@
     <side-bar></side-bar>
     <top-controls></top-controls>
   </div>
-  <donors-panel  v-if="CurrentPanel === 'Donors' "></donors-panel>
-  <receivers-panel v-if="CurrentPanel === 'Receivers' "></receivers-panel>
+  <DonorsPanel v-if="CurrentPanel === 'Donors'"></DonorsPanel>
+  <ReceiversPanel v-if="CurrentPanel === 'Receivers'"></ReceiversPanel>
 </template>
 
 <script>
@@ -13,28 +13,26 @@ import TopControls from "../components/TopControls";
 import DonorsPanel from "../components/DonorsPanel";
 import ReceiversPanel from "../components/ReceiversPanel";
 
-
 export default {
   name: "App",
-  components: {ReceiversPanel, DonorsPanel, SideBar, TopControls},
+  components: { ReceiversPanel, DonorsPanel, SideBar, TopControls },
   methods: {
-    DebugFunction: function () {
-      console.log(this.$data.CurrentPanel)
+    DebugFunction() {
+      console.log(this.$data.CurrentPanel);
     },
   },
-  data: function () {
+  data() {
     return {
-      CurrentPanel: "Donors"
-    }
-  }
-}
+      CurrentPanel: "Donors",
+    };
+  },
+};
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
-
 
 :root {
   --blue: #498afe;
