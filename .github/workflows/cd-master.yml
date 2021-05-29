@@ -1,0 +1,19 @@
+name: CD to dev server
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+
+jobs:
+  update:
+    name: Push to dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restart dev server
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.PROD_HOST }}
+          script: |
+            sudo systemctl restart organia-dev
