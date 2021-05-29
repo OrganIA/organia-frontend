@@ -1,6 +1,6 @@
 <template>
   <div>
-      <a @click="backToParent()">Back</a>
+    <a @click="back()">Back</a>
     <form class="form-fields" @submit.prevent="submitForm()">
       <input class="form-input" type="text" v-model="user.name" />
       <input class="form-input" type="email" v-model="user.email" />
@@ -14,10 +14,9 @@
 import http from "../http";
 
 export default {
-  name: "EditPanel",
+  name: "EditReceiversPanel",
   props: {
     id: String,
-    parent: String,
   },
   data() {
     return {
@@ -36,21 +35,21 @@ export default {
         });
     },
     submitForm() {
-        console.log(this.$store.getters.getToken)
-        http.post(`/users/${this.id}`, {
-            headers: {
-                autorization: `Bearer ${this.$store.getters.getToken}`
-            },
-            params: {
-                name: this.user.name,
-                email: this.user.email,
-                password: this.user.password,
-            }
-        })
+      console.log(this.$store.getters.getToken);
+      http.post(`/users/${this.id}`, {
+        headers: {
+          autorization: `Bearer ${this.$store.getters.getToken}`,
+        },
+        params: {
+          name: this.user.name,
+          email: this.user.email,
+          password: this.user.password,
+        },
+      });
     },
-    backToParent() {
-        this.$parent.$data.CurrentPanel = this.parent;
-    }
+    back() {
+      this.$parent.$data.CurrentPanel = "Receivers";
+    },
   },
   created() {
     this.getUserByID();
