@@ -19,7 +19,7 @@ export default {
   name: "App",
   components: { ReceiversPanel, DonorsPanel, EditPanel, SideBar, TopControls },
   methods: {
-    DebugFunction() {
+    debugFunction() {
       console.log(this.$data.CurrentPanel);
     },
     getUserEditId() {
