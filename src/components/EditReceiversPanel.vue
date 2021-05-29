@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a @click="back()">Back</a>
+    <router-link to="/receivers">Back</router-link>
     <form class="form-fields" @submit.prevent="submitForm()">
       <input class="form-input" type="text" v-model="user.name" />
       <input class="form-input" type="email" v-model="user.email" />
@@ -46,9 +46,6 @@ export default {
           password: this.user.password,
         },
       });
-    },
-    back() {
-      this.$parent.$data.CurrentPanel = "Receivers";
     },
   },
   created() {
