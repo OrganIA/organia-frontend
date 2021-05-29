@@ -5,6 +5,7 @@
   </div>
   <DonorsPanel v-if="CurrentPanel === 'Donors'"></DonorsPanel>
   <ReceiversPanel v-if="CurrentPanel === 'Receivers'"></ReceiversPanel>
+  <EditReceiversPanel v-if="CurrentPanel.includes('Edit/')" :id="getUserEditId()"></EditReceiversPanel>
 </template>
 
 <script>
@@ -12,14 +13,18 @@ import SideBar from "../components/SideBar";
 import TopControls from "../components/TopControls";
 import DonorsPanel from "../components/DonorsPanel";
 import ReceiversPanel from "../components/ReceiversPanel";
+import EditReceiversPanel from "../components/EditReceiversPanel";
 
 export default {
   name: "App",
-  components: { ReceiversPanel, DonorsPanel, SideBar, TopControls },
+  components: { ReceiversPanel, DonorsPanel, EditReceiversPanel, SideBar, TopControls },
   methods: {
-    DebugFunction() {
+    debugFunction() {
       console.log(this.$data.CurrentPanel);
     },
+    getUserEditId() {
+      return (this.CurrentPanel.substring(5))
+    }
   },
   data() {
     return {
