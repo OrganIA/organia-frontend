@@ -1,29 +1,23 @@
 <template>
   <div id="context-menu">
     <div id="menu-subcontainer">
-        <a class="button">Se connecter</a>
-        <a class="button">S'inscrire</a>
-        <a class="button">Panel administrateur</a>
-        <a class="button">Debug</a>
-        <ul id="flash-messages"></ul>
+      <a class="button">Se connecter</a>
+      <a class="button">S'inscrire</a>
+      <a class="button">Panel administrateur</a>
+      <a class="button">Debug</a>
+      <ul id="flash-messages"></ul>
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
   name: "TopControls",
-  methods: {
-    Debug() {
-      this.$parent.methods.DebugFunction();
-    }
-  }
-}
+  methods: {},
+};
 </script>
 
 <style scoped>
-
 #context-menu {
   max-height: 80px;
   width: 100%;
@@ -61,5 +55,4 @@ select,
   text-decoration: none;
   color: inherit;
 }
-
 </style>

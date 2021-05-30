@@ -1,35 +1,21 @@
 <template>
   <div class="main-container">
-    <side-bar></side-bar>
-    <top-controls></top-controls>
+    <SideBar/>
+    <TopControls/>
   </div>
-  <DonorsPanel v-if="CurrentPanel === 'Donors'"></DonorsPanel>
-  <ReceiversPanel v-if="CurrentPanel === 'Receivers'"></ReceiversPanel>
-  <EditReceiversPanel v-if="CurrentPanel.includes('Edit/')" :id="getUserEditId()"></EditReceiversPanel>
+  <router-view/>
 </template>
 
 <script>
-import SideBar from "../components/SideBar";
-import TopControls from "../components/TopControls";
-import DonorsPanel from "../components/DonorsPanel";
-import ReceiversPanel from "../components/ReceiversPanel";
-import EditReceiversPanel from "../components/EditReceiversPanel";
+import SideBar from "./components/SideBar";
+import TopControls from "./components/TopControls";
 
 export default {
   name: "App",
-  components: { ReceiversPanel, DonorsPanel, EditReceiversPanel, SideBar, TopControls },
-  methods: {
-    debugFunction() {
-      console.log(this.$data.CurrentPanel);
-    },
-    getUserEditId() {
-      return (this.CurrentPanel.substring(5))
-    }
-  },
+  components: { SideBar, TopControls },
+  methods: {},
   data() {
-    return {
-      CurrentPanel: "Donors",
-    };
+    return {};
   },
 };
 </script>

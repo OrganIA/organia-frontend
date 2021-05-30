@@ -2,23 +2,24 @@
   <nav id="navbar">
     <header>
       <h1>
-        <a href="/">
-          <img id="navbar-logo"
-               src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
+        <router-link to="/">
+          <img
+            id="navbar-logo"
+            src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
           />
-        </a>
+        </router-link>
       </h1>
     </header>
     <div id="navlinks">
       <div id="navbox">
-        <a @click="DisplayReceivers()">
+        <router-link to="/receivers">
           <i class="fa fa-address-card"></i>
           <span class="nav-text">Receveurs</span>
-        </a>
-        <a @click="DisplayDonors()">
+        </router-link>
+        <router-link to="/donors">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text">Donneurs</span>
-        </a>
+        </router-link>
       </div>
     </div>
   </nav>
@@ -27,26 +28,14 @@
 <script>
 export default {
   name: "SideBar",
-  props: ["WhoIsActive"],
-  methods: {
-    DisplayReceivers () {
-      console.log("Panel changed to receivers")
-      this.$parent.$data.CurrentPanel = "Receivers";
-    },
-    DisplayDonors () {
-      console.log("Panel changed to donors")
-      this.$parent.$data.CurrentPanel = "Donors"
-    },
+  methods: {},
+  data() {
+    return {};
   },
-  data: function () {
-    return {
-    }
-  }
-}
+};
 </script>
 
 <style scoped>
-
 img {
   max-width: 100%;
 }
@@ -97,9 +86,6 @@ img {
   flex: 0 0 auto;
 }
 
-#navlinks .nav-text {
-}
-
 #navbox > * {
   border-radius: var(--rounding);
   padding: 0.5em;
@@ -127,5 +113,4 @@ img {
   background-color: var(--blue);
   color: white;
 }
-
 </style>
