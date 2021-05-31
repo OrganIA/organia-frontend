@@ -3,7 +3,7 @@
     <main>
       <h1>Liste d'attente</h1>
       <p>
-        <a class="button">Ajouter</a>
+        <router-link to="/receivers/add" class="button">Ajouter</router-link>
       </p>
       <table class="table-list">
         <thead>
@@ -60,6 +60,9 @@ export default {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
+          response.data.forEach((element) => {
+            element.created_at = new Date(element.created_at).toDateString();
+          });
           this.receivers = response.data;
         })
         .catch((error) => {
