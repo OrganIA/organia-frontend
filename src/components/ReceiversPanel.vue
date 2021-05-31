@@ -20,9 +20,9 @@
         </thead>
         <tbody>
           <tr v-for="receiver in receivers" :key="receiver">
-            <td>{{ receiver.name }}</td>
+            <td>{{ receiver.first_name }}</td>
             <td>{{ receiver.last_name }}</td>
-            <td>{{ receiver.birth_date }}</td>
+            <td>{{ receiver.birthday }}</td>
             <td>{{ receiver.gender }}</td>
             <td>{{ receiver.blood_type }}</td>
             <td>{{ receiver.organ }}</td>
@@ -56,15 +56,14 @@ export default {
   methods: {
     getAllReceivers() {
       http
-        .get("/users")
+        .get("/persons", {
+          headers: { authorization: `Bearer ${this.$store.getters.getToken}` },
+        })
         .then((response) => {
-          response.data.forEach((element) => {
-            element.created_at = new Date(element.created_at).toDateString();
-          });
           this.receivers = response.data;
         })
         .catch((error) => {
-          console.log(error.data);
+          console.log(error);
         });
     },
   },
