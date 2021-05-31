@@ -17,27 +17,34 @@ export default {
   methods: {
     login() {
       http
-        .post("/auth")
+        .get("/users/me", {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("token")}`,
+          },
+        })
         .then((response) => {
           this.$store.commit(
             "login",
-            this.email,
-            this.name,
+            response.data.email,
+            response.data.name,
             response.data.token
           );
-          this.$cookies.set("token", response.data.token, -1);
           this.$router.push("/");
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
   },
   data() {
     return {};
   },
-  beforeCreate() {
-    this.$store.commit("updateToken", this.$cookies.get("token"));
+  created() {
+    if (this.$cookies.get("token")) {
+      this.login();
+    } else {
+      this.$router.push('/login')
+    }
   },
 };
 </script>
