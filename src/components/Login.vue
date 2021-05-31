@@ -3,7 +3,7 @@
     <p>Login page</p>
     <form @submit.prevent="login()">
       <input v-model="email" placeholder="email" type="email" />
-      <input type="password" />
+      <input v-model="password" type="password" />
       <button type="submit">S'inscrire</button>
     </form>
   </div>
