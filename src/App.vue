@@ -27,7 +27,6 @@ export default {
             "login",
             response.data.email,
             response.data.name,
-            response.data.token
           );
           this.$router.push("/");
         })

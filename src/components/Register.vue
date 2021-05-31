@@ -44,7 +44,7 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          this.$store.commit("updateToken", response.data.token)
+          this.$store.commit("login", this.email, this.name)
           this.$cookies.set("token", response.data.token, -1)
           this.$router.push("/")
         }).catch((error) => {

@@ -35,10 +35,9 @@ export default {
         });
     },
     submitForm() {
-      console.log(this.$store.getters.getToken);
       http.post(`/users/${this.id}`, {
         headers: {
-          autorization: `Bearer ${this.$store.getters.getToken}`,
+          Autorization: `Bearer ${this.$cookies.get("token")}`,
         },
         params: {
           name: this.user.name,
