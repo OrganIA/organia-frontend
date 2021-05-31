@@ -57,7 +57,7 @@ export default {
     getAllReceivers() {
       http
         .get("/persons", {
-          headers: { authorization: `Bearer ${this.$store.getters.getToken}` },
+          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
           this.receivers = response.data;
