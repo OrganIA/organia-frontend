@@ -1,25 +1,44 @@
 <template>
   <div class="main-container">
-    <SideBar/>
-    <TopControls/>
+    <SideBar />
+    <TopControls />
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
 import SideBar from "./components/SideBar";
 import TopControls from "./components/TopControls";
+import http from "./http";
 
 export default {
   name: "App",
   components: { SideBar, TopControls },
-  methods: {},
+  methods: {
+    login() {
+      http
+        .post("/auth")
+        .then((response) => {
+          this.$store.commit(
+            "login",
+            this.email,
+            this.name,
+            response.data.token
+          );
+          this.$cookies.set("token", response.data.token, -1);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
   data() {
     return {};
   },
   beforeCreate() {
-    this.$store.commit("updateToken", this.$cookies.get("token"))
-  }
+    this.$store.commit("updateToken", this.$cookies.get("token"));
+  },
 };
 </script>
 
