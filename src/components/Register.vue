@@ -4,7 +4,7 @@
     <form @submit.prevent="register()">
       <input v-model="name" placeholder="name" type="text" />
       <input v-model="email" placeholder="email" type="email" />
-      <input type="password" />
+      <input v-model="password" type="password" />
       <button type="submit">S'inscrire</button>
     </form>
   </div>
@@ -44,7 +44,7 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          this.$store.commit("updateToken", response.data.token)
+          this.$store.commit("login", this.email, this.name)
           this.$cookies.set("token", response.data.token, -1)
           this.$router.push("/")
         }).catch((error) => {

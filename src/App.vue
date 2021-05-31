@@ -1,21 +1,49 @@
 <template>
   <div class="main-container">
-    <SideBar/>
-    <TopControls/>
+    <SideBar />
+    <TopControls />
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
 import SideBar from "./components/SideBar";
 import TopControls from "./components/TopControls";
+import http from "./http";
 
 export default {
   name: "App",
   components: { SideBar, TopControls },
-  methods: {},
+  methods: {
+    login() {
+      http
+        .get("/users/me", {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("token")}`,
+          },
+        })
+        .then((response) => {
+          this.$store.commit(
+            "login",
+            response.data.email,
+            response.data.name,
+          );
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+  },
   data() {
     return {};
+  },
+  created() {
+    if (this.$cookies.get("token")) {
+      this.login();
+    } else {
+      this.$router.push('/login')
+    }
   },
 };
 </script>
