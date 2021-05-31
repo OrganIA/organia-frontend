@@ -7,7 +7,3 @@ export default {
 name: "DonorsPanel",
 }
 </script>
-
-<style scoped>
-
-</style>
