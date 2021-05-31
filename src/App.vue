@@ -17,6 +17,9 @@ export default {
   data() {
     return {};
   },
+  beforeCreate() {
+    this.$store.commit("updateToken", this.$cookies.get("token"))
+  }
 };
 </script>
 
