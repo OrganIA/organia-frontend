@@ -2,9 +2,23 @@
   <div>
     <router-link to="/receivers">Back</router-link>
     <form class="form-fields" @submit.prevent="submitForm()">
-      <input class="form-input" type="text" v-model="user.name" />
-      <input class="form-input" type="email" v-model="user.email" />
-      <input class="form-input" type="password" v-model="user.password" />
+      <input
+        v-model="receiver.first_name"
+        placeholder="first_name"
+        type="text"
+      />
+      <input v-model="receiver.last_name" placeholder="last_name" type="text" />
+      <input v-model="receiver.birthday" placeholder="birthday" type="date" />
+      <input
+        v-model="receiver.description"
+        placeholder="description"
+        type="text"
+      />
+      <input
+        v-model="receiver.supervisor_id"
+        placeholder="supervisor_id"
+        type="number"
+      />
       <button type="submit">Save Changes</button>
     </form>
   </div>
@@ -20,35 +34,50 @@ export default {
   },
   data() {
     return {
-      user: {},
+      receiver: {},
     };
   },
   methods: {
-    getUserByID() {
+    getReceiverByID() {
       http
-        .get(`/users/${this.id}`)
+        .get(`/persons/${this.id}`, {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("token")}`,
+          },
+        })
         .then((response) => {
-          this.user = response.data;
+          this.receiver = response.data;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     submitForm() {
-      http.post(`/users/${this.id}`, {
-        headers: {
-          Autorization: `Bearer ${this.$cookies.get("token")}`,
-        },
-        params: {
-          name: this.user.name,
-          email: this.user.email,
-          password: this.user.password,
-        },
-      });
+      http
+        .post(
+          `/persons/${this.id}`,
+          {
+            first_name: this.receiver.first_name,
+            last_name: this.receiver.last_name,
+            birthday: this.receiver.birthday,
+            description: this.receiver.description,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.$cookies.get("token")}`,
+            },
+          }
+        )
+        .then(() => {
+          this.$router.push("/receivers");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   created() {
-    this.getUserByID();
+    this.getReceiverByID();
   },
 };
 </script>
