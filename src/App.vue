@@ -28,7 +28,6 @@ export default {
             response.data.email,
             response.data.name,
           );
-          this.$router.push("/");
         })
         .catch((error) => {
           console.log(error.response);
