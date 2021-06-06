@@ -50,6 +50,7 @@ export default {
         )
         .then((response) => {
           console.log(response);
+          this.$router.push("/receivers");
         })
         .catch((error) => {
           console.log(error);
