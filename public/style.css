@@ -41,6 +41,13 @@
     flex: 1;
     width: 100%;
 }
+.secondary-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 3%;
+    max-width: 70%;
+}
 
 a, button {
     cursor: pointer;
@@ -400,4 +407,8 @@ img {
     text-decoration: none;
     color: inherit;
   }
-  
+
+  .sidebar-link:hover {
+      text-decoration: none;
+      background: lightskyblue;
+  }

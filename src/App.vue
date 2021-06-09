@@ -1,19 +1,19 @@
 <template>
   <div class="main-container">
     <SideBar />
-    <TopControls />
+    <div class="secondary-container">
+      <router-view />
+    </div>
   </div>
-  <router-view />
 </template>
 
 <script>
 import SideBar from "./components/SideBar";
-import TopControls from "./components/TopControls";
 import http from "./http";
 
 export default {
   name: "App",
-  components: { SideBar, TopControls },
+  components: { SideBar},
   methods: {
     login() {
       http

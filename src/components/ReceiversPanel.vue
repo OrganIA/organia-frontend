@@ -1,10 +1,13 @@
 <template>
   <div id="main">
     <main>
-      <h1>Liste d'attente</h1>
-      <p>
-        <router-link to="/receivers/add" class="button">Ajouter</router-link>
-      </p>
+      <div>
+        <h1 style="text-align: center">Liste d'attente</h1>
+        <p>
+          <router-link to="/receivers/add" class="button">Ajouter</router-link>
+        </p>
+      </div>
+
       <table class="table-list">
         <thead>
           <tr>

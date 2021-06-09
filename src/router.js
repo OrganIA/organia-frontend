@@ -10,5 +10,6 @@ export default createRouter({
         { path: "/donors", component: () => import("./components/DonorsPanel.vue") },
         { path: "/login", component: () => import("./components/Login.vue") },
         { path: "/register", component: () => import("./components/Register.vue") },
+        { path: "/administrator_panel", component: () => import("./components/AdministratorPanel") },
     ],
 });

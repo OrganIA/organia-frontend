@@ -12,13 +12,17 @@
     </header>
     <div id="navlinks">
       <div id="navbox">
-        <router-link to="/receivers">
+        <router-link class="sidebar-link" to="/receivers" v-bind:class="{ active: panelActive === 'Receivers' }" v-on:click="this.panelActive = 'Receivers'">
           <i class="fa fa-address-card"></i>
           <span class="nav-text">Receveurs</span>
         </router-link>
-        <router-link to="/donors">
+        <router-link class="sidebar-link" to="/donors" v-bind:class="{ active: panelActive === 'Donors' }" v-on:click="this.panelActive = 'Donors'">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text">Donneurs</span>
+        </router-link>
+        <router-link class="sidebar-link" to="/administrator_panel" v-bind:class="{ active: panelActive === 'Admin'}" v-on:click="this.panelActive = 'Admin'">
+          <i class="fa fa-user-shield" aria-hidden="true"></i>
+          <span class="nav-text">Administrateur</span>
         </router-link>
       </div>
     </div>
@@ -28,9 +32,13 @@
 <script>
 export default {
   name: "SideBar",
-  methods: {},
+  methods: {
+
+  },
   data() {
-    return {};
+    return {
+      panelActive: undefined,
+    };
   },
 };
 </script>
