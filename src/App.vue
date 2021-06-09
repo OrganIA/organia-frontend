@@ -1,9 +1,11 @@
 <template>
   <div class="main-container">
     <SideBar />
-    <TopControls />
+    <div class="secondary-container">
+      <TopControls />
+      <router-view />
+    </div>
   </div>
-  <router-view />
 </template>
 
 <script>

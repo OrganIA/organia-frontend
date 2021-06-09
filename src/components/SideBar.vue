@@ -16,7 +16,7 @@
           <i class="fa fa-address-card"></i>
           <span class="nav-text">Receveurs</span>
         </router-link>
-        <router-link class="sidebar-link" to="/donors" v-bind:class="{ active: !isActive }" v-on:click="DonorClicked">
+        <router-link class="sidebar-link" to="/donors" v-bind:class="{ active: (isActive === undefined) ? false : !isActive }" v-on:click="DonorClicked">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text">Donneurs</span>
         </router-link>
@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      isActive: true,
+      isActive: undefined,
     };
   },
 };
