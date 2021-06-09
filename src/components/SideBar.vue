@@ -12,11 +12,11 @@
     </header>
     <div id="navlinks">
       <div id="navbox">
-        <router-link to="/receivers">
+        <router-link to="/receivers" v-bind:class="{ active: isActive }" v-on:click="ReceiverClicked">
           <i class="fa fa-address-card"></i>
           <span class="nav-text">Receveurs</span>
         </router-link>
-        <router-link to="/donors">
+        <router-link to="/donors" v-bind:class="{ active: !isActive }" v-on:click="DonorClicked">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text">Donneurs</span>
         </router-link>
@@ -28,9 +28,19 @@
 <script>
 export default {
   name: "SideBar",
-  methods: {},
+  methods: {
+    ReceiverClicked() {
+      this.isActive = true;
+    },
+    DonorClicked() {
+      this.isActive = false;
+
+    },
+  },
   data() {
-    return {};
+    return {
+      isActive: true,
+    };
   },
 };
 </script>
