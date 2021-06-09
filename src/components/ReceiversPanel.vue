@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <main>
-      <div style="margin-left: -300px ">
+      <div>
         <h1 style="text-align: center">Liste d'attente</h1>
         <p>
           <router-link to="/receivers/add" class="button">Ajouter</router-link>

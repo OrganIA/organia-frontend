@@ -2,7 +2,6 @@
   <div class="main-container">
     <SideBar />
     <div class="secondary-container">
-      <TopControls />
       <router-view />
     </div>
   </div>
@@ -10,12 +9,11 @@
 
 <script>
 import SideBar from "./components/SideBar";
-import TopControls from "./components/TopControls";
 import http from "./http";
 
 export default {
   name: "App",
-  components: { SideBar, TopControls },
+  components: { SideBar},
   methods: {
     login() {
       http
