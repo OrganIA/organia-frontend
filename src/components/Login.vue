@@ -5,6 +5,7 @@
       <input v-model="email" placeholder="email" type="email" />
       <input v-model="password" type="password" />
       <button type="submit">S'inscrire</button>
+      <router-link to="/register">Register Here</router-link>
     </form>
   </div>
 </template>
