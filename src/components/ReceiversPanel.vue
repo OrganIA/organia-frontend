@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     getAllReceivers() {
+      console.log(this.$cookies.get("token"))
       http
         .get("/persons", {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
