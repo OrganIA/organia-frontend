@@ -400,4 +400,8 @@ img {
     text-decoration: none;
     color: inherit;
   }
-  
+
+  .sidebar-link:hover {
+      text-decoration: none;
+      background: lightskyblue;
+  }
