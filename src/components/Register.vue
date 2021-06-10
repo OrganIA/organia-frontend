@@ -46,6 +46,9 @@ export default {
         .then((response) => {
           this.$store.commit("login", this.email, this.name)
           this.$cookies.set("token", response.data.token, -1)
+          http.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${response.data.token}`;
           this.$router.push("/")
         }).catch((error) => {
           console.log(error)

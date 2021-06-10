@@ -13,21 +13,13 @@ import http from "./http";
 
 export default {
   name: "App",
-  components: { SideBar},
+  components: { SideBar },
   methods: {
     login() {
       http
-        .get("/users/me", {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("token")}`,
-          },
-        })
+        .get("/users/me")
         .then((response) => {
-          this.$store.commit(
-            "login",
-            response.data.email,
-            response.data.name,
-          );
+          this.$store.commit("login", response.data.email, response.data.name);
         })
         .catch((error) => {
           console.log(error.response);
@@ -39,9 +31,12 @@ export default {
   },
   created() {
     if (this.$cookies.get("token")) {
+      http.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${this.$cookies.get("token")}`;
       this.login();
     } else {
-      this.$router.push('/login')
+      this.$router.push("/login");
     }
   },
 };
