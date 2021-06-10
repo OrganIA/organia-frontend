@@ -41,13 +41,7 @@ export default {
             birthday: this.birthday,
             description: this.description,
             supervisor_id: this.supervisor_id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("token")}`,
-            },
-          }
-        )
+          })
         .then((response) => {
           console.log(response);
         })
