@@ -40,11 +40,7 @@ export default {
   methods: {
     getReceiverByID() {
       http
-        .get(`/persons/${this.id}`, {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("token")}`,
-          },
-        })
+        .get(`/persons/${this.id}`)
         .then((response) => {
           this.receiver = response.data;
         })
@@ -61,13 +57,7 @@ export default {
             last_name: this.receiver.last_name,
             birthday: this.receiver.birthday,
             description: this.receiver.description,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("token")}`,
-            },
-          }
-        )
+          })
         .then(() => {
           this.$router.push("/receivers");
         })

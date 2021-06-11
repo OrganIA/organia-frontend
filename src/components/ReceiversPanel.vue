@@ -60,9 +60,7 @@ export default {
     getAllReceivers() {
       console.log(this.$cookies.get("token"))
       http
-        .get("/persons", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
+        .get("/persons")
         .then((response) => {
           response.data.forEach((element) => {
             element.created_at = new Date(element.created_at).toDateString();
