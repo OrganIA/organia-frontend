@@ -3,6 +3,7 @@
     <thead>
     <tr>
       <th>Id</th>
+      <th>Prénom</th>
       <th>Nom</th>
       <th>Mail</th>
       <th>Date de création</th>
@@ -12,8 +13,8 @@
     <tbody>
     <tr v-for="user in users" :key="user">
       <td>{{ user.id }}</td>
-      <td>{{ user.person.first_name}}</td>
-      <td>{{ user.person.last_name }}</td>
+      <td>{{ user.person ? user.person.first_name : "[Empty]" }}</td>
+      <td>{{ user.person ? user.person.last_name : "[Empty]" }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.created_at }}</td>
       <td>{{ user.updated_at }}</td>
