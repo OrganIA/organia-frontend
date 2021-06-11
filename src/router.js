@@ -11,6 +11,6 @@ export default createRouter({
         { path: "/login", component: () => import("./components/Login.vue") },
         { path: "/register", component: () => import("./components/Register.vue") },
         { path: "/administrator", component: () => import("./components/AdministratorPanel") },
-        { path: "/administrator/edit/user/:id", component: () => import("./components/AdministratorEditUser") },
+        { path: "/administrator/edit/user/:id", component: () => import("./components/AdministratorEditUser"), props: true },
     ],
 });

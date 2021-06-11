@@ -417,3 +417,37 @@ textarea:focus, input:focus{
       text-decoration: none;
       background: lightskyblue;
   }
+
+  .btn {
+      padding: 10px 20px;
+      display: inline-block;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      user-select: none;
+      font-weight: bold;
+
+  }
+
+.back_button {
+
+    background-color: #dc3545;
+    border-color: #dc3545;
+    border-radius: 10px;
+    color: white !important;
+
+}
+.back_button:focus, .back_button:hover {
+    box-shadow: #bd2f3c;
+    text-decoration: none;
+}
+
+.form-editor {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    width: 75% !important;
+    margin-bottom: 20px;
+}
