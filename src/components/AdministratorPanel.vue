@@ -1,5 +1,5 @@
 <template>
-  <table class="table-list">
+  <table class="table-list" style="margin-top: 8%">
     <thead>
     <tr>
       <th>Id</th>
@@ -16,6 +16,11 @@
       <td>{{ user.email }}</td>
       <td>{{ user.created_at }}</td>
       <td>{{ user.updated_at }}</td>
+      <td>
+        <router-link :to="`/administrator/edit/user/${user.id}`">
+          <i style="font-size: x-large" class="fas fa-edit"></i>
+        </router-link>
+      </td>
     </tr>
     </tbody>
   </table>

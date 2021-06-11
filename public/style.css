@@ -240,6 +240,7 @@ td {
     text-align: center;
 }
 
+
 tr td:first-child {
     border-left: 2px solid var(--border-color);
     border-top-left-radius: 10px;
@@ -407,6 +408,10 @@ img {
     text-decoration: none;
     color: inherit;
   }
+
+textarea:focus, input:focus{
+    outline: none;
+}
 
   .sidebar-link:hover {
       text-decoration: none;

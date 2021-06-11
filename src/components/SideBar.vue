@@ -12,15 +12,15 @@
     </header>
     <div id="navlinks">
       <div id="navbox">
-        <router-link class="sidebar-link" to="/receivers" v-bind:class="{ active: panelActive === 'Receivers' }" v-on:click="this.panelActive = 'Receivers'">
+        <router-link class="sidebar-link" to="/receivers" v-bind:class="{ active:  this.$route.path === '/receivers' }">
           <i class="fa fa-address-card"></i>
           <span class="nav-text">Receveurs</span>
         </router-link>
-        <router-link class="sidebar-link" to="/donors" v-bind:class="{ active: panelActive === 'Donors' }" v-on:click="this.panelActive = 'Donors'">
+        <router-link class="sidebar-link" to="/donors" v-bind:class="{ active:  this.$route.path === '/donors'}">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text">Donneurs</span>
         </router-link>
-        <router-link class="sidebar-link" to="/administrator_panel" v-bind:class="{ active: panelActive === 'Admin'}" v-on:click="this.panelActive = 'Admin'">
+        <router-link class="sidebar-link" to="/administrator" v-bind:class="{ active: this.$route.path === '/administrator'}">
           <i class="fa fa-user-shield" aria-hidden="true"></i>
           <span class="nav-text">Administrateur</span>
         </router-link>
@@ -37,7 +37,6 @@ export default {
   },
   data() {
     return {
-      panelActive: undefined,
     };
   },
 };
