@@ -1,11 +1,11 @@
 <template>
   <div>
-    <router-link  style="float: right;" class="btn back_button" to="/administrator">Back</router-link>
+    <router-link class="btn back-button" to="/administrator">Back</router-link>
     <form class="form-editor">
       <div>
         <input v-model="user.email" type="email" class="form-control">
       </div>
-      <div style="display: flex; flex-direction: row">
+      <div class="horizontal-form-group">
         <input v-model="user.created_at" type="date" class="form-control">
         <input v-model="user.updated_at" type="date" class="form-control">
 
@@ -56,7 +56,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     getAllReceivers() {
-      console.log(this.$cookies.get("token"))
       http
         .get("/persons")
         .then((response) => {

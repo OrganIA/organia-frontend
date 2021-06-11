@@ -1,5 +1,5 @@
 <template>
-  <table class="table-list" style="margin-top: 8%">
+  <table class="table-list margin-top-s">
     <thead>
     <tr>
       <th>Id</th>
@@ -12,7 +12,8 @@
     <tbody>
     <tr v-for="user in users" :key="user">
       <td>{{ user.id }}</td>
-      <td>{{ user.name }}</td>
+      <td>{{ user.person.first_name}}</td>
+      <td>{{ user.person.last_name }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.created_at }}</td>
       <td>{{ user.updated_at }}</td>
