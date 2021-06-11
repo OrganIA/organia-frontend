@@ -460,3 +460,7 @@ textarea:focus, input:focus{
 .margin-top-s {
     margin-top: 8%;
 }
+
+td > i {
+    font-size: x-large;
+}

@@ -20,7 +20,7 @@
       <td>{{ user.updated_at }}</td>
       <td>
         <router-link :to="`/administrator/edit/user/${user.id}`">
-          <i style="font-size: x-large" class="fas fa-edit"></i>
+          <i class="fas fa-edit"></i>
         </router-link>
       </td>
     </tr>
