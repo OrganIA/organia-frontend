@@ -240,6 +240,7 @@ td {
     text-align: center;
 }
 
+
 tr td:first-child {
     border-left: 2px solid var(--border-color);
     border-top-left-radius: 10px;
@@ -408,7 +409,58 @@ img {
     color: inherit;
   }
 
+textarea:focus, input:focus{
+    outline: none;
+}
+
   .sidebar-link:hover {
       text-decoration: none;
       background: lightskyblue;
   }
+
+  .btn {
+      padding: 10px 20px;
+      display: inline-block;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      user-select: none;
+      font-weight: bold;
+
+  }
+
+.back-button {
+    float: right;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    border-radius: 10px;
+    color: white;
+
+}
+.back-button:focus, .back-button:hover {
+    box-shadow: #bd2f3c;
+    text-decoration: none;
+}
+
+.form-editor {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    width: 75%;
+    margin-bottom: 20px;
+}
+
+.horizontal-form-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.margin-top-s {
+    margin-top: 8%;
+}
+
+td > i {
+    font-size: x-large;
+}
