@@ -1,11 +1,12 @@
 <template>
   <div>
-    <p>Register page</p>
     <form @submit.prevent="register()">
-      <input v-model="name" placeholder="name" type="text" />
-      <input v-model="email" placeholder="email" type="email" />
-      <input v-model="password" type="password" />
+      <h2 class="form-title">S'inscrire</h2>
+      <input v-model="name" placeholder="name" type="text" required/>
+      <input v-model="email" placeholder="email" type="email" required/>
+      <input v-model="password" placeholder="mot de passe" type="password" required/>
       <button type="submit">S'inscrire</button>
+      <router-link to="/login">Se connecter</router-link>
     </form>
   </div>
 </template>
@@ -49,6 +50,7 @@ export default {
           http.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.token}`;
+          this.$emit('login', true)
           this.$router.push("/")
         }).catch((error) => {
           console.log(error)
