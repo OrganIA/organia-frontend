@@ -31,8 +31,8 @@
             <td>{{ receiver.organ }}</td>
             <td>{{ receiver.person.created_at }}</td>
             <td>
-              <router-link :to="`/receivers/edit/${receiver.id}`">
-                <i class="fas fa-trash-alt"></i>
+              <router-link :to="`/receivers/edit/${receiver.person.id}`">
+                <i class="fas fa-edit"></i>
               </router-link>
             </td>
           </tr>
