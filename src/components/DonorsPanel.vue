@@ -60,7 +60,6 @@ export default {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
-          console.log(response.data);
           response.data.forEach((element) => {
             element.person.created_at = new Date(element.person.created_at).toDateString();
           });

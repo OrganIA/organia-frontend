@@ -61,7 +61,6 @@ export default {
       http
         .get("/listings/receivers")
         .then((response) => {
-          console.log(response.data)
           response.data.forEach((element) => {
             element.person.created_at = new Date(element.person.created_at).toDateString();
           });

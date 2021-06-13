@@ -24,14 +24,9 @@
         <label for="first_name">Date de naissance</label>
         <input v-model="birthday" placeholder="birthday" type="date" required />
       </div>
-      <div class="form-input small required">
+      <div class="form-input small">
         <label for="first_name">Date d'admission</label>
-        <input
-          v-model="start_date"
-          placeholder="start date"
-          type="date"
-          required
-        />
+        <input v-model="start_date" placeholder="start date" type="date" />
       </div>
       <div class="form-input small required">
         <label for="first_name">Description</label>
@@ -44,7 +39,11 @@
       </div>
       <div class="form-input small required">
         <label for="first_name">Organe</label>
-        <input v-model="organ" placeholder="organ" type="text" required />
+        <select v-model="organ" id="organ-select" required>
+          <option v-for="element in all_organs" :key="element">
+            {{ element }}
+          </option>
+        </select>
       </div>
       <div class="form-input small required">
         <label for="first_name">Groupe sanguin</label>
@@ -65,16 +64,16 @@
         </select>
       </div>
       <div class="form-input small required">
-        <label for="first_name">Genre</label>
+        <label for="first_name">Sece</label>
         <select v-model="gender" name="gender" id="gender-select" required>
           <option value="">--Please choose an option--</option>
           <option value="MALE">MALE</option>
           <option value="FEMALE">FEMALE</option>
         </select>
       </div>
-      <div class="form-input small required">
+      <div class="form-input small">
         <label for="first_name">Notes</label>
-        <textarea v-model="notes" placeholder="notes" required />
+        <textarea v-model="notes" placeholder="notes" />
         <p class="required-notice">* Obligatoire</p>
         <div class="form-submit">
           <button type="submit">Ajouter</button>
@@ -103,9 +102,12 @@ export default {
       blood_type: "",
       rhesus: "",
       gender: "",
+      all_organs: "",
     };
   },
-  created() {},
+  created() {
+    this.getAllOrgans();
+  },
   methods: {
     createPerson() {
       http
@@ -128,13 +130,17 @@ export default {
         });
     },
     createDonor() {
-      console.log(this.person_id)
       http.post("/listings", {
         start_date: this.start_date,
         notes: this.notes,
         organ: this.organ,
         donor: true,
         person_id: this.person_id,
+      });
+    },
+    getAllOrgans() {
+      http.get("/listings/organs").then((response) => {
+        this.all_organs = response.data;
       });
     },
   },
