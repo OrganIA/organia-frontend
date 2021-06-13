@@ -1,25 +1,119 @@
 <template>
   <div>
     <router-link to="/donors">Back</router-link>
-    <form class="form-fields" @submit.prevent="submitForm()">
-      <input
-        v-model="donor.first_name"
-        placeholder="first_name"
-        type="text"
-      />
-      <input v-model="donor.last_name" placeholder="last_name" type="text" />
-      <input v-model="donor.birthday" placeholder="birthday" type="date" />
-      <input
-        v-model="donor.description"
-        placeholder="description"
-        type="text"
-      />
-      <input
-        v-model="donor.supervisor_id"
-        placeholder="supervisor_id"
-        type="number"
-      />
-      <button type="submit">Save Changes</button>
+    <form @submit.prevent="submitForm()" class="show-requireds">
+      <h2 class="form-title">Éditer un donneur</h2>
+      <div class="form-fields">
+        <div class="form-input small required">
+          <label for="first_name">Prénom</label>
+          <input
+            v-model="person.first_name"
+            placeholder="first_name"
+            type="text"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Nom de Famille</label>
+          <input
+            v-model="person.last_name"
+            placeholder="last_name"
+            type="text"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Date de naissance</label>
+          <input
+            v-model="person.birthday"
+            placeholder="birthday"
+            type="date"
+            required
+          />
+        </div>
+        <div class="form-input small">
+          <label for="first_name">Date d'admission</label>
+          <input
+            v-model="donor.start_date"
+            placeholder="start date"
+            type="date"
+          />
+        </div>
+        <div class="form-input small">
+          <label for="first_name">Date de fin</label>
+          <input
+            v-model="donor.end_date"
+            placeholder="end date"
+            type="date"
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Description</label>
+          <input
+            v-model="person.description"
+            placeholder="description"
+            type="text"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Organe</label>
+          <select v-model="donor.organ" id="organ-select" required>
+            <option v-for="element in all_organs" :key="element">
+              {{ element }}
+            </option>
+          </select>
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Groupe sanguin</label>
+          <select
+            v-model="person.abo"
+            name="abo"
+            id="abo-select"
+            required
+          >
+            <option value="">--Please choose an option--</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="O">O</option>
+            <option value="AB">AB</option>
+          </select>
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Rhésus</label>
+          <select
+            v-model="person.rhesus"
+            name="rhesus"
+            id="rhesus-select"
+            required
+          >
+            <option value="">--Please choose an option--</option>
+            <option value="+">+</option>
+            <option value="-">-</option>
+          </select>
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Sexe</label>
+          <select
+            v-model="person.gender"
+            name="gender"
+            id="gender-select"
+            required
+          >
+            <option value="">--Please choose an option--</option>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+          </select>
+        </div>
+        <div class="form-input small">
+          <label for="first_name">Notes</label>
+          <textarea v-model="donor.notes" placeholder="notes" />
+        </div>
+        <p class="required-notice">* Obligatoire</p>
+        <div class="form-submit">
+          <button type="submit">Ajouter</button>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -28,25 +122,24 @@
 import http from "../http";
 
 export default {
-  name: "EditDonorsPanel",
+  name: "EditdonorsPanel",
   props: {
     id: String,
   },
   data() {
     return {
       donor: {},
+      person: {},
+      all_organs: [],
     };
   },
   methods: {
     getdonorByID() {
       http
-        .get(`/persons/${this.id}`, {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("token")}`,
-          },
-        })
+        .get(`/listings/${this.id}`)
         .then((response) => {
           this.donor = response.data;
+          this.person = response.data.person;
         })
         .catch((error) => {
           console.log(error);
@@ -54,30 +147,47 @@ export default {
     },
     submitForm() {
       http
-        .post(
-          `/persons/${this.id}`,
-          {
-            first_name: this.donor.first_name,
-            last_name: this.donor.last_name,
-            birthday: this.donor.birthday,
-            description: this.donor.description,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("token")}`,
-            },
-          }
-        )
+        .post(`/listings/${this.id}`, {
+          start_date: this.donor.start_date,
+          end_date: this.donor.end_date,
+          notes: this.donor.notes,
+          organ: this.donor.organ,
+          person_id: this.id,
+        })
         .then(() => {
-          this.$router.push("/donors");
+          this.updatePerson();
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    updatePerson() {
+      http
+        .post(`/persons/${this.id}`, {
+          first_name: this.person.first_name,
+          last_name: this.person.last_name,
+          birthday: this.person.birthday,
+          description: this.person.description,
+          abo: this.person.abo,
+          rhesus: this.person.rhesus,
+          gender: this.person.gender,
+        })
+        .then(() => {
+          this.$router.push("/donors");
+        });
+    },
+    redirect() {
+      window.location.replace("/donors");
+    },
+    getAllOrgans() {
+      http.get("/listings/organs").then((response) => {
+        this.all_organs = response.data;
+      });
+    },
   },
   created() {
     this.getdonorByID();
+    this.getAllOrgans();
   },
 };
 </script>
