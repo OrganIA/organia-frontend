@@ -1,52 +1,92 @@
 <template>
   <div>
-    <form @submit.prevent="createPerson()">
-      <input
-        v-model="first_name"
-        placeholder="first_name"
-        type="text"
-        required
-      />
-      <input v-model="last_name" placeholder="last_name" type="text" required />
-      <input v-model="birthday" placeholder="birthday" type="date" required />
-      <input
-        v-model="start_date"
-        placeholder="start date"
-        type="date"
-        required
-      />
-      <input
-        v-model="description"
-        placeholder="description"
-        type="text"
-        required
-      />
-      <input v-model="organ" placeholder="organ" type="text" required />
-      <select v-model="blood_type" name="abo" id="abo-select" required>
-        <option value="">--Please choose an option--</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="O">O</option>
-        <option value="AB">AB</option>
-      </select>
-      <select v-model="rhesus" name="rhesus" id="rhesus-select" required>
-        <option value="">--Please choose an option--</option>
-        <option value="+">+</option>
-        <option value="-">-</option>
-      </select>
-      <select v-model="gender" name="gender" id="gender-select" required>
-        <option value="">--Please choose an option--</option>
-        <option value="MALE">MALE</option>
-        <option value="FEMALE">FEMALE</option>
-      </select>
-      <textarea v-model="notes" placeholder="notes" required />
-      <input
-        v-model="supervisor_id"
-        placeholder="supervisor_id"
-        type="number"
-        required
-      />
-      <button type="submit">S'inscrire</button>
+    <form @submit.prevent="createPerson()" class="show-requireds">
+      <h2 class="form-title">Ajouter un receveur</h2>
+      <div class="form-fields">
+        <div class="form-input small required">
+          <label for="first_name">Prénom</label>
+          <input
+            v-model="first_name"
+            placeholder="first_name"
+            type="text"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Nom de Famille</label>
+          <input
+            v-model="last_name"
+            placeholder="last_name"
+            type="text"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Date de naissance</label>
+          <input
+            v-model="birthday"
+            placeholder="birthday"
+            type="date"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Date d'admission</label>
+          <input
+            v-model="start_date"
+            placeholder="start date"
+            type="date"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Description</label>
+          <input
+            v-model="description"
+            placeholder="description"
+            type="text"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Organe</label>
+          <input v-model="organ" placeholder="organ" type="text" required />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Groupe sanguin</label>
+          <select v-model="blood_type" name="abo" id="abo-select" required>
+            <option value="">--Please choose an option--</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="O">O</option>
+            <option value="AB">AB</option>
+          </select>
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Rhésus</label>
+          <select v-model="rhesus" name="rhesus" id="rhesus-select" required>
+            <option value="">--Please choose an option--</option>
+            <option value="+">+</option>
+            <option value="-">-</option>
+          </select>
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Genre</label>
+          <select v-model="gender" name="gender" id="gender-select" required>
+            <option value="">--Please choose an option--</option>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+          </select>
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Notes</label>
+          <textarea v-model="notes" placeholder="notes" required />
+          <p class="required-notice">* Obligatoire</p>
+          <div class="form-submit">
+            <button type="submit">Ajouter</button>
+          </div>
+        </div>
+      </div>
     </form>
   </div>
 </template>
