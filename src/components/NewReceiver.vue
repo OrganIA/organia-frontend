@@ -137,13 +137,17 @@ export default {
         });
     },
     createReceiver() {
-      http.post("/listings", {
-        start_date: this.start_date,
-        notes: this.notes,
-        organ: this.organ,
-        donor: false,
-        person_id: this.person_id,
-      });
+      http
+        .post("/listings", {
+          start_date: this.start_date,
+          notes: this.notes,
+          organ: this.organ,
+          donor: false,
+          person_id: this.person_id,
+        })
+        .then(() => {
+          this.$router.push("/receivers");
+        });
     },
     getAllOrgans() {
       http.get("/listings/organs").then((response) => {

@@ -130,13 +130,17 @@ export default {
         });
     },
     createDonor() {
-      http.post("/listings", {
-        start_date: this.start_date,
-        notes: this.notes,
-        organ: this.organ,
-        donor: true,
-        person_id: this.person_id,
-      });
+      http
+        .post("/listings", {
+          start_date: this.start_date,
+          notes: this.notes,
+          organ: this.organ,
+          donor: true,
+          person_id: this.person_id,
+        })
+        .then(() => {
+          this.$router.push("/donors");
+        });
     },
     getAllOrgans() {
       http.get("/listings/organs").then((response) => {
