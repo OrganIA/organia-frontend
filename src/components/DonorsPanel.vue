@@ -20,15 +20,15 @@
         </thead>
         <tbody>
           <tr v-for="donor in donors" :key="donor">
-            <td>{{ donor.first_name }}</td>
-            <td>{{ donor.last_name }}</td>
-            <td>{{ donor.birthday }}</td>
-            <td>{{ donor.gender }}</td>
-            <td>{{ donor.blood_type }}</td>
+            <td>{{ donor.person.first_name }}</td>
+            <td>{{ donor.person.last_name }}</td>
+            <td>{{ donor.person.birthday }}</td>
+            <td>{{ donor.person.gender }}</td>
+            <td>{{ donor.person.blood_type }}</td>
             <td>{{ donor.organ }}</td>
-            <td>{{ donor.created_at }}</td>
+            <td>{{ donor.person.created_at }}</td>
             <td>
-              <router-link :to="`/donors/edit/${donor.id}`">
+              <router-link :to="`/donors/edit/${donor.person.id}`">
                 <i class="fas fa-trash-alt"></i>
               </router-link>
             </td>
@@ -56,12 +56,13 @@ export default {
   methods: {
     getAllDonors() {
       http
-        .get("/persons", {
+        .get("/listings/donors", {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
+          console.log(response.data);
           response.data.forEach((element) => {
-            element.created_at = new Date(element.created_at).toDateString();
+            element.person.created_at = new Date(element.person.created_at).toDateString();
           });
           this.donors = response.data;
         })

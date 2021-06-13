@@ -1,32 +1,87 @@
 <template>
-<form @submit.prevent="createPerson()" class="show-requireds">
-<h2 class="form-title">Ajouter un donneur</h2>
-<div class="form-fields">
-<div class="form-input small required">
-<label for="first_name">Prénom</label>
-<input v-model="first_name" data-classes="['small']" id="first_name" name="first_name" required="" type="text">
-</div>
-<div class="form-input small required">
-<label for="last_name">Nom de famille</label>
-<input v-model="last_name" data-classes="['small']" id="last_name" name="last_name" required="" type="text">
-</div>
-<div class="form-input required">
-<label for="birthday">Date de naissance</label>
-<input v-model="birthday" id="birthday" name="birthday" required="" type="date">
-</div>
-
-<div class="form-input required">
-    <label for="description">Description</label>
-    <input v-model="description" id="description" name="description" required="" type="text">
-</div>
-
-<input id="csrf_token" name="csrf_token" type="hidden" value="IjVjN2Y0Zjk5MGJiZjhkYWZlYTU4ZTMzNTY1OWRkOGJkYjVkZGZmZDQi.YLvcvA.CXg_Fl_YlTv7k3qFySeA2xlZhWw">
-</div>
-<p class="required-notice">* Obligatoire</p>
-<div class="form-submit">
-<button type="submit">Ajouter</button>
-</div>
-</form>
+  <form @submit.prevent="createPerson()" class="show-requireds">
+    <h2 class="form-title">Ajouter un donneur</h2>
+    <div class="form-fields">
+      <div class="form-input small required">
+        <label for="first_name">Prénom</label>
+        <input
+          v-model="first_name"
+          placeholder="first_name"
+          type="text"
+          required
+        />
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Nom de Famille</label>
+        <input
+          v-model="last_name"
+          placeholder="last_name"
+          type="text"
+          required
+        />
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Date de naissance</label>
+        <input v-model="birthday" placeholder="birthday" type="date" required />
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Date d'admission</label>
+        <input
+          v-model="start_date"
+          placeholder="start date"
+          type="date"
+          required
+        />
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Description</label>
+        <input
+          v-model="description"
+          placeholder="description"
+          type="text"
+          required
+        />
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Organe</label>
+        <input v-model="organ" placeholder="organ" type="text" required />
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Groupe sanguin</label>
+        <select v-model="blood_type" name="abo" id="abo-select" required>
+          <option value="">--Please choose an option--</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="O">O</option>
+          <option value="AB">AB</option>
+        </select>
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Rhésus</label>
+        <select v-model="rhesus" name="rhesus" id="rhesus-select" required>
+          <option value="">--Please choose an option--</option>
+          <option value="+">+</option>
+          <option value="-">-</option>
+        </select>
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Genre</label>
+        <select v-model="gender" name="gender" id="gender-select" required>
+          <option value="">--Please choose an option--</option>
+          <option value="MALE">MALE</option>
+          <option value="FEMALE">FEMALE</option>
+        </select>
+      </div>
+      <div class="form-input small required">
+        <label for="first_name">Notes</label>
+        <textarea v-model="notes" placeholder="notes" required />
+        <p class="required-notice">* Obligatoire</p>
+        <div class="form-submit">
+          <button type="submit">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -41,34 +96,46 @@ export default {
       birthday: "",
       description: "",
       supervisor_id: 0,
+      person_id: undefined,
+      start_date: "",
+      notes: "",
+      organ: "",
+      blood_type: "",
+      rhesus: "",
+      gender: "",
     };
   },
   created() {},
   methods: {
     createPerson() {
       http
-        .post(
-          "/persons",
-          {
-            first_name: this.first_name,
-            last_name: this.last_name,
-            birthday: this.birthday,
-            description: this.description,
-            supervisor_id: this.supervisor_id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("token")}`,
-            },
-          }
-        )
+        .post("/persons", {
+          first_name: this.first_name,
+          last_name: this.last_name,
+          birthday: this.birthday,
+          description: this.description,
+          supervisor_id: this.supervisor_id,
+          abo: this.blood_type,
+          rhesus: this.rhesus,
+          gender: this.gender,
+        })
         .then((response) => {
-          console.log(response);
-          this.$router.push("/donors");
+          this.person_id = response.data.id;
+          this.createDonor();
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    createDonor() {
+      console.log(this.person_id)
+      http.post("/listings", {
+        start_date: this.start_date,
+        notes: this.notes,
+        organ: this.organ,
+        donor: true,
+        person_id: this.person_id,
+      });
     },
   },
 };
