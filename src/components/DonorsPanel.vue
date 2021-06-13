@@ -29,7 +29,7 @@
             <td>{{ donor.person.created_at }}</td>
             <td>
               <router-link :to="`/donors/edit/${donor.person.id}`">
-                <i class="fas fa-trash-alt"></i>
+                <i class="fas fa-edit"></i>
               </router-link>
             </td>
           </tr>
