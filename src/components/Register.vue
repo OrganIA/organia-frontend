@@ -2,9 +2,14 @@
   <div>
     <form @submit.prevent="register()">
       <h2 class="form-title">S'inscrire</h2>
-      <input v-model="name" placeholder="name" type="text" required/>
-      <input v-model="email" placeholder="email" type="email" required/>
-      <input v-model="password" placeholder="mot de passe" type="password" required/>
+      <input v-model="name" placeholder="name" type="text" required />
+      <input v-model="email" placeholder="email" type="email" required />
+      <input
+        v-model="password"
+        placeholder="mot de passe"
+        type="password"
+        required
+      />
       <button type="submit">S'inscrire</button>
       <router-link to="/login">Se connecter</router-link>
     </form>
@@ -32,7 +37,7 @@ export default {
           password: this.password,
         })
         .then(() => {
-          this.login()
+          this.login();
         })
         .catch((error) => {
           console.log(error);
@@ -45,15 +50,16 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          this.$store.commit("login", this.email, this.name)
-          this.$cookies.set("token", response.data.token, -1)
+          this.$store.commit("login", this.email, this.name);
+          this.$cookies.set("token", response.data.token, -1);
           http.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.token}`;
-          this.$emit('login', true)
-          this.$router.push("/")
-        }).catch((error) => {
-          console.log(error)
+          this.$emit("login", true);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },

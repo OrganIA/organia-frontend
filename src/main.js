@@ -6,7 +6,7 @@ import cookies from 'vue3-cookies'
 
 const app = createApp(App);
 app
-.use(store)
-.use(router)
-.use(cookies)
-.mount('#app')
+    .use(store)
+    .use(router)
+    .use(cookies)
+    .mount('#app')

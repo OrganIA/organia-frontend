@@ -1,29 +1,29 @@
 <template>
   <table class="table-list margin-top-s">
     <thead>
-    <tr>
-      <th>Id</th>
-      <th>Prénom</th>
-      <th>Nom</th>
-      <th>Mail</th>
-      <th>Date de création</th>
-      <th>Dernière modification</th>
-    </tr>
+      <tr>
+        <th>Id</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Mail</th>
+        <th>Date de création</th>
+        <th>Dernière modification</th>
+      </tr>
     </thead>
     <tbody>
-    <tr v-for="user in users" :key="user">
-      <td>{{ user.id }}</td>
-      <td>{{ user.person ? user.person.first_name : "[Empty]" }}</td>
-      <td>{{ user.person ? user.person.last_name : "[Empty]" }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.created_at }}</td>
-      <td>{{ user.updated_at }}</td>
-      <td>
-        <router-link :to="`/administrator/edit/user/${user.id}`">
-          <i class="fas fa-edit"></i>
-        </router-link>
-      </td>
-    </tr>
+      <tr v-for="user in users" :key="user">
+        <td>{{ user.id }}</td>
+        <td>{{ user.person ? user.person.first_name : "[Empty]" }}</td>
+        <td>{{ user.person ? user.person.last_name : "[Empty]" }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.created_at }}</td>
+        <td>{{ user.updated_at }}</td>
+        <td>
+          <router-link :to="`/administrator/edit/user/${user.id}`">
+            <i class="fas fa-edit"></i>
+          </router-link>
+        </td>
+      </tr>
     </tbody>
   </table>
 </template>
@@ -44,23 +44,22 @@ export default {
   methods: {
     getUsers() {
       http
-          .get("/users", {
-            headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-          })
-          .then((response) => {
-            response.data.forEach((element) => {
-              element.created_at = new Date(element.created_at).toDateString();
-            });
-            this.users = response.data;
-          })
-          .catch((error) => {
-            console.log(error);
+        .get("/users", {
+          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
+        })
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.created_at = new Date(element.created_at).toDateString();
           });
+          this.users = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
-}
+};
 </script>
 
 <style scoped>
-
 </style>

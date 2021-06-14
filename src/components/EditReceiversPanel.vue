@@ -66,13 +66,7 @@
         </div>
         <div class="form-input small required">
           <label for="first_name">Groupe sanguin</label>
-          <select
-            v-model="person.abo"
-            name="abo"
-            id="abo-select"
-            required
-          >
-            <option value="">--Please choose an option--</option>
+          <select v-model="person.abo" name="abo" id="abo-select" required>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
@@ -87,7 +81,6 @@
             id="rhesus-select"
             required
           >
-            <option value="">--Please choose an option--</option>
             <option value="+">+</option>
             <option value="-">-</option>
           </select>
@@ -100,7 +93,6 @@
             id="gender-select"
             required
           >
-            <option value="">--Please choose an option--</option>
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
           </select>
