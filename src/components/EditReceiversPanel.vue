@@ -153,9 +153,7 @@ export default {
           first_name: this.person.first_name,
           last_name: this.person.last_name,
           birthday: this.person.birthday,
-          ...(this.person.description
-            ? { description: this.person.description }
-            : {}),
+          ...(this.person.description ? { description: this.person.description } : {}),
           supervisor_id: this.person.supervisor_id,
           ...(this.person.blood_type ? { abo: this.person.blood_type } : {}),
           ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
