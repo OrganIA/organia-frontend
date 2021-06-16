@@ -30,19 +30,6 @@
             required
           />
         </div>
-        <div class="form-input small">
-          <label for="first_name">Date d'admission</label>
-          <input v-model="start_date" placeholder="start date" type="date" />
-        </div>
-        <div class="form-input small required">
-          <label for="first_name">Description</label>
-          <input
-            v-model="description"
-            placeholder="description"
-            type="text"
-            required
-          />
-        </div>
         <div class="form-input small required">
           <label for="first_name">Organe</label>
           <select v-model="organ" id="organ-select" required>
@@ -51,25 +38,33 @@
             </option>
           </select>
         </div>
-        <div class="form-input small required">
+        <div class="form-input small">
+          <label for="first_name">Date d'admission</label>
+          <input v-model="start_date" placeholder="start date" type="date" />
+        </div>
+        <div class="form-input small">
+          <label for="first_name">Description</label>
+          <input v-model="description" placeholder="description" type="text" />
+        </div>
+        <div class="form-input small">
           <label for="first_name">Groupe sanguin</label>
-          <select v-model="blood_type" name="abo" id="abo-select" required>
+          <select v-model="blood_type" name="abo" id="abo-select">
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
             <option value="AB">AB</option>
           </select>
         </div>
-        <div class="form-input small required">
+        <div class="form-input small">
           <label for="first_name">Rhésus</label>
-          <select v-model="rhesus" name="rhesus" id="rhesus-select" required>
+          <select v-model="rhesus" name="rhesus" id="rhesus-select">
             <option value="+">+</option>
             <option value="-">-</option>
           </select>
         </div>
-        <div class="form-input small required">
+        <div class="form-input small">
           <label for="first_name">Sexe</label>
-          <select v-model="gender" name="gender" id="gender-select" required>
+          <select v-model="gender" name="gender" id="gender-select">
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
           </select>
@@ -119,11 +114,11 @@ export default {
           first_name: this.first_name,
           last_name: this.last_name,
           birthday: this.birthday,
-          description: this.description,
+          ...(this.description ? { description: this.description } : {}),
           supervisor_id: this.supervisor_id,
-          abo: this.blood_type,
-          rhesus: this.rhesus,
-          gender: this.gender,
+          ...(this.blood_type ? { abo: this.blood_type } : {}),
+          ...(this.rhesus ? { rhesus: this.rhesus } : {}),
+          ...(this.gender ? { gender: this.gender } : {}),
         })
         .then((response) => {
           this.person_id = response.data.id;
@@ -136,14 +131,19 @@ export default {
     createReceiver() {
       http
         .post("/listings", {
-          start_date: this.start_date,
-          notes: this.notes,
+          ...(this.start_date ? { start_date: this.start_date } : {}),
+          ...(this.notes ? { notes: this.notes } : {}),
           organ: this.organ,
           donor: false,
           person_id: this.person_id,
         })
         .then(() => {
           this.$router.push("/receivers");
+        })
+        .catch((error) => {
+          alert(
+            `ERROR:\n${error.response.data.detail[0].loc[1]}: ${error.response.data.detail[0].msg}`
+          );
         });
     },
     getAllOrgans() {
@@ -154,6 +154,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
