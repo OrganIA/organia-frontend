@@ -24,12 +24,15 @@
         </div>
         <div class="form-input small required">
           <label for="first_name">Date de naissance</label>
-          <input
-            v-model="person.birthday"
-            placeholder="birthday"
-            type="date"
-            required
-          />
+          <input v-model="person.birthday" placeholder="birthday" type="date" />
+        </div>
+        <div class="form-input small required">
+          <label for="first_name">Organe</label>
+          <select v-model="receiver.organ" id="organ-select" required>
+            <option v-for="element in all_organs" :key="element">
+              {{ element }}
+            </option>
+          </select>
         </div>
         <div class="form-input small">
           <label for="first_name">Date d'admission</label>
@@ -47,33 +50,24 @@
             type="date"
           />
         </div>
-        <div class="form-input small required">
+        <div class="form-input small">
           <label for="first_name">Description</label>
           <input
             v-model="person.description"
             placeholder="description"
             type="text"
-            required
           />
         </div>
-        <div class="form-input small required">
-          <label for="first_name">Organe</label>
-          <select v-model="receiver.organ" id="organ-select" required>
-            <option v-for="element in all_organs" :key="element">
-              {{ element }}
-            </option>
-          </select>
-        </div>
-        <div class="form-input small required">
+        <div class="form-input small">
           <label for="first_name">Groupe sanguin</label>
-          <select v-model="person.abo" name="abo" id="abo-select" required>
+          <select v-model="person.blood_type" name="abo" id="abo-select">
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
             <option value="AB">AB</option>
           </select>
         </div>
-        <div class="form-input small required">
+        <div class="form-input small">
           <label for="first_name">Rhésus</label>
           <select
             v-model="person.rhesus"
@@ -85,14 +79,9 @@
             <option value="-">-</option>
           </select>
         </div>
-        <div class="form-input small required">
+        <div class="form-input small">
           <label for="first_name">Sexe</label>
-          <select
-            v-model="person.gender"
-            name="gender"
-            id="gender-select"
-            required
-          >
+          <select v-model="person.gender" name="gender" id="gender-select">
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
           </select>
@@ -140,11 +129,16 @@ export default {
     submitForm() {
       http
         .post(`/listings/${this.id}`, {
-          start_date: this.receiver.start_date,
-          end_date: this.receiver.end_date,
           notes: this.receiver.notes,
           organ: this.receiver.organ,
           person_id: this.id,
+          ...(this.receiver.start_date
+            ? { start_date: this.receiver.start_date }
+            : {}),
+          ...(this.receiver.end_date
+            ? { end_date: this.receiver.end_date }
+            : {}),
+          ...(this.receiver.notes ? { notes: this.receiver.notes } : {}),
         })
         .then(() => {
           this.updatePerson();
@@ -159,10 +153,13 @@ export default {
           first_name: this.person.first_name,
           last_name: this.person.last_name,
           birthday: this.person.birthday,
-          description: this.person.description,
-          abo: this.person.abo,
-          rhesus: this.person.rhesus,
-          gender: this.person.gender,
+          ...(this.person.description
+            ? { description: this.person.description }
+            : {}),
+          supervisor_id: this.person.supervisor_id,
+          ...(this.person.blood_type ? { abo: this.person.blood_type } : {}),
+          ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
+          ...(this.person.gender ? { gender: this.person.gender } : {}),
         })
         .then(() => {
           this.$router.push("/receivers");
