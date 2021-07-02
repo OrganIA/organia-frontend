@@ -52,7 +52,6 @@ export default {
   },
   created() {
     this.getUserByID();
-    console.log(this.id)
   },
 }
 </script>
