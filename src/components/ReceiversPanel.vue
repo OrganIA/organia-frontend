@@ -23,16 +23,16 @@
         </thead>
         <tbody>
           <tr v-for="receiver in receivers" :key="receiver">
-            <td>{{ receiver.first_name }}</td>
-            <td>{{ receiver.last_name }}</td>
-            <td>{{ receiver.birthday }}</td>
-            <td>{{ receiver.gender }}</td>
-            <td>{{ receiver.blood_type }}</td>
+            <td>{{ receiver.person.first_name }}</td>
+            <td>{{ receiver.person.last_name }}</td>
+            <td>{{ receiver.person.birthday }}</td>
+            <td>{{ receiver.person.gender }}</td>
+            <td>{{ receiver.person.blood_type }}</td>
             <td>{{ receiver.organ }}</td>
-            <td>{{ receiver.created_at }}</td>
+            <td>{{ receiver.person.created_at }}</td>
             <td>
-              <router-link :to="`/receivers/edit/${receiver.id}`">
-                <i class="fas fa-trash-alt"></i>
+              <router-link :to="`/receivers/edit/${receiver.person.id}`">
+                <i class="fas fa-edit"></i>
               </router-link>
             </td>
           </tr>
@@ -59,10 +59,12 @@ export default {
   methods: {
     getAllReceivers() {
       http
-        .get("/persons")
+        .get("/listings/receivers")
         .then((response) => {
           response.data.forEach((element) => {
-            element.created_at = new Date(element.created_at).toDateString();
+            element.person.created_at = new Date(
+              element.person.created_at
+            ).toDateString();
           });
           this.receivers = response.data;
         })

@@ -47,7 +47,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -67,18 +66,18 @@ export default {
   methods: {
     getUsers() {
       http
-          .get("/users", {
-            headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-          })
-          .then((response) => {
-            response.data.forEach((element) => {
-              element.created_at = new Date(element.created_at).toDateString();
-            });
-            this.users = response.data;
-          })
-          .catch((error) => {
-            console.log(error);
+        .get("/users", {
+          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
+        })
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.created_at = new Date(element.created_at).toDateString();
           });
+          this.users = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getUserByID() {
       http
@@ -97,10 +96,8 @@ export default {
       this.getUserByID(userId)
     }
   },
-
-}
+};
 </script>
 
 <style scoped>
-
 </style>
