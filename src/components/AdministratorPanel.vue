@@ -90,7 +90,7 @@ export default {
       console.log(userId)
       this.user.id = userId;
       this.getUserByID(userId)
-    }
+    },
   },
 };
 </script>
