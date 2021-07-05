@@ -2,17 +2,17 @@
   <div>
     <form @submit.prevent="register()">
       <h2 class="form-title">S'inscrire</h2>
-      <input v-model="name" class="action-name" placeholder="name" type="text" required />
-      <input v-model="email" class="action-email" placeholder="email" type="email" required />
+      <input v-model="name" class="cypress-name" placeholder="name" type="text" required />
+      <input v-model="email" class="cypress-email" placeholder="email" type="email" required />
       <input
         v-model="password"
         placeholder="mot de passe"
         type="password"
-        class="action-password"
+        class="cypress-password"
         required
       />
-      <button type="submit" class="action-register">S'inscrire</button>
-      <router-link to="/login" class="action-to-login">Se connecter</router-link>
+      <button type="submit" class="cypress-register">S'inscrire</button>
+      <router-link to="/login" class="cypress-to-login">Se connecter</router-link>
     </form>
   </div>
 </template>
