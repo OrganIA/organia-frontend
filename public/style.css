@@ -385,6 +385,7 @@ img {
     margin: 20px;
   }
   
+
   #flash-messages {
     width: 100%;
   }
@@ -465,4 +466,44 @@ textarea:focus, input:focus{
 
 td > i {
     font-size: x-large;
+}
+
+.align-left {
+text-align: start;
+}
+
+.half-table {
+    max-width: 50%;
+}
+
+.separator {
+    max-height: 500px;
+    border-right: solid black 5px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.large-container {
+    background-color: #29abe2;
+    max-height: 100%;
+}
+
+.selected-element {
+    border-top: 2px solid var(--blue);
+    border-bottom: 2px solid var(--blue);
+}
+.selected-line {
+    color: var(--blue);
+}
+
+tr td:first-child.selected-element {
+    border-left: 2px solid var(--blue);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+tr td:last-child.selected-element {
+    border-right: 2px solid var(--blue);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
