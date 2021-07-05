@@ -11,5 +11,7 @@ describe('Login Test', () => {
       .should('have.value', 'saber')  
   
       cy.get('.action-login').click()
-    })
+      cy.url().should('eq', 'http://localhost:8080/')
+      cy.getCookie("token").should('not.be.null')
+      })
   })

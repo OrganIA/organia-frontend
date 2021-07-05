@@ -20,5 +20,7 @@ describe('Register Test', () => {
     .should('have.value', 'cypress')  
 
     cy.get('.action-register').click()
+    cy.url().should('eq', 'http://localhost:8080/')
+    cy.getCookie("token").should('not.be.null')
   })
 })
