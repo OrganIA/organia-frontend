@@ -1,8 +1,8 @@
 import { emailGenerator } from "../utils"
 var email = emailGenerator();
 
-describe('Register Test', () => {
-  it('Tries to register', () => {
+describe('Register Test Success', () => {
+  it('Tries to register should succeed', () => {
     cy.visit('http://localhost:8080/')
 
     cy.get('.action-to-register').click()
