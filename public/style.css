@@ -453,6 +453,7 @@ textarea:focus, input:focus{
 .form-control {
     width: 75%;
     margin-bottom: 20px;
+    margin-left: -10px;
 }
 
 .horizontal-form-group {

@@ -37,10 +37,14 @@ export default {
           password: this.password,
         })
         .then(() => {
+          this.$toast.success("Connexion réussie !");
+          setTimeout(this.$toast.clear, 3000)
           this.login();
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error("Erreur lors de la connexion : " + error);
+          setTimeout(this.$toast.clear, 3000)
         });
     },
     login() {
