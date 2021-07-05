@@ -1,9 +1,15 @@
 describe('Login Test', () => {
-  it('Visits the login page', () => {
-    cy.visit('http://localhost:8080/login')
-    cy.get('email')
-    .type('fake@email.com')
-    .should('have.value', 'fake@email.com')  
-    cy.contains('Se connecter')
+    it('Tries to login', () => {
+      cy.visit('http://localhost:8080/')
+      cy.get('.action-to-register').click()
+      cy.get('.action-to-login').click()
+      cy.get('.action-email')
+      .type('saber@saber.com')
+      .should('have.value', 'saber@saber.com')  
+      cy.get('.action-password')
+      .type('saber')
+      .should('have.value', 'saber')  
+  
+      cy.get('.action-login').click()
+    })
   })
-})
