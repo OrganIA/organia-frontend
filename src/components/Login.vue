@@ -2,7 +2,7 @@
   <div>
     <form @submit.prevent="login()">
       <h2 class="form-title">Se connecter</h2>
-      <input v-model="email" placeholder="email" type="email" required />
+      <input v-model="email" placeholder="email" type="email" class="action-email" required />
       <input
         v-model="password"
         placeholder="mot de passe"
