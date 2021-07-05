@@ -7,10 +7,11 @@
         v-model="password"
         placeholder="mot de passe"
         type="password"
+        class="action-password"
         required
       />
-      <button type="submit">Se connecter</button>
-      <router-link to="/register">S'inscrire</router-link>
+      <button type="submit" class="action-login">Se connecter</button>
+      <router-link to="/register" class="action-to-register">S'inscrire</router-link>
     </form>
   </div>
 </template>
