@@ -1,5 +1,4 @@
 <template>
-  <div id="toast"><div id="img">[ERROR]</div><div id="desc"></div></div>
   <h1>Panel Administrateur</h1>
   <h2 class="align-left">Utilisateurs</h2>
   <div class="main-container">
@@ -89,10 +88,8 @@ export default {
           })
           .catch((error) => {
             console.log(error)
-            var toast = document.getElementById("toast")
-            toast.className = "show";
-            document.getElementById("desc").innerText = error;
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
+            this.$toast.error(error);
+            setTimeout(this.$toast.clear, 3000)
           });
     },
     loadSelectedUser(userId) {
