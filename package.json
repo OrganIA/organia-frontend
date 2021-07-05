@@ -10,11 +10,13 @@
   "dependencies": {
     "@cypress/vue": "^3.0.1",
     "@cypress/webpack-dev-server": "^1.4.0",
+    "@meforma/vue-toaster": "^1.2.2",
     "axios": "^0.21.1",
-    "core-js": "^3.15.2",
-    "cypress": "^7.6.0",
-    "vue": "^3.1.4",
-    "vue-router": "^4.0.10",
+    "core-js": "^3.6.5",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^3.0.2",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.8",
     "vue3-cookies": "^1.0.1",
     "vuex": "^4.0.2"
   },
