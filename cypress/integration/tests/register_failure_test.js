@@ -5,21 +5,21 @@ describe('Register Test Success', () => {
   it('Tries to register should succeed', () => {
     cy.visit('http://localhost:8080/')
 
-    cy.get('.action-to-register').click()
+    cy.get('.cypress-to-register').click()
 
-    cy.get('.action-name')
+    cy.get('.cypress-name')
     .type(`${email}`)
     .should('have.value', `${email}`)  
 
-    cy.get('.action-email')
+    cy.get('.cypress-email')
     .type(`${email}`)
     .should('have.value', `${email}`)  
 
-    cy.get('.action-password')
+    cy.get('.cypress-password')
     .type('cypress')
     .should('have.value', 'cypress')  
 
-    cy.get('.action-register').click()
+    cy.get('.cypress-register').click()
     cy.url().should('eq', 'http://localhost:8080/register')
     cy.getCookie("token").should('be.null')
   })

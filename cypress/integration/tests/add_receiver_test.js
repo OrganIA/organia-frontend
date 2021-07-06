@@ -1,5 +1,5 @@
-describe('Login Test Success', () => {
-    it('Tries to login should succeed', () => {
+describe('Login Test', () => {
+    it('Tries to login', () => {
       cy.visit('http://localhost:8080/')
       cy.get('.cypress-to-register').click()
       cy.get('.cypress-to-login').click()
