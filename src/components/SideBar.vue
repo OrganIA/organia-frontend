@@ -18,7 +18,7 @@
           v-bind:class="{ active: this.$route.path === '/receivers' }"
         >
           <i class="fa fa-address-card"></i>
-          <span class="nav-text">Receveurs</span>
+          <span class="nav-text cypress-to-receivers">Receveurs</span>
         </router-link>
         <router-link
           class="sidebar-link"

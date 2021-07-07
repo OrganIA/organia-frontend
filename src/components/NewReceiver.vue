@@ -9,6 +9,7 @@
             v-model="first_name"
             placeholder="first_name"
             type="text"
+            class="cypress-first-name"
             required
           />
         </div>
@@ -18,6 +19,7 @@
             v-model="last_name"
             placeholder="last_name"
             type="text"
+            class="cypress-last-name"
             required
           />
         </div>
@@ -27,12 +29,18 @@
             v-model="birthday"
             placeholder="birthday"
             type="date"
+            class="cypress-birth-date"
             required
           />
         </div>
         <div class="form-input small required">
           <label for="first_name">Organe</label>
-          <select v-model="organ" id="organ-select" required>
+          <select
+            v-model="organ"
+            id="organ-select"
+            class="cypress-organ"
+            required
+          >
             <option v-for="element in all_organs" :key="element">
               {{ element }}
             </option>
@@ -40,7 +48,7 @@
         </div>
         <div class="form-input small">
           <label for="first_name">Date d'admission</label>
-          <input v-model="start_date" placeholder="start date" type="date" />
+          <input v-model="start_date" placeholder="start date" type="date" class="cypress-admission-date"/>
         </div>
         <div class="form-input small">
           <label for="first_name">Description</label>
@@ -74,7 +82,7 @@
           <textarea v-model="notes" placeholder="notes" />
           <p class="required-notice">* Obligatoire</p>
           <div class="form-submit">
-            <button type="submit">Ajouter</button>
+            <button type="submit" class="cypress-add">Ajouter</button>
           </div>
         </div>
       </div>
