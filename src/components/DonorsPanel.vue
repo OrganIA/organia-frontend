@@ -2,7 +2,7 @@
   <div id="main">
     <h1>Liste d'attente</h1>
     <p>
-      <router-link to="/donors/add" class="button">Ajouter</router-link>
+      <router-link to="/donors/add" class="button cypress-to-add">Ajouter</router-link>
     </p>
     <table class="table-list">
       <thead>
