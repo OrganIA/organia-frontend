@@ -32,17 +32,12 @@
     <div class="separator"></div>
     <div>
       <div>
-        <router-link class="btn back-button" to="/administrator">Back</router-link>
-        <form class="form-editor">
+        <form class="form-editor" style="width: 150%">
           <div>
             <input v-model="user.email" type="email" class="form-control">
           </div>
-          <div class="horizontal-form-group">
             <input v-model="user.created_at" type="date" class="form-control">
-            <input v-model="user.updated_at" type="date" class="form-control">
-
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Modifier</button>
         </form>
       </div>
     </div>
@@ -81,20 +76,21 @@ export default {
     },
     getUserByID() {
       http
-          .get(`/users/${this.id}`)
+          .get(`/users/${this.user.id}`)
           .then((response) => {
             this.user = response.data;
           })
           .catch((error) => {
             console.log(error)
-            this.$toast.error(error);
+            this.$toast.error(error.message);
             setTimeout(this.$toast.clear, 3000)
           });
     },
     loadSelectedUser(userId) {
+      console.log(userId)
       this.user.id = userId;
       this.getUserByID(userId)
-    }
+    },
   },
 };
 </script>

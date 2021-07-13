@@ -36,6 +36,8 @@ export default {
           password: this.password,
         })
         .then((response) => {
+          this.$toast.success("Connexion réussie !");
+          setTimeout(this.$toast.clear, 3000)
           this.$store.commit("login", this.email, this.name);
           this.$cookies.set("token", response.data.token, -1);
           http.defaults.headers.common[
@@ -43,9 +45,12 @@ export default {
           ] = `Bearer ${response.data.token}`;
           this.$emit("login", true);
           this.$router.push("/");
+
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error)
+          this.$toast.error("Erreur lors de la connexion : " + error);
+          setTimeout(this.$toast.clear, 3000)
         });
     },
   },
