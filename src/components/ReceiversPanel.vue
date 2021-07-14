@@ -4,7 +4,7 @@
       <div>
         <h1 style="text-align: center">Liste d'attente</h1>
         <p>
-          <router-link to="/receivers/add" class="button">Ajouter</router-link>
+          <router-link to="/receivers/add" class="button cypress-to-add">Ajouter</router-link>
         </p>
       </div>
 
