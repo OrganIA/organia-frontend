@@ -4,7 +4,9 @@
       <div>
         <h1 style="text-align: center">Liste d'attente</h1>
         <p>
-          <router-link to="/receivers/add" class="button cypress-to-add">Ajouter</router-link>
+          <router-link to="/receivers/add" class="button cypress-to-add"
+            >Ajouter</router-link
+          >
         </p>
       </div>
 
@@ -22,7 +24,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="receiver in receivers" :key="receiver">
+          <tr
+            v-for="receiver in receivers"
+            :key="receiver"
+            @click="toDetail(receiver)"
+          >
             <td>{{ receiver.person.first_name }}</td>
             <td>{{ receiver.person.last_name }}</td>
             <td>{{ receiver.person.birthday }}</td>
@@ -71,6 +77,13 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    toDetail(receiver) {
+      // console.log(receiver);
+      this.$router.push({
+        name: "PersonDetails",
+        params: { person: JSON.stringify(receiver) },
+      });
     },
   },
 };
