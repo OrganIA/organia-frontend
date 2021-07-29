@@ -75,6 +75,11 @@ button.active, .button.active, [type="submit"] {
     color: white;
 }
 
+tr:hover {
+    cursor: pointer;
+    color: --blue;
+}
+
 .form-fields {
     display: flex;
     flex-flow: wrap row;
