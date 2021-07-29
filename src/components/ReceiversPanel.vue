@@ -4,9 +4,9 @@
       <div>
         <h1 style="text-align: center">Liste d'attente</h1>
         <p>
-          <router-link to="/receivers/add" class="button cypress-to-add"
-            >Ajouter</router-link
-          >
+          <router-link to="/receivers/add" class="button cypress-to-add">
+            Ajouter
+          </router-link>
         </p>
       </div>
 
@@ -27,7 +27,7 @@
           <tr
             v-for="receiver in receivers"
             :key="receiver"
-            @click="toDetail(receiver)"
+            @click="openModal(receiver)"
           >
             <td>{{ receiver.person.first_name }}</td>
             <td>{{ receiver.person.last_name }}</td>
@@ -44,19 +44,27 @@
           </tr>
         </tbody>
       </table>
+      <person-details
+        v-if="showModal == true"
+        :person="currentReceiver"
+        @closeModal="closeModal"
+      />
     </main>
   </div>
 </template>
 
 <script>
 import http from "../http";
+import PersonDetails from "./PersonDetails.vue";
 
 export default {
-  components: {},
+  components: { PersonDetails },
   name: "ReceiversPanel",
   data() {
     return {
       receivers: {},
+      showModal: false,
+      currentReceiver: {},
     };
   },
   created() {
@@ -78,12 +86,15 @@ export default {
           console.log(error);
         });
     },
-    toDetail(receiver) {
-      // console.log(receiver);
-      this.$router.push({
-        name: "PersonDetails",
-        params: { person: JSON.stringify(receiver) },
-      });
+    openModal(receiver) {
+      if (!this.showModal) {
+        this.showModal = true;
+        this.currentReceiver = receiver;
+      }
+    },
+    closeModal() {
+      this.showModal = false;
+      this.currentReceiver = {};
     },
   },
 };

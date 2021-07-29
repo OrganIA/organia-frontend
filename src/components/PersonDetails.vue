@@ -1,29 +1,31 @@
 <template>
   <div>
     <h2>Nom</h2>
-    <h4>{{ personLocal.person.last_name }}</h4>
+    <h4>{{ person.person.last_name }}</h4>
     <h2>Prénom</h2>
-    <h4>{{ personLocal.person.first_name }}</h4>
+    <h4>{{ person.person.first_name }}</h4>
     <h2>Date de naissance</h2>
-    <h4>{{ personLocal.person.birthday }}</h4>
+    <h4>{{ person.person.birthday }}</h4>
     <h2>Groupe Sanguin</h2>
-    <h4>{{ personLocal.person.blood_type }}</h4>
+    <h4>{{ person.person.blood_type }}</h4>
     <h2>Genre</h2>
-    <h4>{{ personLocal.person.gender }}</h4>
-    <div v-if="personLocal.donor">
-      <h3>Demande un {{ personLocal.organ }}</h3>
+    <h4>{{ person.person.gender }}</h4>
+    <div v-if="person.donor">
+      <h3>Demande un {{ person.organ }}</h3>
+      // console.log(receiver);
     </div>
     <div v-else>
-      <h3>Donne un {{ personLocal.organ }}</h3>
+      <h3>Donne un {{ person.organ }}</h3>
     </div>
     <h2>Admis le:</h2>
-    <h4>{{ personLocal.start_date }}</h4>
+    <h4>{{ person.start_date }}</h4>
     <h2>Description:</h2>
-    <h4>{{ personLocal.person.description }}</h4>
-    <div v-if="personLocal.notes">
+    <h4>{{ person.person.description }}</h4>
+    <div v-if="person.notes">
       <h2>Notes:</h2>
-      <h4>{{ personLocal.notes }}</h4>
+      <h4>{{ person.notes }}</h4>
     </div>
+    <button type="button" @click="closeModal">Close</button>
   </div>
 </template>
 
@@ -34,21 +36,14 @@ export default {
   name: "PersonDetails",
   props: ["person"],
   data() {
-    return {
-      personLocal: undefined,
-    };
+    return {};
   },
-  methods: {},
-  created() {
-    // console.log(this.$router)
-    this.personLocal = JSON.parse(this.person);
-    console.log(this.personLocal);
+  emits: ["closeModal"],
+  methods: {
+    closeModal() {
+      this.$emit("closeModal");
+    },
   },
+  created() {},
 };
 </script>
-
-<style scoped>
-h2, h3, h4 {
-  border: 10px, black;
-}
-</style>
