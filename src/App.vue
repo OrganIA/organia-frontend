@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <SideBar v-if="logged_in" />
+    <SideBar v-if="logged_in" @logout="logout" />
     <div class="secondary-container">
       <router-view @login="handleLogin" />
     </div>
@@ -30,6 +30,10 @@ export default {
     },
     handleLogin() {
       this.logged_in = true;
+    },
+    logout() {
+      this.logged_in = false;
+      this.$router.push("/login");
     },
   },
   data() {
