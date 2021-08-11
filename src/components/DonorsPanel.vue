@@ -2,7 +2,9 @@
   <div id="main">
     <h1>Liste d'attente</h1>
     <p>
-      <router-link to="/donors/add" class="button cypress-to-add">Ajouter</router-link>
+      <router-link to="/donors/add" class="button cypress-to-add"
+        >Ajouter</router-link
+      >
     </p>
     <table class="table-list">
       <thead>
@@ -18,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="donor in donors" :key="donor">
+        <tr v-for="donor in donors" :key="donor" @click="openModal(donor)">
           <td>{{ donor.person.first_name }}</td>
           <td>{{ donor.person.last_name }}</td>
           <td>{{ donor.person.birthday }}</td>
@@ -34,18 +36,27 @@
         </tr>
       </tbody>
     </table>
+    <person-details
+      v-if="showModal == true"
+      :person="currentDonor"
+      @closeModal="closeModal"
+      class="details"
+    />
   </div>
 </template>
 
 <script>
 import http from "../http";
+import PersonDetails from "./PersonDetails.vue";
 
 export default {
-  components: {},
+  components: { PersonDetails },
   name: "DonorsPanel",
   data() {
     return {
       donors: {},
+      showModal: false,
+      currentDonor: {},
     };
   },
   created() {
@@ -68,6 +79,18 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    openModal(donor) {
+      if (!this.showModal) {
+        this.showModal = true;
+        this.currentDonor = donor;
+        document.getElementById("bodiv").style.display = "initial";
+      }
+    },
+    closeModal() {
+      this.showModal = false;
+      this.currentDonor = {};
+      document.getElementById("bodiv").style.display = "none";
     },
   },
 };
