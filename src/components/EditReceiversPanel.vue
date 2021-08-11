@@ -60,7 +60,7 @@
         </div>
         <div class="form-input small">
           <label for="first_name">Groupe sanguin</label>
-          <select v-model="person.blood_type" name="abo" id="abo-select">
+          <select v-model="person.abo" name="abo" id="abo-select">
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
@@ -92,7 +92,7 @@
         </div>
         <p class="required-notice">* Obligatoire</p>
         <div class="form-submit">
-          <button type="submit">Ajouter</button>
+          <button type="submit">Sauvegarder</button>
         </div>
       </div>
     </form>
@@ -155,7 +155,7 @@ export default {
           birthday: this.person.birthday,
           ...(this.person.description ? { description: this.person.description } : {}),
           supervisor_id: this.person.supervisor_id,
-          ...(this.person.blood_type ? { abo: this.person.blood_type } : {}),
+          ...(this.person.abo ? { abo: this.person.abo } : {}),
           ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
           ...(this.person.gender ? { gender: this.person.gender } : {}),
         })

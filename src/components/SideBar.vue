@@ -26,7 +26,7 @@
           v-bind:class="{ active: this.$route.path === '/donors' }"
         >
           <i class="fa fa-address-card" aria-hidden="true"></i>
-          <span  class="nav-text  cypress-to-donors">Donneurs</span>
+          <span class="nav-text  cypress-to-donors">Donneurs</span>
         </router-link>
         <router-link
           class="sidebar-link"
@@ -36,6 +36,7 @@
           <i class="fa fa-user-shield" aria-hidden="true"></i>
           <span class="nav-text">Administrateur</span>
         </router-link>
+        <button @click="logout">Se déconnecter</button>
       </div>
     </div>
   </nav>
@@ -44,7 +45,13 @@
 <script>
 export default {
   name: "SideBar",
-  methods: {},
+  methods: {
+    logout() {
+      this.$store.commit("logout");
+      this.$cookies.remove("token");
+      this.$emit("logout");
+    }
+  },
   data() {
     return {};
   },

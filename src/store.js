@@ -18,6 +18,10 @@ const store = createStore({
             state.name = newName;
             state.email = newEmail;
         },
+        logout(state) {
+            state.name = "";
+            state.email = "";
+        }
     },
     getters: {
         getName(state) {
