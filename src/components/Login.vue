@@ -48,8 +48,8 @@ export default {
 
         })
         .catch((error) => {
-          console.log(error)
-          this.$toast.error("Erreur lors de la connexion : " + error);
+          console.log(error.response.data.detail)
+          this.$toast.error("Erreur lors de la connexion : " + error.response.data.detail);
           setTimeout(this.$toast.clear, 3000)
         });
     },
