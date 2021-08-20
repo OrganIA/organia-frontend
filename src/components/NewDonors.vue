@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link to="/receivers">Back</router-link>
     <form @submit.prevent="createPerson()" class="show-requireds">
       <h2 class="form-title">Ajouter un receveur</h2>
       <div class="form-fields">
