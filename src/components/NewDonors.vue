@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link to="/receivers">Back</router-link>
     <form @submit.prevent="createPerson()" class="show-requireds">
       <h2 class="form-title">Ajouter un receveur</h2>
       <div class="form-fields">
@@ -48,7 +49,12 @@
         </div>
         <div class="form-input small">
           <label for="first_name">Date d'admission</label>
-          <input v-model="start_date" placeholder="start date" type="date" class="cypress-admission-date"/>
+          <input
+            v-model="start_date"
+            placeholder="start date"
+            type="date"
+            class="cypress-admission-date"
+          />
         </div>
         <div class="form-input small">
           <label for="first_name">Description</label>
@@ -149,15 +155,25 @@ export default {
           this.$router.push("/donors");
         })
         .catch((error) => {
-          alert(
-            `ERROR:\n${error.response.data.detail[0].loc[1]}: ${error.response.data.detail[0].msg}`
+          this.$toast.error(
+            "Erreur : " + error.response.data.detail
           );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     getAllOrgans() {
-      http.get("/listings/organs").then((response) => {
-        this.all_organs = response.data;
-      });
+      http
+        .get("/listings/organs")
+        .then((response) => {
+          this.all_organs = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
   },
 };

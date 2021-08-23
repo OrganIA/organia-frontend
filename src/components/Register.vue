@@ -2,8 +2,20 @@
   <div>
     <form @submit.prevent="register()">
       <h2 class="form-title">S'inscrire</h2>
-      <input v-model="name" class="cypress-name" placeholder="name" type="text" required />
-      <input v-model="email" class="cypress-email" placeholder="email" type="email" required />
+      <input
+        v-model="name"
+        class="cypress-name"
+        placeholder="name"
+        type="text"
+        required
+      />
+      <input
+        v-model="email"
+        class="cypress-email"
+        placeholder="email"
+        type="email"
+        required
+      />
       <input
         v-model="password"
         placeholder="mot de passe"
@@ -12,7 +24,9 @@
         required
       />
       <button type="submit" class="cypress-register">S'inscrire</button>
-      <router-link to="/login" class="cypress-to-login">Se connecter</router-link>
+      <router-link to="/login" class="cypress-to-login"
+        >Se connecter</router-link
+      >
     </form>
   </div>
 </template>
@@ -39,13 +53,15 @@ export default {
         })
         .then(() => {
           this.$toast.success("Connexion réussie !");
-          setTimeout(this.$toast.clear, 3000)
+          setTimeout(this.$toast.clear, 3000);
           this.login();
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur lors de la connexion : " + error);
-          setTimeout(this.$toast.clear, 3000)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     login() {
@@ -65,6 +81,10 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
   },

@@ -124,6 +124,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     submitForm() {
@@ -145,6 +147,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     updatePerson() {
@@ -153,7 +157,9 @@ export default {
           first_name: this.person.first_name,
           last_name: this.person.last_name,
           birthday: this.person.birthday,
-          ...(this.person.description ? { description: this.person.description } : {}),
+          ...(this.person.description
+            ? { description: this.person.description }
+            : {}),
           supervisor_id: this.person.supervisor_id,
           ...(this.person.abo ? { abo: this.person.abo } : {}),
           ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
@@ -161,15 +167,27 @@ export default {
         })
         .then(() => {
           this.$router.push("/receivers");
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     redirect() {
       window.location.replace("/receivers");
     },
     getAllOrgans() {
-      http.get("/listings/organs").then((response) => {
-        this.all_organs = response.data;
-      });
+      http
+        .get("/listings/organs")
+        .then((response) => {
+          this.all_organs = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
   },
   created() {
