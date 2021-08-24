@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 describe('Add receiver', () => {
-  it('Tries to add a receiver should succeed<', () => {
+  it('Tries to add a receiver should succeed', () => {
     cy.visit('http://localhost:8080/')
 
     cy.get('.cypress-to-register').click()
