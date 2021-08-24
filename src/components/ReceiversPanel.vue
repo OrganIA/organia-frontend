@@ -17,15 +17,12 @@
           <th>ABO</th>
           <th>Organe</th>
           <th>Arrivée</th>
-          <th>action</th>
+          <th>Éditer</th>
+          <th>Infos</th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="receiver in receivers"
-          :key="receiver"
-          @click="openModal(receiver)"
-        >
+        <tr v-for="receiver in receivers" :key="receiver">
           <td>{{ receiver.person.first_name }}</td>
           <td>{{ receiver.person.last_name }}</td>
           <td>{{ receiver.person.birthday }}</td>
@@ -37,6 +34,9 @@
             <router-link :to="`/receivers/edit/${receiver.person.id}`">
               <i class="fas fa-edit"></i>
             </router-link>
+          </td>
+          <td>
+            <i class="fas fa-info-circle" @click="openModal(receiver)"></i>
           </td>
         </tr>
       </tbody>
@@ -81,9 +81,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error(
-            "Erreur : " + error.response.data.detail
-          );
+          this.$toast.error("Erreur : " + error.response.data.detail);
           setTimeout(this.$toast.clear, 3000);
         });
     },
