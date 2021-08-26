@@ -10,12 +10,12 @@
       <thead>
         <tr>
           <th @click="updateFilter('first_name')">Prénom</th>
-          <th>Nom de famille</th>
-          <th>Date de naissance</th>
-          <th>Sexe</th>
-          <th>ABO</th>
-          <th>Organe</th>
-          <th>Arrivée</th>
+          <th @click="updateFilter('last_name')">Nom de famille</th>
+          <th @click="updateFilter('birthday')">Date de naissance</th>
+          <th @click="updateFilter('gender')">Sexe</th>
+          <th @click="updateFilter('blood_type')">ABO</th>
+          <th @click="updateFilter('organ')">Organe</th>
+          <th @click="updateFilter('created_at')">Arrivée</th>
           <th>action</th>
         </tr>
       </thead>
@@ -101,18 +101,47 @@ export default {
       this.sortingKey = dataName;
     },
     sortData() {
-      if (this.sortingKey === "created_at") {
-        this.donors.sort((a, b) =>
-          Date.parse(a.person.created_at) > Date.parse(b.person.created_at)
-            ? 1
-            : -1
-        );
-        if (this.sortingOrder === false)
-          this.donors.reverse();
-      } else if (this.sortingKey == "first_name") {
-        this.donors.sort((a, b) => a.person.first_name.localeCompare(b.person.first_name))
-        if (this.sortingOrder === false)
-          this.donors.reverse();
+      if (this.sortingKey == "first_name" || this.sortingKey == "last_name" || 
+          this.sortingKey == "gender" || this.sortingKey == "blood_type") {
+        this.donors.sort((a, b) => {
+          if (a.person[this.sortingKey] == null && b.person[this.sortingKey] == null)
+            return 0
+          else if (a.person[this.sortingKey] == null)
+            return 1
+          else if (b.person[this.sortingKey] == null)
+            return -1
+          if (this.sortingOrder)
+            return a.person[this.sortingKey].localeCompare(b.person[this.sortingKey]);
+          return b.person[this.sortingKey].localeCompare(a.person[this.sortingKey]);
+          })
+      } else if (this.sortingKey === "birthday" || this.sortingKey == "created_at") {
+        this.donors.sort((a, b) => {
+          if (a.person[this.sortingKey] == null && b.person[this.sortingKey] == null)
+            return 0
+          else if (a.person[this.sortingKey] == null)
+            return 1
+          else if (b.person[this.sortingKey] == null)
+            return -1
+          if (this.sortingOrder)
+            return Date.parse(a.person[this.sortingKey]) > Date.parse(b.person[this.sortingKey])
+              ? -1
+              : 1
+          return Date.parse(b.person[this.sortingKey]) > Date.parse(a.person[this.sortingKey])
+            ? -1
+            : 1
+        });
+      } else if (this.sortingKey == "organ") {
+        this.donors.sort((a, b) => {
+          if (a.person[this.sortingKey] == null && b.person[this.sortingKey] == null)
+            return 0
+          else if (a.person[this.sortingKey] == null)
+            return 1
+          else if (b.person[this.sortingKey] == null)
+            return -1
+          if (this.sortingOrder)
+            return a.organ.localeCompare(b.organ)
+          return b.organ.localeCompare(a.organ)
+        })
       }
     },
   },
