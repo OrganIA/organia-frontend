@@ -9,7 +9,7 @@
     <table class="table-list">
       <thead>
         <tr>
-          <th>Prénom</th>
+          <th @click="updateFilter('first_name')">Prénom</th>
           <th>Nom de famille</th>
           <th>Date de naissance</th>
           <th>Sexe</th>
@@ -57,6 +57,8 @@ export default {
       donors: {},
       showModal: false,
       currentDonor: {},
+      sortingOrder: true,
+      sortingKey: "created_at",
     };
   },
   created() {
@@ -78,9 +80,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error(
-            "Erreur : " + error.response.data.detail
-          );
+          this.$toast.error("Erreur : " + error.response.data.detail);
           setTimeout(this.$toast.clear, 3000);
         });
     },
@@ -95,6 +95,33 @@ export default {
       this.showModal = false;
       this.currentDonor = {};
       document.getElementById("bodiv").style.display = "none";
+    },
+    updateFilter(dataName) {
+      if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
+      this.sortingKey = dataName;
+    },
+    sortData() {
+      if (this.sortingKey === "created_at") {
+        this.donors.sort((a, b) =>
+          Date.parse(a.person.created_at) > Date.parse(b.person.created_at)
+            ? 1
+            : -1
+        );
+        if (this.sortingOrder === false)
+          this.donors.reverse();
+      } else if (this.sortingKey == "first_name") {
+        this.donors.sort((a, b) => a.person.first_name.localeCompare(b.person.first_name))
+        if (this.sortingOrder === false)
+          this.donors.reverse();
+      }
+    },
+  },
+  watch: {
+    sortingKey() {
+      this.sortData();
+    },
+    sortingOrder() {
+      this.sortData();
     },
   },
 };
