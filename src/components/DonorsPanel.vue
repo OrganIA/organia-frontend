@@ -6,6 +6,20 @@
         >Ajouter</router-link
       >
     </p>
+    <div class="search-block">
+      <p class="search">Search by</p>
+      <select v-model="selectFilter" class="search-filter">
+        <option value="first_name">Prénom</option>
+        <option value="last_name">Nom</option>
+        <option value="birthday">Date de naissance</option>
+        <option value="gender">Sexe</option>
+        <option value="blood_type">ABO</option>
+        <option value="organ">Organe</option>
+        <option value="created_at">Arrivée</option>
+      </select>
+      <input @input="filter" v-model="filterText" class="search-bar" />
+      <br />
+    </div>
     <table class="table-list">
       <thead>
         <tr>
@@ -59,6 +73,9 @@ export default {
       currentDonor: {},
       sortingOrder: true,
       sortingKey: "created_at",
+      selectFilter: "first_name",
+      filterText: "",
+      donorsBackup: [],
     };
   },
   created() {
@@ -77,6 +94,7 @@ export default {
             ).toDateString();
           });
           this.donors = response.data;
+          this.donorsBackup = this.donors;
         })
         .catch((error) => {
           console.log(error);
@@ -101,47 +119,79 @@ export default {
       this.sortingKey = dataName;
     },
     sortData() {
-      if (this.sortingKey == "first_name" || this.sortingKey == "last_name" || 
-          this.sortingKey == "gender" || this.sortingKey == "blood_type") {
+      if (
+        this.sortingKey == "first_name" ||
+        this.sortingKey == "last_name" ||
+        this.sortingKey == "gender" ||
+        this.sortingKey == "blood_type"
+      ) {
         this.donors.sort((a, b) => {
-          if (a.person[this.sortingKey] == null && b.person[this.sortingKey] == null)
-            return 0
-          else if (a.person[this.sortingKey] == null)
-            return 1
-          else if (b.person[this.sortingKey] == null)
-            return -1
+          if (
+            a.person[this.sortingKey] == null &&
+            b.person[this.sortingKey] == null
+          )
+            return 0;
+          else if (a.person[this.sortingKey] == null) return 1;
+          else if (b.person[this.sortingKey] == null) return -1;
           if (this.sortingOrder)
-            return a.person[this.sortingKey].localeCompare(b.person[this.sortingKey]);
-          return b.person[this.sortingKey].localeCompare(a.person[this.sortingKey]);
-          })
-      } else if (this.sortingKey === "birthday" || this.sortingKey == "created_at") {
+            return a.person[this.sortingKey].localeCompare(
+              b.person[this.sortingKey]
+            );
+          return b.person[this.sortingKey].localeCompare(
+            a.person[this.sortingKey]
+          );
+        });
+      } else if (
+        this.sortingKey === "birthday" ||
+        this.sortingKey == "created_at"
+      ) {
         this.donors.sort((a, b) => {
-          if (a.person[this.sortingKey] == null && b.person[this.sortingKey] == null)
-            return 0
-          else if (a.person[this.sortingKey] == null)
-            return 1
-          else if (b.person[this.sortingKey] == null)
-            return -1
+          if (
+            a.person[this.sortingKey] == null &&
+            b.person[this.sortingKey] == null
+          )
+            return 0;
+          else if (a.person[this.sortingKey] == null) return 1;
+          else if (b.person[this.sortingKey] == null) return -1;
           if (this.sortingOrder)
-            return Date.parse(a.person[this.sortingKey]) > Date.parse(b.person[this.sortingKey])
+            return Date.parse(a.person[this.sortingKey]) >
+              Date.parse(b.person[this.sortingKey])
               ? -1
-              : 1
-          return Date.parse(b.person[this.sortingKey]) > Date.parse(a.person[this.sortingKey])
+              : 1;
+          return Date.parse(b.person[this.sortingKey]) >
+            Date.parse(a.person[this.sortingKey])
             ? -1
-            : 1
+            : 1;
         });
       } else if (this.sortingKey == "organ") {
         this.donors.sort((a, b) => {
-          if (a.person[this.sortingKey] == null && b.person[this.sortingKey] == null)
-            return 0
-          else if (a.person[this.sortingKey] == null)
-            return 1
-          else if (b.person[this.sortingKey] == null)
-            return -1
-          if (this.sortingOrder)
-            return a.organ.localeCompare(b.organ)
-          return b.organ.localeCompare(a.organ)
-        })
+          if (
+            a.person[this.sortingKey] == null &&
+            b.person[this.sortingKey] == null
+          )
+            return 0;
+          else if (a.person[this.sortingKey] == null) return 1;
+          else if (b.person[this.sortingKey] == null) return -1;
+          if (this.sortingOrder) return a.organ.localeCompare(b.organ);
+          return b.organ.localeCompare(a.organ);
+        });
+      }
+    },
+    filter() {
+      if (this.filterText == "") {
+        this.donors = this.donorsBackup;
+        return;
+      }
+      if (this.selectFilter in this.donorsBackup[0].person) {
+        this.donors = this.donorsBackup.filter((el) => {
+          if (el.person[this.selectFilter] != null)
+            return el.person[this.selectFilter].includes(this.filterText);
+        });
+      } else {
+        this.donors = this.donorsBackup.filter((el) => {
+          if (el[this.selectFilter] != null)
+            return el[this.selectFilter].includes(this.filterText);
+        });
       }
     },
   },
@@ -151,6 +201,9 @@ export default {
     },
     sortingOrder() {
       this.sortData();
+    },
+    selectFilter() {
+      console.log(this.selectFilter);
     },
   },
 };
