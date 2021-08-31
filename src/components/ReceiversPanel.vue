@@ -6,7 +6,6 @@
         Ajouter
       </router-link>
     </p>
-
     <table class="table-list">
       <thead>
         <tr>
