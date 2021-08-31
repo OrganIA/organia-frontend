@@ -1,47 +1,59 @@
 <template>
   <div class="main-container">
-    <SideBar />
-    <TopControls />
+    <SideBar v-if="logged_in" @logout="logout" />
+    <div class="secondary-container">
+      <router-view @login="handleLogin" />
+    </div>
   </div>
-  <router-view />
 </template>
 
 <script>
 import SideBar from "./components/SideBar";
-import TopControls from "./components/TopControls";
 import http from "./http";
 
 export default {
   name: "App",
-  components: { SideBar, TopControls },
+  components: { SideBar },
   methods: {
     login() {
       http
-        .get("/users/me", {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("token")}`,
-          },
-        })
+        .get("/users/me")
         .then((response) => {
-          this.$store.commit(
-            "login",
-            response.data.email,
-            response.data.name,
-          );
+          this.$store.commit("login", response.data.email, response.data.name);
+          this.logged_in = true;
         })
         .catch((error) => {
           console.log(error.response);
+          this.$cookies.remove("token");
+          this.$router.push("/login");
         });
+    },
+    handleLogin() {
+      this.logged_in = true;
+    },
+    logout() {
+      this.logged_in = false;
+      this.$router.push("/login");
     },
   },
   data() {
-    return {};
+    return {
+      logged_in: false,
+    };
   },
   created() {
     if (this.$cookies.get("token")) {
+      http.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${this.$cookies.get("token")}`;
       this.login();
     } else {
-      this.$router.push('/login')
+      console.log(this.$router);
+      this.$router.isReady().then(() => {
+        console.log(this.$route);
+        if (this.$route.path != "/register" && this.$route.path != "/login")
+          this.$router.push("/login");
+      });
     }
   },
 };

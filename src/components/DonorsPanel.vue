@@ -1,53 +1,71 @@
 <template>
   <div id="main">
-    <main>
-      <h1>Liste d'attente</h1>
-      <p>
-        <router-link to="/donors/add" class="button">Ajouter</router-link>
-      </p>
-      <table class="table-list">
-        <thead>
-          <tr>
-            <th>Prénom</th>
-            <th>Nom de famille</th>
-            <th>Date de naissance</th>
-            <th>Sexe</th>
-            <th>ABO</th>
-            <th>Organe</th>
-            <th>Arrivée</th>
-            <th>action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="donor in donors" :key="donor">
-            <td>{{ donor.first_name }}</td>
-            <td>{{ donor.last_name }}</td>
-            <td>{{ donor.birthday }}</td>
-            <td>{{ donor.gender }}</td>
-            <td>{{ donor.blood_type }}</td>
-            <td>{{ donor.organ }}</td>
-            <td>{{ donor.created_at }}</td>
-            <td>
-              <router-link :to="`/donors/edit/${donor.id}`">
-                <i class="fas fa-trash-alt"></i>
-              </router-link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </main>
+    <h1>Liste d'attente</h1>
+    <p>
+      <router-link to="/donors/add" class="button cypress-to-add"
+        >Ajouter</router-link
+      >
+    </p>
+    <table class="table-list">
+      <thead>
+        <tr>
+          <th>Prénom</th>
+          <th>Nom de famille</th>
+          <th>Date de naissance</th>
+          <th>Sexe</th>
+          <th>ABO</th>
+          <th>Organe</th>
+          <th>Arrivée</th>
+          <th>action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="donor in donors" :key="donor" @click="openModal(donor)">
+          <td>{{ donor.person.first_name }}</td>
+          <td>{{ donor.person.last_name }}</td>
+          <td>{{ donor.person.birthday }}</td>
+          <td>{{ donor.person.gender }}</td>
+          <td>{{ donor.person.blood_type }}</td>
+          <td>{{ donor.organ }}</td>
+          <td>{{ donor.person.created_at }}</td>
+          <td>
+            <router-link :to="`/donors/edit/${donor.person.id}`">
+              <i class="fas fa-edit"></i>
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <person-details
+      v-if="showModal == true"
+      :person="currentDonor"
+      @closeModal="closeModal"
+      class="details"
+    />
   </div>
 </template>
 
 <script>
 import http from "../http";
+<<<<<<< HEAD
 
 export default {
   components: {},
+=======
+import PersonDetails from "./PersonDetails.vue";
+
+export default {
+  components: { PersonDetails },
+>>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
   name: "DonorsPanel",
   data() {
     return {
       donors: {},
+<<<<<<< HEAD
+=======
+      showModal: false,
+      currentDonor: {},
+>>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
     };
   },
   created() {
@@ -56,19 +74,50 @@ export default {
   methods: {
     getAllDonors() {
       http
+<<<<<<< HEAD
         .get("/persons", {
+=======
+        .get("/listings/donors", {
+>>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
           response.data.forEach((element) => {
+<<<<<<< HEAD
             element.created_at = new Date(element.created_at).toDateString();
+=======
+            element.person.created_at = new Date(
+              element.person.created_at
+            ).toDateString();
+>>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
           });
           this.donors = response.data;
         })
         .catch((error) => {
           console.log(error);
+<<<<<<< HEAD
         });
     },
+=======
+          this.$toast.error(
+            "Erreur : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    openModal(donor) {
+      if (!this.showModal) {
+        this.showModal = true;
+        this.currentDonor = donor;
+        document.getElementById("bodiv").style.display = "initial";
+      }
+    },
+    closeModal() {
+      this.showModal = false;
+      this.currentDonor = {};
+      document.getElementById("bodiv").style.display = "none";
+    },
+>>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
   },
 };
 </script>
