@@ -99,39 +99,20 @@
 import http from "../http";
 
 export default {
-<<<<<<< HEAD
-  name: "EditDonorsPanel",
-=======
   name: "EditdonorsPanel",
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
   props: {
     id: String,
   },
   data() {
     return {
       donor: {},
-<<<<<<< HEAD
-=======
       person: {},
       all_organs: [],
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
     };
   },
   methods: {
     getdonorByID() {
       http
-<<<<<<< HEAD
-        .get(`/persons/${this.id}`, {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("token")}`,
-          },
-        })
-        .then((response) => {
-          this.donor = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-=======
         .get(`/listings/${this.id}`)
         .then((response) => {
           this.donor = response.data;
@@ -141,27 +122,10 @@ export default {
           console.log(error);
           this.$toast.error("Erreur : " + error.response.data.detail);
           setTimeout(this.$toast.clear, 3000);
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
         });
     },
     submitForm() {
       http
-<<<<<<< HEAD
-        .post(
-          `/persons/${this.id}`,
-          {
-            first_name: this.donor.first_name,
-            last_name: this.donor.last_name,
-            birthday: this.donor.birthday,
-            description: this.donor.description,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("token")}`,
-            },
-          }
-        )
-=======
         .post(`/listings/${this.id}`, {
           notes: this.donor.notes,
           organ: this.donor.organ,
@@ -195,14 +159,11 @@ export default {
           ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
           ...(this.person.gender ? { gender: this.person.gender } : {}),
         })
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
         .then(() => {
           this.$router.push("/donors");
         })
         .catch((error) => {
           console.log(error);
-<<<<<<< HEAD
-=======
           this.$toast.error("Erreur : " + error.response.data.detail);
           setTimeout(this.$toast.clear, 3000);
         });
@@ -220,19 +181,12 @@ export default {
           console.log(error);
           this.$toast.error("Erreur : " + error.response.data.detail);
           setTimeout(this.$toast.clear, 3000);
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
         });
     },
   },
   created() {
     this.getdonorByID();
-<<<<<<< HEAD
-  },
-};
-</script>
-=======
     this.getAllOrgans();
   },
 };
 </script>e
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2

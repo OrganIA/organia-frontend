@@ -108,35 +108,6 @@ export default {
       birthday: "",
       description: "",
       supervisor_id: 0,
-<<<<<<< HEAD
-    };
-  },
-  created() {},
-  methods: {
-    createPerson() {
-      http
-        .post(
-          "/persons",
-          {
-            first_name: this.first_name,
-            last_name: this.last_name,
-            birthday: this.birthday,
-            description: this.description,
-            supervisor_id: this.supervisor_id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("token")}`,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          this.$router.push("/donors");
-        })
-        .catch((error) => {
-          console.log(error);
-=======
       person_id: undefined,
       start_date: "",
       notes: "",
@@ -202,16 +173,8 @@ export default {
             "Erreur : " + error.response.data.detail
           );
           setTimeout(this.$toast.clear, 3000);
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
         });
     },
   },
 };
-<<<<<<< HEAD
 </script>
-
-<style>
-</style>
-=======
-</script>
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2

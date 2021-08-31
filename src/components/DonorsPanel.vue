@@ -47,25 +47,16 @@
 
 <script>
 import http from "../http";
-<<<<<<< HEAD
-
-export default {
-  components: {},
-=======
 import PersonDetails from "./PersonDetails.vue";
 
 export default {
   components: { PersonDetails },
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
   name: "DonorsPanel",
   data() {
     return {
       donors: {},
-<<<<<<< HEAD
-=======
       showModal: false,
       currentDonor: {},
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
     };
   },
   created() {
@@ -74,31 +65,19 @@ export default {
   methods: {
     getAllDonors() {
       http
-<<<<<<< HEAD
-        .get("/persons", {
-=======
         .get("/listings/donors", {
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
           response.data.forEach((element) => {
-<<<<<<< HEAD
-            element.created_at = new Date(element.created_at).toDateString();
-=======
             element.person.created_at = new Date(
               element.person.created_at
             ).toDateString();
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
           });
           this.donors = response.data;
         })
         .catch((error) => {
           console.log(error);
-<<<<<<< HEAD
-        });
-    },
-=======
           this.$toast.error(
             "Erreur : " + error.response.data.detail
           );
@@ -117,7 +96,6 @@ export default {
       this.currentDonor = {};
       document.getElementById("bodiv").style.display = "none";
     },
->>>>>>> b4786302ff6b16d206af8843dff9b8c541245ec2
   },
 };
 </script>
