@@ -1,10 +1,10 @@
 <template>
   <div id="main">
-    <h1>Liste d'attente</h1>
+    <h1 style="text-align: center">Liste d'attente</h1>
     <p>
-      <router-link to="/donors/add" class="button cypress-to-add"
-        >Ajouter</router-link
-      >
+      <router-link to="/receivers/add" class="button cypress-to-add">
+        Ajouter
+      </router-link>
     </p>
     <table class="table-list">
       <thead>
@@ -21,28 +21,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="donor in donors" :key="donor">
-          <td>{{ donor.person.first_name }}</td>
-          <td>{{ donor.person.last_name }}</td>
-          <td>{{ donor.person.birthday }}</td>
-          <td>{{ donor.person.gender }}</td>
-          <td>{{ donor.person.blood_type }}</td>
-          <td>{{ donor.organ }}</td>
-          <td>{{ donor.person.created_at }}</td>
+        <tr v-for="receiver in receivers" :key="receiver">
+          <td>{{ receiver.person.first_name }}</td>
+          <td>{{ receiver.person.last_name }}</td>
+          <td>{{ receiver.person.birthday }}</td>
+          <td>{{ receiver.person.gender }}</td>
+          <td>{{ receiver.person.blood_type }}</td>
+          <td>{{ receiver.organ }}</td>
+          <td>{{ receiver.person.created_at }}</td>
           <td>
-            <router-link :to="`/donors/edit/${donor.person.id}`">
+            <router-link :to="`/receivers/edit/${receiver.person.id}`">
               <i class="fas fa-edit"></i>
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info-circle cypress-donor-modal" @click="openModal(donor)"/>
+            <i class="fas fa-info-circle cypress-receiver-modal" @click="openModal(receiver)"/>
           </td>
         </tr>
       </tbody>
     </table>
     <person-details
       v-if="showModal == true"
-      :person="currentDonor"
+      :person="currentReceiver"
       @closeModal="closeModal"
       class="details"
     />
@@ -51,34 +51,32 @@
 
 <script>
 import http from "../http";
-import PersonDetails from "./PersonDetails.vue";
+import PersonDetails from "../components/PersonDetails.vue";
 
 export default {
   components: { PersonDetails },
-  name: "DonorsPanel",
+  name: "ReceiversPanel",
   data() {
     return {
-      donors: {},
+      receivers: {},
       showModal: false,
-      currentDonor: {},
+      currentReceiver: {},
     };
   },
   created() {
-    this.getAllDonors();
+    this.getAllReceivers();
   },
   methods: {
-    getAllDonors() {
+    getAllReceivers() {
       http
-        .get("/listings/donors", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
+        .get("/listings/receivers")
         .then((response) => {
           response.data.forEach((element) => {
             element.person.created_at = new Date(
               element.person.created_at
             ).toDateString();
           });
-          this.donors = response.data;
+          this.receivers = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -86,16 +84,16 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    openModal(donor) {
+    openModal(receiver) {
       if (!this.showModal) {
         this.showModal = true;
-        this.currentDonor = donor;
+        this.currentReceiver = receiver;
         document.getElementById("bodiv").style.display = "initial";
       }
     },
     closeModal() {
       this.showModal = false;
-      this.currentDonor = {};
+      this.currentReceiver = {};
       document.getElementById("bodiv").style.display = "none";
     },
   },
