@@ -87,7 +87,6 @@ export default {
           });
     },
     loadSelectedUser(userId) {
-      console.log(userId)
       this.user.id = userId;
       this.getUserByID(userId)
     },

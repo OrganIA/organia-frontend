@@ -2,7 +2,7 @@
   <div>
     <router-link to="/receivers">Back</router-link>
     <form @submit.prevent="createPerson()" class="show-requireds">
-      <h2 class="form-title">Ajouter un receveur</h2>
+      <h2 class="form-title">Ajouter un donneur</h2>
       <div class="form-fields">
         <div class="form-input small required">
           <label for="first_name">Prénom</label>

@@ -48,9 +48,7 @@ export default {
       ] = `Bearer ${this.$cookies.get("token")}`;
       this.login();
     } else {
-      console.log(this.$router);
       this.$router.isReady().then(() => {
-        console.log(this.$route);
         if (this.$route.path != "/register" && this.$route.path != "/login")
           this.$router.push("/login");
       });
