@@ -36,7 +36,7 @@
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info-circle" @click="openModal(receiver)"></i>
+            <i class="fas fa-info-circle cypress-receiver-modal" @click="openModal(receiver)"/>
           </td>
         </tr>
       </tbody>
