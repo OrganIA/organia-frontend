@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import http from "../http";
-
 export default {
   name: "Login",
   data() {
@@ -38,7 +36,7 @@ export default {
   },
   methods: {
     login() {
-      http
+      this.$http
         .post("/auth", {
           email: this.email,
           password: this.password,
@@ -48,7 +46,7 @@ export default {
           setTimeout(this.$toast.clear, 3000);
           this.$store.commit("login", this.email, this.name);
           this.$cookies.set("token", response.data.token, -1);
-          http.defaults.headers.common[
+          this.$http.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.token}`;
           this.$emit("login", true);

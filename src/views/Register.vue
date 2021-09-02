@@ -32,8 +32,6 @@
 </template>
 
 <script>
-import http from "../http";
-
 export default {
   name: "Register",
   data() {
@@ -45,7 +43,7 @@ export default {
   },
   methods: {
     register() {
-      http
+      this.$http
         .post("/users/", {
           name: this.name,
           email: this.email,
@@ -65,7 +63,7 @@ export default {
         });
     },
     login() {
-      http
+      this.$http
         .post("/auth", {
           email: this.email,
           password: this.password,
@@ -73,7 +71,7 @@ export default {
         .then((response) => {
           this.$store.commit("login", this.email, this.name);
           this.$cookies.set("token", response.data.token, -1);
-          http.defaults.headers.common[
+          this.$http.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.token}`;
           this.$emit("login", true);

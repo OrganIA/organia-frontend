@@ -96,8 +96,6 @@
 </template>
 
 <script>
-import http from "../http";
-
 export default {
   name: "EditdonorsPanel",
   props: {
@@ -112,7 +110,7 @@ export default {
   },
   methods: {
     getdonorByID() {
-      http
+      this.$http
         .get(`/listings/${this.id}`)
         .then((response) => {
           this.donor = response.data;
@@ -125,7 +123,7 @@ export default {
         });
     },
     submitForm() {
-      http
+      this.$http
         .post(`/listings/${this.id}`, {
           notes: this.donor.notes,
           organ: this.donor.organ,
@@ -146,7 +144,7 @@ export default {
         });
     },
     updatePerson() {
-      http
+      this.$http
         .post(`/persons/${this.id}`, {
           first_name: this.person.first_name,
           last_name: this.person.last_name,
@@ -172,7 +170,7 @@ export default {
       window.location.replace("/donors");
     },
     getAllOrgans() {
-      http
+      this.$http
         .get("/listings/organs")
         .then((response) => {
           this.all_organs = response.data;

@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import http from "../http";
 import PersonDetails from "../components/PersonDetails.vue";
 
 export default {
@@ -68,7 +67,7 @@ export default {
   },
   methods: {
     getAllDonors() {
-      http
+      this.$http
         .get("/listings/donors", {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })

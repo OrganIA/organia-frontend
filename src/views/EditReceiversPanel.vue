@@ -100,8 +100,6 @@
 </template>
 
 <script>
-import http from "../http";
-
 export default {
   name: "EditReceiversPanel",
   props: {
@@ -116,7 +114,7 @@ export default {
   },
   methods: {
     getReceiverByID() {
-      http
+      this.$http
         .get(`/listings/${this.id}`)
         .then((response) => {
           this.receiver = response.data;
@@ -129,7 +127,7 @@ export default {
         });
     },
     submitForm() {
-      http
+      this.$http
         .post(`/listings/${this.id}`, {
           notes: this.receiver.notes,
           organ: this.receiver.organ,
@@ -152,7 +150,7 @@ export default {
         });
     },
     updatePerson() {
-      http
+      this.$http
         .post(`/persons/${this.id}`, {
           first_name: this.person.first_name,
           last_name: this.person.last_name,
@@ -178,7 +176,7 @@ export default {
       window.location.replace("/receivers");
     },
     getAllOrgans() {
-      http
+      this.$http
         .get("/listings/organs")
         .then((response) => {
           this.all_organs = response.data;

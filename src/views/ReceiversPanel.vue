@@ -35,7 +35,10 @@
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info-circle cypress-receiver-modal" @click="openModal(receiver)"/>
+            <i
+              class="fas fa-info-circle cypress-receiver-modal"
+              @click="openModal(receiver)"
+            />
           </td>
         </tr>
       </tbody>
@@ -50,7 +53,6 @@
 </template>
 
 <script>
-import http from "../http";
 import PersonDetails from "../components/PersonDetails.vue";
 
 export default {
@@ -68,7 +70,7 @@ export default {
   },
   methods: {
     getAllReceivers() {
-      http
+      this.$http
         .get("/listings/receivers")
         .then((response) => {
           response.data.forEach((element) => {
