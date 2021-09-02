@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import http from "../http";
 
 export default {
   name: "AdministratorEditUser",
@@ -25,7 +24,7 @@ export default {
   },
   methods: {
     getUserByID() {
-      http
+      this.$http
         .get(`/users/${this.id}`)
         .then((response) => {
           this.user = response.data;
@@ -35,7 +34,7 @@ export default {
         });
     },
     submitForm() {
-      http
+      this.$http
         .post({})
         .then(() => {
           this.$router.push("/administrator");

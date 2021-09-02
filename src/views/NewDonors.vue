@@ -97,8 +97,6 @@
 </template>
 
 <script>
-import http from "../http";
-
 export default {
   name: "NewDonor",
   data() {
@@ -123,7 +121,7 @@ export default {
   },
   methods: {
     createPerson() {
-      http
+      this.$http
         .post("/persons", {
           first_name: this.first_name,
           last_name: this.last_name,
@@ -143,7 +141,7 @@ export default {
         });
     },
     createDonor() {
-      http
+      this.$http
         .post("/listings", {
           ...(this.start_date ? { start_date: this.start_date } : {}),
           ...(this.notes ? { notes: this.notes } : {}),
@@ -162,7 +160,7 @@ export default {
         });
     },
     getAllOrgans() {
-      http
+      this.$http
         .get("/listings/organs")
         .then((response) => {
           this.all_organs = response.data;
