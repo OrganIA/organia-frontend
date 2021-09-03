@@ -36,7 +36,7 @@
           <i class="fa fa-user-shield" aria-hidden="true"></i>
           <span class="nav-text">Administrateur</span>
         </router-link>
-        <button @click="logout">Se déconnecter</button>
+        <button class="cypress-logout" @click="logout">Se déconnecter</button>
       </div>
     </div>
   </nav>
