@@ -7,7 +7,7 @@
       >
     </p>
     <div class="search-block">
-      <p class="search">Search by</p>
+      <p class="search">Rechercher par</p>
       <select v-model="selectFilter" class="search-filter">
         <option value="first_name">Prénom</option>
         <option value="last_name">Nom</option>
@@ -118,21 +118,22 @@ export default {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
       this.sortingKey = dataName;
     },
-    sortData() {
+    checkNull(a, b) {
       if (
-        this.sortingKey == "first_name" ||
-        this.sortingKey == "last_name" ||
-        this.sortingKey == "gender" ||
-        this.sortingKey == "blood_type"
-      ) {
+        a.person[this.sortingKey] == null &&
+        b.person[this.sortingKey] == null
+      )
+        return 0;
+      if (a.person[this.sortingKey] == null) return 1;
+      else if (b.person[this.sortingKey] == null) return -1;
+      return 0;
+    },
+    sortData() {
+      if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
         this.donors.sort((a, b) => {
-          if (
-            a.person[this.sortingKey] == null &&
-            b.person[this.sortingKey] == null
-          )
-            return 0;
-          else if (a.person[this.sortingKey] == null) return 1;
-          else if (b.person[this.sortingKey] == null) return -1;
+          if (a.person[this.sortingKey] == null ||
+              b.person[this.sortingKey] == null)
+              return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
               b.person[this.sortingKey]
@@ -141,18 +142,11 @@ export default {
             a.person[this.sortingKey]
           );
         });
-      } else if (
-        this.sortingKey === "birthday" ||
-        this.sortingKey == "created_at"
-      ) {
+      } else if (["birthday", "created_at"].includes(this.sortingKey)) {
         this.donors.sort((a, b) => {
-          if (
-            a.person[this.sortingKey] == null &&
-            b.person[this.sortingKey] == null
-          )
-            return 0;
-          else if (a.person[this.sortingKey] == null) return 1;
-          else if (b.person[this.sortingKey] == null) return -1;
+          if (a.person[this.sortingKey] == null ||
+              b.person[this.sortingKey] == null)
+              return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
               Date.parse(b.person[this.sortingKey])
@@ -165,13 +159,9 @@ export default {
         });
       } else if (this.sortingKey == "organ") {
         this.donors.sort((a, b) => {
-          if (
-            a.person[this.sortingKey] == null &&
-            b.person[this.sortingKey] == null
-          )
-            return 0;
-          else if (a.person[this.sortingKey] == null) return 1;
-          else if (b.person[this.sortingKey] == null) return -1;
+          if (a.person[this.sortingKey] == null ||
+              b.person[this.sortingKey] == null)
+              return this.checkNull(a, b);
           if (this.sortingOrder) return a.organ.localeCompare(b.organ);
           return b.organ.localeCompare(a.organ);
         });
