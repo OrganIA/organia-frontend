@@ -1,47 +1,34 @@
 <template>
   <div>
     <router-link to="/receivers">Back</router-link>
-    <form @submit.prevent="createPerson()" class="show-requireds">
-      <h2 class="form-title">Ajouter un receveur</h2>
+    <form @submit.prevent="submitForm()" class="show-requireds">
+      <h2 class="form-title">Éditer un receveur</h2>
       <div class="form-fields">
         <div class="form-input small required">
           <label for="first_name">Prénom</label>
           <input
-            v-model="first_name"
+            v-model="person.first_name"
             placeholder="first_name"
             type="text"
-            class="cypress-first-name"
             required
           />
         </div>
         <div class="form-input small required">
           <label for="first_name">Nom de Famille</label>
           <input
-            v-model="last_name"
+            v-model="person.last_name"
             placeholder="last_name"
             type="text"
-            class="cypress-last-name"
             required
           />
         </div>
         <div class="form-input small required">
           <label for="first_name">Date de naissance</label>
-          <input
-            v-model="birthday"
-            placeholder="birthday"
-            type="date"
-            class="cypress-birth-date"
-            required
-          />
+          <input v-model="person.birthday" placeholder="birthday" type="date" />
         </div>
         <div class="form-input small required">
           <label for="first_name">Organe</label>
-          <select
-            v-model="organ"
-            id="organ-select"
-            class="cypress-organ"
-            required
-          >
+          <select v-model="receiver.organ" id="organ-select" required>
             <option v-for="element in all_organs" :key="element">
               {{ element }}
             </option>
@@ -50,19 +37,30 @@
         <div class="form-input small">
           <label for="first_name">Date d'admission</label>
           <input
-            v-model="start_date"
+            v-model="receiver.start_date"
             placeholder="start date"
             type="date"
-            class="cypress-admission-date"
+          />
+        </div>
+        <div class="form-input small">
+          <label for="first_name">Date de fin</label>
+          <input
+            v-model="receiver.end_date"
+            placeholder="end date"
+            type="date"
           />
         </div>
         <div class="form-input small">
           <label for="first_name">Description</label>
-          <input v-model="description" placeholder="description" type="text" />
+          <input
+            v-model="person.description"
+            placeholder="description"
+            type="text"
+          />
         </div>
         <div class="form-input small">
           <label for="first_name">Groupe sanguin</label>
-          <select v-model="blood_type" name="abo" id="abo-select">
+          <select v-model="person.abo" name="abo" id="abo-select">
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
@@ -71,25 +69,30 @@
         </div>
         <div class="form-input small">
           <label for="first_name">Rhésus</label>
-          <select v-model="rhesus" name="rhesus" id="rhesus-select">
+          <select
+            v-model="person.rhesus"
+            name="rhesus"
+            id="rhesus-select"
+            required
+          >
             <option value="+">+</option>
             <option value="-">-</option>
           </select>
         </div>
         <div class="form-input small">
           <label for="first_name">Sexe</label>
-          <select v-model="gender" name="gender" id="gender-select">
+          <select v-model="person.gender" name="gender" id="gender-select">
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
           </select>
         </div>
         <div class="form-input small">
           <label for="first_name">Notes</label>
-          <textarea v-model="notes" placeholder="notes" />
-          <p class="required-notice">* Obligatoire</p>
-          <div class="form-submit">
-            <button type="submit" class="cypress-add">Ajouter</button>
-          </div>
+          <textarea v-model="receiver.notes" placeholder="notes" />
+        </div>
+        <p class="required-notice">* Obligatoire</p>
+        <div class="form-submit">
+          <button type="submit">Sauvegarder</button>
         </div>
       </div>
     </form>
@@ -97,46 +100,25 @@
 </template>
 
 <script>
-import http from "../http";
-
 export default {
-  name: "NewReceiver",
+  name: "EditReceiversPanel",
+  props: {
+    id: String,
+  },
   data() {
     return {
-      first_name: "",
-      last_name: "",
-      birthday: "",
-      description: "",
-      supervisor_id: 0,
-      person_id: undefined,
-      start_date: "",
-      notes: "",
-      organ: "",
-      blood_type: "",
-      rhesus: "",
-      gender: "",
-      all_organs: "",
+      receiver: {},
+      person: {},
+      all_organs: [],
     };
   },
-  created() {
-    this.getAllOrgans();
-  },
   methods: {
-    createPerson() {
-      http
-        .post("/persons", {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          birthday: this.birthday,
-          ...(this.description ? { description: this.description } : {}),
-          supervisor_id: this.supervisor_id,
-          ...(this.blood_type ? { abo: this.blood_type } : {}),
-          ...(this.rhesus ? { rhesus: this.rhesus } : {}),
-          ...(this.gender ? { gender: this.gender } : {}),
-        })
+    getReceiverByID() {
+      this.$http
+        .get(`/listings/${this.id}`)
         .then((response) => {
-          this.person_id = response.data.id;
-          this.createReceiver();
+          this.receiver = response.data;
+          this.person = response.data.person;
         })
         .catch((error) => {
           console.log(error);
@@ -144,14 +126,42 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    createReceiver() {
-      http
-        .post("/listings", {
-          ...(this.start_date ? { start_date: this.start_date } : {}),
-          ...(this.notes ? { notes: this.notes } : {}),
-          organ: this.organ,
-          donor: false,
-          person_id: this.person_id,
+    submitForm() {
+      this.$http
+        .post(`/listings/${this.id}`, {
+          notes: this.receiver.notes,
+          organ: this.receiver.organ,
+          person_id: this.id,
+          ...(this.receiver.start_date
+            ? { start_date: this.receiver.start_date }
+            : {}),
+          ...(this.receiver.end_date
+            ? { end_date: this.receiver.end_date }
+            : {}),
+          ...(this.receiver.notes ? { notes: this.receiver.notes } : {}),
+        })
+        .then(() => {
+          this.updatePerson();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    updatePerson() {
+      this.$http
+        .post(`/persons/${this.id}`, {
+          first_name: this.person.first_name,
+          last_name: this.person.last_name,
+          birthday: this.person.birthday,
+          ...(this.person.description
+            ? { description: this.person.description }
+            : {}),
+          supervisor_id: this.person.supervisor_id,
+          ...(this.person.abo ? { abo: this.person.abo } : {}),
+          ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
+          ...(this.person.gender ? { gender: this.person.gender } : {}),
         })
         .then(() => {
           this.$router.push("/receivers");
@@ -162,8 +172,11 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+    redirect() {
+      window.location.replace("/receivers");
+    },
     getAllOrgans() {
-      http
+      this.$http
         .get("/listings/organs")
         .then((response) => {
           this.all_organs = response.data;
@@ -174,6 +187,10 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+  },
+  created() {
+    this.getReceiverByID();
+    this.getAllOrgans();
   },
 };
 </script>

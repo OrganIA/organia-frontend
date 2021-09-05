@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 describe('Add receiver', () => {
-  it('Tries to open modal in the receiver panel should succeed', () => {
+  it('Tries to add a receiver should succeed', () => {
     cy.visit('http://localhost:8080/')
 
     cy.get('.cypress-to-register').click()
@@ -21,13 +21,13 @@ describe('Add receiver', () => {
 
     cy.getCookie("token").should('not.be.null')
 
-    cy.get('.cypress-to-donors').click();
+    cy.get('.cypress-to-receivers').click();
 
-    cy.url().should('eq', 'http://localhost:8080/donors')
+    cy.url().should('eq', 'http://localhost:8080/receivers')
 
     cy.get('.cypress-to-add').click();
 
-    cy.url().should('eq', 'http://localhost:8080/donors/add')
+    cy.url().should('eq', 'http://localhost:8080/receivers/add')
 
     cy.get('.cypress-first-name')
       .type('Prénom')
@@ -41,16 +41,18 @@ describe('Add receiver', () => {
       .type('2000-10-22')
       .should('have.value', '2000-10-22')
 
-    cy.get('.cypress-admission-date')
-      .type('2000-10-22')
-      .should('have.value', '2000-10-22')
-
     cy.get('.cypress-organ')
       .select('HEART')
       .should('have.value', 'HEART')
 
+    cy.get('.cypress-admission-date')
+      .type('2000-10-22')
+      .should('have.value', '2000-10-22')
+
     cy.get('.cypress-add').click();
 
-    cy.url().should('eq', 'http://localhost:8080/donors')
+    cy.get('.cypress-receiver-modal').first().click({ multiple: false })
+
+    cy.url().should('eq', 'http://localhost:8080/receivers')
   })
 })

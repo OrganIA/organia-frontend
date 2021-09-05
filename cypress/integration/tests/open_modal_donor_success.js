@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-describe('Add receiver', () => {
-  it('Tries to open modal in the receiver panel should succeed', () => {
+describe('Add donor', () => {
+  it('Tries to add a donor should succeed', () => {
     cy.visit('http://localhost:8080/')
 
     cy.get('.cypress-to-register').click()
@@ -41,16 +41,21 @@ describe('Add receiver', () => {
       .type('2000-10-22')
       .should('have.value', '2000-10-22')
 
-    cy.get('.cypress-admission-date')
-      .type('2000-10-22')
-      .should('have.value', '2000-10-22')
-
     cy.get('.cypress-organ')
       .select('HEART')
       .should('have.value', 'HEART')
 
+    cy.get('.cypress-admission-date')
+      .type('2000-10-22')
+      .should('have.value', '2000-10-22')
+
     cy.get('.cypress-add').click();
 
+    cy.get('.cypress-to-donors').click()
+    
     cy.url().should('eq', 'http://localhost:8080/donors')
+
+    cy.get('.cypress-donor-modal').first().click()
+
   })
 })

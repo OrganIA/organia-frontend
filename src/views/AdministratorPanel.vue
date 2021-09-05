@@ -45,8 +45,6 @@
 </template>
 
 <script>
-import http from "../http";
-
 export default {
   name: "AdministratorPanel",
   data() {
@@ -60,7 +58,7 @@ export default {
   },
   methods: {
     getUsers() {
-      http
+      this.$http
         .get("/users", {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
@@ -75,7 +73,7 @@ export default {
         });
     },
     getUserByID() {
-      http
+      this.$http
           .get(`/users/${this.user.id}`)
           .then((response) => {
             this.user = response.data;
@@ -87,7 +85,6 @@ export default {
           });
     },
     loadSelectedUser(userId) {
-      console.log(userId)
       this.user.id = userId;
       this.getUserByID(userId)
     },

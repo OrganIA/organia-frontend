@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="cypress-modal">
       <h2>Nom</h2>
       <h4>{{ person.person.last_name }}</h4>
       <h2>Prénom</h2>
