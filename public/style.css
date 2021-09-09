@@ -538,3 +538,35 @@ tr td:last-child.selected-element {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
+.search-block {
+    display: block;
+    margin: 5px;
+}
+
+.search {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    padding-right: 5px;
+    background-color: white;
+    transition: var(--anim-time) linear;
+    text-decoration: none;
+    color: inherit;
+}
+
+.search-filter {
+    display: inline-block;
+    width: 200px;
+    margin: 0;
+    padding: 2px;
+}
+
+.search-bar {
+    display: inline-block;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+    padding: 5px;
+}
