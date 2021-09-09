@@ -65,7 +65,7 @@
 
 <script>
 import http from "../http";
-import PersonDetails from "./PersonDetails.vue";
+import PersonDetails from "../components/PersonDetails.vue";
 
 export default {
   components: { PersonDetails },
