@@ -6,7 +6,6 @@
         Ajouter
       </router-link>
     </p>
-
     <table class="table-list">
       <thead>
         <tr>
@@ -36,7 +35,10 @@
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info-circle" @click="openModal(receiver)"></i>
+            <i
+              class="fas fa-info-circle cypress-receiver-modal"
+              @click="openModal(receiver)"
+            />
           </td>
         </tr>
       </tbody>
@@ -51,8 +53,7 @@
 </template>
 
 <script>
-import http from "../http";
-import PersonDetails from "./PersonDetails.vue";
+import PersonDetails from "../components/PersonDetails.vue";
 
 export default {
   components: { PersonDetails },
@@ -69,7 +70,7 @@ export default {
   },
   methods: {
     getAllReceivers() {
-      http
+      this.$http
         .get("/listings/receivers")
         .then((response) => {
           response.data.forEach((element) => {

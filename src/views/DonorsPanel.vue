@@ -30,11 +30,12 @@
           <th @click="updateFilter('blood_type')">ABO</th>
           <th @click="updateFilter('organ')">Organe</th>
           <th @click="updateFilter('created_at')">Arrivée</th>
-          <th>action</th>
+          <th>Éditer</th>
+          <th>Infos</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="donor in donors" :key="donor" @click="openModal(donor)">
+        <tr v-for="donor in donors" :key="donor">
           <td>{{ donor.person.first_name }}</td>
           <td>{{ donor.person.last_name }}</td>
           <td>{{ donor.person.birthday }}</td>
@@ -46,6 +47,9 @@
             <router-link :to="`/donors/edit/${donor.person.id}`">
               <i class="fas fa-edit"></i>
             </router-link>
+          </td>
+          <td>
+            <i class="fas fa-info-circle cypress-donor-modal" @click="openModal(donor)"/>
           </td>
         </tr>
       </tbody>
@@ -60,8 +64,7 @@
 </template>
 
 <script>
-import http from "../http";
-import PersonDetails from "./PersonDetails.vue";
+import PersonDetails from "../components/PersonDetails.vue";
 
 export default {
   components: { PersonDetails },
@@ -83,7 +86,7 @@ export default {
   },
   methods: {
     getAllDonors() {
-      http
+      this.$http
         .get("/listings/donors", {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
