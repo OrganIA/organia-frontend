@@ -48,6 +48,9 @@
               <i class="fas fa-edit"></i>
             </router-link>
           </td>
+          <td>
+            <i class="fas fa-info cypress-donor-modal" @click="openModal(donor)"></i>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -130,11 +133,17 @@ export default {
       return 0;
     },
     sortData() {
-      if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
+      if (
+        ["first_name", "last_name", "gender", "blood_type"].includes(
+          this.sortingKey
+        )
+      ) {
         this.donors.sort((a, b) => {
-          if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+          if (
+            a.person[this.sortingKey] == null ||
+            b.person[this.sortingKey] == null
+          )
+            return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
               b.person[this.sortingKey]
@@ -145,9 +154,11 @@ export default {
         });
       } else if (["birthday", "created_at"].includes(this.sortingKey)) {
         this.donors.sort((a, b) => {
-          if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+          if (
+            a.person[this.sortingKey] == null ||
+            b.person[this.sortingKey] == null
+          )
+            return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
               Date.parse(b.person[this.sortingKey])
@@ -160,9 +171,11 @@ export default {
         });
       } else if (this.sortingKey == "organ") {
         this.donors.sort((a, b) => {
-          if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+          if (
+            a.person[this.sortingKey] == null ||
+            b.person[this.sortingKey] == null
+          )
+            return this.checkNull(a, b);
           if (this.sortingOrder) return a.organ.localeCompare(b.organ);
           return b.organ.localeCompare(a.organ);
         });
