@@ -1,0 +1,26 @@
+[
+    {
+        "name": "damien",
+        "can_manage_users": true,
+        "can_manage_persons": false,
+        "can_manage_roles": false,
+        "can_manage_hospitals": false,
+        "can_invite": false
+    },
+    {
+        "name": "default",
+        "can_manage_users": false,
+        "can_manage_persons": false,
+        "can_manage_roles": false,
+        "can_manage_hospitals": false,
+        "can_invite": false
+    },
+    {
+        "name": "caca",
+        "can_manage_users": true,
+        "can_manage_persons": true,
+        "can_manage_roles": true,
+        "can_manage_hospitals": true,
+        "can_invite": true
+    }
+]

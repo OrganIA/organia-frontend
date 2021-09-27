@@ -69,7 +69,7 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          this.$store.commit("login", this.email, this.name);
+          this.$store.commit("login", this.email, this.name, response.data.role_id);
           this.$cookies.set("token", response.data.token, -1);
           this.$http.defaults.headers.common[
             "Authorization"

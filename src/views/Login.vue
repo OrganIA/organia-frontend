@@ -44,7 +44,7 @@ export default {
         .then((response) => {
           this.$toast.success("Connexion réussie !");
           setTimeout(this.$toast.clear, 3000);
-          this.$store.commit("login", this.email, this.name);
+          this.$store.commit("login", this.email, this.name, response.data.role_id);
           this.$cookies.set("token", response.data.token, -1);
           this.$http.defaults.headers.common[
             "Authorization"

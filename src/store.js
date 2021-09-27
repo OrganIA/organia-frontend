@@ -5,6 +5,7 @@ const store = createStore({
         return {
             name: "",
             email: "",
+            role_id: "",
         }
     },
     mutations: {
@@ -14,13 +15,18 @@ const store = createStore({
         updateEmail(state, newEmail) {
             state.email = newEmail;
         },
-        login(state, newEmail, newName) {
+        updateRoleID(state, newRoleID) {
+            state.role_id = newRoleID;
+        },
+        login(state, newEmail, newName, newRoleID) {
             state.name = newName;
             state.email = newEmail;
+            state.role_id = newRoleID;
         },
         logout(state) {
             state.name = "";
             state.email = "";
+            state.role_id = "";
         }
     },
     getters: {
@@ -29,6 +35,9 @@ const store = createStore({
         },
         getEmail(state) {
             return state.email;
+        },
+        getRoleID(state) {
+            return state.role_id;
         },
     }
 })

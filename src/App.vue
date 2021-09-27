@@ -19,7 +19,7 @@ export default {
       http
         .get("/users/me")
         .then((response) => {
-          this.$store.commit("login", response.data.email, response.data.name);
+          this.$store.commit("login", response.data.email, response.data.name, response.data.role_id);
           this.logged_in = true;
         })
         .catch((error) => {
@@ -33,6 +33,7 @@ export default {
     },
     logout() {
       this.logged_in = false;
+      this.$store.commit("logout");
       this.$router.push("/login");
     },
   },
