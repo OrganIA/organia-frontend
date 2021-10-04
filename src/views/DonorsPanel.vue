@@ -2,11 +2,11 @@
   <div id="main">
     <h1>Liste d'attente</h1>
     <p>
-      <router-link to="/donors/add" class="button cypress-to-add"
+      <router-link to="/donors/add" class="button is-info mb-6 cypress-to-add"
         >Ajouter</router-link
       >
     </p>
-    <table class="table-list">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
         <tr>
           <th>Prénom</th>

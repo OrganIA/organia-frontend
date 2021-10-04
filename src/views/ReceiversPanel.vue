@@ -2,11 +2,11 @@
   <div id="main">
     <h1 style="text-align: center">Liste d'attente</h1>
     <p>
-      <router-link to="/receivers/add" class="button cypress-to-add">
+      <router-link to="/receivers/add" class="button is-info cypress-to-add mb-6">
         Ajouter
       </router-link>
     </p>
-    <table class="table-list">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
         <tr>
           <th>Prénom</th>
@@ -31,12 +31,12 @@
           <td>{{ receiver.person.created_at }}</td>
           <td>
             <router-link :to="`/receivers/edit/${receiver.person.id}`">
-              <i class="fas fa-edit"></i>
+              <i class="fas fa-edit button is-primary"></i>
             </router-link>
           </td>
           <td>
             <i
-              class="fas fa-info-circle cypress-receiver-modal"
+              class="fas fa-info-circle cypress-receiver-modal button is-info"
               @click="openModal(receiver)"
             />
           </td>

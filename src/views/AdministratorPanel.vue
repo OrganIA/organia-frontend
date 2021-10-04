@@ -2,7 +2,7 @@
   <h1>Panel Administrateur</h1>
   <h2 class="align-left">Utilisateurs</h2>
   <div class="main-container">
-    <table class="table-list half-table">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
       <tr>
         <th>Id</th>
@@ -14,7 +14,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="user in users" :key="user" v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-line':  user.id === $data.user.id}">
+      <tr v-for="user in users" :key="user" v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'is-selected':  user.id === $data.user.id}">
         <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.id }}</td>
         <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.person ? user.person.first_name : "-" }}</td>
         <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.person ? user.person.last_name : "-" }}</td>
@@ -22,25 +22,13 @@
         <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.created_at }}</td>
         <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.updated_at }}</td>
         <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">
-          <router-link :to="`/administrator/edit/user/${user.id}`">
+          <router-link :to="`/administrator/edit/user/${user.id}`" class="button is-primary">
             <i class="fas fa-edit"></i>
           </router-link>
         </td>
       </tr>
       </tbody>
     </table>
-    <div class="separator"></div>
-    <div>
-      <div>
-        <form class="form-editor" style="width: 150%">
-          <div>
-            <input v-model="user.email" type="email" class="form-control">
-          </div>
-            <input v-model="user.created_at" type="date" class="form-control">
-          <button type="submit" class="btn btn-primary">Modifier</button>
-        </form>
-      </div>
-    </div>
   </div>
 </template>
 
