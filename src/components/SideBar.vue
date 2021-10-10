@@ -15,7 +15,7 @@
         <router-link
           class="sidebar-link"
           to="/receivers"
-          v-bind:class="{ active: this.$route.path === '/receivers' }"
+          :class="{ active: this.$route.path === '/receivers' }"
         >
           <i class="fa fa-address-card"></i>
           <span class="nav-text cypress-to-receivers">Receveurs</span>
@@ -23,7 +23,7 @@
         <router-link
           class="sidebar-link"
           to="/donors"
-          v-bind:class="{ active: this.$route.path === '/donors' }"
+          :class="{ active: this.$route.path === '/donors' }"
         >
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text cypress-to-donors">Donneurs</span>
@@ -31,10 +31,18 @@
         <router-link
           class="sidebar-link"
           to="/administrator"
-          v-bind:class="{ active: this.$route.path === '/administrator' }"
+          :class="{ active: this.$route.path === '/administrator' }"
         >
           <i class="fa fa-user-shield" aria-hidden="true"></i>
           <span class="nav-text">Administrateur</span>
+        </router-link>
+        <router-link
+          class="sidebar-link"
+          to="/actions"
+          :class="{ active: this.$route.path === '/actions' }"
+        >
+          <i class="fas fa-terminal"></i>
+          <span class="nav-text">Historique d'actions</span>
         </router-link>
         <button @click="logout">Se déconnecter</button>
       </div>
@@ -45,6 +53,7 @@
 <script>
 export default {
   name: "SideBar",
+  emits: ["logout"],
   methods: {
     logout() {
       this.$store.commit("logout");
