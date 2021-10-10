@@ -91,7 +91,7 @@
         </div>
         <div class="form-submit is-center">
           <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>
-          <router-link to="/receivers" class="button is-danger ml-6">Back</router-link>
+          <router-link to="/receivers" class="button is-danger ml-6">Retour</router-link>
         </div>
       </div>
     </form>
