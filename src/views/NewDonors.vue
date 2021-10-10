@@ -1,45 +1,44 @@
 <template>
   <div>
-    <router-link to="/receivers">Back</router-link>
     <form @submit.prevent="createPerson()" class="show-requireds">
-      <h2 class="form-title">Ajouter un donneur</h2>
+      <h2 class="form-title title is-3">Ajouter un donneur</h2>
       <div class="form-fields">
         <div class="form-input small required">
-          <label for="first_name">Prénom</label>
+          <label class="label">Prénom</label>
           <input
             v-model="first_name"
             placeholder="first_name"
             type="text"
-            class="cypress-first-name"
+            class="cypress-first-name input is-info"
             required
           />
         </div>
         <div class="form-input small required">
-          <label for="first_name">Nom de Famille</label>
+          <label class="label">Nom de Famille</label>
           <input
             v-model="last_name"
             placeholder="last_name"
             type="text"
-            class="cypress-last-name"
+            class="cypress-last-name input is-info"
             required
           />
         </div>
         <div class="form-input small required">
-          <label for="first_name">Date de naissance</label>
+          <label class="label">Date de naissance</label>
           <input
             v-model="birthday"
             placeholder="birthday"
             type="date"
-            class="cypress-birth-date"
+            class="cypress-birth-date input is-info"
             required
           />
         </div>
         <div class="form-input small required">
-          <label for="first_name">Organe</label>
+          <label class="label">Organe</label>
           <select
             v-model="organ"
             id="organ-select"
-            class="cypress-organ"
+            class="cypress-organ input is-info"
             required
           >
             <option v-for="element in all_organs" :key="element">
@@ -48,21 +47,21 @@
           </select>
         </div>
         <div class="form-input small">
-          <label for="first_name">Date d'admission</label>
+          <label class="label">Date d'admission</label>
           <input
             v-model="start_date"
             placeholder="start date"
             type="date"
-            class="cypress-admission-date"
+            class="cypress-admission-date input is-info"
           />
         </div>
         <div class="form-input small">
-          <label for="first_name">Description</label>
-          <input v-model="description" placeholder="description" type="text" />
+          <label class="label">Description</label>
+          <input v-model="description" placeholder="description" type="text" class="input is-info"/>
         </div>
         <div class="form-input small">
-          <label for="first_name">Groupe sanguin</label>
-          <select v-model="blood_type" name="abo" id="abo-select">
+          <label class="label">Groupe sanguin</label>
+          <select v-model="blood_type" name="abo" id="abo-select" class="button is-info is-light">
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
@@ -70,26 +69,28 @@
           </select>
         </div>
         <div class="form-input small">
-          <label for="first_name">Rhésus</label>
-          <select v-model="rhesus" name="rhesus" id="rhesus-select">
+          <label class="label">Rhésus</label>
+          <select v-model="rhesus" name="rhesus" id="rhesus-select" class="button is-info is-light">
             <option value="+">+</option>
             <option value="-">-</option>
           </select>
         </div>
         <div class="form-input small">
-          <label for="first_name">Sexe</label>
-          <select v-model="gender" name="gender" id="gender-select">
+          <label class="label">Sexe</label>
+          <select v-model="gender" name="gender" id="gender-select" class="button is-info is-light">
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
           </select>
         </div>
         <div class="form-input small">
-          <label for="first_name">Notes</label>
-          <textarea v-model="notes" placeholder="notes" />
+          <label class="label">Notes</label>
+          <textarea v-model="notes" placeholder="notes" class="textarea"/>
           <p class="required-notice">* Obligatoire</p>
-          <div class="form-submit">
-            <button type="submit" class="cypress-add">Ajouter</button>
-          </div>
+
+        </div>
+        <div class="form-submit is-center">
+          <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>
+          <router-link to="/donors" class="button is-danger ml-6">Back</router-link>
         </div>
       </div>
     </form>
