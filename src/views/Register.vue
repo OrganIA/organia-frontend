@@ -34,6 +34,7 @@
 <script>
 export default {
   name: "Register",
+  emits: ["login"],
   data() {
     return {
       name: "",
