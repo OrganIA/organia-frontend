@@ -442,3 +442,7 @@ td>i {
     background-color: #29abe2;
     max-height: 100%;
 }
+
+.search-block {
+    display: flex;
+}
