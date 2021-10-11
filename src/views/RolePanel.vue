@@ -53,8 +53,6 @@ export default {
   },
   methods: {
     getRoles() {
-      console.log("TEST RolePanel.vue");
-      console.log(this.$store.getters.getRoleID);
       this.$http
         .get(`/roles`)
         .then((response) => {
@@ -62,7 +60,6 @@ export default {
           this.roles = response.data.map(role => Object.assign({}, role));
           this.$toast.success("Reception des rôles reussie !");
           setTimeout(this.$toast.clear, 3000);
-          console.log(this.roles);
         })
         .catch((error) => {
           console.log(error);
@@ -82,7 +79,6 @@ export default {
           can_invite: r.can_invite,
         })
         .then((response) => {
-          console.log(response);
           this.$toast.success("Reception du rôle: " + r.name + " reussite !");
           setTimeout(this.$toast.clear, 3000);
         })
@@ -95,12 +91,9 @@ export default {
         });
     },
     updateRoles() {
-      console.log(this.roles);
       for(let i in this.roles) {
-        console.log(this.roles[i]);
         if (JSON.stringify(this.roles[i]) === JSON.stringify(this.backup[i])) {
-          console.log(this.roles[i].name);
-          console.log("No changes");
+          continue;
         }
         else {
           this.changeRole(this.roles[i]);

@@ -21,8 +21,7 @@ export default {
         .then((response) => {
           this.$toast.success("Connexion réussie !");
           setTimeout(this.$toast.clear, 3000);
-          console.log("LOGIN.VUE GET ROLE");
-          console.log(response.data);
+          this.logged_in = true;
           this.$store.commit("login", { email: data.email, role: response.data });
           this.$emit("login", true);
           this.$router.push("/");
@@ -39,10 +38,6 @@ export default {
       http
         .get("/users/me")
         .then((response) => {
-          this.logged_in = true;
-          this.$toast.success("Connexion réussie !");
-          setTimeout(this.$toast.clear, 3000);
-          console.log("LOGIN.VUE RESPONSE.DATA");
           this.getRole(response.data);
         })
         .catch((error) => {

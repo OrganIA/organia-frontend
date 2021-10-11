@@ -19,11 +19,9 @@ const store = createStore({
             state.role = newRole;
         },
         login(state, payload) {
-            console.log("TEST store.js");
             state.email = payload.email;
             state.role = payload.role;
             state.role_id = payload.role.id;
-            console.log(state);
         },
         logout(state) {
             state.email = "";
