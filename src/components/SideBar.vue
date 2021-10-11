@@ -24,11 +24,11 @@
         <span class="nav-text">Administrateur</span>
       </router-link>
       <router-link class="block button is-info" to="/administrator/role">
-        <i class="fa fa-tasks" aria-hidden="true"></i>
+        <i class="fa fa-tasks cypress-to-roles" aria-hidden="true"></i>
         <span class="nav-text">Rôles</span>
       </router-link>
       <router-link class="block button is-info" to="/actions">
-        <i class="fas fa-terminal"></i>
+        <i class="fas fa-terminal cypress-to-logs"></i>
         <span class="nav-text">Historique d'actions</span>
       </router-link>
       <button
