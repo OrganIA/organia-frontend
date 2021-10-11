@@ -10,38 +10,42 @@
         <th>Gestion des Personnes</th>
         <th>Gestion des Rôles</th>
         <th>Gestion des Hopitaux</th>
+        <th>Gestion des Invitations</th>
       </tr>
       </thead>
       <tbody>
-      <!-- <tr v-for="role in roles" :key="role">
+      <tr v-for="role in roles" :key="role">
         <td>{{ role.name }}</td>
-        <input type="checkbox">
-        <input type="checkbox">
-        <input type="checkbox">
-        <input type="checkbox">
-      </tr> -->
-      <tr v-for="role in myJson" :key="role">
-        <td>{{ role.name }}</td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox"></td>
+        <td>
+          <input class="center_checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
+        </td>
+        <td>
+          <input class="center_checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
+        </td>
+        <td>
+          <input class="center_checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
+        </td>
+        <td>
+          <input class="center_checkbox" v-model="role.can_manage_hospitals" true=true false=false type="checkbox">
+        </td>
+        <td>
+          <input class="center_checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
-  <input type="submit">
+  <input @click="updateRoles()" type="submit">
 </template>
 
 <script>
-import json from './../test.json'
 export default {
   name: "RolePanel",
   data() {
     return {
+      backup: {},
       roles: {},
       role: {},
-      myJson: json,
     };
   },
   created() {
@@ -49,17 +53,61 @@ export default {
   },
   methods: {
     getRoles() {
-    //   this.$http
-    //     .get(`/roles/${this.$store.getters.getRoleID}`, {
-    //       headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-    //     })
-    //     .then((response) => {
-    //       this.roles = response.data;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
+      console.log("TEST RolePanel.vue");
+      console.log(this.$store.getters.getRoleID);
+      this.$http
+        .get(`/roles`)
+        .then((response) => {
+          this.backup = response.data;
+          this.roles = response.data.map(role => Object.assign({}, role));
+          this.$toast.success("Reception des rôles reussie !");
+          setTimeout(this.$toast.clear, 3000);
+          console.log(this.roles);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur de la reception des rôles : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
+    changeRole(r) {
+      this.$http
+        .post(`/roles/${r.id}`, {
+          can_manage_users: r.can_manage_users,
+          can_manage_persons: r.can_manage_persons,
+          can_manage_roles: r.can_manage_roles,
+          can_manage_hospitals: r.can_manage_hospitals,
+          can_invite: r.can_invite,
+        })
+        .then((response) => {
+          console.log(response);
+          this.$toast.success("Reception du rôle: " + r.name + " reussite !");
+          setTimeout(this.$toast.clear, 3000);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur de la modification du rôle : " + r.name
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    updateRoles() {
+      console.log(this.roles);
+      for(let i in this.roles) {
+        console.log(this.roles[i]);
+        if (JSON.stringify(this.roles[i]) === JSON.stringify(this.backup[i])) {
+          console.log(this.roles[i].name);
+          console.log("No changes");
+        }
+        else {
+          this.changeRole(this.roles[i]);
+        }
+        i++;
+      }
+    }
   },
 };
 </script>

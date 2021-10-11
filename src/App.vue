@@ -15,17 +15,44 @@ export default {
   name: "App",
   components: { SideBar },
   methods: {
+    getRole(data) {
+      this.$http
+        .get(`/roles/${data.role_id}`)
+        .then((response) => {
+          this.$toast.success("Connexion réussie !");
+          setTimeout(this.$toast.clear, 3000);
+          console.log("LOGIN.VUE GET ROLE");
+          console.log(response.data);
+          this.$store.commit("login", { email: data.email, role: response.data });
+          this.$emit("login", true);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error.response.data.detail);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
     login() {
       http
         .get("/users/me")
         .then((response) => {
-          this.$store.commit("login", response.data.email, response.data.name, response.data.role_id);
           this.logged_in = true;
+          this.$toast.success("Connexion réussie !");
+          setTimeout(this.$toast.clear, 3000);
+          console.log("LOGIN.VUE RESPONSE.DATA");
+          this.getRole(response.data);
         })
         .catch((error) => {
           console.log(error.response);
           this.$cookies.remove("token");
           this.$router.push("/login");
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     handleLogin() {
@@ -40,6 +67,13 @@ export default {
   data() {
     return {
       logged_in: false,
+      role: [
+        { can_manage_users: false },
+        { can_manage_persons: false },
+        { can_manage_roles: false },
+        { can_manage_hospitals: false },
+        { can_invite: false }
+      ],
     };
   },
   created() {

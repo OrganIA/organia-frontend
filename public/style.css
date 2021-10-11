@@ -606,3 +606,7 @@ tr td:last-child.selected-element {
     text-align: center;
     margin: 0px;
 }
+
+.center_checkbox {
+    transform: translate(500%, 0px);
+}

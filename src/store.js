@@ -3,41 +3,43 @@ import { createStore } from "vuex"
 const store = createStore({
     state() {
         return {
-            name: "",
             email: "",
-            role_id: "",
+            role_id: 0,
+            role: [],
         }
     },
     mutations: {
-        updateName(state, newName) {
-            state.name = newName;
-        },
         updateEmail(state, newEmail) {
             state.email = newEmail;
         },
         updateRoleID(state, newRoleID) {
             state.role_id = newRoleID;
         },
-        login(state, newEmail, newName, newRoleID) {
-            state.name = newName;
-            state.email = newEmail;
-            state.role_id = newRoleID;
+        updateRole(state, newRole) {
+            state.role = newRole;
+        },
+        login(state, payload) {
+            console.log("TEST store.js");
+            state.email = payload.email;
+            state.role = payload.role;
+            state.role_id = payload.role.id;
+            console.log(state);
         },
         logout(state) {
-            state.name = "";
             state.email = "";
             state.role_id = "";
+            state.role = [];
         }
     },
     getters: {
-        getName(state) {
-            return state.name;
-        },
         getEmail(state) {
             return state.email;
         },
         getRoleID(state) {
             return state.role_id;
+        },
+        getRole(state) {
+            return state.role;
         },
     }
 })
