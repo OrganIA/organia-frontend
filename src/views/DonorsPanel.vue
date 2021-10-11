@@ -1,14 +1,14 @@
 <template>
   <div id="main">
-    <h1>Liste d'attente</h1>
+    <h1>Liste d'attente donneurs</h1>
     <p>
-      <router-link to="/donors/add" class="button cypress-to-add"
+      <router-link to="/donors/add" class="button is-info mb-6 cypress-to-add"
         >Ajouter</router-link
       >
     </p>
+    <p class="search content">Rechercher par</p>
     <div class="search-block">
-      <p class="search">Rechercher par</p>
-      <select v-model="selectFilter" class="search-filter">
+      <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
         <option value="first_name">Prénom</option>
         <option value="last_name">Nom</option>
         <option value="birthday">Date de naissance</option>
@@ -17,10 +17,10 @@
         <option value="organ">Organe</option>
         <option value="created_at">Arrivée</option>
       </select>
-      <input @input="filter" v-model="filterText" class="search-bar" />
+      <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
     </div>
-    <table class="table-list">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
         <tr>
           <th @click="updateFilter('first_name')">Prénom</th>
