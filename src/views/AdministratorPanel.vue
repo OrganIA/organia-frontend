@@ -35,7 +35,46 @@
 export default {
   name: "AdministratorPanel",
   data() {
-    return {};
+    return {
+      users: {},
+      user: {},
+    };
+  },
+  created() {
+    this.getUsers();
+  },
+  methods: {
+    getUsers() {
+      this.$http
+        .get("/users", {
+          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
+        })
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.created_at = new Date(element.created_at).toDateString();
+          });
+          this.users = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getUserByID() {
+      this.$http
+          .get(`/users/${this.user.id}`)
+          .then((response) => {
+            this.user = response.data;
+          })
+          .catch((error) => {
+            console.log(error)
+            this.$toast.error(error.message);
+            setTimeout(this.$toast.clear, 3000)
+          });
+    },
+    loadSelectedUser(userId) {
+      this.user.id = userId;
+      this.getUserByID(userId)
+    },
   },
 };
 </script>
