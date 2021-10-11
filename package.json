@@ -11,6 +11,7 @@
     "@cypress/vue": "^3.0.1",
     "@meforma/vue-toaster": "^1.2.2",
     "axios": "^0.21.1",
+    "bulma": "^0.9.3",
     "core-js": "^3.6.5",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
