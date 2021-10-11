@@ -8,10 +8,6 @@ describe('Register Test Success', () => {
 
     cy.get('.cypress-to-register').click()
 
-    cy.get('.cypress-name')
-      .type(`${email}`)
-      .should('have.value', `${email}`)
-
     cy.get('.cypress-email')
       .type(`${email}@cypress.com`)
       .should('have.value', `${email}@cypress.com`)
