@@ -1,12 +1,23 @@
 <template>
   <div>
-    <router-link class="btn back-button" to="/administrator">Back</router-link>
-    <form class="form-editor">
-      <div>
-        <input v-model="user.email" type="email" class="form-control" />
+    <form class="form-control">
+      <div class="form-fields">
+        <label class="label">Mail</label>
+        <input v-model="user.email" type="email" class="input mb-6" required/>
+        <div class="form-input small">
+          <label class="label">Prénom</label>
+          <input type="text" class="input mb-6"/>
+        </div>
+        <div class="form-input small">
+          <label class="label">Nom</label>
+          <input type="text" class="input mb-6"/>
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="button is-info">Enregistrer</button>
+      <router-link class="button is-danger ml-6" to="/administrator">Retour</router-link>
+
     </form>
+
   </div>
 </template>
 
@@ -25,23 +36,23 @@ export default {
   methods: {
     getUserByID() {
       this.$http
-        .get(`/users/${this.id}`)
-        .then((response) => {
-          this.user = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .get(`/users/${this.id}`)
+          .then((response) => {
+            this.user = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     submitForm() {
       this.$http
-        .post({})
-        .then(() => {
-          this.$router.push("/administrator");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .post({})
+          .then(() => {
+            this.$router.push("/administrator");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
   },
   created() {
