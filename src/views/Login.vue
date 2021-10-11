@@ -1,25 +1,34 @@
 <template>
   <div>
     <form @submit.prevent="login()">
-      <h2 class="form-title">Se connecter</h2>
-      <input
-        v-model="email"
-        placeholder="email"
-        type="email"
-        class="cypress-email"
-        required
-      />
-      <input
-        v-model="password"
-        placeholder="mot de passe"
-        type="password"
-        class="cypress-password"
-        required
-      />
-      <button type="submit" class="cypress-login">Se connecter</button>
-      <router-link to="/register" class="cypress-to-register"
-        >S'inscrire</router-link
-      >
+      <div class="content">
+        <h2>Se connecter</h2>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input
+              v-model="email"
+              placeholder="email"
+              type="email"
+              class="cypress-email input"
+              required
+          />
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input
+              v-model="password"
+              placeholder="mot de passe"
+              type="password"
+              class="cypress-password input"
+              required
+          />
+        </div>
+      </div>
+        <button type="submit" class="cypress-login button is-info mr-6">Se connecter</button>
+        <router-link to="/register" class="cypress-to-register  button is-link">S'inscrire</router-link>
+
     </form>
   </div>
 </template>

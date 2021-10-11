@@ -2,13 +2,13 @@
   <div id="main">
     <h1 style="text-align: center">Liste d'attente</h1>
     <p>
-      <router-link to="/receivers/add" class="button cypress-to-add">
+      <router-link to="/receivers/add" class="button is-info cypress-to-add mb-6">
         Ajouter
       </router-link>
     </p>
+    <p class="search content">Rechercher par</p>
     <div class="search-block">
-      <p class="search">Rechercher par</p>
-      <select v-model="selectFilter" class="search-filter">
+      <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
         <option value="first_name">Prénom</option>
         <option value="last_name">Nom</option>
         <option value="birthday">Date de naissance</option>
@@ -17,10 +17,10 @@
         <option value="organ">Organe</option>
         <option value="created_at">Arrivée</option>
       </select>
-      <input @input="filter" v-model="filterText" class="search-bar" />
+      <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
     </div>
-    <table class="table-list">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
         <tr>
           <th @click="updateFilter('first_name')">Prénom</th>
@@ -45,7 +45,7 @@
           <td>{{ receiver.person.created_at }}</td>
           <td>
             <router-link :to="`/receivers/edit/${receiver.person.id}`">
-              <i class="fas fa-edit"></i>
+              <i class="fas fa-edit button is-primary"></i>
             </router-link>
           </td>
           <td>
