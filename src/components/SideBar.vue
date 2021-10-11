@@ -29,6 +29,12 @@
           <i class="fa fa-user-shield" aria-hidden="true"></i>
           <span class="nav-text">Administrateur</span>
         </router-link>
+        <router-link
+            class=" block button is-info"
+            to="/administrator/role">
+          <i class="fa fa-tasks" aria-hidden="true"></i>
+          <span class="nav-text">Rôles</span>
+        </router-link>
         <button @click="logout" class="block button is-danger is-light is-outlined">Se déconnecter</button>
       </div>
   </nav>
