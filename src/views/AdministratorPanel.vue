@@ -1,6 +1,5 @@
 <template>
   <h1>Panel Administrateur</h1>
-  <h2 class="align-left">Utilisateurs</h2>
   <div class="main-container">
     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
@@ -36,46 +35,7 @@
 export default {
   name: "AdministratorPanel",
   data() {
-    return {
-      users: {},
-      user: {},
-    };
-  },
-  created() {
-    this.getUsers();
-  },
-  methods: {
-    getUsers() {
-      this.$http
-        .get("/users", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
-        .then((response) => {
-          response.data.forEach((element) => {
-            element.created_at = new Date(element.created_at).toDateString();
-          });
-          this.users = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    getUserByID() {
-      this.$http
-          .get(`/users/${this.user.id}`)
-          .then((response) => {
-            this.user = response.data;
-          })
-          .catch((error) => {
-            console.log(error)
-            this.$toast.error(error.message);
-            setTimeout(this.$toast.clear, 3000)
-          });
-    },
-    loadSelectedUser(userId) {
-      this.user.id = userId;
-      this.getUserByID(userId)
-    },
+    return {};
   },
 };
 </script>
