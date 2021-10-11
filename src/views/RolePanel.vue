@@ -78,7 +78,7 @@ export default {
           can_manage_hospitals: r.can_manage_hospitals,
           can_invite: r.can_invite,
         })
-        .then((response) => {
+        .then(() => {
           this.$toast.success("Reception du rôle: " + r.name + " reussite !");
           setTimeout(this.$toast.clear, 3000);
         })
