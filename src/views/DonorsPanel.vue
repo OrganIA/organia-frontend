@@ -35,7 +35,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="donor in donors" :key="donor" @click="openModal(donor)">
+        <tr v-for="donor in donors" :key="donor">
           <td>{{ donor.person.first_name }}</td>
           <td>{{ donor.person.last_name }}</td>
           <td>{{ donor.person.birthday }}</td>
@@ -45,7 +45,7 @@
           <td>{{ donor.person.created_at }}</td>
           <td>
             <router-link :to="`/donors/edit/${donor.person.id}`">
-              <i class="fas fa-edit"></i>
+              <i class="fas fa-edit button is-primary"></i>
             </router-link>
           </td>
           <td>
