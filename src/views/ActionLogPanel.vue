@@ -2,8 +2,8 @@
   <p>Action Log</p>
   <div id="actions-container">
     <p v-for="action in actions" :key="action" class="action">
-      {{ action.type }} object {{ action.item_type }} of id
-      {{ action.item_id }} by user {{ action.author_id }}. {{ action.message }}
+      [{{action.created_at}}] {{ action.action }} {{action.target_type }} of id
+      {{ action.target_id }} by user {{ action.author_id }}. {{ action.message }}
     </p>
   </div>
 </template>
@@ -12,7 +12,7 @@
 export default {
   created() {
     this.getActions();
-    setInterval(this.getActions, 5000);
+    setInterval(this.getActions, 2000);
   },
   data() {
     return {
