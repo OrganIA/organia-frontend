@@ -11,7 +11,7 @@
 <script>
 export default {
   created() {
-    this.getActions()
+    this.getActions();
     setInterval(this.getActions, 5000);
   },
   data() {
@@ -21,8 +21,16 @@ export default {
   },
   methods: {
     getActions() {
-      console.log("hey");
-      this.actions = require("./actions.json");
+      this.$http
+        .get("/logs")
+        .then((resp) => {
+          this.actions = resp.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
   },
 };
