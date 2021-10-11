@@ -15,6 +15,7 @@ export default createRouter({
         { path: "/administrator", component: () => import("./views/AdministratorPanel") },
         { path: "/administrator/user", component: () => import("./views/UserPanel") },
         { path: "/administrator/edit/user/:id", component: () => import("./views/AdministratorEditUser"), props: true },
+        { path: "/actions", component: () => import("./views/ActionLogPanel")},
         { path: "/administrator/role", component: () => import("./views/RolePanel") },
     ],
 });

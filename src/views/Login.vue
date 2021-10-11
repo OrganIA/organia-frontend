@@ -36,6 +36,7 @@
 <script>
 export default {
   name: "Login",
+  emits: ["login"],
   data() {
     return {
       email: "",

@@ -1,25 +1,27 @@
 /* eslint-disable no-undef */
-import { emailGenerator } from "../utils"
-var email = emailGenerator();
 
-describe('Register Test Success', () => {
+describe('Check logs page', () => {
   it('Tries to register should succeed', () => {
     cy.visit('http://localhost:8080/')
 
     cy.get('.cypress-to-register').click()
 
+    cy.get('.cypress-to-login').click()
+
     cy.get('.cypress-email')
-      .type(`${email}@cypress.com`)
-      .should('have.value', `${email}@cypress.com`)
+      .type('saber@saber.com')
+      .should('have.value', 'saber@saber.com')
 
     cy.get('.cypress-password')
-      .type('cypress')
-      .should('have.value', 'cypress')
+      .type('saber')
+      .should('have.value', 'saber')
 
-    cy.get('.cypress-register').click()
+    cy.get('.cypress-login').click()
 
     cy.url().should('eq', 'http://localhost:8080/')
 
     cy.getCookie("token").should('not.be.null')
+    cy.get('.cypress-to-logs').click()
+
   })
 })

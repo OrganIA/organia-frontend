@@ -1,11 +1,12 @@
 <template>
   <div>
     <form @submit.prevent="submitForm()" class="show-requireds">
-      <h2 class="form-title  title is-3">Éditer un receveur</h2>
+      <h2 class="form-title title is-3">Éditer un receveur</h2>
       <div class="form-fields">
         <div class="form-input small required">
           <label class="label">Prénom</label>
-          <input class="input is-info"
+          <input
+            class="input is-info"
             v-model="person.first_name"
             placeholder="first_name"
             type="text"
@@ -14,7 +15,8 @@
         </div>
         <div class="form-input small required">
           <label class="label">Nom de Famille</label>
-          <input class="input is-info"
+          <input
+            class="input is-info"
             v-model="person.last_name"
             placeholder="last_name"
             type="text"
@@ -23,11 +25,21 @@
         </div>
         <div class="form-input small required">
           <label class="label">Date de naissance</label>
-          <input v-model="person.birthday" placeholder="birthday" type="date" class="input is-info" />
+          <input
+            v-model="person.birthday"
+            placeholder="birthday"
+            type="date"
+            class="input is-info"
+          />
         </div>
         <div class="form-input small required">
           <label class="label">Organe</label>
-          <select v-model="receiver.organ" id="organ-select" required class="button is-info is-light">
+          <select
+            v-model="receiver.organ"
+            id="organ-select"
+            required
+            class="button is-info is-light"
+          >
             <option v-for="element in all_organs" :key="element">
               {{ element }}
             </option>
@@ -46,12 +58,14 @@
           <input
             v-model="receiver.end_date"
             placeholder="end date"
-            type="date" class="input is-info"
+            type="date"
+            class="input is-info"
           />
         </div>
         <div class="form-input small">
           <label class="label">Description</label>
-          <input class="input is-info"
+          <input
+            class="input is-info"
             v-model="person.description"
             placeholder="description"
             type="text"
@@ -59,7 +73,12 @@
         </div>
         <div class="form-input small">
           <label class="label">Groupe sanguin</label>
-          <select v-model="person.abo" name="abo" id="abo-select" class="button is-info is-light">
+          <select
+            v-model="person.abo"
+            name="abo"
+            id="abo-select"
+            class="button is-info is-light"
+          >
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
@@ -68,7 +87,8 @@
         </div>
         <div class="form-input small">
           <label class="label">Rhésus</label>
-          <select class="button is-info is-light"
+          <select
+            class="button is-info is-light"
             v-model="person.rhesus"
             name="rhesus"
             id="rhesus-select"
@@ -80,20 +100,40 @@
         </div>
         <div class="form-input small">
           <label class="label">Sexe</label>
-          <select v-model="person.gender" name="gender" id="gender-select" class="button is-info is-light">
+          <select
+            v-model="person.gender"
+            name="gender"
+            id="gender-select"
+            class="button is-info is-light"
+          >
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
           </select>
         </div>
         <div class="form-input small">
           <label class="label">Notes</label>
-          <textarea class="textarea" v-model="receiver.notes" placeholder="notes" />
+          <textarea
+            class="textarea"
+            v-model="receiver.notes"
+            placeholder="notes"
+          />
         </div>
         <p class="required-notice">* Obligatoire</p>
       </div>
       <div class="form-submit is-center">
-        <button type="submit" class="cypress-add button is-info mx-auto mr-6">Enregistrer</button>
-        <router-link to="/receivers" class="button is-danger ml-6">Retour</router-link>
+        <button type="submit" class="cypress-add button is-info mx-auto mr-6">
+          Enregistrer
+        </button>
+        <router-link to="/receivers" class="button is-danger ml-6"
+          >Retour</router-link
+        >
+        <button
+          type="button"
+          class="button is-danger ml-6"
+          @click="delete_donor"
+        >
+          Supprimer
+        </button>
       </div>
     </form>
   </div>
@@ -151,7 +191,7 @@ export default {
     },
     updatePerson() {
       this.$http
-        .post(`/persons/${this.id}`, {
+        .post(`/persons/${this.person.id}`, {
           first_name: this.person.first_name,
           last_name: this.person.last_name,
           birthday: this.person.birthday,
@@ -180,6 +220,28 @@ export default {
         .get("/listings/organs")
         .then((response) => {
           this.all_organs = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    delete_receiver() {
+      this.$http
+        .delete(`/listings/${this.id}`)
+        .then(() => {
+          this.$http
+            .delete(`/persons/${this.person.id}`)
+            .then(() => {
+              this.$toast.success("Suppression effectué");
+              this.$router.push("/donors");
+            })
+            .catch((error) => {
+              console.log(error);
+              this.$toast.error("Erreur : " + error.response.data.detail);
+              setTimeout(this.$toast.clear, 3000);
+            });
         })
         .catch((error) => {
           console.log(error);
