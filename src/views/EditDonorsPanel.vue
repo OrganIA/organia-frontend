@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="/donors">Back</router-link>
+    <router-link to="/donors">Retour</router-link>
     <form @submit.prevent="submitForm()" class="show-requireds">
       <h2 class="form-title">Éditer un donneur</h2>
       <div class="form-fields">
