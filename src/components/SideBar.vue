@@ -31,6 +31,10 @@
         <i class="fas fa-terminal cypress-to-logs"></i>
         <span class="nav-text">Historique d'actions</span>
       </router-link>
+      <router-link class="block button is-info" to="/chat">
+        <i class="fas fa-terminal cypress-to-logs"></i>
+        <span class="nav-text">Chat</span>
+      </router-link>
       <button
         @click="logout"
         class="block button is-danger is-light is-outlined"
