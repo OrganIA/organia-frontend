@@ -1,12 +1,12 @@
 <template>
   <div>
-    <router-link to="/donors">Retour</router-link>
     <form @submit.prevent="submitForm()" class="show-requireds">
-      <h2 class="form-title">Éditer un donneur</h2>
+      <h2 class="form-title title is-3">Éditer un donneur</h2>
       <div class="form-fields">
         <div class="form-input small required">
-          <label for="first_name">Prénom</label>
+          <label class="label">Prénom</label>
           <input
+            class="input is-info"
             v-model="person.first_name"
             placeholder="first_name"
             type="text"
@@ -14,8 +14,9 @@
           />
         </div>
         <div class="form-input small required">
-          <label for="first_name">Nom de Famille</label>
+          <label class="label">Nom de Famille</label>
           <input
+            class="input is-info"
             v-model="person.last_name"
             placeholder="last_name"
             type="text"
@@ -23,24 +24,29 @@
           />
         </div>
         <div class="form-input small required">
-          <label for="first_name">Date de naissance</label>
+          <label class="label">Date de naissance</label>
           <input
             v-model="person.birthday"
             placeholder="birthday"
             type="date"
-            required
+            class="input is-info"
           />
         </div>
         <div class="form-input small required">
-          <label for="first_name">Organe</label>
-          <select v-model="donor.organ" id="organ-select" required>
+          <label class="label">Organe</label>
+          <select
+            v-model="donor.organ"
+            id="organ-select"
+            required
+            class="button is-info is-light"
+          >
             <option v-for="element in all_organs" :key="element">
               {{ element }}
             </option>
           </select>
         </div>
         <div class="form-input small">
-          <label for="first_name">Date d'admission</label>
+          <label class="label">Date d'admission</label>
           <input
             v-model="donor.start_date"
             placeholder="start date"
@@ -48,20 +54,31 @@
           />
         </div>
         <div class="form-input small">
-          <label for="first_name">Date de fin</label>
-          <input v-model="donor.end_date" placeholder="end date" type="date" />
+          <label class="label">Date de fin</label>
+          <input
+            v-model="donor.end_date"
+            placeholder="end date"
+            type="date"
+            class="input is-info"
+          />
         </div>
         <div class="form-input small">
-          <label for="first_name">Description</label>
+          <label class="label">Description</label>
           <input
+            class="input is-info"
             v-model="person.description"
             placeholder="description"
             type="text"
           />
         </div>
         <div class="form-input small">
-          <label for="first_name">Groupe sanguin</label>
-          <select v-model="person.abo" name="abo" id="abo-select">
+          <label class="label">Groupe sanguin</label>
+          <select
+            v-model="person.abo"
+            name="abo"
+            id="abo-select"
+            class="button is-info is-light"
+          >
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
@@ -69,27 +86,53 @@
           </select>
         </div>
         <div class="form-input small">
-          <label for="first_name">Rhésus</label>
-          <select v-model="person.rhesus" name="rhesus" id="rhesus-select">
+          <label class="label">Rhésus</label>
+          <select
+            class="button is-info is-light"
+            v-model="person.rhesus"
+            name="rhesus"
+            id="rhesus-select"
+          >
             <option value="+">+</option>
             <option value="-">-</option>
           </select>
         </div>
         <div class="form-input small">
-          <label for="first_name">Sexe</label>
-          <select v-model="person.gender" name="gender" id="gender-select">
+          <label class="label">Sexe</label>
+          <select
+            v-model="person.gender"
+            name="gender"
+            id="gender-select"
+            class="button is-info is-light"
+          >
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
           </select>
         </div>
         <div class="form-input small">
-          <label for="first_name">Notes</label>
-          <textarea v-model="donor.notes" placeholder="notes" />
+          <label class="label">Notes</label>
+          <textarea
+            class="textarea"
+            v-model="donor.notes"
+            placeholder="notes"
+          />
         </div>
         <p class="required-notice">* Obligatoire</p>
-        <div class="form-submit">
-          <button type="submit">Sauvegarder</button>
-        </div>
+      </div>
+      <div class="form-submit is-center">
+        <button type="submit" class="cypress-add button is-info mx-auto mr-6">
+          Enregistrer
+        </button>
+        <router-link to="/donors" class="button is-danger ml-6"
+          >Retour</router-link
+        >
+        <button
+          type="button"
+          class="button is-danger ml-6"
+          @click="delete_donor"
+        >
+          Supprimer
+        </button>
       </div>
     </form>
   </div>
@@ -145,7 +188,7 @@ export default {
     },
     updatePerson() {
       this.$http
-        .post(`/persons/${this.id}`, {
+        .post(`/persons/${this.person.id}`, {
           first_name: this.person.first_name,
           last_name: this.person.last_name,
           birthday: this.person.birthday,
@@ -181,10 +224,32 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+    delete_donor() {
+      this.$http
+        .delete(`/listings/${this.id}`)
+        .then(() => {
+          this.$http
+            .delete(`/persons/${this.person.id}`)
+            .then(() => {
+              this.$toast.success("Suppression effectué");
+              this.$router.push("/donors");
+            })
+            .catch((error) => {
+              console.log(error);
+              this.$toast.error("Erreur : " + error.response.data.detail);
+              setTimeout(this.$toast.clear, 3000);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
   },
   created() {
     this.getdonorByID();
     this.getAllOrgans();
   },
 };
-</script>e
+</script>

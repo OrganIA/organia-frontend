@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <h1 style="text-align: center">Liste d'attente</h1>
+    <h1 style="text-align: center">Liste d'attente receveurs</h1>
     <p>
       <router-link to="/receivers/add" class="button is-info cypress-to-add mb-6">
         Ajouter

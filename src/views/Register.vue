@@ -7,17 +7,6 @@
       <div class="field">
         <div class="control">
           <input
-              v-model="name"
-              class="cypress-name input"
-              placeholder="name"
-              type="text"
-              required
-          />
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input
               v-model="email"
               class="cypress-email input"
               placeholder="email"
@@ -48,9 +37,9 @@
 <script>
 export default {
   name: "Register",
+  emits: ["login"],
   data() {
     return {
-      name: "",
       email: "",
       password: "",
     };
@@ -59,17 +48,32 @@ export default {
     register() {
       this.$http
         .post("/users/", {
-          name: this.name,
           email: this.email,
           password: this.password,
         })
         .then(() => {
-          this.$toast.success("Connexion réussie !");
-          setTimeout(this.$toast.clear, 3000);
           this.login();
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    getRole(role_id) {
+      this.$http
+        .get(`/roles/${role_id}`)
+        .then((response) => {
+          this.$toast.success("Connexion réussie !");
+          setTimeout(this.$toast.clear, 3000);
+          this.$store.commit("login", { email: this.email, role: response.data});
+          this.$emit("login", true);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error.response.data.detail);
           this.$toast.error(
             "Erreur lors de la connexion : " + error.response.data.detail
           );
@@ -83,16 +87,14 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          this.$store.commit("login", this.email, this.name);
-          this.$cookies.set("token", response.data.token, -1);
           this.$http.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.token}`;
-          this.$emit("login", true);
-          this.$router.push("/");
+          this.$cookies.set("token", response.data.token, -1);
+          this.getRole(response.data.user.role_id);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.detail);
           this.$toast.error(
             "Erreur lors de la connexion : " + error.response.data.detail
           );
