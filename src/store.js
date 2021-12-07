@@ -3,12 +3,16 @@ import { createStore } from "vuex"
 const store = createStore({
     state() {
         return {
+            id: 0,
             email: "",
             role_id: 0,
             role: [],
         }
     },
     mutations: {
+        updateID(state, newID) {
+            state.id = newID;
+        },
         updateEmail(state, newEmail) {
             state.email = newEmail;
         },
@@ -19,17 +23,22 @@ const store = createStore({
             state.role = newRole;
         },
         login(state, payload) {
+            state.id = payload.id;
             state.email = payload.email;
             state.role = payload.role;
             state.role_id = payload.role.id;
         },
         logout(state) {
+            state.id = 0;
             state.email = "";
-            state.role_id = "";
+            state.role_id = 0;
             state.role = [];
         }
     },
     getters: {
+        getID(state) {
+            return state.id;
+        },
         getEmail(state) {
             return state.email;
         },

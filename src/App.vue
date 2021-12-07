@@ -22,7 +22,7 @@ export default {
           this.$toast.success("Connexion réussie !");
           setTimeout(this.$toast.clear, 3000);
           this.logged_in = true;
-          this.$store.commit("login", { email: data.email, role: response.data });
+          this.$store.commit("login", { id: data.id,email: data.email, role: response.data });
           this.$emit("login", true);
           this.$router.push("/");
         })

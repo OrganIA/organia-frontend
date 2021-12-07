@@ -574,3 +574,29 @@ td>i {
 .chat_msg::-webkit-scrollbar {
     display: none; /* for Chrome, Safari, and Opera */
 }
+
+.user_can_be_add {
+    position:relative;
+    left:-1px;
+    top:34px;
+    height: 400px;
+    width: 300px;
+    border: solid 1px #707070;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.user_add {
+    position:relative;
+    right:-360px;
+    top:-366px;
+    height: 400px;
+    width: 300px;
+    border: solid 1px #707070;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
