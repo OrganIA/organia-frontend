@@ -576,10 +576,10 @@ td>i {
 }
 
 .user_can_be_add {
-    position:relative;
-    left:-1px;
-    top:34px;
-    height: 400px;
+    position:absolute;
+    left:0px;
+    top:100px;
+    height: 301px;
     width: 300px;
     border: solid 1px #707070;
     overflow-y:scroll;
@@ -589,10 +589,10 @@ td>i {
 }
 
 .user_add {
-    position:relative;
-    right:-360px;
-    top:-366px;
-    height: 400px;
+    position:absolute;
+    right:0px;
+    top:100px;
+    height: 301px;
     width: 300px;
     border: solid 1px #707070;
     overflow-y:scroll;

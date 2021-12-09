@@ -195,41 +195,41 @@
           <button class="fas fa-paper-plane button_send_msg"></button>
         </div>
       </div>
-      <div v-if="this.create == true" style="z-index: 12; height: 600px">
-        <button
-          style="position: relative; right: -300px; top: 10px"
-          @click="WindowChatRoom(false)"
-        >
-          X
-        </button>
-        <div
-          style="
+        <div v-if="this.create == true" style="z-index: 12; display: flex; flex-direction:row;justify-content:flex-start;height: 600px;">
+            <div style="height:50px;width:100%;text-align:center;line-height: 50px;">
+                Fenêtre de creation d'une salle de chat
+                <button
+                  style="position: relative; right: -160px; top: 0px"
+                  @click="WindowChatRoom(false)"
+                >
+                  X
+                </button>
+            </div>
+        <div style="display: flex;flex-direction:column;justify-content:flex-start;position:absolute;left:-1px;top:59px;">
+            <div
+              style="
+                width: 300px;
+                height: 52px;
+                border: solid 1px #707070;
+                text-align: center;
+                line-height: 52px;
+              "
+            >
+              Liste des utilisateurs
+            </div>
+        
+        <input @input="filter" v-model="filterText" style="
             display: table-cell;
-            position: relative;
-            left: -1px;
-            top: 35px;
+            position: absolute;
+            left: 0px;
+            top: 51px;
             width: 300px;
             height: 50px;
             vertical-align: middle;
             border: solid 1px #707070;
-          "
-        >
-          Liste des utilisateurs
-        </div>
-        <div
-          style="
-            display: table-cell;
-            position: relative;
-            right: -60px;
-            top: 35px;
-            width: 300px;
-            height: 50px;
-            vertical-align: middle;
-            border: solid 1px #707070;
-          "
-        >
-          Liste des utilisateurs ajouté
-        </div>
+          " />
+          <!-- -->
+        
         <div class="user_can_be_add">
           <div
             v-for="(user, index) in users"
@@ -281,6 +281,33 @@
             </div>
           </div>
         </div>
+        </div>
+
+        <div style="display: flex;flex-direction:column;justify-content:flex-start;position:absolute;right:-1px;top:59px;">
+        <div
+          style="
+            width: 300px;
+            height: 52px;
+            border: solid 1px #707070;
+            text-align: center;
+            line-height: 52px;
+          "
+        >
+          Liste des utilisateurs ajouté
+        </div>
+        <input @input="filterAdd" v-model="filterTextAdd" style="
+            display: table-cell;
+            position: absolute;
+            left: 0px;
+            top: 51px;
+            width: 300px;
+            height: 50px;
+            vertical-align: middle;
+            border: solid 1px #707070;
+          " />
+
+        <!---->
+        
         <div class="user_add">
           <div
             v-for="(add_user, index) in add_users"
@@ -332,12 +359,18 @@
             </div>
           </div>
         </div>
+
+        
+        <!--
         <button
           style="position: absolute; left: 240px; top: 530px"
           @click="createChat"
         >
           Créer une salle de chat
-        </button>
+        </button> -->
+
+        </div>
+
       </div>
     </div>
   </div>
@@ -350,6 +383,9 @@ export default {
     return {
       id: 0,
       chats: {},
+      user_backups: {},
+      users_list: [],
+      add_users_list: [],
       users: {},
       add_users: [],
       all_users: {},
@@ -357,6 +393,8 @@ export default {
       create: false,
       msgs: {},
       msgSend: [],
+      filterText: "",
+      filterTextAdd: "",
     };
   },
   created() {
@@ -388,10 +426,12 @@ export default {
           this.users = response.data;
           this.all_users = response.data.map(all_user => Object.assign({}, all_user));
           let i = 0;
+
           for (i; i < this.users.length; i++) {
             if (this.id == this.users[i].id) break;
           }
           this.users.splice(i, 1);
+          this.user_backups = this.users.map(user_backup => Object.assign({}, user_backup));
           this.$toast.success("Recuperation des Utilisateurs !");
           setTimeout(this.$toast.clear, 3000);
         })
@@ -424,20 +464,31 @@ export default {
         return(h + ":" + m + " - " + day + "/" + month);
     },
     WindowChatRoom(state) {
-      this.create = state;
-      if (state == true) {
-        this.selected = false;
-        this.getUsers();
-      } else this.selected = true;
+        this.create = state;
+        if (state == true) {
+            this.selected = false;
+            this.users = this.user_backups.map(user_backup => Object.assign({}, user_backup));
+        } else {
+            this.selected = true;
+            this.filterText = "";
+            this.filterTextAdd = "";
+            this.users_list = {};
+            this.add_users_list = {};
+            this.add_users = [];
+            this.users = this.user_backups.map(user_backup => Object.assign({}, user_backup));
+        }
     },
     inviteUsers(user, index) {
       this.add_users.push(user);
       this.users.splice(index, 1);
-      console.log(this.add_users);
+      this.users_list = this.users;
+      this.add_users_list = this.add_users;
     },
     uninviteUsers(user, index) {
       this.users.push(user);
       this.add_users.splice(index, 1);
+      this.users_list = this.users;
+      this.add_users_list = this.add_users;
     },
     createChat() {
       if (this.add_users.length == 0) return;
@@ -476,7 +527,15 @@ export default {
         .get(`/chats/messages/${id}`)
         .then((response) => {
           this.selected = true;
-          this.create = false;
+          if (this.create == true) {
+            this.create = false;
+            this.filterText = "";
+            this.filterTextAdd = "";
+            this.users_list = {};
+            this.add_users_list = {};
+            this.add_users = [];
+            this.users = this.user_backups.map(user_backup => Object.assign({}, user_backup));
+          }
           this.msgs = response.data;
           this.$toast.success("Recuperation des messages réussi !");
           setTimeout(this.$toast.clear, 3000);
@@ -489,6 +548,33 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+    filter() {
+        if (this.filterText == "") {
+          this.users = this.users_list;
+          return;
+        }
+        this.users = this.users_list.filter((el) => {
+            return el.email.includes(this.filterText);
+        });
+    },
+    filterAdd() {
+        if (this.filterTextAdd == "") {
+          this.add_users = this.add_users_list;
+          return;
+        }
+        this.add_users = this.add_users_list.filter((el) => {
+            return el.email.includes(this.filterTextAdd);
+        });
+    },
+    watch: {
+        filterText() {
+            console.log(this.users_list);
+            this.filter();
+        },
+        filterTextAdd() {
+            this.filterAdd();
+        },
+  },
   },
 };
 </script>
