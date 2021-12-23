@@ -17,19 +17,19 @@
       <tr v-for="role in roles" :key="role">
         <td>{{ role.name }}</td>
         <td>
-          <input class="center_checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
+          <input class="center-checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
         </td>
         <td>
-          <input class="center_checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
+          <input class="center-checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
         </td>
         <td>
-          <input class="center_checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
+          <input class="center-checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
         </td>
         <td>
-          <input class="center_checkbox" v-model="role.can_manage_hospitals" true=true false=false type="checkbox">
+          <input class="center-checkbox" v-model="role.can_manage_hospitals" true=true false=false type="checkbox">
         </td>
         <td>
-          <input class="center_checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
+          <input class="center-checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
         </td>
       </tr>
       </tbody>
