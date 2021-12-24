@@ -2,19 +2,7 @@
   <h1></h1>
   <div class="main-container">
     <div class="chat_list">
-      <div
-        style="
-          position: relative;
-          width: 340px;
-          height: 60px;
-          text-align: center;
-          border-bottom: solid 1px #707070;
-          padding-top: 2px;
-          font-family: HelveticaNeue;
-          font-size: 34px;
-          background: white;
-        "
-      >
+      <div class="chat_room">
         Chat Room <button @click="WindowChatRoom(true)">+</button>
       </div>
       <!-- <div v-for="chat in chats" :key="chat" class="chat_el" @click="getMessagesChat(chat.id)">
@@ -37,61 +25,17 @@
         class="chat_el"
         @click="getMessagesChat(chat.chat_id)"
       >
-        <div
-          style="
-            position: relative;
-            left: 0px;
-            top: 0px;
-            width: 0px;
-            height: 0px;
-            text-align: left;
-          "
-        >
-          <div
-            style="
-              position: relative;
-              left: 20px;
-              top: 15px;
-              width: 70px;
-              height: 70px;
-              border: solid 1px #707070;
-              background-color: #071f49;
-              border-radius: 35px;
-              font-family: TimesNewRoman;
-              font-size: 52px;
-              text-align: center;
-              color: #fbfcff;
-              line-height: 1.4;
-              text-transform: uppercase;
-            "
-          >
+        <div class="chat_el_sub">
+          <div class="chat_el_icon">
             {{ chat.chat_id }}
           </div>
-          <h2
-            style="
-              position: relative;
-              left: 100px;
-              top: -50px;
-              height: 20px;
-              width: 240px;
-            "
-          >
-            <i class="fas fa-id-card"></i> 1
+          <h2 class="chat_el_desc">
+            <i class="fas fa-id-card"></i> {{ chat.chat_id }}
           </h2>
         </div>
       </div>
     </div>
-    <div
-      style="
-        position: relative;
-        left: 0px;
-        top: 0px;
-        height: 100%;
-        width: 660px;
-        border: solid 1px #707070;
-        overflow: hidden;
-      "
-    >
+    <div class="chat_right_box">
       <div v-if="this.selected == true" style="z-index: 10">
         <div class="chat_msg">
           <div
@@ -100,103 +44,36 @@
             style="position: relative; top: 0px; left: 0px"
           >
             <div v-if="msg.sender_id == this.id" style="text-align: right">
-              <div
-                style="
-                  display: inline-block;
-                  position: relative;
-                  top: 10px;
-                  right: 10px;
-                  background: #3e8ed0;
-                  color: white;
-                  border-radius: 4px;
-                  width: auto;
-                  min-width: 50px;
-                  max-width: 360px;
-                  margin-bottom: 20px;
-                  padding: 5px;
-                  text-align: left;
-                "
-              >
+              <div class="my_msg">
                 {{ msg.content }}
               </div>
               <br />
-              <div
-                style="
-                  display: inline-block;
-                  position: relative;
-                  top: -10px;
-                  right: 12px;
-                  color: #8e8e8e;
-                  font-size: 15px;
-                "
-              >
+              <div class="my_info">
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
               </div>
             </div>
             <div v-else style="text-align: left">
-              <div
-                style="
-                  display: inline-block;
-                  position: relative;
-                  top: 10px;
-                  left: 10px;
-                  background: #8e8e8e;
-                  color: white;
-                  border-radius: 4px;
-                  width: auto;
-                  min-width: 50px;
-                  max-width: 360px;
-                  margin-bottom: 20px;
-                  padding: 5px;
-                  text-align: left;
-                "
-              >
+              <div class="other_msg">
                 {{ msg.content }}
               </div>
               <br />
-              <div
-                style="
-                  display: inline-block;
-                  position: relative;
-                  top: -10px;
-                  left: 12px;
-                  color: #8e8e8e;
-                  font-size: 15px;
-                "
-              >
+              <div class="other_info">
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
               </div>
             </div>
           </div>
         </div>
-        <div
-          style="
-            position: relative;
-            left: 0px;
-            top: 0px;
-            height: 30px;
-            width: 100%;
-            border-top: solid 1px #707070;
-          "
-        >
+        <div class="chat_section">
           <input
             @input="msgSend"
             v-model="filterText"
-            style="
-              position: relative;
-              left: -7px;
-              top: 5px;
-              width: 90%;
-              height: 26px;
-              border-radius: 10px;
-              border: solid 1px #707070;
-            "
+            class="chat_bar"
           />
           <button class="fas fa-paper-plane button_send_msg"></button>
         </div>
       </div>
-        <div v-if="this.create == true" style="z-index: 12; display: flex; flex-direction:row;justify-content:flex-start;height: 600px;">
-            <div style="height:50px;width:100%;text-align:center;line-height: 50px;">
+        <div v-if="this.create == true" class="create_chat_section">
+            <div class="create_chat_top_bar">
                 Fenêtre de creation d'une salle de chat
                 <button
                   style="position: relative; right: -160px; top: 0px"
@@ -205,29 +82,11 @@
                   X
                 </button>
             </div>
-        <div style="display: flex;flex-direction:column;justify-content:flex-start;position:absolute;left:-1px;top:59px;">
-            <div
-              style="
-                width: 300px;
-                height: 52px;
-                border: solid 1px #707070;
-                text-align: center;
-                line-height: 52px;
-              "
-            >
+        <div class="create_chat_left_list">
+            <div class="user_list">
               Liste des utilisateurs
             </div>
-        
-        <input @input="filter" v-model="filterText" style="
-            display: table-cell;
-            position: absolute;
-            left: 0px;
-            top: 51px;
-            width: 300px;
-            height: 50px;
-            vertical-align: middle;
-            border: solid 1px #707070;
-          " />
+        <input @input="filter" v-model="filterText" class="user_list_filter"/>
           <!-- -->
         
         <div class="user_can_be_add">
@@ -237,45 +96,11 @@
             class="chat_el"
             @click="inviteUsers(user, index)"
           >
-            <div
-              style="
-                position: relative;
-                left: 0px;
-                top: 0px;
-                width: 0px;
-                height: 0px;
-                text-align: left;
-              "
-            >
-              <div
-                style="
-                  position: relative;
-                  left: 20px;
-                  top: 15px;
-                  width: 70px;
-                  height: 70px;
-                  border: solid 1px #707070;
-                  background-color: #071f49;
-                  border-radius: 35px;
-                  font-family: TimesNewRoman;
-                  font-size: 52px;
-                  text-align: center;
-                  color: #fbfcff;
-                  line-height: 1.4;
-                  text-transform: uppercase;
-                "
-              >
+            <div class="chat_el_sub">
+              <div class="chat_el_icon">
                 {{ getSymbol(user.email) }}
               </div>
-              <h2
-                style="
-                  position: relative;
-                  left: 100px;
-                  top: -50px;
-                  height: 20px;
-                  width: 240px;
-                "
-              >
+              <h2 class="chat_el_desc">
                 <i class="fas fa-id-card"></i> {{ user.email }}
               </h2>
             </div>
@@ -283,28 +108,11 @@
         </div>
         </div>
 
-        <div style="display: flex;flex-direction:column;justify-content:flex-start;position:absolute;right:-1px;top:59px;">
-        <div
-          style="
-            width: 300px;
-            height: 52px;
-            border: solid 1px #707070;
-            text-align: center;
-            line-height: 52px;
-          "
-        >
+        <div class="create_chat_right_list">
+        <div class="user_list">
           Liste des utilisateurs ajouté
         </div>
-        <input @input="filterAdd" v-model="filterTextAdd" style="
-            display: table-cell;
-            position: absolute;
-            left: 0px;
-            top: 51px;
-            width: 300px;
-            height: 50px;
-            vertical-align: middle;
-            border: solid 1px #707070;
-          " />
+        <input @input="filterAdd" v-model="filterTextAdd" class="user_list_filter"/>
 
         <!---->
         
@@ -315,45 +123,11 @@
             class="chat_el"
             @click="uninviteUsers(add_user, index)"
           >
-            <div
-              style="
-                position: relative;
-                left: 0px;
-                top: 0px;
-                width: 0px;
-                height: 0px;
-                text-align: left;
-              "
-            >
-              <div
-                style="
-                  position: relative;
-                  left: 20px;
-                  top: 15px;
-                  width: 70px;
-                  height: 70px;
-                  border: solid 1px #707070;
-                  background-color: #071f49;
-                  border-radius: 35px;
-                  font-family: TimesNewRoman;
-                  font-size: 52px;
-                  text-align: center;
-                  color: #fbfcff;
-                  line-height: 1.4;
-                  text-transform: uppercase;
-                "
-              >
+            <div class="chat_el_sub">
+              <div class="chat_el_icon">
                 {{ getSymbol(add_user.email) }}
               </div>
-              <h2
-                style="
-                  position: relative;
-                  left: 100px;
-                  top: -50px;
-                  height: 20px;
-                  width: 240px;
-                "
-              >
+              <h2 class="chat_el_desc">
                 <i class="fas fa-id-card"></i> {{ add_user.email }}
               </h2>
             </div>
@@ -361,14 +135,14 @@
         </div>
 
         
-        <!--
+        <!-- -->
         <button
-          style="position: absolute; left: 240px; top: 530px"
+          style="position: absolute; left: -110px; top: 480px"
           @click="createChat"
         >
           Créer une salle de chat
-        </button> -->
-
+        </button> 
+        <!-- -->
         </div>
 
       </div>
