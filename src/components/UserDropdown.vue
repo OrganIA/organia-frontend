@@ -1,10 +1,10 @@
 <template>
   <div class="dropdown avatar-dropdown is-hoverable">
-    <div class="dropdown-trigger ">
+    <div class="dropdown-trigger">
       <button class="button dropdown-trigger" aria-haspopup="true" aria-controls="dropdown-menu3">
-        <span>{{cutMail($store.getters.getEmail)}}</span>
-        <span class="icon is-small">
-        <img src="https://synergy-it.gitlab.io/speekio/speekio-portal/assets/img/img_avatar.png"/>
+        <span class="name-display-dropdown">{{ cutMail($store.getters.getEmail) }}</span>
+        <span class="avatar-container">
+        <img class="avatar-display" src="https://synergy-it.gitlab.io/speekio/speekio-portal/assets/img/img_avatar.png"/>
       </span>
       </button>
     </div>
