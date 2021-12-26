@@ -515,6 +515,22 @@ td>i {
     transform: translate(500%, 0px);
 }
 
+.avatar-dropdown {
+    margin-top: 50px;
+    margin-left: 4%;
+    min-width: 300px;
+}
+
+.dropdown-trigger {
+width: 93%;
+}
+
+.dropdown-correction {
+    margin-left: -100px;
+    width: 260px;
+
+}
+
 .centered-container {
     position: absolute;
     width: 50%;
