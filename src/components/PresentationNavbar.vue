@@ -6,14 +6,14 @@
              alt="logo" class="logo-img-align">
       </div>
     </div>
-
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
         <a href="https://www.agence-biomedecine.fr/" class="navbar-item">
           Site de l'agence de biomédecine
-        </a>        <router-link to="/useorgania" class="navbar-item">
-        Utiliser la plateforme
-      </router-link>
+        </a>
+        <router-link to="/useorgania" class="navbar-item">
+          Utiliser la plateforme
+        </router-link>
         <router-link to="/aboutthegroup" class="navbar-item">
           Qui sommes nous ?
         </router-link>
@@ -27,13 +27,13 @@
       <div class="message-body">
         Bienvenue sur le portail de connexion d'OrganIA : la plateforme de matching entre donneur et receveur d'organe.
         <br>
-        Si vous possédez un nom d'utilisateur et un mot de passe attitré, connectez vous directement via ce portail, sinon,
+        Si vous possédez un nom d'utilisateur et un mot de passe attitré, connectez vous directement via ce portail,
+        sinon,
         faites une demande d'inscription!
       </div>
     </article>
   </nav>
 </template>
-
 <script>
 
 export default {
