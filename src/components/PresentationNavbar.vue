@@ -1,4 +1,5 @@
 <template>
+  <Infobulle/>
   <nav class="navbar base-navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand logo-placeholder">
       <div class="navbar-item logo">
@@ -32,13 +33,14 @@
       </div>
     </article>
   </nav>
-
 </template>
 
 <script>
+import Infobulle from "@/components/Infobulle";
+
 export default {
   name: "PresentationNavbar",
-
+  components: {Infobulle},
 }
 </script>
 

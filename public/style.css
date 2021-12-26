@@ -569,7 +569,18 @@ width: 140%
 
 .presentation-message {
     position: absolute;
-    top: 30vh;
+    top: 25vh;
     width: 20vw;
     margin-left: 50px;
+}
+
+.infobulle-container {
+    background-color: var(--logo-light-blue);
+
+    min-width: 300px;
+    min-height: 60px;
+    border-radius: 25px;
+    position: absolute;
+    top: 83%;
+    right: 5%;
 }
