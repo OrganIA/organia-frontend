@@ -18,5 +18,8 @@ export default createRouter({
         { path: "/actions", component: () => import("./views/ActionLogPanel")},
         { path: "/administrator/role", component: () => import("./views/RolePanel") },
         { path: "/chat", component: () => import("./views/Chat") },
+        { path: "/aboutthegroup", component: () => import("./views/AboutGroup") },
+        { path: "/abouttheproject", component: () => import("./views/AboutProject") },
+        { path: "/useorgania", component: () => import("./views/HowToUseThePlatform") },
     ],
 });

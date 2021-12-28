@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="/receivers">Back</router-link>
+    <router-link to="/receivers">Retour</router-link>
     <form @submit.prevent="createPerson()" class="show-requireds">
       <h2 class="form-title title is-3">Ajouter un receveur</h2>
       <div class="form-fields">
