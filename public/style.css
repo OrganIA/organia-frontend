@@ -89,7 +89,6 @@ input[type="number"] {
     min-width: 4em;
 }
 
-
 tr:hover {
     cursor: pointer;
     color: --blue;
@@ -129,6 +128,9 @@ tr:hover {
 .column {
     display: flex;
     flex-direction: column;
+}
+.nav-text {
+    margin-left: 10px;
 }
 
 .hide {
