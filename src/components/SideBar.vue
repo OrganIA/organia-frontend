@@ -33,7 +33,7 @@
       </router-link>
       <button
         @click="logout"
-        class="block button is-danger is-light is-outlined"
+        class="block button is-danger is-light is-outlined cypress-logout"
       >
         Se déconnecter
       </button>
