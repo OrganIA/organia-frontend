@@ -1,21 +1,35 @@
 <template>
   <div id="main">
-    <h1>Liste d'attente</h1>
+    <h1>Liste d'attente donneurs</h1>
     <p>
-      <router-link to="/donors/add" class="button cypress-to-add"
+      <router-link to="/donors/add" class="button is-info mb-6 cypress-to-add"
         >Ajouter</router-link
       >
     </p>
-    <table class="table-list">
+    <p class="search content">Rechercher par</p>
+    <div class="search-block">
+      <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
+        <option value="first_name">Prénom</option>
+        <option value="last_name">Nom</option>
+        <option value="birthday">Date de naissance</option>
+        <option value="gender">Sexe</option>
+        <option value="blood_type">ABO</option>
+        <option value="organ">Organe</option>
+        <option value="created_at">Arrivée</option>
+      </select>
+      <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+      <br />
+    </div>
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
         <tr>
-          <th>Prénom</th>
-          <th>Nom de famille</th>
-          <th>Date de naissance</th>
-          <th>Sexe</th>
-          <th>ABO</th>
-          <th>Organe</th>
-          <th>Arrivée</th>
+          <th @click="updateFilter('first_name')">Prénom</th>
+          <th @click="updateFilter('last_name')">Nom de famille</th>
+          <th @click="updateFilter('birthday')">Date de naissance</th>
+          <th @click="updateFilter('gender')">Sexe</th>
+          <th @click="updateFilter('blood_type')">ABO</th>
+          <th @click="updateFilter('organ')">Organe</th>
+          <th @click="updateFilter('created_at')">Arrivée</th>
           <th>Éditer</th>
           <th>Infos</th>
         </tr>
@@ -31,11 +45,11 @@
           <td>{{ donor.person.created_at }}</td>
           <td>
             <router-link :to="`/donors/edit/${donor.person.id}`">
-              <i class="fas fa-edit"></i>
+              <i class="fas fa-edit button is-primary"></i>
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info-circle cypress-donor-modal" @click="openModal(donor)"/>
+            <i class="fas fa-info cypress-donor-modal" @click="openModal(donor)"></i>
           </td>
         </tr>
       </tbody>
@@ -60,6 +74,11 @@ export default {
       donors: {},
       showModal: false,
       currentDonor: {},
+      sortingOrder: true,
+      sortingKey: "created_at",
+      selectFilter: "first_name",
+      filterText: "",
+      donorsBackup: [],
     };
   },
   created() {
@@ -78,6 +97,7 @@ export default {
             ).toDateString();
           });
           this.donors = response.data;
+          this.donorsBackup = this.donors;
         })
         .catch((error) => {
           console.log(error);
@@ -96,6 +116,97 @@ export default {
       this.showModal = false;
       this.currentDonor = {};
       document.getElementById("bodiv").style.display = "none";
+    },
+    updateFilter(dataName) {
+      if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
+      this.sortingKey = dataName;
+    },
+    checkNull(a, b) {
+      if (
+        a.person[this.sortingKey] == null &&
+        b.person[this.sortingKey] == null
+      )
+        return 0;
+      if (a.person[this.sortingKey] == null) return 1;
+      else if (b.person[this.sortingKey] == null) return -1;
+      return 0;
+    },
+    sortData() {
+      if (
+        ["first_name", "last_name", "gender", "blood_type"].includes(
+          this.sortingKey
+        )
+      ) {
+        this.donors.sort((a, b) => {
+          if (
+            a.person[this.sortingKey] == null ||
+            b.person[this.sortingKey] == null
+          )
+            return this.checkNull(a, b);
+          if (this.sortingOrder)
+            return a.person[this.sortingKey].localeCompare(
+              b.person[this.sortingKey]
+            );
+          return b.person[this.sortingKey].localeCompare(
+            a.person[this.sortingKey]
+          );
+        });
+      } else if (["birthday", "created_at"].includes(this.sortingKey)) {
+        this.donors.sort((a, b) => {
+          if (
+            a.person[this.sortingKey] == null ||
+            b.person[this.sortingKey] == null
+          )
+            return this.checkNull(a, b);
+          if (this.sortingOrder)
+            return Date.parse(a.person[this.sortingKey]) >
+              Date.parse(b.person[this.sortingKey])
+              ? -1
+              : 1;
+          return Date.parse(b.person[this.sortingKey]) >
+            Date.parse(a.person[this.sortingKey])
+            ? -1
+            : 1;
+        });
+      } else if (this.sortingKey == "organ") {
+        this.donors.sort((a, b) => {
+          if (
+            a.person[this.sortingKey] == null ||
+            b.person[this.sortingKey] == null
+          )
+            return this.checkNull(a, b);
+          if (this.sortingOrder) return a.organ.localeCompare(b.organ);
+          return b.organ.localeCompare(a.organ);
+        });
+      }
+    },
+    filter() {
+      if (this.filterText == "") {
+        this.donors = this.donorsBackup;
+        return;
+      }
+      if (this.selectFilter in this.donorsBackup[0].person) {
+        this.donors = this.donorsBackup.filter((el) => {
+          if (el.person[this.selectFilter] != null)
+            return el.person[this.selectFilter].includes(this.filterText);
+        });
+      } else {
+        this.donors = this.donorsBackup.filter((el) => {
+          if (el[this.selectFilter] != null)
+            return el[this.selectFilter].includes(this.filterText);
+        });
+      }
+    },
+  },
+  watch: {
+    sortingKey() {
+      this.sortData();
+    },
+    sortingOrder() {
+      this.sortData();
+    },
+    selectFilter() {
+      console.log(this.selectFilter);
     },
   },
 };

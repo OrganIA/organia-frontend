@@ -1,5 +1,5 @@
 <template>
-    <div class="cypress-modal">
+    <div class="cypress-modal modal">
       <h2>Nom</h2>
       <h4>{{ person.person.last_name }}</h4>
       <h2>Prénom</h2>
@@ -24,7 +24,7 @@
         <h2>Notes:</h2>
         <h4>{{ person.notes }}</h4>
       </div>
-      <button type="button" @click="closeModal">Fermer</button>
+      <button type="button" class="button is-danger" @click="closeModal">Fermer</button>
     </div>
 </template>
 

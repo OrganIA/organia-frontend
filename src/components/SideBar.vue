@@ -11,33 +11,32 @@
       </h1>
     </header>
     <div id="navlinks">
-      <div id="navbox">
-        <router-link
-          class="sidebar-link"
-          to="/receivers"
-          v-bind:class="{ active: this.$route.path === '/receivers' }"
-        >
-          <i class="fa fa-address-card"></i>
-          <span class="nav-text cypress-to-receivers">Receveurs</span>
-        </router-link>
-        <router-link
-          class="sidebar-link"
-          to="/donors"
-          v-bind:class="{ active: this.$route.path === '/donors' }"
-        >
-          <i class="fa fa-address-card" aria-hidden="true"></i>
-          <span class="nav-text cypress-to-donors">Donneurs</span>
-        </router-link>
-        <router-link
-          class="sidebar-link"
-          to="/administrator"
-          v-bind:class="{ active: this.$route.path === '/administrator' }"
-        >
-          <i class="fa fa-user-shield" aria-hidden="true"></i>
-          <span class="nav-text">Administrateur</span>
-        </router-link>
-        <button class="cypress-logout" @click="logout">Se déconnecter</button>
-      </div>
+      <router-link class="block button is-info" to="/receivers">
+        <i class="fa fa-address-card"></i>
+        <span class="nav-text cypress-to-receivers">Receveurs</span>
+      </router-link>
+      <router-link class="block button is-info" to="/donors">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        <span class="nav-text cypress-to-donors">Donneurs</span>
+      </router-link>
+      <router-link class="block button is-info" to="/administrator">
+        <i class="fa fa-user-shield" aria-hidden="true"></i>
+        <span class="nav-text">Administrateur</span>
+      </router-link>
+      <router-link class="block button is-info" to="/administrator/role">
+        <i class="fa fa-tasks cypress-to-roles" aria-hidden="true"></i>
+        <span class="nav-text">Rôles</span>
+      </router-link>
+      <router-link class="block button is-info" to="/actions">
+        <i class="fas fa-terminal cypress-to-logs"></i>
+        <span class="nav-text">Historique d'actions</span>
+      </router-link>
+      <button
+        @click="logout"
+        class="block button is-danger is-light is-outlined"
+      >
+        Se déconnecter
+      </button>
     </div>
   </nav>
 </template>
@@ -45,6 +44,7 @@
 <script>
 export default {
   name: "SideBar",
+  emits: ["logout"],
   methods: {
     logout() {
       this.$store.commit("logout");

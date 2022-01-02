@@ -1,42 +1,49 @@
 <template>
-  <div>
+  <PresentationNavbar/>
+  <div class="centered-container">
     <form @submit.prevent="register()">
-      <h2 class="form-title">S'inscrire</h2>
-      <input
-        v-model="name"
-        class="cypress-name"
-        placeholder="name"
-        type="text"
-        required
-      />
-      <input
-        v-model="email"
-        class="cypress-email"
-        placeholder="email"
-        type="email"
-        required
-      />
-      <input
-        v-model="password"
-        placeholder="mot de passe"
-        type="password"
-        class="cypress-password"
-        required
-      />
-      <button type="submit" class="cypress-register">S'inscrire</button>
-      <router-link to="/login" class="cypress-to-login"
-        >Se connecter</router-link
+      <div class="content">
+        <h2>S'inscrire</h2>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input
+              v-model="email"
+              class="cypress-email input"
+              placeholder="email"
+              type="email"
+              required
+          />
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input
+              v-model="password"
+              placeholder="mot de passe"
+              type="password"
+              class="cypress-password input"
+              required
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="cypress-register button is-info mr-6">Confirmer</button>
+      <router-link to="/login" class="cypress-to-login  button is-link">Se connecter</router-link
       >
     </form>
   </div>
 </template>
 
 <script>
+import PresentationNavbar from "@/components/PresentationNavbar";
+
 export default {
   name: "Register",
+  emits: ["login"],
+  components: {PresentationNavbar},
   data() {
     return {
-      name: "",
       email: "",
       password: "",
     };
@@ -45,17 +52,32 @@ export default {
     register() {
       this.$http
         .post("/users/", {
-          name: this.name,
           email: this.email,
           password: this.password,
         })
         .then(() => {
-          this.$toast.success("Connexion réussie !");
-          setTimeout(this.$toast.clear, 3000);
           this.login();
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    getRole(role_id) {
+      this.$http
+        .get(`/roles/${role_id}`)
+        .then((response) => {
+          this.$toast.success("Connexion réussie !");
+          setTimeout(this.$toast.clear, 3000);
+          this.$store.commit("login", { email: this.email, role: response.data});
+          this.$emit("login", true);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error.response.data.detail);
           this.$toast.error(
             "Erreur lors de la connexion : " + error.response.data.detail
           );
@@ -69,16 +91,14 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          this.$store.commit("login", this.email, this.name);
-          this.$cookies.set("token", response.data.token, -1);
           this.$http.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.token}`;
-          this.$emit("login", true);
-          this.$router.push("/");
+          this.$cookies.set("token", response.data.token, -1);
+          this.getRole(response.data.user.role_id);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.detail);
           this.$toast.error(
             "Erreur lors de la connexion : " + error.response.data.detail
           );
