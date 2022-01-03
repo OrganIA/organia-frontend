@@ -11,12 +11,12 @@
     <div class="dropdown-menu" id="dropdown-menu3" role="menu">
       <div class="dropdown-content dropdown-correction">
         <router-link to="#" class="dropdown-item">
-          Layout
+          Demande au support
         </router-link>
         <hr class="dropdown-divider">
         <button
             @click="logout"
-            class="block button is-danger is-light is-outlined"
+            class="block button is-danger is-light is-outlined  "
         >
           Se déconnecter
         </button>
