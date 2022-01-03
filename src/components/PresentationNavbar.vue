@@ -6,19 +6,19 @@
              alt="logo" class="logo-img-align">
       </div>
     </div>
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a href="https://www.agence-biomedecine.fr/" class="navbar-item">
+    <div id="navbarBasicExample" class="navbar-menu main-menu-navbar">
+      <div class="navbar-start navbar-correction">
+        <a href="https://www.agence-biomedecine.fr/" class="navbar-item button is-medium is-info is-light">
           Site de l'agence de biomédecine
         </a>
-        <router-link to="/useorgania" class="navbar-item">
+        <router-link to="/useorgania" class="navbar-item button is-medium is-info is-light">
           Utiliser la plateforme
         </router-link>
-        <router-link to="/aboutthegroup" class="navbar-item">
+        <router-link to="/aboutthegroup" class="navbar-item button is-medium is-info is-light">
           Qui sommes nous ?
         </router-link>
 
-        <router-link to="/abouttheproject" class="navbar-item">
+        <router-link to="/abouttheproject" class="navbar-item button is-medium is-info is-light">
           Le projet
         </router-link>
       </div>

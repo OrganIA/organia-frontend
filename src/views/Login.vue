@@ -51,14 +51,16 @@ export default {
     };
   },
   methods: {
-    getRole(role_id) {
+    getRole(data) {
+      console.log(data)
       this.$http
-        .get(`/roles/${role_id}`)
+        .get(`/roles/${data.role_id}`)
         .then((response) => {
           this.$toast.success("Connexion réussie !");
           setTimeout(this.$toast.clear, 3000);
           this.$store.commit("login", {
-            email: this.email,
+            id: data.id,
+            email: data.email,
             role: response.data,
           });
           this.$emit("login", true);
@@ -83,7 +85,7 @@ export default {
             "Authorization"
           ] = `Bearer ${response.data.token}`;
           this.$cookies.set("token", response.data.token, -1);
-          this.getRole(response.data.user.role_id);
+          this.getRole(response.data.user);
         })
         .catch((error) => {
           console.log(error.response.data.detail);
