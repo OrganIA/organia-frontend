@@ -1,15 +1,16 @@
 <template>
-  <nav id="navbar">
+  <nav id="navbar" class="reset-bg">
     <header>
       <h1>
         <router-link to="/">
           <img
-            id="navbar-logo"
-            src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
+              id="navbar-logo"
+              src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
           />
         </router-link>
       </h1>
     </header>
+    <UserDropdown @logout="handle_logout"/>
     <div id="navlinks">
       <router-link class="block button is-info" to="/receivers">
         <i class="fa fa-address-card"></i>
@@ -33,26 +34,22 @@
       </router-link>
       <router-link class="block button is-info" to="/chat">
         <i class="fas fa-terminal cypress-to-logs"></i>
-        <span class="nav-text">Chat</span>
+        <span class="nav-text">Chats</span>
       </router-link>
-      <button
-        @click="logout"
-        class="block button is-danger is-light is-outlined cypress-logout"
-      >
-        Se déconnecter
-      </button>
     </div>
   </nav>
 </template>
 
 <script>
+
+import UserDropdown from "@/components/UserDropdown";
+
 export default {
+  components: {UserDropdown},
   name: "SideBar",
   emits: ["logout"],
   methods: {
-    logout() {
-      this.$store.commit("logout");
-      this.$cookies.remove("token");
+    handle_logout() {
       this.$emit("logout");
     },
   },

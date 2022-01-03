@@ -1,6 +1,6 @@
 <template>
   <h1>Panel Administrateur</h1>
-  <div class="main-container">
+  <div class="main-container-admin-panel">
     <table class="table is-bordered is-striped is-narrow is-hoverable is-info">
       <thead>
       <tr>
