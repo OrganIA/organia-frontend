@@ -1,5 +1,5 @@
 <template>
-  <nav id="navbar">
+  <nav id="navbar" class="reset-bg">
     <header>
       <h1>
         <router-link to="/">
