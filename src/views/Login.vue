@@ -63,7 +63,6 @@ export default {
             role: response.data,
           });
           this.$emit("login", true);
-          console.log(this.$store.getters.getID);
           this.$router.push("/");
         })
         .catch((error) => {
