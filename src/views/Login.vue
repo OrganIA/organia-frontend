@@ -1,5 +1,5 @@
 <template>
-  <PresentationNavbar/>
+  <PresentationNavbar />
   <div class="centered-container">
     <form @submit.prevent="login()">
       <div class="content">
@@ -8,28 +8,31 @@
       <div class="field">
         <div class="control">
           <input
-              v-model="email"
-              placeholder="email"
-              type="email"
-              class="cypress-email input"
-              required
+            v-model="email"
+            placeholder="email"
+            type="email"
+            class="cypress-email input"
+            required
           />
         </div>
       </div>
       <div class="field">
         <div class="control">
           <input
-              v-model="password"
-              placeholder="mot de passe"
-              type="password"
-              class="cypress-password input"
-              required
+            v-model="password"
+            placeholder="mot de passe"
+            type="password"
+            class="cypress-password input"
+            required
           />
         </div>
       </div>
-      <button type="submit" class="cypress-login button is-info mr-6">Confirmer</button>
-      <router-link to="/register" class="cypress-to-register  button is-link">S'inscrire</router-link>
-
+      <button type="submit" class="cypress-login button is-info mr-6">
+        Confirmer
+      </button>
+      <router-link to="/register" class="cypress-to-register button is-link"
+        >S'inscrire</router-link
+      >
     </form>
   </div>
 </template>
@@ -54,7 +57,11 @@ export default {
         .then((response) => {
           this.$toast.success("Connexion réussie !");
           setTimeout(this.$toast.clear, 3000);
-          this.$store.commit("login", { id: id, email: this.email, role: response.data});
+          this.$store.commit("login", {
+            id: id,
+            email: this.email,
+            role: response.data,
+          });
           this.$emit("login", true);
           console.log(this.$store.getters.getID);
           this.$router.push("/");

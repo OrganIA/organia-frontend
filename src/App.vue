@@ -23,8 +23,6 @@ export default {
           setTimeout(this.$toast.clear, 3000);
           this.logged_in = true;
           this.$store.commit("login", { id: data.id,email: data.email, role: response.data });
-          this.$emit("login", true);
-          this.$router.push("/");
         })
         .catch((error) => {
           console.log(error.response.data.detail);
