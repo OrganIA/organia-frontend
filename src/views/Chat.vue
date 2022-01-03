@@ -1,5 +1,4 @@
 <template>
-  {{ state }}
   <div class="main-container">
     <div class="chat_list">
       <div class="chat_room">
@@ -50,7 +49,7 @@
           </div>
         </div>
         <div class="chat_section">
-          <input @input="msgSend" v-model="filterText" class="chat_bar" />
+          <input class="chat_bar" />
           <button class="fas fa-paper-plane button_send_msg"></button>
         </div>
       </div>
@@ -137,7 +136,6 @@ export default {
       filterText: "",
       filterTextAdd: "",
       msgs: [],
-      msgSend: [],
       state: "none",
       users_backup: [],
       users_not_added_filtered: [],
@@ -157,7 +155,6 @@ export default {
       this.filterText = "";
       this.filterTextAdd = "";
       this.msgs = [];
-      this.msgSend = [];
       this.state = "none";
       this.users_backup = [];
       this.users_not_added_filtered = [];
