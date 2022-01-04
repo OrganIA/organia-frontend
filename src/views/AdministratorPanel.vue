@@ -13,13 +13,25 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="user in users" :key="user" v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'is-selected':  user.id === $data.user.id}">
-        <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.id }}</td>
-        <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.person ? user.person.first_name : "-" }}</td>
-        <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.person ? user.person.last_name : "-" }}</td>
-        <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.email }}</td>
-        <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.created_at }}</td>
-        <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">{{ user.updated_at }}</td>
+      <tr v-for="user in users" :key="user" v-bind:class="{ 'is-selected':  user.id === $data.user.id}">
+        <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element':  user.id === $data.user.id}">
+          {{ user.id }}
+        </td>
+        <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element':  user.id === $data.user.id}">
+          {{ user.person ? user.person.first_name : "-" }}
+        </td>
+        <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element':  user.id === $data.user.id}">
+          {{ user.person ? user.person.last_name : "-" }}
+        </td>
+        <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element':  user.id === $data.user.id}">
+          {{ user.email }}
+        </td>
+        <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element':  user.id === $data.user.id}">
+          {{ user.created_at }}
+        </td>
+        <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element':  user.id === $data.user.id}">
+          {{ user.updated_at }}
+        </td>
         <td v-bind:class="{ 'selected-element':  user.id === $data.user.id}">
           <router-link :to="`/administrator/edit/user/${user.id}`" class="button is-primary">
             <i class="fas fa-edit"></i>
@@ -28,14 +40,23 @@
       </tr>
       </tbody>
     </table>
-  </div>
+    <div class="modal"    v-bind:class="{'is-invisible' : (state !== 'clicked'), 'is-active' : (state === 'clicked') }">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        Oh sa mere
+      </div>
+      <button class="modal-close is-large" aria-label="close"  v-on:click="loadSelectedUser(this.user.id)"></button>
+    </div>  </div>
+
 </template>
 
 <script>
 export default {
   name: "AdministratorPanel",
   data() {
+
     return {
+      state: "",
       users: {},
       user: {},
     };
@@ -46,18 +67,18 @@ export default {
   methods: {
     getUsers() {
       this.$http
-        .get("/users", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
-        .then((response) => {
-          response.data.forEach((element) => {
-            element.created_at = new Date(element.created_at).toDateString();
+          .get("/users", {
+            headers: {Authorization: `Bearer ${this.$cookies.get("token")}`},
+          })
+          .then((response) => {
+            response.data.forEach((element) => {
+              element.created_at = new Date(element.created_at).toDateString();
+            });
+            this.users = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          this.users = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     getUserByID() {
       this.$http
@@ -72,9 +93,19 @@ export default {
           });
     },
     loadSelectedUser(userId) {
+      if (this.user.id === userId) {
+        this.state = ""
+        this.user.id = -1
+        return;
+      }
       this.user.id = userId;
       this.getUserByID(userId)
+      this.state = "clicked"
+
     },
+    popUserModal(userId) {
+      console.log(userId)
+    }
   },
 };
 </script>
