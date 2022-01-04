@@ -24,9 +24,10 @@
       <div v-if="state == 'select'" style="z-index: 10">
         <div class="chat_msg">
           <div
-            v-for="msg in msgs"
+            v-for="msg in messages_list"
             :key="msg"
             style="position: relative; top: 0px; left: 0px"
+            id="chat-container"
           >
             <div v-if="msg.sender_id == this.id" style="text-align: right">
               <div class="my_msg">
@@ -49,8 +50,15 @@
           </div>
         </div>
         <div class="chat_section">
-          <input class="chat_bar" />
-          <button class="fas fa-paper-plane button_send_msg"></button>
+          <input
+            class="chat_bar"
+            v-model="message_to_send"
+            @keypress.enter="sendMessage"
+          />
+          <button
+            @click="sendMessage"
+            class="fas fa-paper-plane button_send_msg"
+          ></button>
         </div>
       </div>
       <div v-if="state == 'create'" class="create_chat_section">
@@ -131,17 +139,20 @@ export default {
   emits: ["login"],
   data() {
     return {
-      id: 0,
+      id: this.$store.getters.getID,
       chats: [],
+      selected_chat: 0,
       filterText: "",
       filterTextAdd: "",
-      msgs: [],
+      messages_list: [],
+      message_to_send: "",
       state: "none",
       users_backup: [],
       users_not_added_filtered: [],
       users_not_added: [],
       users_added: [],
       users_added_filtered: [],
+      websocket: null,
     };
   },
   created() {
@@ -150,11 +161,12 @@ export default {
   },
   methods: {
     reset() {
-      this.id = 0;
+      this.id = this.$store.getters.getID;
       this.chats = [];
       this.filterText = "";
       this.filterTextAdd = "";
-      this.msgs = [];
+      this.messages_list = [];
+      this.message_to_send = "";
       this.state = "none";
       this.users_backup = [];
       this.users_not_added_filtered = [];
@@ -169,7 +181,6 @@ export default {
         .get("/chats")
         .then((response) => {
           this.chats = response.data;
-          this.id = this.$store.getters.getID;
           this.$toast.success("Recuperation de la messagerie réussite !");
           setTimeout(this.$toast.clear, 3000);
         })
@@ -204,9 +215,11 @@ export default {
         .get(`/chats/messages/${id}`)
         .then((response) => {
           this.windowSate("select");
-          this.msgs = response.data;
+          this.selected_chat = id;
+          this.messages_list = response.data;
           this.$toast.success("Recuperation des messages réussi !");
           setTimeout(this.$toast.clear, 3000);
+          this.websocketSetup();
         })
         .catch((error) => {
           console.log(error);
@@ -314,6 +327,61 @@ export default {
       this.users_added_filtered = this.users_added.filter((el) => {
         return el.email.includes(this.filterTextAdd);
       });
+    },
+    async websocketSetup() {
+      if (this.websocket == null) {
+        this.websocket = new WebSocket(
+          `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.selected_chat}`
+        );
+      } else {
+        this.websocket.close();
+        this.websocket = new WebSocket(
+          `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.selected_chat}`
+        );
+      }
+      this.websocket.onopen = async () => {
+        this.websocket.send(
+          JSON.stringify({
+            event: "login",
+            token: `Bearer ${this.$cookies.get("token")}`,
+          })
+        );
+        this.websocket.onmessage = async (data) => {
+          let resp = JSON.parse(data.data);
+          if (resp.status != 200) {
+            this.$toast.error(resp.error);
+            this.websocket.close();
+          }
+          let container;
+          switch (resp.event) {
+            case "message_received":
+              this.messages_list.push(resp.data);
+              container = this.$el.querySelector("#messages-list");
+              container.scrollTop = container.scrollHeight;
+              break;
+            case "message_sent":
+              this.messages_list.push(resp.data);
+              break;
+          }
+        };
+      };
+    },
+    async sendMessage() {
+      if (
+        this.message_to_send != "" &&
+        this.websocket != null &&
+        this.websocket.readyState == WebSocket.OPEN
+      ) {
+        this.websocket.send(
+          JSON.stringify({
+            event: "send_message",
+            chat_id: this.selected_chat,
+            content: this.message_to_send,
+            sender_id: this.id,
+          })
+        );
+        this.message_to_send = "";
+      }
     },
   },
   watch: {
