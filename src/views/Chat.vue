@@ -2,12 +2,12 @@
   <div class="main-container">
     <div class="chat_list">
       <div class="chat_room">
-        Chat Room <button @click="windowSate('create')">+</button>
+        Chat Room <button class="cypress-add" @click="windowSate('create')">+</button>
       </div>
       <div
         v-for="chat in chats"
         :key="chat"
-        class="chat_el"
+        class="chat_el cypress-chat-room"
         @click="getMessagesChat(chat.chat_id)"
       >
         <div class="chat_el_sub">
@@ -21,14 +21,14 @@
       </div>
     </div>
     <div class="chat_right_box">
-      <div v-if="state == 'select'" style="z-index: 10">
-        <div class="chat_msg">
+      <div v-if="state == 'select'" class="state_select">
+        <div class="chat_msg" ref="chat_msg">
           <div
             v-for="msg in msgs"
             :key="msg"
-            style="position: relative; top: 0px; left: 0px"
+            class="all_messages"
           >
-            <div v-if="msg.sender_id == this.id" style="text-align: right">
+            <div v-if="msg.sender_id == this.id" class="text-right">
               <div class="my_msg">
                 {{ msg.content }}
               </div>
@@ -37,7 +37,7 @@
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
               </div>
             </div>
-            <div v-else style="text-align: left">
+            <div v-else class="text-left">
               <div class="other_msg">
                 {{ msg.content }}
               </div>
@@ -49,15 +49,15 @@
           </div>
         </div>
         <div class="chat_section">
-          <input class="chat_bar" />
-          <button class="fas fa-paper-plane button_send_msg"></button>
+          <input class="chat_bar cypress-chat-box" />
+          <button @click="sendMessage()" class="fas fa-paper-plane button_send_msg cypress-send-msg"></button>
         </div>
       </div>
       <div v-if="state == 'create'" class="create_chat_section">
         <div class="create_chat_top_bar">
           Fenêtre de creation d'une salle de chat
           <button
-            style="position: relative; right: -160px; top: 0px"
+            class="chat_exit_button"
             @click="windowSate('none')"
           >
             X
@@ -74,7 +74,7 @@
             <div
               v-for="user in users_not_added_filtered"
               :key="user"
-              class="chat_el"
+              class="chat_el cypress-invite"
               @click="inviteUsers(user)"
             >
               <div class="chat_el_sub">
@@ -113,7 +113,7 @@
             </div>
           </div>
           <button
-            style="position: absolute; left: -110px; top: 480px"
+            class="chat_create_button cypress-create"
             @click="createChat"
           >
             Créer une salle de chat
@@ -314,6 +314,13 @@ export default {
       this.users_added_filtered = this.users_added.filter((el) => {
         return el.email.includes(this.filterTextAdd);
       });
+    },
+    sendMessage() {
+      this.scrollToEnd();
+    },
+    scrollToEnd () {
+      var content = this.$refs.chat_msg;
+      content.scrollTop = content.scrollHeight;
     },
   },
   watch: {

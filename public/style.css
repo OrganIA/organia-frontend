@@ -920,3 +920,33 @@ td>i {
     max-width: 90%;
     margin-left: 50px;
 }
+
+.chat_create_button {
+    position: absolute;
+    left: -110px;
+    top: 480px;
+}
+
+.chat_exit_button {
+    position: relative;
+    right: -160px;
+    top: 0px;
+}
+
+.all_messages {
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+.state_select {
+    z-index: 10;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
