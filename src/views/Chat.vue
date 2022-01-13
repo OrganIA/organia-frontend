@@ -230,9 +230,15 @@ export default {
         });
     },
     getEmail(sender_id) {
-      return this.users_backup.filter((element) => {
-        return element.id == sender_id;
-      }).email;
+      console.log(sender_id);
+      console.log(JSON.parse(JSON.stringify(this.users_backup)));
+      console.log(this.users_backup);
+      let va = this.users_backup.find((element) => element.id == sender_id);
+      if (va) {
+        return va.email;
+      } else {
+        return this.$store.getters.getEmail;
+      }
     },
     getTime(data) {
       let date = new Date(data);
@@ -352,12 +358,9 @@ export default {
             this.$toast.error(resp.error);
             this.websocket.close();
           }
-          let container;
           switch (resp.event) {
             case "message_received":
               this.messages_list.push(resp.data);
-              container = this.$el.querySelector("#messages-list");
-              container.scrollTop = container.scrollHeight;
               break;
             case "message_sent":
               this.messages_list.push(resp.data);
