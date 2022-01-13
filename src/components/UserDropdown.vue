@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown avatar-dropdown is-hoverable">
+  <div class="dropdown avatar-dropdown is-hoverable cypress-dropdown">
     <div class="dropdown-trigger">
       <button class="button dropdown-trigger" aria-haspopup="true" aria-controls="dropdown-menu3">
         <span class="name-display-dropdown">{{ cutMail($store.getters.getEmail) }}</span>
@@ -16,7 +16,7 @@
         <hr class="dropdown-divider">
         <button
             @click="logout"
-            class="block button is-danger is-light is-outlined  "
+            class="block button is-danger is-light is-outlined cypress-logout"
         >
           Se déconnecter
         </button>

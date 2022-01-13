@@ -15,6 +15,7 @@ describe('Logout', () => {
 
         cy.url().should('eq', 'http://localhost:8080/')
 
+        cy.get(".cypress-dropdown").realHover()
         cy.get(".cypress-logout").click()
         cy.url().should('eq', "http://localhost:8080/login")
         cy.getCookie("token").should('be.null')
