@@ -17,10 +17,12 @@
     "core-js": "^3.6.5",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
+    "v-calendar": "^2.3.4",
     "vue": "^3.0.0",
     "vue-axios": "^3.2.5",
     "vue-router": "^4.0.8",
     "vue3-cookies": "^1.0.1",
+    "vuejs": "^3.0.1",
     "vuex": "^4.0.2",
     "webpack": "^4.45.0"
   },
