@@ -528,7 +528,7 @@ td>i {
     transform: translate(500%, 0px);
 }
 
-.chat_el {
+.chat-el {
     width: 100%;
     height: 100px;
     border-bottom: solid 1px #707070;
@@ -536,7 +536,7 @@ td>i {
     background-image: none;
 }
 
-.chat_el:hover {
+.chat-el:hover {
     width: 100%;
     height: 100px;
     border-bottom: solid 1px #707070;
@@ -544,7 +544,7 @@ td>i {
     background-image: linear-gradient(to right, rgba(73, 138, 254, 0.6), rgba(37, 69, 127, 0));
 }
 
-.chat_list {
+.chat-list {
     position: relative;
     left: 0px;
     top: 0px;
@@ -558,12 +558,12 @@ td>i {
     -ms-overflow-style: none;
 }
 
-.chat_list::-webkit-scrollbar {
+.chat-list::-webkit-scrollbar {
     display: none;
     /* for Chrome, Safari, and Opera */
 }
 
-.button_send_msg {
+.button-send-msg {
     position: relative;
     top: 5px;
     height: 26px;
@@ -574,7 +574,7 @@ td>i {
     color: white;
 }
 
-.chat_msg {
+.chat-msg {
     position: relative;
     left: 0px;
     top: 0px;
@@ -585,12 +585,12 @@ td>i {
     -ms-overflow-style: none;
 }
 
-.chat_msg::-webkit-scrollbar {
+.chat-msg::-webkit-scrollbar {
     display: none;
     /* for Chrome, Safari, and Opera */
 }
 
-.user_can_be_add {
+.user-can-be-add {
     position: absolute;
     left: 0px;
     top: 100px;
@@ -603,7 +603,7 @@ td>i {
     -ms-overflow-style: none;
 }
 
-.user_add {
+.user-add {
     position: absolute;
     right: 0px;
     top: 100px;
@@ -616,7 +616,7 @@ td>i {
     -ms-overflow-style: none;
 }
 
-.chat_room {
+.chat-room {
     position: relative;
     width: 340px;
     height: 60px;
@@ -628,7 +628,7 @@ td>i {
     background: white;
 }
 
-.chat_el_sub {
+.chat-el-sub {
     position: relative;
     left: 0px;
     top: 0px;
@@ -637,7 +637,7 @@ td>i {
     text-align: left;
 }
 
-.chat_el_icon {
+.chat-el-icon {
     position: relative;
     left: 20px;
     top: 15px;
@@ -654,7 +654,7 @@ td>i {
     text-transform: uppercase;
 }
 
-.chat_el_desc {
+.chat-el-desc {
     position: relative;
     left: 100px;
     top: -50px;
@@ -662,7 +662,7 @@ td>i {
     width: 240px;
 }
 
-.chat_right_box {
+.chat-right-box {
     position: relative;
     left: 0px;
     top: 0px;
@@ -672,7 +672,7 @@ td>i {
     overflow: hidden;
 }
 
-.my_msg {
+.my-msg {
     display: inline-block;
     position: relative;
     top: 10px;
@@ -688,7 +688,7 @@ td>i {
     text-align: left;
 }
 
-.my_info {
+.my-info {
     display: inline-block;
     position: relative;
     top: -10px;
@@ -697,7 +697,7 @@ td>i {
     font-size: 15px;
 }
 
-.other_msg {
+.other-msg {
     display: inline-block;
     position: relative;
     top: 10px;
@@ -713,7 +713,7 @@ td>i {
     text-align: left;
 }
 
-.other_info {
+.other-info {
     display: inline-block;
     position: relative;
     top: -10px;
@@ -722,7 +722,7 @@ td>i {
     font-size: 15px;
 }
 
-.chat_section {
+.chat-section {
     position: relative;
     left: 0px;
     top: 0px;
@@ -731,7 +731,7 @@ td>i {
     border-top: solid 1px #707070;
 }
 
-.chat_bar {
+.chat-bar {
     position: relative;
     left: -7px;
     top: 5px;
@@ -741,7 +741,7 @@ td>i {
     border: solid 1px #707070;
 }
 
-.create_chat_section {
+.create-chat-section {
     z-index: 12;
     display: flex;
     flex-direction: row;
@@ -749,14 +749,14 @@ td>i {
     height: 600px;
 }
 
-.create_chat_top_bar {
+.create-chat-top-bar {
     height: 50px;
     width: 100%;
     text-align: center;
     line-height: 50px;
 }
 
-.create_chat_left_list {
+.create-chat-left-list {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -765,7 +765,7 @@ td>i {
     top: 59px;
 }
 
-.user_list {
+.user-list {
     width: 300px;
     height: 52px;
     border: solid 1px #707070;
@@ -773,7 +773,7 @@ td>i {
     line-height: 52px;
 }
 
-.user_list_filter {
+.user-list-filter {
     display: table-cell;
     position: absolute;
     left: 0px;
@@ -784,7 +784,7 @@ td>i {
     border: solid 1px #707070;
 }
 
-.create_chat_right_list {
+.create-chat-right-list {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -919,4 +919,34 @@ td>i {
     margin-top: 3%;
     max-width: 90%;
     margin-left: 50px;
+}
+
+.chat-create-button {
+    position: absolute;
+    left: -110px;
+    top: 480px;
+}
+
+.chat-exit-button {
+    position: relative;
+    right: -160px;
+    top: 0px;
+}
+
+.all-messages {
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+.state-select {
+    z-index: 10;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
 }
