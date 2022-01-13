@@ -1,119 +1,119 @@
 <template>
   <div class="main-container">
-    <div class="chat_list">
-      <div class="chat_room">
+    <div class="chat-list">
+      <div class="chat-room">
         Chat Room <button class="cypress-add" @click="windowSate('create')">+</button>
       </div>
       <div
         v-for="chat in chats"
         :key="chat"
-        class="chat_el cypress-chat-room"
+        class="chat-el cypress-chat-room"
         @click="getMessagesChat(chat.chat_id)"
       >
-        <div class="chat_el_sub">
-          <div class="chat_el_icon">
+        <div class="chat-el-sub">
+          <div class="chat-el-icon">
             {{ chat.chat_id }}
           </div>
-          <h2 class="chat_el_desc">
+          <h2 class="chat-el-desc">
             <i class="fas fa-id-card"></i> {{ chat.chat_id }}
           </h2>
         </div>
       </div>
     </div>
-    <div class="chat_right_box">
-      <div v-if="state == 'select'" class="state_select">
-        <div class="chat_msg" ref="chat_msg">
+    <div class="chat-right-box">
+      <div v-if="state == 'select'" class="state-select">
+        <div class="chat-msg" ref="chat-msg">
           <div
             v-for="msg in msgs"
             :key="msg"
-            class="all_messages"
+            class="all-messages"
           >
             <div v-if="msg.sender_id == this.id" class="text-right">
-              <div class="my_msg">
+              <div class="my-msg">
                 {{ msg.content }}
               </div>
               <br />
-              <div class="my_info">
+              <div class="my-info">
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
               </div>
             </div>
             <div v-else class="text-left">
-              <div class="other_msg">
+              <div class="other-msg">
                 {{ msg.content }}
               </div>
               <br />
-              <div class="other_info">
+              <div class="other-info">
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
               </div>
             </div>
           </div>
         </div>
-        <div class="chat_section">
-          <input class="chat_bar cypress-chat-box" />
-          <button @click="sendMessage()" class="fas fa-paper-plane button_send_msg cypress-send-msg"></button>
+        <div class="chat-section">
+          <input class="chat-bar cypress-chat-box" />
+          <button @click="sendMessage()" class="fas fa-paper-plane button-send-msg cypress-send-msg"></button>
         </div>
       </div>
-      <div v-if="state == 'create'" class="create_chat_section">
-        <div class="create_chat_top_bar">
+      <div v-if="state == 'create'" class="create-chat-section">
+        <div class="create-chat-top-bar">
           Fenêtre de creation d'une salle de chat
           <button
-            class="chat_exit_button"
+            class="chat-exit-button"
             @click="windowSate('none')"
           >
             X
           </button>
         </div>
-        <div class="create_chat_left_list">
-          <div class="user_list">Liste des utilisateurs</div>
+        <div class="create-chat-left-list">
+          <div class="user-list">Liste des utilisateurs</div>
           <input
             @input="filter"
             v-model="filterText"
-            class="user_list_filter"
+            class="user-list-filter"
           />
-          <div class="user_can_be_add">
+          <div class="user-can-be-add">
             <div
               v-for="user in users_not_added_filtered"
               :key="user"
-              class="chat_el cypress-invite"
+              class="chat-el cypress-invite"
               @click="inviteUsers(user)"
             >
-              <div class="chat_el_sub">
-                <div class="chat_el_icon">
+              <div class="chat-el-sub">
+                <div class="chat-el-icon">
                   {{ user.email[0] }}
                 </div>
-                <h2 class="chat_el_desc">
+                <h2 class="chat-el-desc">
                   <i class="fas fa-id-card"></i> {{ user.email }}
                 </h2>
               </div>
             </div>
           </div>
         </div>
-        <div class="create_chat_right_list">
-          <div class="user_list">Liste des utilisateurs ajouté</div>
+        <div class="create-chat-right-list">
+          <div class="user-list">Liste des utilisateurs ajouté</div>
           <input
             @input="filterAdd"
             v-model="filterTextAdd"
-            class="user_list_filter"
+            class="user-list-filter"
           />
-          <div class="user_add">
+          <div class="user-add">
             <div
               v-for="user in users_added_filtered"
               :key="user"
-              class="chat_el"
+              class="chat-el"
               @click="uninviteUsers(user)"
             >
-              <div class="chat_el_sub">
-                <div class="chat_el_icon">
+              <div class="chat-el-sub">
+                <div class="chat-el-icon">
                   {{ user.email[0] }}
                 </div>
-                <h2 class="chat_el_desc">
+                <h2 class="chat-el-desc">
                   <i class="fas fa-id-card"></i> {{ user.email }}
                 </h2>
               </div>
             </div>
           </div>
           <button
-            class="chat_create_button cypress-create"
+            class="chat-create-button cypress-create"
             @click="createChat"
           >
             Créer une salle de chat
