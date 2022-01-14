@@ -21,5 +21,6 @@ export default createRouter({
         { path: "/aboutthegroup", component: () => import("./views/AboutGroup") },
         { path: "/abouttheproject", component: () => import("./views/AboutProject") },
         { path: "/useorgania", component: () => import("./views/HowToUseThePlatform") },
+        { path: "/hospitals", component: () => import("./views/HospitalsPanel") },
     ],
 });
