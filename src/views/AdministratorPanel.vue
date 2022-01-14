@@ -89,6 +89,7 @@
 <script>
 export default {
   name: "AdministratorPanel",
+  emits: ["login"],
   data() {
 
     return {
