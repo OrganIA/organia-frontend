@@ -63,16 +63,34 @@
         </header>
         <section class="modal-card-body">
           <div class="row mt-4">
-            <a :href="'mailto:' + this.user.email"  class="button is-info is-light mx-auto">{{ this.user.email }}</a>
-            <div class="button is-info is-light mx-auto"></div>
+            <a :href="'mailto:' + this.user.email" class="button is-info is-light mx-auto role-btn">{{ this.user.email }}</a>
+            <div class="button is-info is-light mx-auto role-btn">{{ this.role.name }}</div>
           </div>
           <div class="row mt-4">
-            <div class="button is-info is-light mx-auto">un</div>
-            <div class="button is-info is-light mx-auto">deux</div>
+            <div class="button is-light mx-auto role-btn"
+                 v-bind:class="{'is-primary': this.role.can_manage_users, 'is-danger': ! this.role.can_manage_users }">
+              Peut gérer les utilisateurs
+            </div>
+            <div class="button is-light mx-auto role-btn"
+                 v-bind:class="{'is-primary': this.role.can_manage_persons, 'is-danger': ! this.role.can_manage_persons }">
+              Peut gérer les patients
+            </div>
           </div>
           <div class="row mt-4">
-            <div class="button is-info is-light mx-auto">un</div>
-            <div class="button is-info is-light mx-auto">deux</div>
+            <div class="button is-light mx-auto role-btn"
+                 v-bind:class="{'is-primary': this.role.can_manage_roles, 'is-danger': ! this.role.can_manage_roles }">
+              Peut gérer les rôles
+            </div>
+            <div class="button is-light mx-auto role-btn"
+                 v-bind:class="{'is-primary': this.role.can_manage_hospitals, 'is-danger': ! this.role.can_manage_hospitals }">
+              Peut gérer les hôpitaux
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="button is-light mx-auto role-btn"
+                 v-bind:class="{'is-primary': this.role.can_invite, 'is-danger': ! this.role.can_invite }">
+              Peut créer des invitations
+            </div>
           </div>
         </section>
         <footer class="modal-card-foot">
@@ -96,6 +114,7 @@ export default {
       state: "",
       users: {},
       user: {},
+      role: {},
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "email",
@@ -188,6 +207,20 @@ export default {
           .get(`/users/${this.user.id}`)
           .then((response) => {
             this.user = response.data;
+            this.getRoleById(this.user.role_id)
+          })
+          .catch((error) => {
+            console.log(error)
+            this.$toast.error(error.message);
+            setTimeout(this.$toast.clear, 3000)
+          });
+
+    },
+    getRoleById(id) {
+      this.$http
+          .get(`/roles/${id}`)
+          .then((response) => {
+            this.role = response.data;
           })
           .catch((error) => {
             console.log(error)
