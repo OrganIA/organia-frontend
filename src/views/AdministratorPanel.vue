@@ -63,8 +63,8 @@
         </header>
         <section class="modal-card-body">
           <div class="row mt-4">
-            <a v-bind:href="{ email }" class="button is-info is-light mx-auto">{{ this.user.email }}</a>
-            <div class="button is-info is-light mx-auto">deux</div>
+            <a :href="'mailto:' + this.user.email"  class="button is-info is-light mx-auto">{{ this.user.email }}</a>
+            <div class="button is-info is-light mx-auto"></div>
           </div>
           <div class="row mt-4">
             <div class="button is-info is-light mx-auto">un</div>
@@ -92,6 +92,7 @@ export default {
   data() {
 
     return {
+      mailLink: "mailto:",
       state: "",
       users: {},
       user: {},
