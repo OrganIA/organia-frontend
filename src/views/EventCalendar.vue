@@ -1,4 +1,4 @@
-<!-- <template>  
+<template>  
   <head>
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
   </head>
@@ -117,4 +117,3 @@ export default {
   }
 }
 </style>
--->
