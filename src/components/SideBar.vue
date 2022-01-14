@@ -32,9 +32,13 @@
         <i class="fas fa-terminal cypress-to-logs"></i>
         <span class="nav-text">Historique d'actions</span>
       </router-link>
-      <router-link class="block button is-info" to="/eventCalendar">
+      <router-link class="block button is-info" to="/eventcalendar">
         <i class="fas fa-terminal cypress-to-logs"></i>
         <span class="nav-text">Calendrier d'evenements</span>
+      </router-link>
+      <router-link class="block button is-info" to="/eventlist">
+        <i class="fas fa-terminal cypress-to-logs"></i>
+        <span class="nav-text">Liste d'evenements</span>
       </router-link>
       <router-link class="block button is-info" to="/chat">
         <i class="fas fa-terminal cypress-to-chats"></i>
