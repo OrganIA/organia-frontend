@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <PresentationNavbar/>
+  <div class="centered-container">
     <form @submit.prevent="register()">
       <div class="content">
         <h2>S'inscrire</h2>
@@ -27,7 +28,7 @@
         </div>
       </div>
 
-      <button type="submit" class="cypress-register button is-info mr-6">S'inscrire</button>
+      <button type="submit" class="cypress-register button is-info mr-6">Confirmer</button>
       <router-link to="/login" class="cypress-to-login  button is-link">Se connecter</router-link
       >
     </form>
@@ -35,9 +36,12 @@
 </template>
 
 <script>
+import PresentationNavbar from "@/components/PresentationNavbar";
+
 export default {
   name: "Register",
   emits: ["login"],
+  components: {PresentationNavbar},
   data() {
     return {
       email: "",

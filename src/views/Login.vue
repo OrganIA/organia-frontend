@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <PresentationNavbar />
+  <div class="centered-container">
     <form @submit.prevent="login()">
       <div class="content">
         <h2>Se connecter</h2>
@@ -7,36 +8,42 @@
       <div class="field">
         <div class="control">
           <input
-              v-model="email"
-              placeholder="email"
-              type="email"
-              class="cypress-email input"
-              required
+            v-model="email"
+            placeholder="email"
+            type="email"
+            class="cypress-email input"
+            required
           />
         </div>
       </div>
       <div class="field">
         <div class="control">
           <input
-              v-model="password"
-              placeholder="mot de passe"
-              type="password"
-              class="cypress-password input"
-              required
+            v-model="password"
+            placeholder="mot de passe"
+            type="password"
+            class="cypress-password input"
+            required
           />
         </div>
       </div>
-        <button type="submit" class="cypress-login button is-info mr-6">Se connecter</button>
-        <router-link to="/register" class="cypress-to-register  button is-link">S'inscrire</router-link>
-
+      <button type="submit" class="cypress-login button is-info mr-6">
+        Confirmer
+      </button>
+      <router-link to="/register" class="cypress-to-register button is-link"
+        >S'inscrire</router-link
+      >
     </form>
   </div>
 </template>
 
 <script>
+import PresentationNavbar from "../components/PresentationNavbar";
+
 export default {
   name: "Login",
   emits: ["login"],
+  components: { PresentationNavbar },
   data() {
     return {
       email: "",
@@ -44,13 +51,17 @@ export default {
     };
   },
   methods: {
-    getRole(role_id) {
+    getRole(role_id, id) {
       this.$http
         .get(`/roles/${role_id}`)
         .then((response) => {
           this.$toast.success("Connexion réussie !");
           setTimeout(this.$toast.clear, 3000);
-          this.$store.commit("login", { email: this.email, role: response.data});
+          this.$store.commit("login", {
+            id: id,
+            email: this.email,
+            role: response.data,
+          });
           this.$emit("login", true);
           this.$router.push("/");
         })
@@ -73,7 +84,7 @@ export default {
             "Authorization"
           ] = `Bearer ${response.data.token}`;
           this.$cookies.set("token", response.data.token, -1);
-          this.getRole(response.data.user.role_id);
+          this.getRole(response.data.user.role_id, response.data.user.id);
         })
         .catch((error) => {
           console.log(error.response.data.detail);

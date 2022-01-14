@@ -1,7 +1,7 @@
 <template>
   <h1>Panel Administrateur</h1>
-  <div class="main-container">
-    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
+  <div class="main-container-admin-panel">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-info">
       <thead>
       <tr>
         <th>Id</th>
@@ -34,6 +34,7 @@
 <script>
 export default {
   name: "AdministratorPanel",
+  emits: ["login"],
   data() {
     return {
       users: {},

@@ -1,7 +1,10 @@
 <template>
-  <p>Landing</p>
+  Tkt
 </template>
 
 <script>
-export default {};
+export default {
+  name: "LandingPage",
+  emits: ["login"]
+};
 </script>
