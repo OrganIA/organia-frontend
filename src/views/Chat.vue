@@ -338,12 +338,12 @@ export default {
     websocketSetup() {
       if (this.websocket == null) {
         this.websocket = new WebSocket(
-          `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.selected_chat}`
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
         );
       } else {
         this.websocket.close();
         this.websocket = new WebSocket(
-          `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.selected_chat}`
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
         );
       }
       this.websocket.onopen = async () => {
