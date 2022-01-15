@@ -25,7 +25,7 @@
       <div v-if="state == 'select'" class="state-select">
         <div class="chat-msg" ref="chat-msg">
           <div v-for="msg in messages_list" :key="msg" class="all-messages">
-            <div v-if="msg.sender_id == this.id" class="text-right">
+            <div v-if="msg.sender_id == this.id" class="text-right cypress-message">
               <div class="my-msg">
                 {{ msg.content }}
               </div>
@@ -34,7 +34,7 @@
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
               </div>
             </div>
-            <div v-else class="text-left">
+            <div v-else class="text-left cypress-message">
               <div class="other-msg">
                 {{ msg.content }}
               </div>
