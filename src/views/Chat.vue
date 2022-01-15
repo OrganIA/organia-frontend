@@ -129,7 +129,7 @@ export default {
   emits: ["login"],
   data() {
     return {
-      id: this.$store.getters.getID,
+      id: 0,
       chats: [],
       selected_chat: 0,
       filterText: "",
@@ -146,6 +146,7 @@ export default {
     };
   },
   created() {
+    this.getMe();
     this.getChats();
     this.getUsers();
   },
@@ -154,7 +155,7 @@ export default {
   },
   methods: {
     reset() {
-      this.id = this.$store.getters.getID;
+      this.getMe();
       this.chats = [];
       this.filterText = "";
       this.filterTextAdd = "";
@@ -203,7 +204,18 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+    getMe() {
+      this.$http
+        .get("/users/me")
+        .then((response) => {
+          this.id = response.data.id;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
     getMessagesChat(id) {
+      this.message_to_send = "";
       this.$http
         .get(`/chats/messages/${id}`)
         .then((response) => {
@@ -236,8 +248,7 @@ export default {
       let h = date.getHours();
       let day = date.getDate();
       let month = date.getMonth();
-
-      return h + ":" + m + " - " + day + "/" + month;
+      return `${h}:${m} - ${day}/${month + 1}`;
     },
     windowSate(state) {
       this.state = state;
