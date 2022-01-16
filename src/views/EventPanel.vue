@@ -9,10 +9,7 @@
     <p class="search content">Rechercher par</p>
     <div class="search-block">
       <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
-        <option value="title">Libellé</option>
-        <option value="location">Lieu</option>
-        <option value="startDate">Date de debut</option>
-        <option value="endDate">Date de fin</option>
+        <option value="date">Date</option>
         <option value="description">Description</option>
       </select>
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
@@ -21,23 +18,17 @@
     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
         <tr>
-          <th @click="updateFilter('title')">Libellé</th>
-          <th @click="updateFilter('location')">Lieu</th>
-          <th @click="updateFilter('startDate')">Date de debut</th>
-          <th @click="updateFilter('endDate')">Date de fin</th>
+          <th @click="updateFilter('date')">Date</th>
           <th @click="updateFilter('description')">Description</th>
           <th>Éditer</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="event in events" :key="event">
-          <td>{{ event.title }}</td>
-          <td>{{ event.location }}</td>
-          <td>{{ event.startDate }}</td>
-          <td>{{ event.endDate }}</td>
-          <td>{{ event.description }}</td>
+          <td>{{ calendar.date }}</td>
+          <td>{{ calendar.description }}</td>
           <td>
-            <router-link :to="`/events/edit/${event.id}`">
+            <router-link :to="`/eventlist/edit/${event.id}`">
               <i class="fas fa-edit button is-primary"></i>
             </router-link>
           </td>
@@ -68,7 +59,7 @@ export default {
       showModal: false,
       currentEvent: {},
       sortingOrder: true,
-      sortingKey: "startDate",
+      sortingKey: "date",
       selectFilter: "title",
       filterText: "",
       eventsBackup: [],
@@ -80,17 +71,17 @@ export default {
   methods: {
     getAllevents() {
       this.$http
-        .get("/listings/events", {
+        .get("/calendar", {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
           response.data.forEach((element) => {
-            element.event.startDate = new Date(
-              element.event.startDate
+            element.calendar.date = new Date(
+              element.calendar.date
             ).toDateString();
           });
-          this.events = response.data;
-          this.eventsBackup = this.events;
+          this.calendar = response.data;
+          this.calendarBackup = this.calendar;
         })
         .catch((error) => {
           console.log(error);
@@ -116,48 +107,48 @@ export default {
     },
     checkNull(a, b) {
       if (
-        a.event[this.sortingKey] == null &&
-        b.event[this.sortingKey] == null
+        a.date[this.sortingKey] == null &&
+        b.date[this.sortingKey] == null
       )
         return 0;
-      if (a.event[this.sortingKey] == null) return 1;
-      else if (b.event[this.sortingKey] == null) return -1;
+      if (a.date[this.sortingKey] == null) return 1;
+      else if (b.date[this.sortingKey] == null) return -1;
       return 0;
     },
     sortData() {
       if (
-        ["title", "location", "description"].includes(
+        ["description"].includes(
           this.sortingKey
         )
       ) {
         this.events.sort((a, b) => {
           if (
-            a.event[this.sortingKey] == null ||
-            b.event[this.sortingKey] == null
+            a.date[this.sortingKey] == null ||
+            b.date[this.sortingKey] == null
           )
             return this.checkNull(a, b);
           if (this.sortingOrder)
-            return a.event[this.sortingKey].localeCompare(
-              b.event[this.sortingKey]
+            return a.date[this.sortingKey].localeCompare(
+              b.date[this.sortingKey]
             );
-          return b.event[this.sortingKey].localeCompare(
-            a.event[this.sortingKey]
+          return b.date[this.sortingKey].localeCompare(
+            a.date[this.sortingKey]
           );
         });
-      } else if (["startDate", "endDate",].includes(this.sortingKey)) {
+      } else if (["date"].includes(this.sortingKey)) {
         this.events.sort((a, b) => {
           if (
-            a.event[this.sortingKey] == null ||
-            b.event[this.sortingKey] == null
+            a.date[this.sortingKey] == null ||
+            b.date[this.sortingKey] == null
           )
             return this.checkNull(a, b);
           if (this.sortingOrder)
-            return Date.parse(a.event[this.sortingKey]) >
-              Date.parse(b.event[this.sortingKey])
+            return Date.parse(a.date[this.sortingKey]) >
+              Date.parse(b.date[this.sortingKey])
               ? -1
               : 1;
-          return Date.parse(b.event[this.sortingKey]) >
-            Date.parse(a.event[this.sortingKey])
+          return Date.parse(b.date[this.sortingKey]) >
+            Date.parse(a.date[this.sortingKey])
             ? -1
             : 1;
         });
@@ -170,8 +161,8 @@ export default {
       }
       if (this.selectFilter in this.eventsBackup[0].event) {
         this.events = this.eventsBackup.filter((el) => {
-          if (el.event[this.selectFilter] != null)
-            return el.event[this.selectFilter].includes(this.filterText);
+          if (el.date[this.selectFilter] != null)
+            return el.date[this.selectFilter].includes(this.filterText);
         });
       } else {
         this.events = this.eventsBackup.filter((el) => {

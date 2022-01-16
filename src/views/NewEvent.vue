@@ -4,42 +4,13 @@
       <h2 class="form-title title is-3">Ajouter un evenement</h2>
       <div class="form-fields">
         <div class="form-input small required">
-          <label class="label">Libellé</label>
+          <label class="label">Date</label>
           <input
-            v-model="title"
-            placeholder="title"
-            type="text"
-            class="cypress-first-name input is-info"
-            required
-          />
-        </div>
-        <div class="form-input small required">
-          <label class="label">Lieu</label>
-          <input
-            v-model="location"
-            placeholder="location"
-            type="text"
-            class="cypress-organ input is-info"
-            required
-          />
-        </div>
-        <div class="form-input small required">
-          <label class="label">Date de debut</label>
-          <input
-            v-model="startDate"
-            placeholder="startDate"
+            v-model="date"
+            placeholder="date"
             type="datetime-local"
             class="cypress-birth-date input is-info"
             required
-          />
-        </div>
-        <div class="form-input small">
-          <label class="label">Date de fin</label>
-          <input
-            v-model="endDate"
-            placeholder="endDate"
-            type="datetime-local"
-            class="cypress-admission-date input is-info"
           />
         </div>
         <div class="form-input small">
@@ -62,28 +33,20 @@ export default {
   name: "NewEvent",
   data() {
     return {
-      title: "",
-      location: "",
-      startDate: "",
-      endDate: "",
-      supervisor_id: 0,
+      date: "",
       description: "",
     };
   },
   methods: {
     createEvent() {
       this.$http
-        .post("/events", {
-          libelle: this.libelle,
-          location: this.location,
-          startDate: this.startDate,
-          endDate: this.endDate,
-          supervisor_id: this.supervisor_id,
+        .post("/calendar", {
+          date: this.date,
           ...(this.description ? { description: this.description } : {}),
         })
         .then((response) => {
           this.event_id = response.data.id;
-          this.$router.push("/events")
+          this.$router.push("/eventlist")
         })
         .catch((error) => {
           this.$toast.error(

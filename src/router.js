@@ -20,6 +20,7 @@ export default createRouter({
         { path: "/eventcalendar", component: () => import("./views/EventCalendar.vue") },
         { path: "/eventlist", component: () => import("./views/EventPanel.vue") },
         { path: "/eventlist/add", component: () => import("./views/NewEvent.vue") },
+        { path: "/eventlist/edit", component: () => import("./views/EditEventPanel.vue") },
         { path: "/chat", component: () => import("./views/Chat") },
         { path: "/aboutthegroup", component: () => import("./views/AboutGroup") },
         { path: "/abouttheproject", component: () => import("./views/AboutProject") },

@@ -1,51 +1,22 @@
 <template>
   <div>
     <form @submit.prevent="submitForm()" class="show-requireds">
-      <h2 class="form-title title is-3">Éditer un eventement</h2>
+      <h2 class="form-title title is-3">Éditer un evenement</h2>
       <div class="form-fields">
         <div class="form-input small required">
-          <label class="label">Libellé</label>
+          <label class="label">Date</label>
           <input
-            class="input is-info"
-            v-model="event.title"
-            placeholder="title"
-            type="text"
-            required
-          />
-        </div>
-        <div class="form-input small required">
-          <label class="label">Lieu</label>
-          <input
-            class="input is-info"
-            v-model="event.location"
-            placeholder="location"
-            type="text"
-            required
-          />
-        </div>
-        <div class="form-input small required">
-          <label class="label">Date de debut</label>
-          <input
-            v-model="event.startDate"
-            placeholder="startDate"
+            v-model="calendar.date"
+            placeholder="date"
             type="datetime-local"
             class="input is-info"
           />
         </div>
-         <div class="form-input small required">
-          <label class="label">Date de fin</label>
-          <input
-            v-model="event.endDate"
-            placeholder="endDate"
-            type="datetiem-local"
-            class="input is-info"
-          />
-        </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Description</label>
           <textarea
             class="textarea"
-            v-model="event.description"
+            v-model="calendar.description"
             placeholder="description"
           />
         </div>
@@ -55,7 +26,7 @@
         <button type="submit" class="cypress-add button is-info mx-auto mr-6">
           Enregistrer
         </button>
-        <router-link to="/events" class="button is-danger ml-6"
+        <router-link to="/eventlist" class="button is-danger ml-6"
           >Retour</router-link
         >
         <button
@@ -72,23 +43,22 @@
 
 <script>
 export default {
-  name: "EditeventsPanel",
+  name: "EditeventPanel",
   props: {
     id: String,
   },
   data() {
     return {
-      event: {},
-      event: {},
+      calendar: {},
       all_organs: [],
     };
   },
   methods: {
     geteventByID() {
       this.$http
-        .get(`/events/${this.event.id}`)
+        .get(`/calendar/${this.calendar.id}`)
         .then((response) => {
-          this.event = response.data;
+          this.calendar = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -98,16 +68,13 @@ export default {
     },
     submitForm() {
       this.$http
-        .post(`/events/${this.event.id}`, {
-          title: this.event.title,
-          location: this.event.location,
-          startDate: this.event.startDate,
-          endDate: this.event.endDate,
-          ...(this.event.description ? { notes: this.event.description } : {}),
+        .post(`/calendar/${this.calendar.id}`, {
+          date: this.calendar.date,
+          ...(this.calendar.description ? { notes: this.calendar.description } : {}),
           event_id: this.id,
         })
         .then(() => {
-          this.$router.push("/events");
+          this.$router.push("/eventlist");
         })
         .catch((error) => {
           console.log(error);
@@ -116,14 +83,14 @@ export default {
         });
     },
     redirect() {
-      window.location.replace("/events");
+      window.location.replace("/calendar");
     },
     delete_event() {
       this.$http
-        .delete(`/events/${this.event.id}`)
+        .delete(`/calendar/${this.calendar.id}`)
         .then(() => {
-          this.$toast.success("Suppression effectué");
-          this.$router.push("/events");
+          this.$toast.success("Suppression effectuée");
+          this.$router.push("/eventlist");
         })
         .catch((error) => {
           console.log(error);
