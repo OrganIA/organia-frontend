@@ -72,7 +72,6 @@ export default {
   },
   methods: {
     dayClick(a) {
-      // eslint-disable-next-line no-console
       console.log("origin DOM click", a);
     }
   }
