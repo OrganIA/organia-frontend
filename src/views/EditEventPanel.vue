@@ -68,9 +68,8 @@ export default {
     submitForm() {
       this.$http
         .post(`/calendar/${this.id}`, {
-          date: this.date,
-          description: this.description,
-          id: this.id,
+          date: this.calendar.date,
+          description: this.calendar.description,
         })
         .then(() => {
           this.$router.push("/eventlist");
