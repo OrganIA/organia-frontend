@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-describe('Add Event', () => {
-  it('Tries to open modal in the event panel should succeed', () => {
+describe('Add event', () => {
+  it('Tries to open modal in the event panel should fail', () => {
     cy.visit('http://localhost:8080/')
 
     cy.get('.cypress-to-register').click()
@@ -30,15 +30,11 @@ describe('Add Event', () => {
     cy.url().should('eq', 'http://localhost:8080/eventlist/add')
 
     cy.get('.cypress-datetime')
-      .type('2022-01-17T14:44')
-      .should('have.value', '2022-01-17T14:44')
-
-    cy.get('.cypress-textarea')
-      .type('cypress evenement test')
-      .should('have.value', 'cypress evenement test')
+      .type('2022-06-01T14:44')
+      .should('have.value', '2022-06-01T14:44')
 
     cy.get('.cypress-add').click();
 
-    cy.url().should('eq', 'http://localhost:8080/eventlist')
+    cy.url().should('eq', 'http://localhost:8080/eventlist/add')
   })
 })

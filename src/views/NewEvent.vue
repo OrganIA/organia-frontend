@@ -9,13 +9,13 @@
             v-model="date"
             placeholder="date"
             type="datetime-local"
-            class="cypress-birth-date input is-info"
+            class="cypress-datetime input is-info"
             required
           />
         </div>
         <div class="form-input small">
           <label class="label">Description</label>
-          <textarea v-model="description" placeholder="description" class="textarea"/>
+          <textarea v-model="description" placeholder="description" class="cypress-textarea" required/>
           <p class="required-notice">* Obligatoire</p>
 
         </div>

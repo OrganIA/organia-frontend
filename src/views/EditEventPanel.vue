@@ -10,6 +10,7 @@
             placeholder="date"
             type="datetime-local"
             class="input is-info"
+            required
           />
         </div>
         <div class="form-input small required">
@@ -18,6 +19,7 @@
             class="textarea"
             v-model="calendar.description"
             placeholder="description"
+            required
           />
         </div>
         <p class="required-notice">* Obligatoire</p>

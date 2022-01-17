@@ -2,7 +2,7 @@
   <div id="main">
     <h1>Evenements</h1>
     <p>
-      <router-link to="/eventList/add" class="button is-info mb-6 cypress-to-add"
+      <router-link to="/eventlist/add" class="button is-info mb-6 cypress-to-add"
         >Ajouter</router-link
       >
     </p>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 
 export default {
   name: "EventPanel",
@@ -67,8 +68,8 @@ export default {
         })
         .then((response) => {
           response.data.forEach((element) => {
-            element.date = new Date(element.date).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
-            element.created_at = new Date(element.created_at).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+            element.date = moment(String(element.date)).format('DD/MM/YYYY hh:mm');
+            element.created_at = moment(String(element.created_at)).format('DD/MM/YYYY hh:mm');
           });
           this.events = response.data;
           this.eventsBackup = this.calendar;
