@@ -43,20 +43,19 @@
 
 <script>
 export default {
-  name: "EditeventPanel",
+  name: "EditEventPanel",
   props: {
     id: String,
   },
   data() {
     return {
       calendar: {},
-      all_organs: [],
     };
   },
   methods: {
     geteventByID() {
       this.$http
-        .get(`/calendar/${this.calendar.id}`)
+        .get(`/calendar/${this.id}`)
         .then((response) => {
           this.calendar = response.data;
         })
@@ -68,10 +67,10 @@ export default {
     },
     submitForm() {
       this.$http
-        .post(`/calendar/${this.calendar.id}`, {
-          date: this.calendar.date,
-          ...(this.calendar.description ? { notes: this.calendar.description } : {}),
-          event_id: this.id,
+        .post(`/calendar/${this.id}`, {
+          date: this.date,
+          description: this.description,
+          id: this.id,
         })
         .then(() => {
           this.$router.push("/eventlist");
@@ -87,7 +86,7 @@ export default {
     },
     delete_event() {
       this.$http
-        .delete(`/calendar/${this.calendar.id}`)
+        .delete(`/calendar/${this.id}`)
         .then(() => {
           this.$toast.success("Suppression effectuée");
           this.$router.push("/eventlist");

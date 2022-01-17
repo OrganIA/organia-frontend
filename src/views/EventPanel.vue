@@ -24,16 +24,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="event in events" :key="event">
+        <tr v-for="calendar in events" :key="calendar">
           <td>{{ calendar.date }}</td>
           <td>{{ calendar.description }}</td>
           <td>
-            <router-link :to="`/eventlist/edit/${event.id}`">
+            <router-link :to="`/eventlist/edit/${calendar.id}`">
               <i class="fas fa-edit button is-primary"></i>
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info cypress-event-modal" @click="openModal(event)"></i>
+            <i class="fas fa-info cypress-event-modal" @click="openModal(calendar)"></i>
           </td>
         </tr>
       </tbody>
@@ -60,7 +60,7 @@ export default {
       currentEvent: {},
       sortingOrder: true,
       sortingKey: "date",
-      selectFilter: "title",
+      selectFilter: "date",
       filterText: "",
       eventsBackup: [],
     };
@@ -76,12 +76,12 @@ export default {
         })
         .then((response) => {
           response.data.forEach((element) => {
-            element.calendar.date = new Date(
-              element.calendar.date
+            element.date = new Date(
+              element.date
             ).toDateString();
           });
-          this.calendar = response.data;
-          this.calendarBackup = this.calendar;
+          this.events = response.data;
+          this.eventsBackup = this.calendar;
         })
         .catch((error) => {
           console.log(error);
