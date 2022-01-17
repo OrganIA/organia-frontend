@@ -998,6 +998,21 @@ td>i {
     margin-left: 50px;
 }
 
+.is-inline-grid {
+    display: inline-grid;
+}
+
+.icon-dropdown-correction {
+    position: relative;
+    margin-top: 12px;
+    margin-left: -30px;
+    margin-right: 40px;
+}
+
+.role-btn {
+ width: 15vw;
+}
+
 .chat-create-button {
     position: absolute;
     left: -110px;

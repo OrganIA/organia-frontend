@@ -15,7 +15,6 @@
 
 <script>
 import SideBar from "./components/SideBar";
-import http from "./http";
 
 export default {
   name: "App",
@@ -44,7 +43,7 @@ export default {
         });
     },
     login() {
-      http
+      this.$http
         .get("/users/me")
         .then((response) => {
           this.getRole(response.data);
@@ -82,7 +81,7 @@ export default {
   },
   created() {
     if (this.$cookies.get("token")) {
-      http.defaults.headers.common[
+      this.$http.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${this.$cookies.get("token")}`;
       this.login();
