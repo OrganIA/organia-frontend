@@ -170,7 +170,7 @@ export default {
       this.getChats();
       this.getUsers();
     },
-    getChats() {
+    async getChats() {
       this.$http
         .get("/chats")
         .then((response) => {
@@ -186,7 +186,7 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    getUsers() {
+    async getUsers() {
       this.$http
         .get("/users")
         .then((response) => {
@@ -204,7 +204,7 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    getMe() {
+    async getMe() {
       this.$http
         .get("/users/me")
         .then((response) => {
