@@ -47,34 +47,43 @@ export default {
       masks: {
         weekdays: "WWW"
       },
-      attributes: [
-        {
-          key: "any",
-          dot: true,
-          content: "blue",
-          // customData: {{ calendar.description }},
-          // dates: new Date({{ calendar.date }})
-          dates: new Date(),
-          order: 0
-        },
-        {
-          key: 'today',
-          highlight: true,
-          dates: new Date(),
-        },
-      ],
-      dayEvents: {
-        click: a => {
-          console.log("dayEvents:", a);
-        }
-      }
+      attributes: [],
     };
   },
+  mounted() {
+      this.calendarFiller()
+    },
   methods: {
-    dayClick(a) {
-      console.log("origin DOM click", a);
+    calendarFiller() {
+      this.$http
+        .get("/calendar")
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.date = new Date(
+              element.date
+            ).toDateString();          
+          });
+          response.data.forEach((item) => {
+            this.attributes.push({
+              key: item.id,
+              dot: true,
+              content: "blue",
+              customData: {
+                title: item.description,
+                class: "bg-blue-500 text-white"
+              },
+              dates: new Date(item.date).toDateString(),
+              order: 0,
+            })
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(`Erreur: ${error.response.data.detail}`);
+          setTimeout(this.$toast.clear, 3000);
+        });
     }
-  }
+  },
 };
 </script>
 
