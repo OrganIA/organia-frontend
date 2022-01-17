@@ -22,5 +22,8 @@ export default createRouter({
         { path: "/abouttheproject", component: () => import("./views/AboutProject") },
         { path: "/useorgania", component: () => import("./views/HowToUseThePlatform") },
         { path: "/hospitals", component: () => import("./views/HospitalsPanel") },
+        { path: "/hospitals/add", component: () => import("./views/NewHospital") },
+        { path: "/hospitals/info/:id", component: () => import("./views/DisplayHospitalInfo"), props: true },
+        { path: "/hospitals/edit/:id", component: () => import("./views/EditHospital"), props: true },
     ],
 });

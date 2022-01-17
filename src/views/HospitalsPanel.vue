@@ -2,7 +2,7 @@
   <div id="main">
     <h1>Liste des hôpitaux</h1>
     <p>
-      <router-link to="/donors/add" class="button is-info is-info mb-6 cypress-to-add"
+      <router-link to="/hospitals/add" class="button is-info is-info mb-6 cypress-to-add"
       >Ajouter</router-link
       >
     </p>
