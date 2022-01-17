@@ -11,6 +11,8 @@
       <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
         <option value="date">Date</option>
         <option value="description">Description</option>
+        <option value="created_at">Date de creation</option>
+        <option value="modified_at">Date de modification</option>
       </select>
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
@@ -20,6 +22,8 @@
         <tr>
           <th @click="updateFilter('date')">Date</th>
           <th @click="updateFilter('description')">Description</th>
+          <th @click="updateFilter('created_at')">Date de creation</th>
+          <th @click="updateFilter('modified_at')">Date de modification</th>
           <th>Éditer</th>
         </tr>
       </thead>
@@ -27,37 +31,27 @@
         <tr v-for="calendar in events" :key="calendar">
           <td>{{ calendar.date }}</td>
           <td>{{ calendar.description }}</td>
+          <td>{{ calendar.author.created_at }}</td>
+          <td>{{ calendar.author.updated_at }}</td>
           <td>
             <router-link :to="`/eventlist/edit/${calendar.id}`">
               <i class="fas fa-edit button is-primary"></i>
             </router-link>
           </td>
-          <td>
-            <i class="fas fa-info cypress-event-modal" @click="openModal(calendar)"></i>
-          </td>
         </tr>
       </tbody>
     </table>
-    <event-details
-      v-if="showModal == true"
-      :event="currentEvent"
-      @closeModal="closeModal"
-      class="details"
-    />
   </div>
 </template>
 
 <script>
-import EventDetails from "../components/EventDetails.vue";
 import moment from 'moment'
 
 export default {
-  components: { EventDetails },
   name: "EventPanel",
   data() {
     return {
       events: {},
-      showModal: false,
       currentEvent: {},
       sortingOrder: true,
       sortingKey: "date",
@@ -78,6 +72,10 @@ export default {
         .then((response) => {
           response.data.forEach((element) => {
             element.date = moment(String(element.date)).format('MM/DD/YYYY hh:mm');
+            element.author.created_at = moment(String(element.author.created_at)).format('MM/DD/YYYY hh:mm');
+            if (element.author.updated_at) {
+              element.author.updated_at = moment(String(element.author.updated_at)).format('MM/DD/YYYY hh:mm');
+            }
           });
           this.events = response.data;
           this.eventsBackup = this.calendar;
@@ -87,18 +85,6 @@ export default {
           this.$toast.error("Erreur : " + error.response.data.detail);
           setTimeout(this.$toast.clear, 3000);
         });
-    },
-    openModal(event) {
-      if (!this.showModal) {
-        this.showModal = true;
-        this.currentEvent = event;
-        document.getElementById("bodiv").style.display = "initial";
-      }
-    },
-    closeModal() {
-      this.showModal = false;
-      this.currentEvent = {};
-      document.getElementById("bodiv").style.display = "none";
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
