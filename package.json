@@ -17,6 +17,7 @@
     "bulma": "^0.9.3",
     "core-js": "^3.6.5",
     "cypress-real-events": "^1.6.0",
+    "moment": "^2.29.1",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
     "v-calendar": "^3.0.0-alpha.6",

@@ -49,6 +49,7 @@
 
 <script>
 import EventDetails from "../components/EventDetails.vue";
+import moment from 'moment'
 
 export default {
   components: { EventDetails },
@@ -76,9 +77,7 @@ export default {
         })
         .then((response) => {
           response.data.forEach((element) => {
-            element.date = new Date(
-              element.date
-            ).toDateString();
+            element.date = moment(String(element.date)).format('MM/DD/YYYY hh:mm');
           });
           this.events = response.data;
           this.eventsBackup = this.calendar;
