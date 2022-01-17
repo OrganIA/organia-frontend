@@ -12,7 +12,6 @@
         <option value="date">Date</option>
         <option value="description">Description</option>
         <option value="created_at">Date de creation</option>
-        <option value="modified_at">Date de modification</option>
       </select>
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
@@ -23,7 +22,6 @@
           <th @click="updateFilter('date')">Date</th>
           <th @click="updateFilter('description')">Description</th>
           <th @click="updateFilter('created_at')">Date de creation</th>
-          <th @click="updateFilter('modified_at')">Date de modification</th>
           <th>Éditer</th>
         </tr>
       </thead>
@@ -31,8 +29,7 @@
         <tr v-for="calendar in events" :key="calendar">
           <td>{{ calendar.date }}</td>
           <td>{{ calendar.description }}</td>
-          <td>{{ calendar.author.created_at }}</td>
-          <td>{{ calendar.author.updated_at }}</td>
+          <td>{{ calendar.created_at }}</td>
           <td>
             <router-link :to="`/eventlist/edit/${calendar.id}`">
               <i class="fas fa-edit button is-primary"></i>
@@ -45,7 +42,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 
 export default {
   name: "EventPanel",
@@ -71,11 +67,8 @@ export default {
         })
         .then((response) => {
           response.data.forEach((element) => {
-            element.date = moment(String(element.date)).format('MM/DD/YYYY hh:mm');
-            element.author.created_at = moment(String(element.author.created_at)).format('MM/DD/YYYY hh:mm');
-            if (element.author.updated_at) {
-              element.author.updated_at = moment(String(element.author.updated_at)).format('MM/DD/YYYY hh:mm');
-            }
+            element.date = new Date(element.date).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+            element.created_at = new Date(element.created_at).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
           });
           this.events = response.data;
           this.eventsBackup = this.calendar;
