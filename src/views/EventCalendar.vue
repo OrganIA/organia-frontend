@@ -1,67 +1,66 @@
-<template>  
-  <head>
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-  </head>
-  <h1>Calendrier des evenements</h1>
-  <div class="text-center section">
-    <v-calendar
-      class="custom-calendar max-w-full"
-      :masks="masks"
-      :attributes="attributes"
-      disable-page-swipe
-    >
-    <template v-slot:day-content="{ day, attributes }">
-      <div
-        v-on="dayEvents"
-        @click="dayClick"
-        class="flex flex-col h-full z-10 overflow-hidden"
-        :class="day.year"
+<template>
+  <div>
+    <h1>Calendrier des evenements</h1>
+    <div class="text-center section">
+      <v-calendar
+        class="custom-calendar max-w-full"
+        :masks="masks"
+        :attributes="attributes"
+        disable-page-swipe
       >
-        <span
-          class="day-label text-sm text-gray-900"
-          :class="[day.dateTime === today ? 'today rounded-sm' : '' ]"
-        >{{ day.day }}</span>
-        <div class="flex-grow overflow-y-scroll overflow-x-auto">
-          <p
-            v-for="attr in attributes"
-            :key="attr.key"
-            class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1"
-            :class="attr.customData.class"
-          >{{ attr.customData.title }}</p>
-        </div>
-      </div>
-    </template>
-    </v-calendar>
+        <template v-slot:day-content="{ day, attributes }">
+          <div
+            @click="dayClick"
+            class="flex flex-col h-full z-10 overflow-hidden"
+            :class="day.year"
+          >
+            <span
+              class="day-label text-sm text-gray-900"
+              :class="[day.dateTime === today ? 'today rounded-sm' : '']"
+              >{{ day.day }}</span
+            >
+            <div class="flex-grow overflow-y-scroll overflow-x-auto">
+              <p
+                v-for="attr in attributes"
+                :key="attr.key"
+                class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1"
+                :class="attr.customData.class"
+              >
+                {{ attr.customData.title }}
+              </p>
+            </div>
+          </div>
+        </template>
+      </v-calendar>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    const now = new Date();
     const month = new Date().getMonth();
     const year = new Date().getFullYear();
-    const day = now.getDate();
+    const day = new Date().getDate();
     return {
       today: new Date(year, month, day) * 1,
       masks: {
-        weekdays: "WWW"
+        weekdays: "WWW",
       },
       attributes: [],
     };
   },
+  emits: ["login"],
   mounted() {
-      this.calendarFiller()
-    },
+    this.calendarFiller();
+  },
   methods: {
     calendarFiller() {
       this.$http
         .get("/calendar")
         .then((response) => {
           response.data.forEach((element) => {
-            element.date = new Date(
-              element.date
-            ).toDateString();          
+            element.date = new Date(element.date).toDateString();
           });
           response.data.forEach((item) => {
             this.attributes.push({
@@ -70,11 +69,11 @@ export default {
               content: "blue",
               customData: {
                 title: item.description,
-                class: "bg-blue-500 text-white"
+                class: "bg-blue-500 text-white",
               },
               dates: new Date(item.date).toDateString(),
               order: 0,
-            })
+            });
           });
         })
         .catch((error) => {
@@ -82,7 +81,7 @@ export default {
           this.$toast.error(`Erreur: ${error.response.data.detail}`);
           setTimeout(this.$toast.clear, 3000);
         });
-    }
+    },
   },
 };
 </script>
