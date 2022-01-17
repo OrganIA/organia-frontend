@@ -35,7 +35,5 @@ describe('Send Message', () => {
     cy.get('.cypress-send-msg').click();
 
     cy.get('.cypress-message').last().contains(message);
-
-    cy.url().should('eq', 'http://localhost:8080/chat')
   })
 })
