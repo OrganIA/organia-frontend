@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-describe('Add chat room', () => {
-  it('Tries to add a chat room should succeed', () => {
+describe('Go to caledar', () => {
+  it('Tries to go to the calendar page should succeed', () => {
     cy.visit('http://localhost:8080/')
 
     cy.get('.cypress-to-register').click()
@@ -21,21 +21,8 @@ describe('Add chat room', () => {
 
     cy.getCookie("token").should('not.be.null')
 
-    cy.get('.cypress-to-chats').click();
-    
-    cy.url().should('eq', 'http://localhost:8080/chat')
-    
-    cy.intercept({
-      method: 'GET',
-      url: 'http://localhost:8000/api/chats/',
-    }).as('getChats');
+    cy.get('.cypress-to-calendar').click();
 
-    cy.get('.cypress-add').click();
-
-    cy.get('.cypress-invite').eq(0).click();
-
-    cy.get('.cypress-create').click();
-
-    cy.url().should('eq', 'http://localhost:8080/chat')
+    cy.url().should('eq', 'http://localhost:8080/eventcalendar')
   })
 })

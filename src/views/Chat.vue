@@ -2,7 +2,8 @@
   <div class="main-container">
     <div class="chat-list">
       <div class="chat-room">
-        Chat Room <button class="cypress-add" @click="windowSate('create')">+</button>
+        Chat Room
+        <button class="cypress-add" @click="windowSate('create')">+</button>
       </div>
       <div
         v-for="chat in chats"
@@ -23,12 +24,8 @@
     <div class="chat-right-box">
       <div v-if="state == 'select'" class="state-select">
         <div class="chat-msg" ref="chat-msg">
-          <div
-            v-for="msg in msgs"
-            :key="msg"
-            class="all-messages"
-          >
-            <div v-if="msg.sender_id == this.id" class="text-right">
+          <div v-for="msg in messages_list" :key="msg" class="all-messages">
+            <div v-if="msg.sender_id == this.id" class="text-right cypress-message">
               <div class="my-msg">
                 {{ msg.content }}
               </div>
@@ -37,7 +34,7 @@
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
               </div>
             </div>
-            <div v-else class="text-left">
+            <div v-else class="text-left cypress-message">
               <div class="other-msg">
                 {{ msg.content }}
               </div>
@@ -48,18 +45,22 @@
             </div>
           </div>
         </div>
-        <div class="chat-section">
-          <input class="chat-bar cypress-chat-box" />
-          <button @click="sendMessage()" class="fas fa-paper-plane button-send-msg cypress-send-msg"></button>
+        <div class="chat_section">
+          <input
+            v-model="message_to_send"
+            @keypress.enter="sendMessage"
+            class="chat-bar cypress-chat-box"
+          />
+          <button
+            @click="sendMessage()"
+            class="fas fa-paper-plane button-send-msg cypress-send-msg"
+          ></button>
         </div>
       </div>
       <div v-if="state == 'create'" class="create-chat-section">
         <div class="create-chat-top-bar">
           Fenêtre de creation d'une salle de chat
-          <button
-            class="chat-exit-button"
-            @click="windowSate('none')"
-          >
+          <button class="chat-exit-button" @click="windowSate('none')">
             X
           </button>
         </div>
@@ -112,10 +113,7 @@
               </div>
             </div>
           </div>
-          <button
-            class="chat-create-button cypress-create"
-            @click="createChat"
-          >
+          <button class="chat-create-button cypress-create" @click="createChat">
             Créer une salle de chat
           </button>
         </div>
@@ -133,28 +131,36 @@ export default {
     return {
       id: 0,
       chats: [],
+      selected_chat: 0,
       filterText: "",
       filterTextAdd: "",
-      msgs: [],
+      messages_list: [],
+      message_to_send: "",
       state: "none",
       users_backup: [],
       users_not_added_filtered: [],
       users_not_added: [],
       users_added: [],
       users_added_filtered: [],
+      websocket: null,
     };
   },
   created() {
+    this.getMe();
     this.getChats();
     this.getUsers();
   },
+  updated() {
+    if (this.state == "select") this.scrollToEnd();
+  },
   methods: {
     reset() {
-      this.id = 0;
+      this.getMe();
       this.chats = [];
       this.filterText = "";
       this.filterTextAdd = "";
-      this.msgs = [];
+      this.messages_list = [];
+      this.message_to_send = "";
       this.state = "none";
       this.users_backup = [];
       this.users_not_added_filtered = [];
@@ -164,12 +170,11 @@ export default {
       this.getChats();
       this.getUsers();
     },
-    getChats() {
+    async getChats() {
       this.$http
         .get("/chats")
         .then((response) => {
           this.chats = response.data;
-          this.id = this.$store.getters.getID;
           this.$toast.success("Recuperation de la messagerie réussite !");
           setTimeout(this.$toast.clear, 3000);
         })
@@ -181,7 +186,7 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    getUsers() {
+    async getUsers() {
       this.$http
         .get("/users")
         .then((response) => {
@@ -199,14 +204,27 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+    async getMe() {
+      this.$http
+        .get("/users/me")
+        .then((response) => {
+          this.id = response.data.id;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
     getMessagesChat(id) {
+      this.message_to_send = "";
       this.$http
         .get(`/chats/messages/${id}`)
         .then((response) => {
           this.windowSate("select");
-          this.msgs = response.data;
+          this.selected_chat = id;
+          this.messages_list = response.data;
           this.$toast.success("Recuperation des messages réussi !");
           setTimeout(this.$toast.clear, 3000);
+          this.websocketSetup();
         })
         .catch((error) => {
           console.log(error);
@@ -217,9 +235,12 @@ export default {
         });
     },
     getEmail(sender_id) {
-      return this.users_backup.filter((element) => {
-        return element.id == sender_id;
-      }).email;
+      let va = this.users_backup.find((element) => element.id == sender_id);
+      if (va) {
+        return va.email;
+      } else {
+        return this.$store.getters.getEmail;
+      }
     },
     getTime(data) {
       let date = new Date(data);
@@ -227,8 +248,7 @@ export default {
       let h = date.getHours();
       let day = date.getDate();
       let month = date.getMonth();
-
-      return h + ":" + m + " - " + day + "/" + month;
+      return `${h}:${m} - ${day}/${month + 1}`;
     },
     windowSate(state) {
       this.state = state;
@@ -315,11 +335,62 @@ export default {
         return el.email.includes(this.filterTextAdd);
       });
     },
-    sendMessage() {
-      this.scrollToEnd();
+    websocketSetup() {
+      if (this.websocket == null) {
+        this.websocket = new WebSocket(
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
+        );
+      } else {
+        this.websocket.close();
+        this.websocket = new WebSocket(
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
+        );
+      }
+      this.websocket.onopen = async () => {
+        this.websocket.send(
+          JSON.stringify({
+            event: "login",
+            token: `Bearer ${this.$cookies.get("token")}`,
+          })
+        );
+        this.websocket.onmessage = async (data) => {
+          let resp = JSON.parse(data.data);
+          if (resp.status != 200) {
+            this.$toast.error(resp.error);
+            this.websocket.close();
+          }
+          switch (resp.event) {
+            case "message_received":
+              await this.messages_list.push(resp.data);
+              this.scrollToEnd();
+              break;
+            case "message_sent":
+              await this.messages_list.push(resp.data);
+              this.scrollToEnd();
+              break;
+          }
+        };
+      };
     },
-    scrollToEnd () {
-      var content = this.$refs.chat_msg;
+    async sendMessage() {
+      if (
+        this.message_to_send != "" &&
+        this.websocket != null &&
+        this.websocket.readyState == WebSocket.OPEN
+      ) {
+        this.websocket.send(
+          JSON.stringify({
+            event: "send_message",
+            chat_id: this.selected_chat,
+            content: this.message_to_send,
+            sender_id: this.id,
+          })
+        );
+        this.message_to_send = "";
+      }
+    },
+    async scrollToEnd() {
+      var content = this.$refs["chat-msg"];
       content.scrollTop = content.scrollHeight;
     },
   },
