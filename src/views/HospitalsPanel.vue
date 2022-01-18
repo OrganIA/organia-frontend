@@ -23,49 +23,51 @@
     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
       <tr>
-        <th @click="updateFilter('first_name')">Prénom</th>
-        <th @click="updateFilter('last_name')">Nom de famille</th>
-        <th @click="updateFilter('birthday')">Date de naissance</th>
-        <th @click="updateFilter('gender')">Sexe</th>
-        <th @click="updateFilter('blood_type')">ABO</th>
-        <th @click="updateFilter('organ')">Organe</th>
-        <th @click="updateFilter('created_at')">Arrivée</th>
+        <th>Nom</th>
+        <th>Ville</th>
         <th>Éditer</th>
-        <th>Infos</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="donor in donors" :key="donor">
-        <td>{{ donor.person.first_name }}</td>
-        <td>{{ donor.person.last_name }}</td>
-        <td>{{ donor.person.birthday }}</td>
-        <td>{{ donor.person.gender }}</td>
-        <td>{{ donor.person.blood_type }}</td>
-        <td>{{ donor.organ }}</td>
-        <td>{{ donor.person.created_at }}</td>
+      <tr v-for="hospital in hospitals" :key="hospital">
+        <td>{{ hospital.name }}</td>
+        <td>{{ hospital.city_id }}</td>
         <td>
-          <router-link :to="`/donors/edit/${donor.person.id}`">
+          <router-link :to="`/hospitals/edit/${hospital.id}`">
             <i class="fas fa-edit button is-primary"></i>
           </router-link>
-        </td>
-        <td>
-          <i class="fas fa-info cypress-donor-modal" @click="openModal(donor)"></i>
         </td>
       </tr>
       </tbody>
     </table>
-    <person-details
-        v-if="showModal == true"
-        :person="currentDonor"
-        @closeModal="closeModal"
-        class="details"
-    />
   </div>
 </template>
 
 <script>
 export default {
-  name: "HospitalsPanel"
+  name: "HospitalsPanel",
+  data() {
+    return {
+      hospitals: {},
+    };
+  },
+  created() {
+    this.getAllHospitals();
+  },
+  methods: {
+    getAllHospitals() {
+      this.$http
+          .get("/hospitals")
+          .then((response) => {
+            this.hospitals = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$toast.error("Erreur : " + error.response.data.detail);
+            setTimeout(this.$toast.clear, 3000);
+          });
+    }
+  }
 }
 </script>
 
