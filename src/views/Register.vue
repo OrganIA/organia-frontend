@@ -60,6 +60,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          console.log(error.response);
           this.$toast.error(
             "Erreur lors de la connexion : " + error.response.data.detail
           );

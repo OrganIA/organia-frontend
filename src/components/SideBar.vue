@@ -44,6 +44,10 @@
         <i class="fas fa-envelope cypress-to-chats"></i>
         <span class="nav-text">Chats</span>
       </router-link>
+      <router-link class="block button is-info" to="/hospitals">
+        <i class="fas fa-hospital-user cypress-to-chats"></i>
+        <span class="nav-text">Hôpitaux</span>
+      </router-link>
     </div>
   </nav>
 </template>
