@@ -17,6 +17,19 @@ npm install
 ```
 npm run build
 ```
+## Open automatic tests:
+```
+npm install
+```
+```
+npm run serve
+```
+In an other terminal run:
+```
+npm run test-open
+```
+Then simply click on the test you want to run.
+
 ## Run automatic tests:
 ```
 npm install
@@ -26,6 +39,7 @@ npm run serve
 ```
 In an other terminal run:
 ```
-npx open cypress
+npm run test-run
 ```
 Then simply click on the test you want to run.
+
