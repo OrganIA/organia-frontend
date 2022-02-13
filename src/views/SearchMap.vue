@@ -24,29 +24,29 @@
 <script>
 import {
   LMap,
-  LIcon,
+  // LIcon,
   LTileLayer,
   LMarker,
   LControlLayers,
   LTooltip,
-  LPopup,
-  LPolyline,
-  LPolygon,
-  LRectangle,
+  // LPopup,
+  // LPolyline,
+  // LPolygon,
+  // LRectangle,
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 export default {
   components: {
     LMap,
-    LIcon,
+    // LIcon,
     LTileLayer,
     LMarker,
     LControlLayers,
     LTooltip,
-    LPopup,
-    LPolyline,
-    LPolygon,
-    LRectangle,
+    // LPopup,
+    // LPolyline,
+    // LPolygon
+    // LRectangle,
   },
   data() {
     return {
