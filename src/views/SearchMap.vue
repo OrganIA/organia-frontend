@@ -6,70 +6,37 @@
     <l-map
       v-model="zoom"
       v-model:zoom="zoom"
+      zoomAnimation=true
       :center="[47, 2.25]"
-      @move="log('move')"
     >
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
-      <l-control-layers />
-      <l-marker :lat-lng="[49, 2.25]" draggable @moveend="log('moveend')">
-        <l-tooltip>
-          France
-        </l-tooltip>
-      </l-marker>
+      <l-geo-json :geojson="geojson"></l-geo-json>
     </l-map>
   </div>
 </template>
 <script>
-import {
-  LMap,
-  // LIcon,
-  LTileLayer,
-  LMarker,
-  LControlLayers,
-  LTooltip,
-  // LPopup,
-  // LPolyline,
-  // LPolygon,
-  // LRectangle,
-} from "@vue-leaflet/vue-leaflet";
+import {LMap, LTileLayer, LGeoJson} from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
+
 export default {
   components: {
     LMap,
-    // LIcon,
     LTileLayer,
-    LMarker,
-    LControlLayers,
-    LTooltip,
-    // LPopup,
-    // LPolyline,
-    // LPolygon
-    // LRectangle,
+    LGeoJson,
   },
   data() {
     return {
       zoom: 6.4,
       iconWidth: 25,
       iconHeight: 40,
+      geojson: null,
     };
   },
-  computed: {
-    iconSize() {
-      return [this.iconWidth, this.iconHeight];
-    },
-  },
-  methods: {
-    log(a) {
-      console.log(a);
-    },
-    changeIcon() {
-      this.iconWidth += 2;
-      if (this.iconWidth > this.iconHeight) {
-        this.iconWidth = Math.floor(this.iconHeight / 2);
-      }
-    },
+  async created () {
+    const response = await fetch("https://france-geojson.gregoiredavid.fr/repo/regions.geojson");
+    this.geojson = await response.json();
   },
 };
 </script>
