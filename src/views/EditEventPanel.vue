@@ -1,0 +1,106 @@
+<template>
+  <div>
+    <form @submit.prevent="submitForm()" class="show-requireds">
+      <h2 class="form-title title is-3">Éditer un evenement</h2>
+      <div class="form-fields">
+        <div class="form-input small required">
+          <label class="label">Date</label>
+          <input
+            v-model="calendar.date"
+            placeholder="date"
+            type="datetime-local"
+            class="input is-info"
+            required
+          />
+        </div>
+        <div class="form-input small required">
+          <label class="label">Description</label>
+          <textarea
+            class="textarea"
+            v-model="calendar.description"
+            placeholder="description"
+            required
+          />
+        </div>
+        <p class="required-notice">* Obligatoire</p>
+      </div>
+      <div class="form-submit is-center">
+        <button type="submit" class="cypress-add button is-info mx-auto mr-6">
+          Enregistrer
+        </button>
+        <router-link to="/eventlist" class="button is-danger ml-6"
+          >Retour</router-link
+        >
+        <button
+          type="button"
+          class="button is-danger ml-6"
+          @click="delete_event"
+        >
+          Supprimer
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "EditEventPanel",
+  props: {
+    id: String,
+  },
+  data() {
+    return {
+      calendar: {},
+    };
+  },
+  methods: {
+    geteventByID() {
+      this.$http
+        .get(`/calendar/${this.id}`)
+        .then((response) => {
+          this.calendar = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    submitForm() {
+      this.$http
+        .post(`/calendar/${this.id}`, {
+          date: this.calendar.date,
+          description: this.calendar.description,
+        })
+        .then(() => {
+          this.$router.push("/eventlist");
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    redirect() {
+      window.location.replace("/calendar");
+    },
+    delete_event() {
+      this.$http
+        .delete(`/calendar/${this.id}`)
+        .then(() => {
+          this.$toast.success("Suppression effectuée");
+          this.$router.push("/eventlist");
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Erreur : " + error.response.data.detail);
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+  },
+  created() {
+    this.geteventByID();
+  },
+};
+</script>

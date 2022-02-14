@@ -1,4 +1,3 @@
-
 export function emailGenerator() {
     var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
     var string = '';
