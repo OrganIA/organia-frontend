@@ -1,9 +1,9 @@
 <template>
-  <div class="main-container">
+  <div class="main-container-chat">
     <div class="chat-list">
       <div class="chat-room">
-        Chat Room
-        <button class="cypress-add" @click="windowSate('create')">+</button>
+        Messages
+        <button class="add-chat-room cypress-add" @click="windowSate('create')">+</button>
       </div>
       <div
         v-for="chat in chats"
@@ -23,18 +23,26 @@
     </div>
     <div class="chat-right-box">
       <div v-if="state == 'select'" class="state-select">
+        <div class="chat-room-name">
+          <div class="chat-room-name-logo"> {{ this.selected_chat }} </div>
+          <p class="chat-room-name-text"> {{ this.selected_chat }} </p>
+          <button class="button-setting">S</button>
+          <button class="button-remove-chat">R</button>
+        </div>
         <div class="chat-msg" ref="chat-msg">
           <div v-for="msg in messages_list" :key="msg" class="all-messages">
             <div v-if="msg.sender_id == this.id" class="text-right cypress-message">
               <div class="my-msg">
                 {{ msg.content }}
               </div>
+              <div class="my-profile">{{ profilePicture(getEmail(msg.sender_id)) }}</div>
               <br />
               <div class="my-info">
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
               </div>
             </div>
             <div v-else class="text-left cypress-message">
+              <div class="other-profile">{{ profilePicture(getEmail(msg.sender_id)) }}</div>
               <div class="other-msg">
                 {{ msg.content }}
               </div>
@@ -45,15 +53,16 @@
             </div>
           </div>
         </div>
-        <div class="chat_section">
+        <div class="chat-section">
           <input
             v-model="message_to_send"
             @keypress.enter="sendMessage"
             class="chat-bar cypress-chat-box"
+            placeholder="Démarrer un nouveau message"
           />
           <button
             @click="sendMessage()"
-            class="fas fa-paper-plane button-send-msg cypress-send-msg"
+            class="fa fa-paper-plane button-send-msg cypress-send-msg"
           ></button>
         </div>
       </div>
@@ -90,7 +99,7 @@
           </div>
         </div>
         <div class="create-chat-right-list">
-          <div class="user-list">Liste des utilisateurs ajouté</div>
+          <div class="user-list-r">Liste des utilisateurs ajouté</div>
           <input
             @input="filterAdd"
             v-model="filterTextAdd"
@@ -113,12 +122,20 @@
               </div>
             </div>
           </div>
+          <input
+            v-model="created_chat_name"
+            class="create-chat-name"
+            placeholder="Nom de la salle de chat"
+          />
           <button class="chat-create-button cypress-create" @click="createChat">
             Créer une salle de chat
           </button>
         </div>
       </div>
-      <div v-else></div>
+      <div v-else>
+        <h1>Créer un Groupe de discution</h1>
+        <button class="add-chat-room cypress-add" @click="windowSate('create')">+</button>
+      </div>
     </div>
   </div>
 </template>
@@ -142,6 +159,7 @@ export default {
       users_not_added: [],
       users_added: [],
       users_added_filtered: [],
+      created_chat_name: [],
       websocket: null,
     };
   },
@@ -317,6 +335,30 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+    //
+    //
+    //
+    // deleteChatRoom(id) {
+    //   this.message_to_send = "";
+    //   this.$http
+    //     .delete(`/chats/${id}`)
+    //     .then((response) => {
+    //       this.windowSate("none");
+    //       this.selected_chat = 0;
+    //       this.$toast.success("Suppression de la salle de chat réussi !");
+    //       setTimeout(this.$toast.clear, 3000);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //       this.$toast.error(
+    //         "Erreur lors de la connexion : " + error.response.data.detail
+    //       );
+    //       setTimeout(this.$toast.clear, 3000);
+    //     });
+    // },
+    //
+    //
+    //
     filter() {
       if (this.filterText == "") {
         this.users_not_added_filtered = this.users_not_added;
@@ -392,6 +434,9 @@ export default {
     async scrollToEnd() {
       var content = this.$refs["chat-msg"];
       content.scrollTop = content.scrollHeight;
+    },
+    profilePicture(username) {
+      return (username.charAt(0).toUpperCase());
     },
   },
   watch: {

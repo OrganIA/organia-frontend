@@ -55,12 +55,19 @@
     background-color: hsl(207, 61%, 96%);
 }
 
+.main-container-chat {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    width: 100vw;
+}
+
 .secondary-container {
     display: flex;
     flex-direction: column;
     flex: 1;
     margin-top: 3%;
-    max-width: 80%;
+    max-width: 79%;
 }
 
 .background-transparent {
@@ -622,17 +629,17 @@ td>i {
 }
 
 .chat-list {
+    z-index: 1;
     position: relative;
     left: 0px;
     top: 0px;
-    height: 620px;
+    height: 680px;
     width: 340px;
-    border-top: solid 1px #707070;
-    border-left: solid 1px #707070;
-    border-bottom: solid 1px #707070;
+    border: solid 1px #707070;
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    background-color: white;
 }
 
 .chat-list::-webkit-scrollbar {
@@ -642,20 +649,31 @@ td>i {
 
 .button-send-msg {
     position: relative;
-    top: 5px;
-    height: 26px;
-    width: 40px;
-    border-radius: 4px;
-    background: #3e8ed0;
+    right: -20px;
+    top: 1px;
+    height: 25px;
+    width: 30px;
+    background: transparent;
     border: none;
-    color: white;
+    color: #071F49;
+}
+
+.button-send-msg:hover {
+    position: relative;
+    top: 1px;
+    height: 25px;
+    width: 30px;
+    background: transparent;
+    border: none;
+    color: #071F49;
+    cursor: pointer;
 }
 
 .chat-msg {
     position: relative;
     left: 0px;
     top: 0px;
-    height: 580px;
+    height: 590px;
     width: 100%;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -671,7 +689,7 @@ td>i {
     position: absolute;
     left: 0px;
     top: 100px;
-    height: 301px;
+    height: 540px;
     width: 300px;
     border: solid 1px #707070;
     overflow-y: scroll;
@@ -684,13 +702,14 @@ td>i {
     position: absolute;
     right: 0px;
     top: 100px;
-    height: 301px;
+    height: 400px;
     width: 300px;
     border: solid 1px #707070;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    border-radius: 0px 0px 0px 20px;
 }
 
 .chat-room {
@@ -699,10 +718,11 @@ td>i {
     height: 60px;
     text-align: center;
     border-bottom: solid 1px #707070;
-    padding-top: 2px;
     font-family: HelveticaNeue;
-    font-size: 34px;
+    font-size: 30px;
     background: white;
+    font-weight: 600;
+    line-height: 1.1;
 }
 
 .chat-el-sub {
@@ -734,17 +754,18 @@ td>i {
 .chat-el-desc {
     position: relative;
     left: 100px;
-    top: -50px;
+    top: -35px;
     height: 20px;
     width: 240px;
 }
 
 .chat-right-box {
+    z-index: 0;
     position: relative;
-    left: 0px;
+    left: -1px;
     top: 0px;
-    height: 100%;
-    width: 660px;
+    height: 680px;
+    width: 760px;
     border: solid 1px #707070;
     overflow: hidden;
 }
@@ -753,8 +774,8 @@ td>i {
     display: inline-block;
     position: relative;
     top: 10px;
-    right: 10px;
-    background: #3e8ed0;
+    right: 20px;
+    background: #498AFE;
     color: white;
     border-radius: 4px;
     width: auto;
@@ -763,6 +784,22 @@ td>i {
     margin-bottom: 20px;
     padding: 5px;
     text-align: left;
+}
+
+.my-profile {
+    display: inline-block;
+    position: relative;
+    top: 16px;
+    right: 10px;
+    background: #071f49;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    font-size: 30px;
 }
 
 .my-info {
@@ -790,6 +827,22 @@ td>i {
     text-align: left;
 }
 
+.other-profile {
+    display: inline-block;
+    position: relative;
+    top: 16px;
+    right: -5px;
+    background: #071f49;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    font-size: 30px;
+}
+
 .other-info {
     display: inline-block;
     position: relative;
@@ -801,21 +854,22 @@ td>i {
 
 .chat-section {
     position: relative;
-    left: 0px;
+    left: -1px;
     top: 0px;
-    height: 30px;
-    width: 100%;
+    height: 29px;
+    width: 760px;
     border-top: solid 1px #707070;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(7, 31, 73, 13%));
 }
 
 .chat-bar {
     position: relative;
-    left: -7px;
-    top: 5px;
+    left: -18px;
+    top: -1px;
     width: 90%;
-    height: 26px;
-    border-radius: 10px;
-    border: solid 1px #707070;
+    height: 30px;
+    border: none;
+    background: transparent;
 }
 
 .create-chat-section {
@@ -848,6 +902,16 @@ td>i {
     border: solid 1px #707070;
     text-align: center;
     line-height: 52px;
+    border-radius: 0px 20px 0px 0px;
+}
+
+.user-list-r {
+    width: 300px;
+    height: 52px;
+    border: solid 1px #707070;
+    text-align: center;
+    line-height: 52px;
+    border-radius: 20px 0px 0px 0px;
 }
 
 .user-list-filter {
@@ -1015,14 +1079,36 @@ td>i {
 
 .chat-create-button {
     position: absolute;
-    left: -110px;
-    top: 480px;
+    left: 40px;
+    top: 590px;
+    background: white;
+    border: 1px solid #707070;
+    border-radius: 4px;
 }
 
 .chat-exit-button {
     position: relative;
-    right: -160px;
-    top: 0px;
+    right: -209px;
+    top: -1px;
+    height: 61px;
+    width: 60px;
+    background: white;
+    border: 1px solid #707070;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.chat-exit-button:hover {
+    position: relative;
+    right: -209px;
+    top: -1px;
+    height: 61px;
+    width: 60px;
+    border: 1px solid #707070;
+    font-size: 30px;
+    font-weight: 600;
+    background: linear-gradient(315deg, #498bfec4, #498bfe62, transparent);
+    cursor: pointer;
 }
 
 .all-messages {
@@ -1041,4 +1127,110 @@ td>i {
 
 .text-left {
     text-align: left;
+}
+
+.add-chat-room {
+    position: relative;
+    right:-62px;
+    top:-1px;
+    height: 61px;
+    width: 60px;
+    background: white;
+    border: 1px solid #707070;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.add-chat-room:hover {
+    background: linear-gradient(315deg, #498bfec4, #498bfe62, transparent);
+    cursor: pointer;
+}
+
+.create-chat-name {
+    position: relative;
+    top: 500px;
+    right: 20px;
+}
+
+.chat-room-name {
+    z-index: 4;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    height: 59px;
+    width: 100%;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+    text-align: left;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
+}
+
+.chat-room-name-logo {
+    position: relative;
+    left: 20px;
+    top: 10px;
+    height: 40px;
+    width: 40px;
+    font-weight: 600;
+    font-size: 30px;
+    color: #fbfcff;
+    background: #071f49;
+    border-radius: 35px;
+    font-family: TimesNewRoman;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.chat-room-name-text {
+    position: relative;
+    left: 40px;
+    top: 7px;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.button-setting {
+    position: relative;
+    top: 20px;
+    left: 660px;
+    height: 20px;
+    width: 20px;
+    background: transparent;
+    border: none;
+}
+
+.button-setting:hover {
+    position: relative;
+    top: 20px;
+    left: 660px;
+    height: 20px;
+    width: 20px;
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.button-remove-chat {
+    position: relative;
+    top: 20px;
+    left: 610px;
+    height: 20px;
+    width: 20px;
+    background: transparent;
+    border: none;
+}
+
+.button-remove-chat:hover {
+    position: relative;
+    top: 20px;
+    left: 610px;
+    height: 20px;
+    width: 20px;
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
 }
