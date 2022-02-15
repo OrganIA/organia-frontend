@@ -1234,3 +1234,61 @@ td>i {
     font-weight: 600;
     cursor: pointer;
 }
+
+.team-desc-page {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, 550px);
+}
+
+.team-box {
+    height: 500px;
+    width: 350px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px black;
+    overflow: hidden;
+}
+
+.team-color {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    height: 100px;
+    width: 100%;
+}
+
+.team-image {
+    position: relative;
+    left: 125px;
+    top: -50px;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background: #071f49;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 60px;
+    font-weight: 600;
+    line-height: 1.8;
+}
+
+.team-name {
+    position: relative;
+    top: -50px;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.team-text {
+    position: relative;
+    left: 25px;
+    top: -50px;
+    width: 300px;
+    word-wrap: break-word
+}
