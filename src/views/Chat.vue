@@ -35,7 +35,6 @@
               <div class="my-msg">
                 {{ msg.content }}
               </div>
-              <div class="my-profile">{{ profilePicture(getEmail(msg.sender_id)) }}</div>
               <br />
               <div class="my-info">
                 {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
@@ -318,9 +317,12 @@ export default {
           user_id: element.id,
         });
       });
+      console.log(body.users_ids);
+      console.log(this.created_chat_name);
       this.$http
         .post("/chats", {
           users_ids: body.users_ids,
+          chat_name: this.created_chat_name,
         })
         .then(() => {
           this.$toast.success("Creation de la salle de Chat réussi !");
