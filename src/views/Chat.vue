@@ -13,10 +13,10 @@
       >
         <div class="chat-el-sub">
           <div class="chat-el-icon">
-            {{ chat.chat_id }}
+            {{ profilePicture(chat.chat_name) }}
           </div>
           <h2 class="chat-el-desc">
-            <i class="fas fa-id-card"></i> {{ chat.chat_id }}
+            <i class="fas fa-id-card"></i> {{ chat.chat_name }}
           </h2>
         </div>
       </div>
@@ -24,8 +24,8 @@
     <div class="chat-right-box">
       <div v-if="state == 'select'" class="state-select">
         <div class="chat-room-name">
-          <div class="chat-room-name-logo"> {{ this.selected_chat }} </div>
-          <p class="chat-room-name-text"> {{ this.selected_chat }} </p>
+          <div class="chat-room-name-logo"> {{ profilePicture(getNameChatByID(this.selected_chat)) }} </div>
+          <p class="chat-room-name-text"> {{ getNameChatByID(this.selected_chat) }} </p>
           <button class="button-setting">S</button>
           <button class="button-remove-chat">R</button>
         </div>
@@ -317,8 +317,6 @@ export default {
           user_id: element.id,
         });
       });
-      console.log(body.users_ids);
-      console.log(this.created_chat_name);
       this.$http
         .post("/chats", {
           users_ids: body.users_ids,
@@ -337,30 +335,13 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    //
-    //
-    //
-    // deleteChatRoom(id) {
-    //   this.message_to_send = "";
-    //   this.$http
-    //     .delete(`/chats/${id}`)
-    //     .then((response) => {
-    //       this.windowSate("none");
-    //       this.selected_chat = 0;
-    //       this.$toast.success("Suppression de la salle de chat réussi !");
-    //       setTimeout(this.$toast.clear, 3000);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //       this.$toast.error(
-    //         "Erreur lors de la connexion : " + error.response.data.detail
-    //       );
-    //       setTimeout(this.$toast.clear, 3000);
-    //     });
-    // },
-    //
-    //
-    //
+    getNameChatByID(id) {
+      for (let i in this.chats) {
+        if (this.chats[i].chat_id == id)
+          return this.chats[i].chat_name;
+      }
+      return ("NULL");
+    },
     filter() {
       if (this.filterText == "") {
         this.users_not_added_filtered = this.users_not_added;
