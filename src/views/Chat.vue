@@ -2,7 +2,7 @@
   <div class="main-container-chat">
     <div class="chat-list">
       <div class="chat-room">
-        Messages
+        Salle de Chat
         <button class="add-chat-room cypress-add" @click="windowSate('create')">+</button>
       </div>
       <div
@@ -26,8 +26,12 @@
         <div class="chat-room-name">
           <div class="chat-room-name-logo"> {{ profilePicture(getNameChatByID(this.selected_chat)) }} </div>
           <p class="chat-room-name-text"> {{ getNameChatByID(this.selected_chat) }} </p>
-          <button class="button-setting">S</button>
-          <button class="button-remove-chat">R</button>
+          <button @click="windowSate('modif')" class="fas fa-cog button-setting"></button>
+          <!-- -->
+          <!-- -->
+          <!-- -->
+          <!-- -->
+          <!-- -->
         </div>
         <div class="chat-msg" ref="chat-msg">
           <div v-for="msg in messages_list" :key="msg" class="all-messages">
@@ -37,7 +41,7 @@
               </div>
               <br />
               <div class="my-info">
-                {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
+                {{ getTime(msg.created_at) }}
               </div>
             </div>
             <div v-else class="text-left cypress-message">
@@ -151,6 +155,7 @@ export default {
       filterText: "",
       filterTextAdd: "",
       messages_list: [],
+      users_chat: [],
       message_to_send: "",
       state: "none",
       users_backup: [],
@@ -239,6 +244,7 @@ export default {
           this.windowSate("select");
           this.selected_chat = id;
           this.messages_list = response.data;
+          console.log(this.messages_list);
           this.$toast.success("Recuperation des messages réussi !");
           setTimeout(this.$toast.clear, 3000);
           this.websocketSetup();
@@ -267,10 +273,53 @@ export default {
       let month = date.getMonth();
       return `${h}:${m} - ${day}/${month + 1}`;
     },
+    checkUserChatList(id) {
+        this.users_chat.forEach((element) => {
+          if (element == id)
+            return (true);
+        })
+        return (false);
+    },
+    getUsersChat() {
+        console.log(this.messages_list);
+        console.log("BEFORE");
+        console.log(this.users_chat);
+        this.messages_list.forEach((element) => {
+          if (element.sender_id != this.id && this.checkUserChatList(element.sender_id) == false)
+            this.users_chat.push(element.sender_id);
+        })
+        console.log("AFTER");
+        console.log(this.users_chat);
+    },
     windowSate(state) {
-      this.state = state;
-      this.users_not_added_filtered = this.users_backup;
-      this.users_not_added = this.users_backup;
+      if (state == "modif") {
+        this.state = "create";
+        this.getUsersChat();
+        this.users_not_added = this.users_backup;
+        this.users_added = [];
+        this.users_not_added.forEach((element) => {
+          if (element.id == this.users_chat)
+            this.inviteUsers(element);
+        })
+        console.log("MODIF");
+        console.log(this.users_not_added);
+        console.log(this.users_chat);
+        this.created_chat_name = this.getNameChatByID(this.selected_chat);
+        //this.users_not_added_filtered = this.users_backup;
+
+        // this.users_not_added_filtered = [];
+        // this.users_not_added = [];
+        // this.users_added = [];
+        // this.users_added_filtered = [];
+      } else {
+        if (this.selected_chat != 0) {
+          this.state = 'select';
+        } else {
+          this.state = state;
+        }
+        this.users_not_added_filtered = this.users_backup;
+        this.users_not_added = this.users_backup;
+      }
     },
     inviteUsers(user) {
       this.users_added.push(user);
@@ -361,14 +410,16 @@ export default {
       });
     },
     websocketSetup() {
+      // if you test the client with the back in local don't forget to replace 
+      // "process.env.VUE_APP_WEBSOCKET_REMOTE_URL" in "process.env.VUE_APP_WEBSOCKET_LOCAL_URL"
       if (this.websocket == null) {
         this.websocket = new WebSocket(
-          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
+          `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.selected_chat}`
         );
       } else {
         this.websocket.close();
         this.websocket = new WebSocket(
-          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
+          `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.selected_chat}`
         );
       }
       this.websocket.onopen = async () => {

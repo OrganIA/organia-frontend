@@ -716,13 +716,14 @@ td>i {
     position: relative;
     width: 340px;
     height: 60px;
-    text-align: center;
+    text-align:left;
+    padding-left: 60px;
     border-bottom: solid 1px #707070;
     font-family: HelveticaNeue;
     font-size: 30px;
     background: white;
     font-weight: 600;
-    line-height: 1.1;
+    line-height: 2;
 }
 
 .chat-el-sub {
@@ -1130,8 +1131,8 @@ td>i {
 }
 
 .add-chat-room {
-    position: relative;
-    right:-62px;
+    position: absolute;
+    right:0px;
     top:-1px;
     height: 61px;
     width: 60px;
@@ -1192,46 +1193,23 @@ td>i {
 }
 
 .button-setting {
-    position: relative;
+    position: absolute;
     top: 20px;
-    left: 660px;
+    left: 710px;
     height: 20px;
-    width: 20px;
+    width: 30px;
     background: transparent;
     border: none;
 }
 
 .button-setting:hover {
-    position: relative;
-    top: 20px;
-    left: 660px;
+    position: absolute;
+    top: 22px;
+    left: 710px;
     height: 20px;
-    width: 20px;
+    width: 30px;
     background: transparent;
     border: none;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.button-remove-chat {
-    position: relative;
-    top: 20px;
-    left: 610px;
-    height: 20px;
-    width: 20px;
-    background: transparent;
-    border: none;
-}
-
-.button-remove-chat:hover {
-    position: relative;
-    top: 20px;
-    left: 610px;
-    height: 20px;
-    width: 20px;
-    background: transparent;
-    border: none;
-    font-weight: 600;
     cursor: pointer;
 }
 
