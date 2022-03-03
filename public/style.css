@@ -1089,8 +1089,8 @@ td>i {
 
 .chat-exit-button {
     position: relative;
-    right: -209px;
-    top: -1px;
+    right: -351px;
+    top: -51px;
     height: 61px;
     width: 60px;
     background: white;
@@ -1101,8 +1101,8 @@ td>i {
 
 .chat-exit-button:hover {
     position: relative;
-    right: -209px;
-    top: -1px;
+    right: -351px;
+    top: -51px;
     height: 61px;
     width: 60px;
     border: 1px solid #707070;

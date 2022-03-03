@@ -69,9 +69,11 @@
           ></button>
         </div>
       </div>
-      <div v-if="state == 'create'" class="create-chat-section">
+      <!-- WINDOW: STATE = CREATE OR MODIF -->
+      <div v-if="state == 'create' || state == 'modif'" class="create-chat-section">
         <div class="create-chat-top-bar">
-          Fenêtre de creation d'une salle de chat
+          <p v-if="state == 'create'">Fenêtre de creation d'une salle de chat</p>
+          <p v-else>Fenêtre de modification d'une salle de chat</p>
           <button class="chat-exit-button" @click="windowSate('none')">
             X
           </button>
@@ -130,12 +132,16 @@
             class="create-chat-name"
             placeholder="Nom de la salle de chat"
           />
-          <button class="chat-create-button cypress-create" @click="createChat">
+          <button v-if="this.state == 'create'" class="chat-create-button cypress-create" @click="createChat">
             Créer une salle de chat
+          </button>
+          <button v-else class="chat-create-button cypress-create" @click="changeChat">
+            Modifier une salle de chat
           </button>
         </div>
       </div>
-      <div v-else>
+      <!-- WINDOW: STATE = NONE -->
+      <div v-if="state == 'none'">
         <h1>Créer un Groupe de discution</h1>
         <button class="add-chat-room cypress-add" @click="windowSate('create')">+</button>
       </div>
@@ -293,7 +299,7 @@ export default {
     },
     windowSate(state) {
       if (state == "modif") {
-        this.state = "create";
+        this.state = "modif";
         this.getUsersChat();
         this.users_not_added = this.users_backup;
         this.users_added = [];
@@ -301,16 +307,25 @@ export default {
           if (element.id == this.users_chat)
             this.inviteUsers(element);
         })
-        console.log("MODIF");
-        console.log(this.users_not_added);
-        console.log(this.users_chat);
+        // console.log("MODIF");
+        // console.log(this.users_not_added);
+        // console.log(this.users_chat);
         this.created_chat_name = this.getNameChatByID(this.selected_chat);
+        return;
         //this.users_not_added_filtered = this.users_backup;
 
         // this.users_not_added_filtered = [];
         // this.users_not_added = [];
         // this.users_added = [];
         // this.users_added_filtered = [];
+      } if (state == "create") {
+        this.selected_chat = 0;
+        this.state = 'create';
+        this.users_not_added_filtered = this.users_backup;
+        this.users_not_added = this.users_backup;
+        this.users_added = [];
+        this.users_added_filtered = [];
+        return;
       } else {
         if (this.selected_chat != 0) {
           this.state = 'select';
@@ -373,6 +388,41 @@ export default {
         })
         .then(() => {
           this.$toast.success("Creation de la salle de Chat réussi !");
+          setTimeout(this.$toast.clear, 3000);
+          this.reset();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    changeChat() {
+      if (this.users_added.length == 0) {
+        this.$toast.error(
+          "Erreur: vous n'avez ajouté aucun utilisateur a la conversation"
+        );
+      }
+      let body = {
+        users_ids: [],
+      };
+      body.users_ids.push({
+        user_id: this.id,
+      });
+      this.users_added.forEach((element) => {
+        body.users_ids.push({
+          user_id: element.id,
+        });
+      });
+      this.$http
+        .post(`/chats/${this.selected_chat}`, {
+          users_ids: body.users_ids,
+          chat_name: this.created_chat_name,
+        })
+        .then(() => {
+          this.$toast.success("Modification de la salle de Chat réussi !");
           setTimeout(this.$toast.clear, 3000);
           this.reset();
         })
