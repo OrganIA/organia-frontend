@@ -250,7 +250,6 @@ export default {
           this.windowSate("select");
           this.selected_chat = id;
           this.messages_list = response.data;
-          console.log(this.messages_list);
           this.$toast.success("Recuperation des messages réussi !");
           setTimeout(this.$toast.clear, 3000);
           this.websocketSetup();
@@ -287,42 +286,31 @@ export default {
         return (false);
     },
     getUsersChat() {
-        console.log(this.messages_list);
-        console.log("BEFORE");
-        console.log(this.users_chat);
+        this.users_chat = [];
         this.messages_list.forEach((element) => {
           if (element.sender_id != this.id && this.checkUserChatList(element.sender_id) == false)
             this.users_chat.push(element.sender_id);
         })
-        console.log("AFTER");
-        console.log(this.users_chat);
     },
     windowSate(state) {
       if (state == "modif") {
-        this.state = "modif";
         this.getUsersChat();
-        this.users_not_added = this.users_backup;
+        this.users_not_added = this.users_backup.slice();
         this.users_added = [];
         this.users_not_added.forEach((element) => {
           if (element.id == this.users_chat)
             this.inviteUsers(element);
         })
-        // console.log("MODIF");
-        // console.log(this.users_not_added);
-        // console.log(this.users_chat);
+        this.users_not_added_filtered = this.users_not_added.slice();
+        this.users_added_filtered = this.users_added.slice();
         this.created_chat_name = this.getNameChatByID(this.selected_chat);
+        this.state = "modif";
         return;
-        //this.users_not_added_filtered = this.users_backup;
-
-        // this.users_not_added_filtered = [];
-        // this.users_not_added = [];
-        // this.users_added = [];
-        // this.users_added_filtered = [];
       } if (state == "create") {
         this.selected_chat = 0;
         this.state = 'create';
-        this.users_not_added_filtered = this.users_backup;
-        this.users_not_added = this.users_backup;
+        this.users_not_added_filtered = this.users_backup.slice();
+        this.users_not_added = this.users_backup.slice();
         this.users_added = [];
         this.users_added_filtered = [];
         return;
@@ -332,15 +320,16 @@ export default {
         } else {
           this.state = state;
         }
-        this.users_not_added_filtered = this.users_backup;
-        this.users_not_added = this.users_backup;
+        this.users_not_added_filtered = this.users_backup.slice();
+        this.users_not_added = this.users_backup.slice();
+        this.users_added = [];
+        this.users_added_filtered = [];
       }
     },
     inviteUsers(user) {
       this.users_added.push(user);
-      if (this.filterTextAdd == "") {
+      if (this.filterTextAdd == "")
         this.users_added_filtered.push(user);
-      }
       this.users_not_added_filtered = this.users_not_added_filtered.filter(
         (element) => {
           return element != user;
@@ -352,9 +341,8 @@ export default {
     },
     uninviteUsers(user) {
       this.users_not_added.push(user);
-      if (this.filterText == "") {
+      if (this.filterText == "")
         this.users_not_added_filtered.push(user);
-      }
       this.users_added_filtered = this.users_added_filtered.filter(
         (element) => {
           return element != user;
@@ -464,12 +452,12 @@ export default {
       // "process.env.VUE_APP_WEBSOCKET_REMOTE_URL" in "process.env.VUE_APP_WEBSOCKET_LOCAL_URL"
       if (this.websocket == null) {
         this.websocket = new WebSocket(
-          `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.selected_chat}`
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
         );
       } else {
         this.websocket.close();
         this.websocket = new WebSocket(
-          `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.selected_chat}`
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
         );
       }
       this.websocket.onopen = async () => {
