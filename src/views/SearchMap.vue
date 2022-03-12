@@ -40,29 +40,25 @@ export default {
       iconHeight: 40,
       geojson: null,
       markers: [],
-      markerLatLng: [51.504, -0.159]
+      markers_length: 0,
     };
   },
   mounted () {
-       window.setTimeout( () => {
-        this.markers.push({
-          id: 1,
-          latlng: [47.417220, -1.222482],
-          content: 'Hi! this is my popup data'
-        });
-      }, 1000);
-       window.setTimeout( () => {
-        this.markers.push({
-          id: 2,
-          latlng: [47.417220, -1.25],
-          content: 'Another'
-        });
-      }, 2000);
+      
   },
   async created () {
     const response = await fetch("https://france-geojson.gregoiredavid.fr/repo/regions.geojson");
     this.geojson = await response.json();
     this.getHospitals();
+    window.setTimeout( () => {        
+        for (var i = 0; i < this.markers_length; i += 1) {
+          this.markers.push({
+            id: i,
+            latlng: [this.hospitals[i].latitude, this.hospitals[i].longitude],
+            content: this.hospitals[i].name
+          })
+        }
+    }, 2000);
   },
   methods: {
     getHospitals() {
@@ -70,7 +66,8 @@ export default {
         .get("/hospitals")
         .then((response) => {
           this.hospitals = response.data;
-          console.log(this.hospitals);
+          console.log(this.hospitals)
+          this.markers_length = this.hospitals.length;
         })
         .catch((error) => {
           console.log(error);
