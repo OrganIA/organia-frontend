@@ -15,6 +15,9 @@
         <option value="gender">Sexe</option>
         <option value="blood_type">ABO</option>
         <option value="organ">Organe</option>
+        <option value="tumors_number">Nombre de tumeurs</option>
+        <option value="isDialyse">Dialysé ?</option>
+        <option value="isRetransplantation">Retransplantation</option>
         <option value="created_at">Arrivée</option>
       </select>
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
@@ -29,6 +32,9 @@
           <th @click="updateFilter('gender')">Sexe</th>
           <th @click="updateFilter('blood_type')">ABO</th>
           <th @click="updateFilter('organ')">Organe</th>
+          <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
+          <th @click="updateFilter('isDialyse')">Dialysé</th>
+          <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
           <th @click="updateFilter('created_at')">Arrivée</th>
           <th>Éditer</th>
           <th>Infos</th>
@@ -42,6 +48,9 @@
           <td>{{ receiver.person.gender }}</td>
           <td>{{ receiver.person.blood_type }}</td>
           <td>{{ receiver.organ }}</td>
+          <td>{{ receiver.tumors_number }}</td>
+          <td>{{ receiver.isDialyse ? "Oui": "Non" }}</td>
+          <td>{{ receiver.isRetransplantation ? "Oui": "Non" }}</td>
           <td>{{ receiver.person.created_at }}</td>
           <td>
             <router-link :to="`/receivers/edit/${receiver.person.id}`">

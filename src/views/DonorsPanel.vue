@@ -15,6 +15,9 @@
         <option value="gender">Sexe</option>
         <option value="blood_type">ABO</option>
         <option value="organ">Organe</option>
+        <option value="tumors_number">Nombre de tumeurs</option>
+        <option value="isDialyse">Dialysé ?</option>
+        <option value="isRetransplantation">Retransplantation</option>
         <option value="created_at">Arrivée</option>
       </select>
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
@@ -29,6 +32,9 @@
           <th @click="updateFilter('gender')">Sexe</th>
           <th @click="updateFilter('blood_type')">ABO</th>
           <th @click="updateFilter('organ')">Organe</th>
+          <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
+          <th @click="updateFilter('isDialyse')">Dialysé</th>
+          <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
           <th @click="updateFilter('created_at')">Arrivée</th>
           <th>Éditer</th>
           <th>Infos</th>
@@ -42,6 +48,9 @@
           <td>{{ donor.person.gender }}</td>
           <td>{{ donor.person.blood_type }}</td>
           <td>{{ donor.organ }}</td>
+          <td>{{ donor.tumors_number }}</td>
+          <td>{{ donor.isDialyse ? "Oui": "Non" }}</td>
+          <td>{{ donor.isRetransplantation ? "Oui": "Non" }}</td>
           <td>{{ donor.person.created_at }}</td>
           <td>
             <router-link :to="`/donors/edit/${donor.person.id}`">

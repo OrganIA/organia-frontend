@@ -56,6 +56,29 @@
           />
         </div>
         <div class="form-input small">
+          <label class="label">Nombre de tumeurs</label>
+          <input
+            v-model="tumors_number"
+            placeholder="0"
+            type="text"
+            class="input is-info"
+          />
+        </div>
+        <div class="form-input small">
+          <label class="label">Le patient est sous dialyse ?</label>
+          <select v-model="isDialyse" name="dialyse" id="dialyse-select" class="button is-info is-light">
+            <option value="true">Oui</option>
+            <option value="false">Non</option>
+          </select>
+        </div>
+        <div class="form-input small">
+          <label class="label">A-t-il effectué une retransplantation ?</label>
+          <select v-model="isRetransplantation" name="retransplantation" id="transplantation-select" class="button is-info is-light">
+            <option value="true">Oui</option>
+            <option value="false">Non</option>
+          </select>
+        </div>
+        <div class="form-input small">
           <label class="label">Description</label>
           <input v-model="description" placeholder="description" type="text" class="input is-info"/>
         </div>
@@ -86,7 +109,6 @@
           <label class="label">Notes</label>
           <textarea v-model="notes" placeholder="notes" class="textarea"/>
           <p class="required-notice">* Obligatoire</p>
-
         </div>
         <div class="form-submit is-center">
           <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>
@@ -113,6 +135,9 @@ export default {
       organ: "",
       blood_type: "",
       rhesus: "",
+      tumors_number: "",
+      isDialyse: "",
+      isRetransplantation: "",
       gender: "",
       all_organs: "",
     };
@@ -131,6 +156,9 @@ export default {
           supervisor_id: this.supervisor_id,
           ...(this.blood_type ? { abo: this.blood_type } : {}),
           ...(this.rhesus ? { rhesus: this.rhesus } : {}),
+          ...(this.tumors_number ? { tumors_number: this.tumors_number } : {}),
+          ...(this.isDialyse ? { isDialyse: this.isDialyse } : {}),
+          ...(this.isRetransplantation ? { isRetransplantation: this.isRetransplantation } : {}),
           ...(this.gender ? { gender: this.gender } : {}),
         })
         .then((response) => {
@@ -149,6 +177,9 @@ export default {
           organ: this.organ,
           donor: true,
           person_id: this.person_id,
+          tumors_number: this.tumors_number,
+          isDialyse: this.isDialyse,
+          isRetransplantation: this.isRetransplantation,
         })
         .then(() => {
           this.$router.push("/donors");
