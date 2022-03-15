@@ -2,7 +2,7 @@
   <div class="main-container-chat">
     <div class="chat-list">
       <div class="chat-room">
-        Salle de Chat
+        <p>Salle de Chat</p>
         <button class="add-chat-room cypress-add" @click="windowSate('create')">+</button>
       </div>
       <div
@@ -37,21 +37,21 @@
           <div v-for="msg in messages_list" :key="msg" class="all-messages">
             <div v-if="msg.sender_id == this.id" class="text-right cypress-message">
               <div class="my-msg">
-                {{ msg.content }}
+                <p>{{ msg.content }}</p>
               </div>
               <br />
               <div class="my-info">
-                {{ getTime(msg.created_at) }}
+                <p>{{ getTime(msg.created_at) }}</p>
               </div>
             </div>
             <div v-else class="text-left cypress-message">
               <div class="other-profile">{{ profilePicture(getEmail(msg.sender_id)) }}</div>
               <div class="other-msg">
-                {{ msg.content }}
+                <p>{{ msg.content }}</p>
               </div>
               <br />
               <div class="other-info">
-                {{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}
+                <p>{{ getTime(msg.created_at) }} - {{ getEmail(msg.sender_id) }}</p>
               </div>
             </div>
           </div>
@@ -74,9 +74,7 @@
         <div class="create-chat-top-bar">
           <p v-if="state == 'create'">Fenêtre de creation d'une salle de chat</p>
           <p v-else>Fenêtre de modification d'une salle de chat</p>
-          <button class="chat-exit-button" @click="windowSate('none')">
-            X
-          </button>
+          <button class="chat-exit-button" @click="windowSate('none')">X</button>
         </div>
         <div class="create-chat-left-list">
           <div class="user-list">Liste des utilisateurs</div>
@@ -94,7 +92,7 @@
             >
               <div class="chat-el-sub">
                 <div class="chat-el-icon">
-                  {{ user.email[0] }}
+                  <p>{{ user.email[0] }}</p>
                 </div>
                 <h2 class="chat-el-desc">
                   <i class="fas fa-id-card"></i> {{ user.email }}
