@@ -62,6 +62,47 @@
             class="input is-info"
           />
         </div>
+         <div class="form-input small">
+          <label class="label">Nombre de tumeurs</label>
+          <input
+            v-model="tumors_number"
+            placeholder="0"
+            type="text"
+            class="input is-info"
+          />
+        </div>
+        <div class="form-input small">
+          <label class="label">Le patient est sous dialyse ?</label>
+          <select v-model="isDialyse" name="dialyse" id="dialyse-select" class="button is-info is-light">
+            <option value="true">Oui</option>
+            <option value="false">Non</option>
+          </select>
+        </div>
+        <div class="form-input small">
+          <label class="label">Date de début de dialyse</label>
+          <input
+            v-model="startDateDialyse"
+            placeholder="start date"
+            type="date"
+            class="input is-info"
+          />
+        </div>
+        <div class="form-input small">
+          <label class="label">Date de fin de dialyse</label>
+          <input
+            v-model="endDateDialyse"
+            placeholder="start date"
+            type="date"
+            class="input is-info"
+          />
+        </div>
+        <div class="form-input small">
+          <label class="label">A-t-il effectué une retransplantation ?</label>
+          <select v-model="isRetransplantation" name="retransplantation" id="transplantation-select" class="button is-info is-light">
+            <option value="true">Oui</option>
+            <option value="false">Non</option>
+          </select>
+        </div>
         <div class="form-input small">
           <label class="label">Description</label>
           <input
@@ -179,6 +220,11 @@ export default {
             ? { end_date: this.receiver.end_date }
             : {}),
           ...(this.receiver.notes ? { notes: this.receiver.notes } : {}),
+          ...(this.receiver.tumors_number ? { rhesus: this.receiver.tumors_number } : {}),
+          ...(this.receiver.isDialyse ? { isDialyse: this.isDialyse } : {}),
+          ...(this.receiver.isRetransplantation ? { isRetransplantation: this.receiver.isRetransplantation } : {}),
+          ...(this.receiver.startDateDialyse ? { startDateDialyse: this.receiver.startDateDialyse } : {}),
+          ...(this.receiver.endDateDialyse ? { endDateDialyse: this.receiver.endDateDialyse } : {}),
         })
         .then(() => {
           this.updatePerson();
@@ -202,6 +248,10 @@ export default {
           ...(this.person.abo ? { abo: this.person.abo } : {}),
           ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
           ...(this.person.gender ? { gender: this.person.gender } : {}),
+          ...(this.person.isDialyse ? { isDialyse: this.person.isDialyse } : {}),
+          ...(this.person.isRetransplantation ? { isRetransplantation: this.person.isRetransplantation } : {}),
+          ...(this.person.startDateDialyse ? { startDateDialyse: this.person.startDateDialyse } : {}),
+          ...(this.person.endDateDialyse ? { endDateDialyse: this.person.endDateDialyse } : {}),
         })
         .then(() => {
           this.$router.push("/receivers");

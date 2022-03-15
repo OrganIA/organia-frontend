@@ -80,6 +80,24 @@
           </select>
         </div>
         <div class="form-input small">
+          <label class="label">Date de début de dialyse</label>
+          <input
+            v-model="startDateDialyse"
+            placeholder="start date"
+            type="date"
+            class="input is-info"
+          />
+        </div>
+        <div class="form-input small">
+          <label class="label">Date de fin de dialyse</label>
+          <input
+            v-model="endDateDialyse"
+            placeholder="start date"
+            type="date"
+            class="input is-info"
+          />
+        </div>
+        <div class="form-input small">
           <label class="label">Description</label>
           <input v-model="description" placeholder="description" type="text" class="input is-info"/>
         </div>
@@ -140,6 +158,9 @@ export default {
       tumors_number: "",
       isDialyse: "",
       isRetransplantation: "",
+      startDateDialyse: "",
+      endDateDialyse: "",
+      alpha_fetoprotein: "",
       gender: "",
       all_organs: "",
     };
@@ -161,6 +182,8 @@ export default {
           ...(this.tumors_number ? { tumors_number: this.tumors_number } : {}),
           ...(this.isDialyse ? { isDialyse: this.isDialyse } : {}),
           ...(this.isRetransplantation ? { isRetransplantation: this.isRetransplantation } : {}),
+          ...(this.startDateDialyse ? { startDateDialyse: this.startDateDialyse } : {}),
+          ...(this.endDateDialyse ? { endDateDialyse: this.endDateDialyse } : {}),
           ...(this.gender ? { gender: this.gender } : {}),
         })
         .then((response) => {

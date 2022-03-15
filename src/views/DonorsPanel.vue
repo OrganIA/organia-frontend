@@ -35,6 +35,8 @@
           <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
           <th @click="updateFilter('isDialyse')">Dialysé</th>
           <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
+          <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
+          <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
           <th @click="updateFilter('created_at')">Arrivée</th>
           <th>Éditer</th>
           <th>Infos</th>
@@ -51,6 +53,8 @@
           <td>{{ donor.tumors_number }}</td>
           <td>{{ donor.isDialyse ? "Oui": "Non" }}</td>
           <td>{{ donor.isRetransplantation ? "Oui": "Non" }}</td>
+          <td>{{ donor.startDateDialyse }}</td>
+          <td>{{ donor.endDateDialyse }}</td>
           <td>{{ donor.person.created_at }}</td>
           <td>
             <router-link :to="`/donors/edit/${donor.person.id}`">
@@ -107,6 +111,7 @@ export default {
           });
           this.donors = response.data;
           this.donorsBackup = this.donors;
+          console.log(this.donors);
         })
         .catch((error) => {
           console.log(error);

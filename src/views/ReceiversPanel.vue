@@ -35,6 +35,8 @@
           <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
           <th @click="updateFilter('isDialyse')">Dialysé</th>
           <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
+          <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
+          <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
           <th @click="updateFilter('created_at')">Arrivée</th>
           <th>Éditer</th>
           <th>Infos</th>
@@ -51,6 +53,8 @@
           <td>{{ receiver.tumors_number }}</td>
           <td>{{ receiver.isDialyse ? "Oui": "Non" }}</td>
           <td>{{ receiver.isRetransplantation ? "Oui": "Non" }}</td>
+          <td>{{ receiver.startDateDialyse }}</td>
+          <td>{{ receiver.endDateDialyse }}</td>
           <td>{{ receiver.person.created_at }}</td>
           <td>
             <router-link :to="`/receivers/edit/${receiver.person.id}`">
