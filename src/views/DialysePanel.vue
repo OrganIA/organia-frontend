@@ -59,7 +59,7 @@ export default {
   methods: {
     getAllDialyse() {
       this.$http
-        .get("/listings/receivers")
+        .get("/listings/")
         .then((response) => {
           response.data.forEach((element) => {
             element.person.created_at = new Date(
@@ -69,8 +69,11 @@ export default {
           this.receivers = response.data;
           console.log(this.receivers_dialyse);
           this.receivers.forEach((element) => {
-              if (element.isDialyse == true)
+              if (element.isDialyse == true) {
                 this.receivers_dialyse.push(element);
+                if (element.startDateDialyse == null)
+                  element.startDateDialyse = "Aucune date informée";
+              }
           });
           this.receiversBackup = this.receivers_dialyse;
         })
