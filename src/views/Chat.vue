@@ -308,8 +308,6 @@ export default {
     //},
     windowSate(state) {
       if (state == "modif") {
-        console.log("USERS_IDS")
-        console.log(this.selected_chat.users_ids)
         this.users_not_added = this.users_backup.slice();
         this.users_added = [];
         this.users_not_added.forEach((element) => {
@@ -318,17 +316,8 @@ export default {
               this.inviteUsers(element);
           })
         })
-        console.log("MODIF")
-        console.log(this.users_not_added)
-        console.log(this.users_added)
-        //
-        //
-        //
         this.users_not_added_filtered = this.users_not_added.slice();
         this.users_added_filtered = this.users_added.slice();
-        //
-        //
-        // change created_chat_name
         this.created_chat_name = this.selected_chat.chat_name;
         this.state = "modif";
         return;
