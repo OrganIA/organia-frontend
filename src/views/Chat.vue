@@ -9,7 +9,7 @@
         v-for="chat in chats"
         :key="chat"
         class="chat-el cypress-chat-room"
-        @click="getMessagesChat(chat.chat_id)"
+        @click="getChatsByID(chat.chat_id)"
       >
         <div class="chat-el-sub">
           <div class="chat-el-icon">
@@ -24,8 +24,8 @@
     <div class="chat-right-box">
       <div v-if="state == 'select'" class="state-select">
         <div class="chat-room-name">
-          <div class="chat-room-name-logo"> {{ profilePicture(getNameChatByID(this.selected_chat)) }} </div>
-          <p class="chat-room-name-text"> {{ getNameChatByID(this.selected_chat) }} </p>
+          <div class="chat-room-name-logo"> {{ profilePicture(this.selected_chat.chat_name) }} </div>
+          <p class="chat-room-name-text"> {{ this.selected_chat.chat_name }} </p>
           <button @click="windowSate('modif')" class="fas fa-cog button-setting"></button>
           <!-- -->
           <!-- -->
@@ -141,7 +141,7 @@
       <!-- WINDOW: STATE = NONE -->
       <div v-if="state == 'none'">
         <h1>Créer un Groupe de discution</h1>
-        <button class="add-chat-room cypress-add" @click="windowSate('create')">+</button>
+        <button class="add-chat-room-intro cypress-add" @click="windowSate('create')">+</button>
       </div>
     </div>
   </div>
@@ -155,11 +155,11 @@ export default {
     return {
       id: 0,
       chats: [],
-      selected_chat: 0,
+      selected_chat: {},
       filterText: "",
       filterTextAdd: "",
       messages_list: [],
-      users_chat: [],
+      //users_chat: [],
       message_to_send: "",
       state: "none",
       users_backup: [],
@@ -212,6 +212,23 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+    async getChatsByID(id) {
+      this.$http
+        .get(`/chats/${id}`)
+        .then((response) => {
+          this.selected_chat = response.data;
+          this.$toast.success("Recuperation du Chat !");
+          setTimeout(this.$toast.clear, 3000);
+          this.getMessagesChat(id);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        })
+    },
     async getUsers() {
       this.$http
         .get("/users")
@@ -243,10 +260,9 @@ export default {
     getMessagesChat(id) {
       this.message_to_send = "";
       this.$http
-        .get(`/chats/messages/${id}`)
+        .get(`/chats/${id}/messages`)
         .then((response) => {
           this.windowSate("select");
-          this.selected_chat = id;
           this.messages_list = response.data;
           this.$toast.success("Recuperation des messages réussi !");
           setTimeout(this.$toast.clear, 3000);
@@ -276,50 +292,64 @@ export default {
       let month = date.getMonth();
       return `${h}:${m} - ${day}/${month + 1}`;
     },
-    checkUserChatList(id) {
-        this.users_chat.forEach((element) => {
-          if (element == id)
-            return (true);
-        })
-        return (false);
-    },
-    getUsersChat() {
-        this.users_chat = [];
-        this.messages_list.forEach((element) => {
-          if (element.sender_id != this.id && this.checkUserChatList(element.sender_id) == false)
-            this.users_chat.push(element.sender_id);
-        })
-    },
+    //checkUserChatList(id) {
+    //    this.users_chat.forEach((element) => {
+    //      if (element == id)
+    //        return (true);
+    //    })
+    //    return (false);
+    //},
+    //getUsersChat() {
+    //    this.users_chat = [];
+    //    this.messages_list.forEach((element) => {
+    //      if (element.sender_id != this.id && this.checkUserChatList(element.sender_id) == false)
+    //        this.users_chat.push(element.sender_id);
+    //    })
+    //},
     windowSate(state) {
       if (state == "modif") {
-        this.getUsersChat();
+        console.log("USERS_IDS")
+        console.log(this.selected_chat.users_ids)
         this.users_not_added = this.users_backup.slice();
         this.users_added = [];
         this.users_not_added.forEach((element) => {
-          if (element.id == this.users_chat)
-            this.inviteUsers(element);
+          this.selected_chat.users_ids.forEach((element_b) => {
+            if (element.id == element_b)
+              this.inviteUsers(element);
+          })
         })
+        console.log("MODIF")
+        console.log(this.users_not_added)
+        console.log(this.users_added)
+        //
+        //
+        //
         this.users_not_added_filtered = this.users_not_added.slice();
         this.users_added_filtered = this.users_added.slice();
-        this.created_chat_name = this.getNameChatByID(this.selected_chat);
+        //
+        //
+        // change created_chat_name
+        this.created_chat_name = this.selected_chat.chat_name;
         this.state = "modif";
         return;
       } if (state == "create") {
-        this.selected_chat = 0;
+        this.selected_chat.chat_id = 0;
         this.state = 'create';
+        this.created_chat_name = "";
         this.users_not_added_filtered = this.users_backup.slice();
         this.users_not_added = this.users_backup.slice();
         this.users_added = [];
         this.users_added_filtered = [];
         return;
       } else {
-        if (this.selected_chat != 0) {
+        if (Object.keys(this.selected_chat).length === 0) {
           this.state = 'select';
         } else {
           this.state = state;
         }
         this.users_not_added_filtered = this.users_backup.slice();
         this.users_not_added = this.users_backup.slice();
+        this.created_chat_name = "";
         this.users_added = [];
         this.users_added_filtered = [];
       }
@@ -371,6 +401,7 @@ export default {
         .post("/chats", {
           users_ids: body.users_ids,
           chat_name: this.created_chat_name,
+          creator_id: this.id,
         })
         .then(() => {
           this.$toast.success("Creation de la salle de Chat réussi !");
@@ -403,7 +434,7 @@ export default {
         });
       });
       this.$http
-        .post(`/chats/${this.selected_chat}`, {
+        .post(`/chats/${this.selected_chat.chat_id}`, {
           users_ids: body.users_ids,
           chat_name: this.created_chat_name,
         })
@@ -420,13 +451,13 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    getNameChatByID(id) {
-      for (let i in this.chats) {
-        if (this.chats[i].chat_id == id)
-          return this.chats[i].chat_name;
-      }
-      return ("NULL");
-    },
+    //getNameChatByID(id) {
+    //  for (let i in this.chats) {
+    //    if (this.chats[i].chat_id == id)
+    //      return this.chats[i].chat_name;
+    //  }
+    //  return ("NULL");
+    //},
     filter() {
       if (this.filterText == "") {
         this.users_not_added_filtered = this.users_not_added;
@@ -450,12 +481,12 @@ export default {
       // "process.env.VUE_APP_WEBSOCKET_REMOTE_URL" in "process.env.VUE_APP_WEBSOCKET_LOCAL_URL"
       if (this.websocket == null) {
         this.websocket = new WebSocket(
-          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat.chat_id}`
         );
       } else {
         this.websocket.close();
         this.websocket = new WebSocket(
-          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat}`
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.selected_chat.chat_id}`
         );
       }
       this.websocket.onopen = async () => {
@@ -493,7 +524,7 @@ export default {
         this.websocket.send(
           JSON.stringify({
             event: "send_message",
-            chat_id: this.selected_chat,
+            chat_id: this.selected_chat.chat_id,
             content: this.message_to_send,
             sender_id: this.id,
           })
