@@ -27,11 +27,6 @@
           <div class="chat-room-name-logo"> {{ profilePicture(this.selected_chat.chat_name) }} </div>
           <p class="chat-room-name-text"> {{ this.selected_chat.chat_name }} </p>
           <button @click="windowSate('modif')" class="fas fa-cog button-setting"></button>
-          <!-- -->
-          <!-- -->
-          <!-- -->
-          <!-- -->
-          <!-- -->
         </div>
         <div class="chat-msg" ref="chat-msg">
           <div v-for="msg in messages_list" :key="msg" class="all-messages">
@@ -159,7 +154,6 @@ export default {
       filterText: "",
       filterTextAdd: "",
       messages_list: [],
-      //users_chat: [],
       message_to_send: "",
       state: "none",
       users_backup: [],
@@ -292,20 +286,6 @@ export default {
       let month = date.getMonth();
       return `${h}:${m} - ${day}/${month + 1}`;
     },
-    //checkUserChatList(id) {
-    //    this.users_chat.forEach((element) => {
-    //      if (element == id)
-    //        return (true);
-    //    })
-    //    return (false);
-    //},
-    //getUsersChat() {
-    //    this.users_chat = [];
-    //    this.messages_list.forEach((element) => {
-    //      if (element.sender_id != this.id && this.checkUserChatList(element.sender_id) == false)
-    //        this.users_chat.push(element.sender_id);
-    //    })
-    //},
     windowSate(state) {
       if (state == "modif") {
         this.users_not_added = this.users_backup.slice();
@@ -440,13 +420,6 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    //getNameChatByID(id) {
-    //  for (let i in this.chats) {
-    //    if (this.chats[i].chat_id == id)
-    //      return this.chats[i].chat_name;
-    //  }
-    //  return ("NULL");
-    //},
     filter() {
       if (this.filterText == "") {
         this.users_not_added_filtered = this.users_not_added;
