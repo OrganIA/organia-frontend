@@ -1147,6 +1147,23 @@ td>i {
     cursor: pointer;
 }
 
+.add-chat-room-intro {
+    position: absolute;
+    right:330px;
+    top:80px;
+    height: 61px;
+    width: 60px;
+    background: white;
+    border: 1px solid #707070;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.add-chat-room-intro:hover {
+    background: linear-gradient(315deg, #498bfec4, #498bfe62, transparent);
+    cursor: pointer;
+}
+
 .create-chat-name {
     position: relative;
     top: 500px;
