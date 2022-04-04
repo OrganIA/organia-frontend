@@ -8,7 +8,6 @@
         <option value="birthday">Date de naissance</option>
         <option value="startDateDialyse">Date de début de dialyse</option>
         <option value="endDateDialyse">Date de fin de dialyse</option>
-
       </select>
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
@@ -35,9 +34,7 @@
     </table>
   </div>
 </template>
-
 <script>
-
 export default {
   name: "ReceiversPanel",
   data() {
