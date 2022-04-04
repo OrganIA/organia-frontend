@@ -91,7 +91,12 @@
         </div>
         <div class="form-input small">
           <label class="label">A-t-il effectué une retransplantation ?</label>
-          <select v-model="isRetransplantation" name="retransplantation" id="transplantation-select" class="cypress-is-retransplantation button is-info is-light">
+          <select v-model="isRetransplantation"
+            name="retransplantation"
+            id="transplantation-select"
+            class="cypress-is-retransplantation
+            button is-info is-light"
+          >
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
