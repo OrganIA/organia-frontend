@@ -67,7 +67,6 @@ export default {
             ).toDateString();
           });
           this.receivers = response.data;
-          console.log(this.receivers_dialyse);
           this.receivers.forEach((element) => {
               if (element.isDialyse == true) {
                 this.receivers_dialyse.push(element);
