@@ -111,7 +111,6 @@ export default {
           });
           this.donors = response.data;
           this.donorsBackup = this.donors;
-          console.log(this.donors);
         })
         .catch((error) => {
           console.log(error);
