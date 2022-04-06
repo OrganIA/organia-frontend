@@ -18,6 +18,9 @@
           <h2 class="chat-el-desc">
             <i class="fas fa-id-card"></i> {{ chat.chat_name }}
           </h2>
+          <h2 class="chat-el-message">
+            <i class="fas fa-comment"></i> {{ getLatestMessageById(chat.chat_id) }}
+          </h2>
         </div>
       </div>
     </div>
@@ -150,6 +153,7 @@ export default {
     return {
       id: 0,
       chats: [],
+      latest_messages: [],
       selected_chat: {},
       filterText: "",
       filterTextAdd: "",
@@ -177,6 +181,7 @@ export default {
     reset() {
       this.getMe();
       this.chats = [];
+      this.latest_messages = [];
       this.filterText = "";
       this.filterTextAdd = "";
       this.messages_list = [];
@@ -195,6 +200,7 @@ export default {
         .get("/chats")
         .then((response) => {
           this.chats = response.data;
+          this.getLatestMessages();
           this.$toast.success("Recuperation de la messagerie réussite !");
           setTimeout(this.$toast.clear, 3000);
         })
@@ -206,6 +212,33 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
+    async getLatestMessages() {
+      this.$http
+        .get("/chats/messages/latest")
+        .then((response) =>{
+          this.latest_messages = response.data;
+        })
+        .catch((error) => {
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        })
+    },
+    getLatestMessageById(chat_id) {
+      // this.latest_messages.forEach((element) => {
+      //   if (element.chat_id == chat_id) {
+      //     console.log(element.content);
+      //     return (element.content);
+      //   }
+      // })
+      // return (null)
+      var tmp = this.latest_messages.find(element => element.chat_id == chat_id);
+      if (tmp)
+        return tmp.content
+      return ""
+      // console.log(JSON.parse(JSON.stringify(tmp)));
+    },
     async getChatsByID(id) {
       this.$http
         .get(`/chats/${id}`)
@@ -216,7 +249,6 @@ export default {
           this.getMessagesChat(id);
         })
         .catch((error) => {
-          console.log(error);
           this.$toast.error(
             "Erreur lors de la connexion : " + error.response.data.detail
           );
