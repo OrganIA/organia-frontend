@@ -226,18 +226,10 @@ export default {
         })
     },
     getLatestMessageById(chat_id) {
-      // this.latest_messages.forEach((element) => {
-      //   if (element.chat_id == chat_id) {
-      //     console.log(element.content);
-      //     return (element.content);
-      //   }
-      // })
-      // return (null)
       var tmp = this.latest_messages.find(element => element.chat_id == chat_id);
       if (tmp)
         return tmp.content
       return ""
-      // console.log(JSON.parse(JSON.stringify(tmp)));
     },
     async getChatsByID(id) {
       this.$http
