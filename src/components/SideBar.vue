@@ -32,8 +32,16 @@
         <i class="fas fa-terminal cypress-to-logs"></i>
         <span class="nav-text">Historique d'actions</span>
       </router-link>
+      <router-link class="block button is-info" to="/eventcalendar">
+        <i class="fas fa-calendar cypress-to-calendar"></i>
+        <span class="nav-text">Calendrier d'evenements</span>
+      </router-link>
+      <router-link class="block button is-info" to="/eventlist">
+        <i class="fas fa-list cypress-to-eventlist"></i>
+        <span class="nav-text">Liste d'evenements</span>
+      </router-link>
       <router-link class="block button is-info" to="/chat">
-        <i class="fas fa-terminal cypress-to-chats"></i>
+        <i class="fas fa-envelope cypress-to-chats"></i>
         <span class="nav-text">Chats</span>
       </router-link>
       <router-link class="block button is-info" to="/hospitals">
