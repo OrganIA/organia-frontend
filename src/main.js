@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import store from './store'
 import router from './router'
@@ -9,8 +9,8 @@ import axios from "./http"
 
 const app = createApp(App);
 app.use(store)
-.use(router)
-.use(cookies)
-.use(Toaster)
-.use(VueAxios, axios)
-.mount('#app')
+    .use(router)
+    .use(cookies)
+    .use(Toaster)
+    .use(VueAxios, axios)
+    .mount('#app')
