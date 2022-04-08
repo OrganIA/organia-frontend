@@ -755,9 +755,23 @@ td > i {
 .chat-el-desc {
     position: relative;
     left: 100px;
-    top: -35px;
+    top: -45px;
     height: 20px;
     width: 240px;
+}
+
+.chat-el-message {
+    position: relative;
+    left: 100px;
+    top: -35px;
+    height: 40px;
+    width: 220px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 240px;
+    max-height: 39px;
+    font-size: 12px;
+    overflow: hidden;
 }
 
 .chat-right-box {
