@@ -49,7 +49,7 @@
         <span class="nav-text">Carte</span>
       </router-link>
       <router-link class="block button is-info" to="/hospitals">
-        <i class="fas fa-hospital-user cypress-to-chats"></i>
+        <i class="fas fa-hospital-user cypress-to-hospitals"></i>
         <span class="nav-text">Hôpitaux</span>
       </router-link>
     </div>

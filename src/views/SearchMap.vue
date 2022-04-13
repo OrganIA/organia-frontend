@@ -13,15 +13,23 @@
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
       <l-geo-json :geojson="geojson"></l-geo-json>
-      <l-marker :lat-lng="markerLatLng"></l-marker>
-      <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng" @l-add="$event.target.openPopup()"> 
+       <!-- <l-marker :lat-lng="markerLatLng"></l-marker> -->
+       <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng" @l-add="$event.target.openPopup()"> 
           <l-popup :content="item.content"></l-popup> 
-      </l-marker> 
+      </l-marker>
     </l-map>
+    
+    <p class="vignette-container" v-for="hospital in hospitals" :key="hospital">
+        {{ hospital.name }}
+        <br>
+        Numéro de téléphone: {{ hospital.phone_number}}
+        <br>
+        Nombre de patient: {{ hospital.patients_count}}
+    </p>
   </div>
 </template>
 <script>
-import {LMap, LTileLayer, LGeoJson, LMarker, LPopup} from "@vue-leaflet/vue-leaflet";
+import {LMap, LTileLayer, LGeoJson, LMarker, LPopup,} from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-geosearch/dist/geosearch.css";
 
@@ -50,15 +58,23 @@ export default {
     const response = await fetch("https://france-geojson.gregoiredavid.fr/repo/regions.geojson");
     this.geojson = await response.json();
     this.getHospitals();
+    console.log("TOTOTOTOOTO", this.markers_length);
     window.setTimeout( () => {        
         for (var i = 0; i < this.markers_length; i += 1) {
-          this.markers.push({
-            id: i,
-            latlng: [this.hospitals[i].latitude, this.hospitals[i].longitude],
-            content: this.hospitals[i].name
-          })
+          console.log(this.hospitals[i]);
+          if (this.hospitals[i].latitude == null|| this.hospitals[i].longitude == null) {
+            console.log("WHATT");
+            continue;
+          }
+          else {
+            this.markers.push({
+              id: i,
+              latlng: [this.hospitals[i].latitude, this.hospitals[i].longitude],
+              content: this.hospitals[i].name
+            })
+          }
         }
-    }, 2000);
+    }, 12000);
   },
   methods: {
     getHospitals() {
