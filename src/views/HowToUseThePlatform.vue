@@ -36,6 +36,8 @@
             v-on:click="isActive = 'chats'">Messagerie</a></li>
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'panneau_admin' }"><a
             v-on:click="isActive = 'panneau_admin'">Panel Administrateur</a></li>
+        <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'support' }"><a
+            v-on:click="isActive = 'support'">Contacter le support</a></li>
       </ul>
     </div>
     <div class="tab-contents">
@@ -47,6 +49,7 @@
       <DroitsSupplementaires @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'askRights' }"></DroitsSupplementaires>
       <Messagerie @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'chats' }"></Messagerie>
       <PanneauAdmin @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'panneau_admin' }"></PanneauAdmin>
+      <ContacterSupport @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'support' }"></ContacterSupport>
     </div>
   </div>
 
@@ -61,10 +64,12 @@ import Connexion from "@/Tutorials/Connexion";
 import DroitsSupplementaires from "@/Tutorials/DroitsSupplementaires";
 import Invitations from "@/Tutorials/Invitations";
 import PanneauAdmin from "@/Tutorials/PanneauAdmin";
+import ContacterSupport from "@/Tutorials/ContacterSupport";
 
 export default {
   name: "HowToUseThePlatform",
-  components: {Plateforme, Messagerie, DroitsSupplementaires, Receveurs, Donneurs, Connexion, Invitations, PanneauAdmin},
+  components: {Plateforme, Messagerie, DroitsSupplementaires, Receveurs, Donneurs, Connexion, Invitations, PanneauAdmin,
+  ContacterSupport},
 
   data() {
     return {

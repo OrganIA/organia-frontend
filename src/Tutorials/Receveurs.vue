@@ -4,13 +4,25 @@
       <h1 class="title is-1">Gestion des receveurs</h1>
       <br><br>
       <div class="is-size-5 has-text-justified">
+        <div class="summary-box has-text-left">
+          <ol>
+            <li class="summary-item"><a href="#userlist">Interface de gestion des receveurs</a></li>
+            <li class="summary-item"><a href="#modifuser">Ajouter un receveur</a></li>
+            <li class="summary-item"><a href="#visualizeuser">Modifier un receveur</a></li>
+            <li class="summary-item"><a href="#visualizeuser">Voir les informations d'un receveur</a></li>
+          </ol>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="is-size-5 has-text-justified">
         La gestion des receveurs a été simplifiée au possible afin de rendre le processus de correspondance le plus
         clair possible.
         <br>
         <br>
         Pour d'accéder à la liste des receveurs il vous faudra d'abord vous connecter via le portail de connexion
         (voir la partie <a
-          v-on:click="isActive = 'connexion'">Se connecter</a>), étape obligatoire avant d'accéder aux informations
+          v-on:click="updateValue('connexion')">Se connecter</a>), étape obligatoire avant d'accéder aux informations
         de la plateforme.
         <br>
         <br>
@@ -55,7 +67,7 @@
       Lorsque que vous cliquez sur le bouton d'ajout (1) une nouvelle page devrait apparaître afin de vous laisser
       remplir certains champs d'informations tels que montré ci dessous, en cas de comportement non documenté dans
       cette aide
-      veuillez <a v-on:click="isActive = 'support'">contacter le support</a>.
+      veuillez <a v-on:click="updateValue('support')">contacter le support</a>.
       <br>
       <br>
       <div class="has-text-centered">
@@ -93,7 +105,12 @@
 
 <script>
 export default {
-  name: "Receveurs"
+  name: "Receveurs",
+  methods: {
+    updateValue: function (activePanel) {
+      this.$emit('changePanel', activePanel);
+    }
+  },
 }
 </script>
 
