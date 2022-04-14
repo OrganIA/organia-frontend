@@ -75,6 +75,10 @@
     color: white;
 }
 
+.vignette-container p {
+    padding-top: 10%;
+}
+
 .background-transparent {
     background-color: transparent;
 }

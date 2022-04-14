@@ -29,16 +29,16 @@ describe('Add receiver', () => {
       cy.url().should('eq', 'http://localhost:8080/hospitals/add')
   
       cy.get('.cypress-name')
-        .type('Hopital Robert Ballanger')
-        .should('have.value', 'Hopital Robert Ballanger')
+        .type('Hopital TEST')
+        .should('have.value', 'Hopital TEST')
     
       cy.get('.cypress-city')
-        .type('Aulnay-sous-bois')
-        .should('have.value', 'Aulnay-sous-bois')
+        .type('CITY TEST')
+        .should('have.value', 'CITY TEST')
 
       cy.get('.cypress-department')
-        .type('93')
-        .should('have.value', '93')
+        .type('DEPARTMENT TEST')
+        .should('have.value', 'DEPARTMENT TEST')
 
       cy.get('.cypress-phone-number')
         .type('0623049589')

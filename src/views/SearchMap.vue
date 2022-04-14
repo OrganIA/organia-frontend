@@ -14,18 +14,19 @@
       ></l-tile-layer>
       <l-geo-json :geojson="geojson"></l-geo-json>
        <!-- <l-marker :lat-lng="markerLatLng"></l-marker> -->
-       <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng" @l-add="$event.target.openPopup()"> 
+       <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng" @l-add="$event.target.openPopup()">
           <l-popup :content="item.content"></l-popup> 
       </l-marker>
     </l-map>
-    
-    <p class="vignette-container" v-for="hospital in hospitals" :key="hospital">
-        {{ hospital.name }}
-        <br>
-        Numéro de téléphone: {{ hospital.phone_number}}
-        <br>
-        Nombre de patient: {{ hospital.patients_count}}
-    </p>
+    <div class="vignette-container">
+      <p v-for="hospital in hospitals" :key="hospital">
+          {{ hospital.name }}
+          <br>
+          Numéro de téléphone: {{ hospital.phone_number}}
+          <br>
+          Nombre de patient: {{ hospital.patients_count}}
+      </p>
+    </div>
   </div>
 </template>
 <script>
