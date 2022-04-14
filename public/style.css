@@ -1357,3 +1357,17 @@ td > i {
     width: 300px;
     word-wrap: break-word
 }
+
+.invit-block-padding {
+    height: 200px;
+}
+
+.invitation-form {
+    width: 200%;
+    margin-left: 12.5%;
+    margin-top: 10%;
+}
+
+.invit-modale {
+    width: 50%;
+}

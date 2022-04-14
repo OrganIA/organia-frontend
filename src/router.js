@@ -31,5 +31,7 @@ export default createRouter({
         { path: "/hospitals/edit/:id", component: () => import("./views/EditHospital"), props: true },
         { path: "/team", component: () => import("./views/TeamDescription") },
         { path: "/dialyse", component: () => import("./views/DialysePanel.vue") },
+        { path: "/new_invitation", component: () => import("./views/CreateInvitation.vue") },
+        { path: "/invitations", component: () => import("./views/Invitations.vue") },
     ],
 });

@@ -98,7 +98,6 @@
           <button class="button">Cancel</button>
         </footer>
       </div>
-      <button class="modal-close is-large" aria-label="close" v-on:click="loadSelectedUser(this.user.id)"></button>
     </div>
   </div>
 
