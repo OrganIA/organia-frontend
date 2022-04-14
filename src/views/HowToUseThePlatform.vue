@@ -27,7 +27,6 @@
             v-on:click="isActive = 'receveurs'">Gestion des receveurs</a></li>
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'donneurs' }"><a
             v-on:click="isActive = 'donneurs'">Gestion des donneurs</a></li>
-
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'invitations' }"><a
             v-on:click="isActive = 'invitations'">Invitations</a></li>
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'askRights' }"><a
@@ -36,8 +35,11 @@
             v-on:click="isActive = 'chats'">Messagerie</a></li>
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'panneau_admin' }"><a
             v-on:click="isActive = 'panneau_admin'">Panel Administrateur</a></li>
+        <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'logs' }"><a
+            v-on:click="isActive = 'logs'">Gérer les logs</a></li>
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'support' }"><a
             v-on:click="isActive = 'support'">Contacter le support</a></li>
+
       </ul>
     </div>
     <div class="tab-contents">
