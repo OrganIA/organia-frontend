@@ -1,13 +1,12 @@
 <template>
   <div>
-      <h1 style="text-align: center">Liste des patients sous dialyse</h1>
+      <h1 style="text-align: center">Liste des patients sous tumeurs</h1>
       <div class="search-block">
       <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
         <option value="first_name">Prénom</option>
         <option value="last_name">Nom</option>
         <option value="birthday">Date de naissance</option>
-        <option value="startDateDialyse">Date de début de dialyse</option>
-        <option value="endDateDialyse">Date de fin de dialyse</option>
+        <option value="tumor">Sous tumeurs</option>
       </select>
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
@@ -18,8 +17,7 @@
           <th @click="updateFilter('first_name')">Prénom</th>
           <th @click="updateFilter('last_name')">Nom de famille</th>
           <th @click="updateFilter('birthday')">Date de naissance</th>
-          <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
-          <th @click="updateFilter('endDateDialyse')">Date de fin de dialyse</th>
+          <th @click="updateFilter('tumor')">Tumeurs</th>
         </tr>
       </thead>
       <tbody>
@@ -27,8 +25,8 @@
           <td>{{ receiver.person.first_name }}</td>
           <td>{{ receiver.person.last_name }}</td>
           <td>{{ receiver.person.birthday }}</td>
-          <td>{{ receiver.startDateDialyse }}</td>
-          <td>{{ receiver.endDateDialyse }}</td>
+          <!-- <td>{{ receiver.tumor }}</td> -->
+
         </tr>
       </tbody>
     </table>
