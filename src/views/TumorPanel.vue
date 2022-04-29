@@ -17,16 +17,15 @@
           <th @click="updateFilter('first_name')">Prénom</th>
           <th @click="updateFilter('last_name')">Nom de famille</th>
           <th @click="updateFilter('birthday')">Date de naissance</th>
-          <th @click="updateFilter('tumor')">Tumeurs</th>
+          <th @click="updateFilter('tumor')">Nombre de tumeurs</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="receiver in receivers" :key="receiver">
-          <td>{{ receiver.person.first_name }}</td>
-          <td>{{ receiver.person.last_name }}</td>
-          <td>{{ receiver.person.birthday }}</td>
-          <!-- <td>{{ receiver.tumor }}</td> -->
-
+        <tr v-for="person in person_tumors" :key="person">
+          <td>{{ person.person.first_name }}</td>
+          <td>{{ person.person.last_name }}</td>
+          <td>{{ person.person.birthday }}</td>
+          <td>{{ person.tumors_number }}</td>
         </tr>
       </tbody>
     </table>
@@ -34,25 +33,25 @@
 </template>
 <script>
 export default {
-  name: "ReceiversPanel",
+  name: "TumorPanel",
   data() {
     return {
-      receivers: {},
-      receivers_dialyse: [],
+      person: {},
+      person_tumors: [],
       showModal: false,
-      currentReceiver: {},
+      currentperson: {},
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "first_name",
       filterText: "",
-      receiversBackup: [],
+      personBackup: [],
     };
   },
   created() {
-    this.getAllDialyse();
+    this.getAllTumors();
   },
   methods: {
-    getAllDialyse() {
+    getAllTumors() {
       this.$http
         .get("/listings/")
         .then((response) => {
@@ -61,15 +60,15 @@ export default {
               element.person.created_at
             ).toDateString();
           });
-          this.receivers = response.data;
-          this.receivers.forEach((element) => {
-              if (element.isDialyse == true) {
-                this.receivers_dialyse.push(element);
-                if (element.startDateDialyse == null)
-                  element.startDateDialyse = "Aucune date informée";
+          this.person = response.data;
+          this.person.forEach((element) => {
+              if (element.tumors_number > 0) {
+                console.log(element);
+                this.person_tumors.push(element);
               }
           });
-          this.receiversBackup = this.receivers_dialyse;
+          this.personBackup = this.person_tumors;
+          console.log("TUMORS: ", this.person_tumors)
         })
         .catch((error) => {
           console.log(error);
@@ -77,16 +76,16 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    openModal(receiver) {
+    openModal(person) {
       if (!this.showModal) {
         this.showModal = true;
-        this.currentReceiver = receiver;
+        this.currentperson = person;
         document.getElementById("bodiv").style.display = "initial";
       }
     },
     closeModal() {
       this.showModal = false;
-      this.currentReceiver = {};
+      this.currentperson = {};
       document.getElementById("bodiv").style.display = "none";
     },
     updateFilter(dataName) {
@@ -105,7 +104,7 @@ export default {
     },
     sortData() {
       if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
-        this.receivers.sort((a, b) => {
+        this.person.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
               b.person[this.sortingKey] == null)
               return this.checkNull(a, b);
@@ -118,7 +117,7 @@ export default {
           );
         });
       } else if (["birthday", "created_at"].includes(this.sortingKey)) {
-        this.receivers.sort((a, b) => {
+        this.person.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
               b.person[this.sortingKey] == null)
               return this.checkNull(a, b);
@@ -133,7 +132,7 @@ export default {
             : 1;
         });
       } else if (this.sortingKey == "organ") {
-        this.receivers.sort((a, b) => {
+        this.person.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
               b.person[this.sortingKey] == null)
               return this.checkNull(a, b);
@@ -144,16 +143,16 @@ export default {
     },
     filter() {
       if (this.filterText == "") {
-        this.receivers_dialyse = this.receiversBackup;
+        this.persons_dialyse = this.personBackup;
         return;
       }
-      if (this.selectFilter in this.receiversBackup[0].person) {
-        this.receivers_dialyse = this.receiversBackup.filter((el) => {
+      if (this.selectFilter in this.personBackup[0].person) {
+        this.persons_dialyse = this.personBackup.filter((el) => {
           if (el.person[this.selectFilter] != null)
             return el.person[this.selectFilter].includes(this.filterText);
         });
       } else {
-        this.receivers_dialyse = this.receiversBackup.filter((el) => {
+        this.persons_dialyse = this.personBackup.filter((el) => {
           if (el[this.selectFilter] != null)
             return el[this.selectFilter].includes(this.filterText);
         });

@@ -36,7 +36,7 @@
 </template>
 <script>
 export default {
-  name: "ReceiversPanel",
+  name: "DialysePanel",
   data() {
     return {
       receivers: {},
