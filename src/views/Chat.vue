@@ -3,7 +3,7 @@
     <div class="chat-list">
       <div class="chat-room">
         <p>Salle de Chat</p>
-        <button class="add-chat-room cypress-add" @click="windowSate('create')">+</button>
+        <button class="add-chat-room cypress-add" @click="windowSate('create')"><i class="far fa-plus-square"></i></button>
       </div>
       <div
         v-for="chat in chats"
@@ -72,27 +72,28 @@
         <div class="create-chat-top-bar">
           <p v-if="state == 'create'">Fenêtre de creation d'une salle de chat</p>
           <p v-else>Fenêtre de modification d'une salle de chat</p>
-          <button class="chat-exit-button" @click="windowSate('none')">X</button>
+          <button class="chat-exit-button" @click="windowSate('none')"><i class="fas fa-times"></i></button>
         </div>
         <div class="create-chat-left-list">
           <div class="user-list">Liste des utilisateurs</div>
           <input
             @input="filter"
             v-model="filterText"
-            class="user-list-filter"
+            class="user-list-filter input mr-6"
+            placeholder="Recherche d'utilisateurs"
           />
           <div class="user-can-be-add">
             <div
               v-for="user in users_not_added_filtered"
               :key="user"
-              class="chat-el cypress-invite"
+              class="chat-users-selection cypress-invite"
               @click="inviteUsers(user)"
             >
               <div class="chat-el-sub">
-                <div class="chat-el-icon">
+                <div class="chat-users-selection-icon">
                   <p>{{ user.email[0] }}</p>
                 </div>
-                <h2 class="chat-el-desc">
+                <h2 class="chat-users-selection-desc">
                   <i class="fas fa-id-card"></i> {{ user.email }}
                 </h2>
               </div>
@@ -104,42 +105,45 @@
           <input
             @input="filterAdd"
             v-model="filterTextAdd"
-            class="user-list-filter"
+            class="user-list-filter-r input mr-6"
+            placeholder="Recherche d'utilisateurs"
           />
           <div class="user-add">
             <div
               v-for="user in users_added_filtered"
               :key="user"
-              class="chat-el"
+              class="chat-users-selection"
               @click="uninviteUsers(user)"
             >
               <div class="chat-el-sub">
-                <div class="chat-el-icon">
+                <div class="chat-users-selection-icon">
                   {{ user.email[0] }}
                 </div>
-                <h2 class="chat-el-desc">
+                <h2 class="chat-users-selection-desc">
                   <i class="fas fa-id-card"></i> {{ user.email }}
                 </h2>
               </div>
             </div>
           </div>
+        </div>
+        <div class="center-chat-creation-interaction">
           <input
             v-model="created_chat_name"
-            class="create-chat-name"
+            class="create-chat-name input mr-6"
             placeholder="Nom de la salle de chat"
           />
-          <button v-if="this.state == 'create'" class="chat-create-button cypress-create" @click="createChat">
+          <button v-if="this.state == 'create'" class="chat-create-button button is-info cypress-to-add mb-6 cypress-create" @click="createChat">
             Créer une salle de chat
           </button>
-          <button v-else class="chat-create-button cypress-create" @click="changeChat">
+          <button v-else class="chat-create-button button is-info cypress-to-add mb-6 cypress-create" @click="changeChat">
             Modifier une salle de chat
           </button>
         </div>
       </div>
       <!-- WINDOW: STATE = NONE -->
       <div v-if="state == 'none'">
-        <h1>Créer un Groupe de discution</h1>
-        <button class="add-chat-room-intro cypress-add" @click="windowSate('create')">+</button>
+        <!-- <h1>Créer un Groupe de discution</h1>
+        <button class="add-chat-room-intro cypress-add" @click="windowSate('create')">+</button> -->
       </div>
     </div>
   </div>
@@ -236,8 +240,6 @@ export default {
         .get(`/chats/${id}`)
         .then((response) => {
           this.selected_chat = response.data;
-          this.$toast.success("Recuperation du Chat !");
-          setTimeout(this.$toast.clear, 3000);
           this.getMessagesChat(id);
         })
         .catch((error) => {
@@ -254,8 +256,6 @@ export default {
           this.users_backup = response.data.filter((element) => {
             return element.id != this.id;
           });
-          this.$toast.success("Recuperation des Utilisateurs !");
-          setTimeout(this.$toast.clear, 3000);
         })
         .catch((error) => {
           console.log(error);
@@ -282,8 +282,6 @@ export default {
         .then((response) => {
           this.windowSate("select");
           this.messages_list = response.data;
-          this.$toast.success("Recuperation des messages réussi !");
-          setTimeout(this.$toast.clear, 3000);
           this.websocketSetup();
         })
         .catch((error) => {
