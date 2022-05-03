@@ -6,8 +6,8 @@
       <div class="is-size-5 has-text-justified">
         <div class="summary-box has-text-left">
           <ol>
-            <li class="summary-item"><a href="#userlist">Interface de gestion des receveurs</a></li>
-            <li class="summary-item"><a href="#modifuser">Ajouter un receveur</a></li>
+            <li class="summary-item"><a href="#receiverinterface">Interface de gestion des receveurs</a></li>
+            <li class="summary-item"><a href="#addreceiver">Ajouter un receveur</a></li>
             <li class="summary-item"><a href="#visualizeuser">Modifier un receveur</a></li>
             <li class="summary-item"><a href="#visualizeuser">Voir les informations d'un receveur</a></li>
           </ol>
@@ -37,6 +37,9 @@
         </div>
         <br>
         <br>
+        <h2 class="title is-3" id="receiverinterface">Interface de gestion des receveurs</h2>
+        <br>
+        <br>
         Vous devriez avoir une interface comme celle-ci :
         <br>
         <br>
@@ -63,7 +66,7 @@
       <h3 class="title is-4">1 : Bouton d'ajout des receveurs</h3>
       <h3 class="title is-4">2 : Recherche d'un receveur</h3>
       <h3 class="title is-4">3 : Liste des receveurs</h3>
-      <h2 class="title is-3">Ajouter un receveur</h2>
+      <h2 class="title is-3" id="addreceiver">Ajouter un receveur</h2>
       Lorsque que vous cliquez sur le bouton d'ajout (1) une nouvelle page devrait apparaître afin de vous laisser
       remplir certains champs d'informations tels que montré ci dessous, en cas de comportement non documenté dans
       cette aide

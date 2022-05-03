@@ -36,7 +36,7 @@
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'panneau_admin' }"><a
             v-on:click="isActive = 'panneau_admin'">Panel Administrateur</a></li>
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'logs' }"><a
-            v-on:click="isActive = 'logs'">Gérer les logs</a></li>
+            v-on:click="isActive = 'logs'">Gérer les journaux</a></li>
         <li class="tutorial-tab" v-bind:class="{ 'is-active': isActive === 'support' }"><a
             v-on:click="isActive = 'support'">Contacter le support</a></li>
 
@@ -51,6 +51,7 @@
       <DroitsSupplementaires @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'askRights' }"></DroitsSupplementaires>
       <Messagerie @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'chats' }"></Messagerie>
       <PanneauAdmin @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'panneau_admin' }"></PanneauAdmin>
+      <GestionLogs @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'logs' }"></GestionLogs>
       <ContacterSupport @changePanel="updatePanel" v-bind:class="{ 'is-active': isActive === 'support' }"></ContacterSupport>
     </div>
   </div>
@@ -67,11 +68,12 @@ import DroitsSupplementaires from "@/Tutorials/DroitsSupplementaires";
 import Invitations from "@/Tutorials/Invitations";
 import PanneauAdmin from "@/Tutorials/PanneauAdmin";
 import ContacterSupport from "@/Tutorials/ContacterSupport";
+import GestionLogs from "@/Tutorials/GestionLogs";
 
 export default {
   name: "HowToUseThePlatform",
   components: {Plateforme, Messagerie, DroitsSupplementaires, Receveurs, Donneurs, Connexion, Invitations, PanneauAdmin,
-  ContacterSupport},
+  ContacterSupport, GestionLogs},
 
   data() {
     return {

@@ -1343,3 +1343,7 @@ td > i {
     width: 300px;
     word-wrap: break-word
 }
+
+.form-full-width {
+    max-width: 100%;
+}
