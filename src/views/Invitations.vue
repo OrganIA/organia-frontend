@@ -20,7 +20,7 @@
               <label class="label">Mail de la personne</label>
               <input type="text" class="input mb-6" placeholder="jean.dupond@mail.com" required/>
               <div class="form-input">
-                <textarea class="textarea" placeholder="e.g. Hello world"></textarea>
+                <textarea class="textarea" placeholder="exemple: Bonjour, voici le lien d'invitation pour la plateforme..."></textarea>
 
               </div>
             </div>
