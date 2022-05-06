@@ -63,6 +63,12 @@
     max-width: 80%;
 }
 
+.vignette-card {
+    position: relative;
+    left: 110%;
+    bottom: 100%;
+}
+
 .vignette-container {
     position: relative;
     top: 5px;
@@ -1059,3 +1065,9 @@ td>i {
     text-align: left;
 }
 
+.map {
+    height: 80%;
+    width: 50vw;
+    position: relative;
+    left: 10%;
+}

@@ -2,10 +2,10 @@
     <div id="main">
         <h1>Carte de recherche pour les hopitaux</h1>
     </div>
-    <div style="height: 75vh; width: 50vw;">
+    <div class="map">
         <input class="form-control my-0 py-1" type="text" placeholder="Rerchercher" aria-label="Search" v-model="search">
         <div class="ui cards" style="margin: 10px">
-          <div class="card ui fluid" v-for="item in filteredHospitals" :key="item.id" style="margin: 0" v-on:click="clickHospital" :ref="item_search">
+          <div class="card ui fluid" v-for="item in filteredHospitals" :key="item.id" style="margin: 0" v-on:click="clickHospital">
             <div class="content">
               <div class="header">{{ item.name }}</div>
                 <div class="meta">
@@ -25,19 +25,21 @@
           <l-popup :content="item.content"></l-popup> 
       </l-marker>
       </l-map>
-      <!-- <div class="vignette-container">
-        <p v-for="hospital in hospitals" :key="hospital">
-            {{ hospital.name }}
-            <br>
-            Numéro de téléphone: {{ hospital.phone_number}}
-            <br>
-            Nombre de patient: {{ hospital.patients_count}}
-        </p>
-      </div> -->
+      <div class="vignette-card">
+        <div class="vignette-container" v-for="item in filteredHospitals" :key="item.id">
+          <p>
+              {{item.name }}
+              <br>
+              Numéro de téléphone: {{ item.phone_number}}
+              <br>
+              Nombre de patient: {{ item.patients_count}}
+          </p>
+        </div>
+      </div>
   </div>
 </template>
 <script>
-import {LMap, LTileLayer, LGeoJson, LMarker, LPopup,} from "@vue-leaflet/vue-leaflet";
+import {LMap, LTileLayer, LGeoJson, LMarker, LPopup} from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-geosearch/dist/geosearch.css";
 
@@ -82,10 +84,8 @@ export default {
     window.setTimeout( () => {        
         for (var i = 0; i < this.markers_length; i += 1) {
           console.log(this.hospitals[i]);
-          if (this.hospitals[i].latitude == null|| this.hospitals[i].longitude == null) {
-            console.log("WHATT");
+          if (this.hospitals[i].latitude == null|| this.hospitals[i].longitude == null)
             continue;
-          }
           else {
             this.markers.push({
               id: i,
@@ -97,10 +97,9 @@ export default {
     }, 12000);
   },
   methods: {
-    clickHospital (e) {
+    clickHospital(e) {
       for (var i = 0; i < this.markers_length; i +=1) {
         if (e.target.textContent == this.hospitals[i].name) {
-          console.log(this.hospitals[i].latitude)
           this.latpos = this.hospitals[i].latitude;
           this.lngpos = this.hospitals[i].longitude;
           this.zoom = 13;
@@ -113,7 +112,6 @@ export default {
         .get("/hospitals")
         .then((response) => {
           this.hospitals = response.data;
-          console.log(this.hospitals)
           this.markers_length = this.hospitals.length;
         })
         .catch((error) => {
