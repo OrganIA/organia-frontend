@@ -8,12 +8,12 @@ describe('Add receiver', () => {
     cy.get('.cypress-to-login').click()
 
     cy.get('.cypress-email')
-      .type('saber@saber.com')
-      .should('have.value', 'saber@saber.com')
+      .type('nicolas.yapobi@epitech.eu')
+      .should('have.value', 'nicolas.yapobi@epitech.eu')
 
     cy.get('.cypress-password')
-      .type('saber')
-      .should('have.value', 'saber')
+      .type('test')
+      .should('have.value', 'test')
 
     cy.get('.cypress-login').click()
 
@@ -48,6 +48,38 @@ describe('Add receiver', () => {
     cy.get('.cypress-organ')
       .select('HEART')
       .should('have.value', 'HEART')
+    
+    cy.get('.cypress-tumors-number')
+      .type('3')
+      .should('have.value', '3')
+    
+    cy.get('.cypress-is-dialyse')
+      .select('true')
+      .should('have.value', 'true')
+
+    cy.get('.cypress-is-retransplantation')
+      .select('false')
+      .should('have.value', 'false')
+    
+    cy.get('.cypress-beginning-dialyse')
+      .type('2000-10-22')
+      .should('have.value', '2000-10-22')
+
+    cy.get('.cypress-end-dialyse')
+      .type('2000-10-22')
+      .should('have.value', '2000-10-22')
+
+    cy.get('.cypress-blood')
+      .select('A')
+      .should('have.value', 'A')
+
+    cy.get('.cypress-rhesus')
+      .select('+')
+      .should('have.value', '+')
+
+    cy.get('.cypress-gender')
+      .select('MALE')
+      .should('have.value', 'MALE')
 
     cy.get('.cypress-add').click();
 

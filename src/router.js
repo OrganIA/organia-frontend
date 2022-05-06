@@ -30,5 +30,7 @@ export default createRouter({
         { path: "/hospitals/add", component: () => import("./views/NewHospital") },
         { path: "/hospitals/info/:id", component: () => import("./views/DisplayHospitalInfo"), props: true },
         { path: "/hospitals/edit/:id", component: () => import("./views/EditHospital"), props: true },
+        { path: "/team", component: () => import("./views/TeamDescription") },
+        { path: "/dialyse", component: () => import("./views/DialysePanel.vue") },
     ],
 });

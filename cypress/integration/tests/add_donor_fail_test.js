@@ -8,12 +8,12 @@ describe('Add receiver', () => {
     cy.get('.cypress-to-login').click()
 
     cy.get('.cypress-email')
-      .type('saber@saber.com')
-      .should('have.value', 'saber@saber.com')
+      .type('nicolas.yapobi@epitech.eu')
+      .should('have.value', 'nicolas.yapobi@epitech.eu')
 
     cy.get('.cypress-password')
-      .type('saber')
-      .should('have.value', 'saber')
+      .type('test')
+      .should('have.value', 'test')
 
     cy.get('.cypress-login').click()
 
