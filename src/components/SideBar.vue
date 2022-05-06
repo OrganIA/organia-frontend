@@ -24,6 +24,10 @@
         <i class="fas fa-address-card"></i>
         <span class="nav-text">Liste des Dialysés</span>
       </router-link>
+      <router-link class="block button is-info" to="/tumor">
+        <i class="fas fa-address-card"></i>
+        <span class="nav-text">Liste des Tumeurs</span>
+      </router-link>
       <router-link class="block button is-info" to="/administrator">
         <i class="fa fa-user-shield" aria-hidden="true"></i>
         <span class="nav-text">Administrateur</span>
