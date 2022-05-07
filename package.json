@@ -17,6 +17,7 @@
     "bulma": "^0.9.3",
     "core-js": "^3.6.5",
     "cypress-real-events": "^1.6.0",
+    "leaflet-geosearch": "^3.6.0",
     "moment": "^2.29.1",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
@@ -24,6 +25,7 @@
     "vue": "^3.2.27",
     "vue-axios": "^3.2.5",
     "vue-router": "^4.0.8",
+    "vue2-leaflet-geosearch": "^1.0.6",
     "vue3-cookies": "^1.0.1",
     "vuejs": "^3.0.1",
     "vuex": "^4.0.2",
@@ -31,6 +33,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.12",
+    "@vue-leaflet/vue-leaflet": "^0.6.1",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
