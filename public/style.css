@@ -719,7 +719,7 @@ td > i {
     -ms-overflow-style: none;
 }
 
-.user-can-be-add::-webkit-scrollbar { 
+.user-can-be-add::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
 }
 
@@ -735,7 +735,7 @@ td > i {
     -ms-overflow-style: none;
 }
 
-.user-add::-webkit-scrollbar { 
+.user-add::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
 }
 
@@ -1438,6 +1438,20 @@ td > i {
     top: -50px;
     width: 300px;
     word-wrap: break-word
+}
+
+.invit-block-padding {
+    height: 200px;
+}
+
+.invitation-form {
+    width: 200%;
+    margin-left: 12.5%;
+    margin-top: 10%;
+}
+
+.invit-modale {
+    width: 50%;
 }
 
 .form-full-width {

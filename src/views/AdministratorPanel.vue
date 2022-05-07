@@ -97,7 +97,6 @@
           <button class="button is-success" v-on:click="loadSelectedUser(this.user.id)">Sauvegarder</button>
         </footer>
       </div>
-      <button class="modal-close is-large" aria-label="close" v-on:click="loadSelectedUser(this.user.id)"></button>
     </div>
   </div>
 

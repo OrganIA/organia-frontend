@@ -32,6 +32,10 @@
         <i class="fa fa-user-shield" aria-hidden="true"></i>
         <span class="nav-text">Administrateur</span>
       </router-link>
+      <router-link class="block button is-info" to="/invitations">
+        <i class="fa fa-user-shield" aria-hidden="true"></i>
+        <span class="nav-text">Invitations</span>
+      </router-link>
       <router-link class="block button is-info" to="/administrator/role">
         <i class="fa fa-tasks cypress-to-roles" aria-hidden="true"></i>
         <span class="nav-text">Rôles</span>
