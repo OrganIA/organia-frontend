@@ -24,6 +24,10 @@
         <i class="fas fa-address-card"></i>
         <span class="nav-text">Liste des Dialysés</span>
       </router-link>
+      <router-link class="block button is-info" to="/tumor">
+        <i class="fas fa-address-card"></i>
+        <span class="nav-text">Liste des Tumeurs</span>
+      </router-link>
       <router-link class="block button is-info" to="/administrator">
         <i class="fa fa-user-shield" aria-hidden="true"></i>
         <span class="nav-text">Administrateur</span>
@@ -48,8 +52,12 @@
         <i class="fas fa-envelope cypress-to-chats"></i>
         <span class="nav-text">Chats</span>
       </router-link>
+      <router-link class="block button is-info" to="/searchmap">
+        <i class="fas fa-terminal cypress-to-maps"></i>
+        <span class="nav-text">Carte</span>
+      </router-link>
       <router-link class="block button is-info" to="/hospitals">
-        <i class="fas fa-hospital-user cypress-to-chats"></i>
+        <i class="fas fa-hospital-user cypress-to-hospitals"></i>
         <span class="nav-text">Hôpitaux</span>
       </router-link>
     </div>

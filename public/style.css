@@ -70,6 +70,28 @@
     max-width: 79%;
 }
 
+.vignette-card {
+    position: relative;
+    left: 110%;
+    bottom: 100%;
+}
+
+.vignette-container {
+    position: relative;
+    top: 5px;
+    height: 130px;
+    width: 200px;
+    border-radius: 10px;
+    margin: 2%;
+    background: #3e8ed0;
+    border: none;
+    color: white;
+}
+
+.vignette-container p {
+    padding-top: 10%;
+}
+
 .background-transparent {
     background-color: transparent;
 }
@@ -689,27 +711,75 @@ td > i {
     position: absolute;
     left: 0px;
     top: 100px;
-    height: 540px;
-    width: 300px;
-    border: solid 1px #707070;
+    height: 420px;
+    width: 380px;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
+.user-can-be-add::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
 .user-add {
     position: absolute;
     right: 0px;
     top: 100px;
-    height: 400px;
-    width: 300px;
-    border: solid 1px #707070;
+    height: 420px;
+    width: 380px;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    border-radius: 0px 0px 0px 20px;
+}
+
+.user-add::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.chat-users-selection {
+    position: relative;
+    left: 20px;
+    top: 0px;
+    width: 340px;
+    height: 30px;
+    margin-top: 20px;
+    border: solid 1px #707070;
+    border-radius: 30px;
+    cursor: pointer;
+    background-image: none;
+}
+
+.chat-users-selection:hover {
+    background-image: linear-gradient(to right, rgba(73, 138, 254, 0.6), rgba(37, 69, 127, 0));
+}
+
+.chat-users-selection-icon {
+    position: relative;
+    left: -1px;
+    top: -1px;
+    width: 30px;
+    height: 30px;
+    border: solid 1px #707070;
+    background-color: #071f49;
+    border-radius: 30px;
+    font-family: TimesNewRoman;
+    font-size: 22px;
+    text-align: center;
+    color: #fbfcff;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.chat-users-selection-desc {
+    position: relative;
+    left: 40px;
+    top: -27px;
+    height: 20px;
+    width: 240px;
+    font-size: 15px;
 }
 
 .chat-room {
@@ -755,9 +825,23 @@ td > i {
 .chat-el-desc {
     position: relative;
     left: 100px;
-    top: -35px;
+    top: -45px;
     height: 20px;
     width: 240px;
+}
+
+.chat-el-message {
+    position: relative;
+    left: 100px;
+    top: -35px;
+    height: 40px;
+    width: 220px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 240px;
+    max-height: 39px;
+    font-size: 12px;
+    overflow: hidden;
 }
 
 .chat-right-box {
@@ -894,36 +978,49 @@ td > i {
     justify-content: flex-start;
     position: absolute;
     left: -1px;
-    top: 59px;
+    top: 160px;
+    width: 361px;
+    height: 518px;
 }
 
 .user-list {
-    width: 300px;
+    width: 380px;
     height: 52px;
-    border: solid 1px #707070;
     text-align: center;
     line-height: 52px;
-    border-radius: 0px 20px 0px 0px;
 }
 
 .user-list-r {
-    width: 300px;
+    width: 380px;
     height: 52px;
-    border: solid 1px #707070;
     text-align: center;
     line-height: 52px;
-    border-radius: 20px 0px 0px 0px;
 }
 
 .user-list-filter {
     display: table-cell;
     position: absolute;
-    left: 0px;
+    left: 20px;
     top: 51px;
-    width: 300px;
+    width: 340px !important;
     height: 50px;
     vertical-align: middle;
-    border: solid 1px #707070;
+    margin: 0px !important;
+    padding: 5px;
+    text-align: center;
+}
+
+.user-list-filter-r {
+    display: table-cell;
+    position: absolute;
+    right: 20px;
+    top: 51px;
+    width: 340px;
+    height: 50px;
+    vertical-align: middle;
+    margin: 0px !important;
+    padding: 5px;
+    text-align: center;
 }
 
 .create-chat-right-list {
@@ -932,7 +1029,7 @@ td > i {
     justify-content: flex-start;
     position: absolute;
     right: -1px;
-    top: 59px;
+    top: 160px;
 }
 
 .avatar-dropdown {
@@ -948,7 +1045,6 @@ td > i {
 .dropdown-correction {
     margin-left: -100px;
     width: 260px;
-
 }
 
 .centered-container {
@@ -1074,37 +1170,24 @@ td > i {
 }
 
 .chat-create-button {
-    position: absolute;
-    left: 40px;
-    top: 590px;
-    background: white;
-    border: 1px solid #707070;
-    border-radius: 4px;
+    text-align: center;
+    margin-top: 15px;
 }
 
 .chat-exit-button {
     position: relative;
-    right: -351px;
-    top: -51px;
-    height: 61px;
-    width: 60px;
+    right: -360px;
+    top: -50px;
+    height: 40px;
+    width: 40px;
     background: white;
-    border: 1px solid #707070;
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 25px;
+    border: none;
+    cursor: pointer;
 }
 
 .chat-exit-button:hover {
-    position: relative;
-    right: -351px;
-    top: -51px;
-    height: 61px;
-    width: 60px;
-    border: 1px solid #707070;
-    font-size: 30px;
-    font-weight: 600;
-    background: linear-gradient(315deg, #498bfec4, #498bfe62, transparent);
-    cursor: pointer;
+    top: -48px;
 }
 
 .all-messages {
@@ -1190,19 +1273,19 @@ td > i {
 
 .add-chat-room {
     position: absolute;
-    right:0px;
-    top:-1px;
-    height: 61px;
-    width: 60px;
-    background: white;
-    border: 1px solid #707070;
+    right:25px;
+    top:13px;
+    height: 30px;
+    width: 30px;
+    background: transparent;
     font-weight: 600;
     font-size: 30px;
+    border: none;
+    cursor: pointer;
 }
 
 .add-chat-room:hover {
-    background: linear-gradient(315deg, #498bfec4, #498bfe62, transparent);
-    cursor: pointer;
+    top: 15px;
 }
 
 .add-chat-room-intro {
@@ -1223,9 +1306,20 @@ td > i {
 }
 
 .create-chat-name {
-    position: relative;
-    top: 500px;
-    right: 20px;
+    text-align: center;
+    display: inline-block;
+    width: 600px;
+    margin: 0px !important;
+    padding: 5px;
+}
+
+.center-chat-creation-interaction {
+    position: absolute;
+    left: 0px;
+    top: 50px;
+    height: 100px;
+    width: 758px;
+    text-align: center;
 }
 
 .chat-room-name {
@@ -1357,4 +1451,10 @@ td > i {
 .titre-about {
     background-color: var(--dark-blue);
     color: white;
+}
+.map {
+    height: 80%;
+    width: 50vw;
+    position: relative;
+    left: 10%;
 }
