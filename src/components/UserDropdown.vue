@@ -13,6 +13,9 @@
         <router-link to="#" class="dropdown-item">
           Demande au support
         </router-link>
+        <router-link to="/new_invitation" class="dropdown-item">
+          Demande au support
+        </router-link>
         <hr class="dropdown-divider">
         <button
             @click="logout"

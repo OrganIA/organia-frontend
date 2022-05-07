@@ -33,5 +33,6 @@ export default createRouter({
         { path: "/team", component: () => import("./views/TeamDescription") },
         { path: "/dialyse", component: () => import("./views/DialysePanel.vue") },
         { path: "/tumor", component: () => import("./views/TumorPanel.vue") },
+        { path: "/invitations", component: () => import("./views/Invitations.vue") },
     ],
 });

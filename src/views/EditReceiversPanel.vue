@@ -302,7 +302,7 @@ export default {
             .delete(`/persons/${this.person.id}`)
             .then(() => {
               this.$toast.success("Suppression effectué");
-              this.$router.push("/donors");
+              this.$router.push("/receivers");
             })
             .catch((error) => {
               console.log(error);
