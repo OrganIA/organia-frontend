@@ -65,23 +65,25 @@
             class="cypress-tumors-number input is-info"
           />
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Le patient est sous dialyse ?</label>
           <select v-model="isDialyse"
             name="dialyse"
             id="dialyse-select"
             class="cypress-is-dialyse button is-info is-light"
+            required
           >
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">A-t-il effectué une retransplantation ?</label>
           <select v-model="isRetransplantation"
             name="retransplantation"
             id="transplantation-select" 
             class="cypress-is-retransplantation button is-info is-light"
+            required
           >
             <option value="true">Oui</option>
             <option value="false">Non</option>
@@ -113,12 +115,13 @@
             class="input is-info"
           />
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Groupe sanguin</label>
           <select v-model="blood_type"
             name="abo"
             id="abo-select"
             class="cypress-blood button is-info is-light"
+            required
           >
             <option value="A">A</option>
             <option value="B">B</option>
@@ -126,23 +129,25 @@
             <option value="AB">AB</option>
           </select>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Rhésus</label>
           <select v-model="rhesus"
             name="rhesus"
             id="rhesus-select"
             class="cypress-rhesus button is-info is-light"
+            required
           >
             <option value="+">+</option>
             <option value="-">-</option>
           </select>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Sexe</label>
           <select v-model="gender"
             name="gender"
             id="gender-select"
             class="cypress-gender button is-info is-light"
+            required
           >
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
