@@ -182,8 +182,8 @@ export default {
       tumors_number: "",
       isDialyse: "",
       isRetransplantation: "",
-      startDateDialyse: "",
-      endDateDialyse: "",
+      startDateDialyse: undefined,
+      endDateDialyse: undefined,
       gender: "",
       all_organs: "",
     };
