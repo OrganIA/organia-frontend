@@ -169,11 +169,11 @@ export default {
   },
   created() {
     this.getAllOrgans();
-    this.donor.tumors_number = 0;
 
   },
   methods: {
     createPerson() {
+      this.tumors_number = 0;
       this.$http
         .post("/persons", {
           first_name: this.first_name,

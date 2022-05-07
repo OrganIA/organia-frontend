@@ -191,10 +191,10 @@ export default {
   },
   created() {
     this.getAllOrgans();
-    this.receiver.tumors_number = 0;
   },
   methods: {
     createPerson() {
+      this.tumors_number = 0;
       this.$http
         .post("/persons", {
           first_name: this.first_name,
