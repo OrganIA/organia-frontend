@@ -20,8 +20,8 @@
         <br>
         <br>
         Pour d'accéder à la liste des donneurs il vous faudra d'abord vous connecter via le portail de connexion
-        (voir la partie <a
-          v-on:click="isActive = 'connexion'">Se connecter</a>), étape obligatoire avant d'accéder aux informations
+        (voir la partie <a v-on:click="updateValue('askRights')">Demander des droits supplémentaires</a>),
+        étape obligatoire avant d'accéder aux informations
         de la plateforme.
         <br>
         <br>
@@ -41,42 +41,34 @@
         <br>
         <div class="has-text-centered">
           <img
-              src="https://media.discordapp.net/attachments/885854807120810045/943019572141895780/unknown.png?width=1234&height=701"
+              src="https://media.discordapp.net/attachments/959068123187773570/972369194760962079/unknown.png?width=1150&height=551"
               alt="" class="bordered-image">
         </div>
       </div>
-      <br>
-      (Dans cet exemple la liste des donneurs est vide)
-      <br>
-      <br>
-      Cette page comporte 3 éléments importants qui seront détaillé dans une partie dédiée ci dessous :
-      <br>
-      <br>
-      <div class="has-text-centered">
-        <img
-            src="https://media.discordapp.net/attachments/837014086133743617/943026931786465300/unknown.png"
-            alt="" class="bordered-image">
-      </div>
+      <br>      <div class="is-size-5">
+
+    (Dans cet exemple la liste des donneurs est vide)
+    </div>
       <br>
       <br>
-      <h3 class="title is-4">1 : Bouton d'ajout des donneurs</h3>
-      <h3 class="title is-4">2 : Recherche d'un donneur</h3>
-      <h3 class="title is-4">3 : Liste des donneurs</h3>
       <h2 class="title is-3">Ajouter un donneur</h2>
-      Lorsque que vous cliquez sur le bouton d'ajout (1) une nouvelle page devrait apparaître afin de vous laisser
+      <div class="is-size-5">
+
+      Lorsque que vous cliquez sur le bouton d'ajout une nouvelle page devrait apparaître afin de vous laisser
       remplir certains champs d'informations tels que montré ci dessous, en cas de comportement non documenté dans
-      cette aide
-      veuillez <a v-on:click="isActive = 'support'">contacter le support</a>.
+      cette aide veuillez<a v-on:click="updateValue('suppport')"> contacter le support</a>
       <br>
       <br>
+      </div>
+
       <div class="has-text-centered">
         <img
-            src="https://media.discordapp.net/attachments/885901939966111844/957901927906160680/unknown.png?width=411&height=467"
+            src="https://media.discordapp.net/attachments/959068123187773570/972371995998158867/unknown.png?width=372&height=551"
             alt="" class="bordered-image">
       </div>
       <br>
       <br>
-      <div>
+      <div class="is-size-5">
         <strong> Veuillez bien vérifier chacune des informations que vous intégrez dans la base de données, de
           mauvais
           formats ou
@@ -84,17 +76,18 @@
           mettre
           en jeu
           la vie de certains patients</strong>
-      </div>
       <br>
       <br>
       Une fois toutes les informations renseignées, il suffira de cliquer sur le bouton "Ajouter" pour intégrer le
       patient
-      à notre base de données :
+      à notre base de données comme dans l'exemple ci dessous :
+      </div>
+
       <br>
       <br>
       <div class="has-text-centered">
         <img
-            src="https://media.discordapp.net/attachments/885901939966111844/957903933827870760/unknown.png?width=425&height=467"
+            src="https://media.discordapp.net/attachments/959068123187773570/972371228922871808/unknown.png?width=404&height=551"
             alt="" class="bordered-image">
       </div>
     </div>
@@ -103,7 +96,12 @@
 
 <script>
 export default {
-  name: "Donneurs"
+  name: "Donneurs",
+  methods: {
+    updateValue: function (activePanel) {
+      this.$emit('changePanel', activePanel);
+    }
+  },
 }
 </script>
 

@@ -169,6 +169,8 @@ export default {
   },
   created() {
     this.getAllOrgans();
+    this.donor.tumors_number = 0;
+
   },
   methods: {
     createPerson() {
