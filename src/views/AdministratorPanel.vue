@@ -94,8 +94,7 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
-          <button class="button">Cancel</button>
+          <button class="button is-success" v-on:click="loadSelectedUser(this.user.id)">Sauvegarder</button>
         </footer>
       </div>
       <button class="modal-close is-large" aria-label="close" v-on:click="loadSelectedUser(this.user.id)"></button>

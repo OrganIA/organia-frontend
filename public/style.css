@@ -1084,11 +1084,6 @@ td > i {
     margin-left: 20%;
 }
 
-.about-container {
-    width: 130%;
-    margin-left: 80px;
-}
-
 .large-footer {
     width: 150%;
 }
@@ -1221,6 +1216,13 @@ td > i {
     display: flex;
 }
 
+.about-container {
+    margin-top: 50px;
+    padding-top: 20px;
+    width: 100vw;
+    background-color: white;
+}
+
 .navbar-correction-tutorial {
     margin-left: 75vw;
     margin-top: 20px;
@@ -1245,7 +1247,7 @@ td > i {
 
 .tutorial-tab {
     width: 320px;
-    margin-top: 30px;
+    margin-top: 15px;
     overflow-x: hidden;
 }
 
@@ -1438,6 +1440,18 @@ td > i {
     word-wrap: break-word
 }
 
+.form-full-width {
+    max-width: 100%;
+}
+
+.not-resizable {
+    resize: none;
+}
+
+.titre-about {
+    background-color: var(--dark-blue);
+    color: white;
+}
 .map {
     height: 80%;
     width: 50vw;
