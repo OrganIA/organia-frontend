@@ -71,11 +71,17 @@
             class="input is-info"
           />
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Le patient est sous dialyse ?</label>
-          <select v-model="receiver.isDialyse" name="dialyse" id="dialyse-select" class="button is-info is-light">
+          <select v-model="receiver.isDialyse" 
+            name="dialyse" 
+            id="dialyse-select" 
+            class="button is-info is-light"
+            required
+          >
             <option value="true">Oui</option>
             <option value="false">Non</option>
+            
           </select>
         </div>
         <div class="form-input small">
@@ -96,9 +102,14 @@
             class="input is-info"
           />
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">A-t-il effectué une retransplantation ?</label>
-          <select v-model="receiver.isRetransplantation" name="retransplantation" id="transplantation-select" class="button is-info is-light">
+          <select v-model="receiver.isRetransplantation" 
+            name="retransplantation" 
+            id="transplantation-select" 
+            class="button is-info is-light"
+            required
+          >
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
@@ -112,13 +123,14 @@
             type="text"
           />
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Groupe sanguin</label>
           <select
             v-model="person.abo"
             name="abo"
             id="abo-select"
             class="button is-info is-light"
+            required
           >
             <option value="A">A</option>
             <option value="B">B</option>
@@ -126,7 +138,7 @@
             <option value="AB">AB</option>
           </select>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Rhésus</label>
           <select
             class="button is-info is-light"
@@ -139,13 +151,14 @@
             <option value="-">-</option>
           </select>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Sexe</label>
           <select
             v-model="person.gender"
             name="gender"
             id="gender-select"
             class="button is-info is-light"
+            required
           >
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
@@ -191,6 +204,7 @@ export default {
       receiver: {},
       person: {},
       all_organs: [],
+      tumors_number: 0,
     };
   },
   methods: {
@@ -200,6 +214,7 @@ export default {
         .then((response) => {
           this.receiver = response.data;
           this.person = response.data.person;
+          console.log(this.receiver)
         })
         .catch((error) => {
           console.log(error);
@@ -208,6 +223,7 @@ export default {
         });
     },
     submitForm() {
+      console.log("IN LISTING RETRANSPLANTATION: ", this.receiver.isRetransplantation)
       this.$http
         .post(`/listings/${this.id}`, {
           notes: this.receiver.notes,
@@ -221,8 +237,8 @@ export default {
             : {}),
           ...(this.receiver.notes ? { notes: this.receiver.notes } : {}),
           ...(this.receiver.tumors_number ? { rhesus: this.receiver.tumors_number } : {}),
-          ...(this.receiver.isDialyse ? { isDialyse: this.isDialyse } : {}),
-          ...(this.receiver.isRetransplantation ? { isRetransplantation: this.receiver.isRetransplantation } : {}),
+          isDialyse : this.receiver.isDialyse,
+          isRetransplantation: this.receiver.isRetransplantation,
           ...(this.receiver.startDateDialyse ? { startDateDialyse: this.receiver.startDateDialyse } : {}),
           ...(this.receiver.endDateDialyse ? { endDateDialyse: this.receiver.endDateDialyse } : {}),
         })
@@ -236,6 +252,7 @@ export default {
         });
     },
     updatePerson() {
+      this.person.isDialyse = this.receiver.isDialyse
       this.$http
         .post(`/persons/${this.person.id}`, {
           first_name: this.person.first_name,

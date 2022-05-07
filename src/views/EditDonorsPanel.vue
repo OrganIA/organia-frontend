@@ -71,9 +71,14 @@
             class="input is-info"
           />
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Le patient est sous dialyse ?</label>
-          <select v-model="donor.isDialyse" name="dialyse" id="dialyse-select" class="button is-info is-light">
+          <select v-model="donor.isDialyse" 
+            name="dialyse" 
+            id="dialyse-select" 
+            class="button is-info is-light"
+            required
+          >
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
@@ -96,9 +101,14 @@
             class="input is-info"
           />
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">A-t-il effectué une retransplantation ?</label>
-          <select v-model="donor.isRetransplantation" name="retransplantation" id="transplantation-select" class="button is-info is-light">
+          <select v-model="donor.isRetransplantation" 
+            name="retransplantation" 
+            id="transplantation-select" 
+            class="button is-info is-light"
+            required
+          >
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
@@ -112,13 +122,14 @@
             type="text"
           />
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Groupe sanguin</label>
           <select
             v-model="person.abo"
             name="abo"
             id="abo-select"
             class="button is-info is-light"
+            required
           >
             <option value="A">A</option>
             <option value="B">B</option>
@@ -126,25 +137,27 @@
             <option value="AB">AB</option>
           </select>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Rhésus</label>
           <select
             class="button is-info is-light"
             v-model="person.rhesus"
             name="rhesus"
             id="rhesus-select"
+            required
           >
             <option value="+">+</option>
             <option value="-">-</option>
           </select>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Sexe</label>
           <select
             v-model="person.gender"
             name="gender"
             id="gender-select"
             class="button is-info is-light"
+            required
           >
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
@@ -218,8 +231,8 @@ export default {
           ...(this.donor.end_date ? { end_date: this.donor.end_date } : {}),
           ...(this.donor.notes ? { notes: this.donor.notes } : {}),
           ...(this.donor.tumors_number ? { rhesus: this.donor.tumors_number } : {}),
-          ...(this.donor.isDialyse ? { isDialyse: this.isDialyse } : {}),
-          ...(this.donor.isRetransplantation ? { isRetransplantation: this.donor.isRetransplantation } : {}),
+          isDialyse: this.donor.isDialyse,
+          isRetransplantation: this.donor.isRetransplantation,
           ...(this.donor.startDateDialyse ? { startDateDialyse: this.donor.startDateDialyse } : {}),
           ...(this.donor.endDateDialyse ? { endDateDialyse: this.donor.endDateDialyse } : {}),
         })
@@ -233,6 +246,8 @@ export default {
         });
     },
     updatePerson() {
+      console.log(this.donor.isDialyse)
+      this.person.isDialyse = this.donor.isDialyse
       this.$http
         .post(`/persons/${this.person.id}`, {
           first_name: this.person.first_name,

@@ -47,13 +47,14 @@
             </option>
           </select>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
           <label class="label">Date d'admission</label>
           <input
               v-model="start_date"
               placeholder="start date"
               type="date"
               class="cypress-admission-date input is-info"
+              required
           />
         </div>
         <div class="form-input small">
@@ -196,6 +197,7 @@ export default {
   },
   created() {
     this.getAllOrgans();
+    this.tumors_number = 0;
   },
   methods: {
     createPerson() {
