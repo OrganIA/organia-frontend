@@ -65,7 +65,7 @@
          <div class="form-input small">
           <label class="label">Nombre de tumeurs</label>
           <input
-            v-model="tumors_number"
+            v-model="receiver.tumors_number"
             placeholder="0"
             type="text"
             class="input is-info"
@@ -73,7 +73,7 @@
         </div>
         <div class="form-input small">
           <label class="label">Le patient est sous dialyse ?</label>
-          <select v-model="isDialyse" name="dialyse" id="dialyse-select" class="button is-info is-light">
+          <select v-model="receiver.isDialyse" name="dialyse" id="dialyse-select" class="button is-info is-light">
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
@@ -81,7 +81,7 @@
         <div class="form-input small">
           <label class="label">Date de début de dialyse</label>
           <input
-            v-model="startDateDialyse"
+            v-model="receiver.startDateDialyse"
             placeholder="start date"
             type="date"
             class="input is-info"
@@ -90,7 +90,7 @@
         <div class="form-input small">
           <label class="label">Date de fin de dialyse</label>
           <input
-            v-model="endDateDialyse"
+            v-model="receiver.endDateDialyse"
             placeholder="start date"
             type="date"
             class="input is-info"
@@ -98,7 +98,7 @@
         </div>
         <div class="form-input small">
           <label class="label">A-t-il effectué une retransplantation ?</label>
-          <select v-model="isRetransplantation" name="retransplantation" id="transplantation-select" class="button is-info is-light">
+          <select v-model="receiver.isRetransplantation" name="retransplantation" id="transplantation-select" class="button is-info is-light">
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
@@ -171,7 +171,7 @@
         <button
           type="button"
           class="button is-danger ml-6"
-          @click="delete_donor"
+          @click="delete_receiver"
         >
           Supprimer
         </button>

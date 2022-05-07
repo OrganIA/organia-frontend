@@ -1,5 +1,5 @@
 <template>
-  <PresentationNavbar/>
+  <PresentationNavbar />
   <div class="centered-container">
     <form @submit.prevent="register()">
       <div class="content">
@@ -8,28 +8,31 @@
       <div class="field">
         <div class="control">
           <input
-              v-model="email"
-              class="cypress-email input"
-              placeholder="email"
-              type="email"
-              required
+            v-model="email"
+            class="cypress-email input"
+            placeholder="email"
+            type="email"
+            required
           />
         </div>
       </div>
       <div class="field">
         <div class="control">
           <input
-              v-model="password"
-              placeholder="mot de passe"
-              type="password"
-              class="cypress-password input"
-              required
+            v-model="password"
+            placeholder="mot de passe"
+            type="password"
+            class="cypress-password input"
+            required
           />
         </div>
       </div>
 
-      <button type="submit" class="cypress-register button is-info mr-6">Confirmer</button>
-      <router-link to="/login" class="cypress-to-login  button is-link">Se connecter</router-link
+      <button type="submit" class="cypress-register button is-info mr-6">
+        Confirmer
+      </button>
+      <router-link to="/login" class="cypress-to-login button is-link"
+        >Se connecter</router-link
       >
     </form>
   </div>
@@ -41,7 +44,7 @@ import PresentationNavbar from "@/components/PresentationNavbar";
 export default {
   name: "Register",
   emits: ["login"],
-  components: {PresentationNavbar},
+  components: { PresentationNavbar },
   data() {
     return {
       email: "",
@@ -54,6 +57,7 @@ export default {
         .post("/users/", {
           email: this.email,
           password: this.password,
+          role_id:1
         })
         .then(() => {
           this.login();
@@ -73,7 +77,10 @@ export default {
         .then((response) => {
           this.$toast.success("Connexion réussie !");
           setTimeout(this.$toast.clear, 3000);
-          this.$store.commit("login", { email: this.email, role: response.data});
+          this.$store.commit("login", {
+            email: this.email,
+            role: response.data,
+          });
           this.$emit("login", true);
           this.$router.push("/");
         })
