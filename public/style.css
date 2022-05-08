@@ -1190,6 +1190,46 @@ td > i {
     top: -48px;
 }
 
+.chat-remove-button {
+    position: relative;
+    right: 0px;
+    top: 0px;
+    height: 40px;
+    width: 40px;
+    background: white;
+    font-size: 25px;
+    border: none;
+    cursor: pointer;
+}
+
+.chat-remove-button:hover {
+    top: -2px;
+}
+
+.chat-remove-button-position {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 40px;
+    width: 40px;
+}
+
+.chat-exit-button-info {
+    position: absolute;
+    top: 20px;
+    left: 710px;
+    height: 20px;
+    width: 30px;
+    background: transparent;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
+
+.chat-exit-button-info:hover {
+    top: 22px;
+}
+
 .all-messages {
     position: relative;
     top: 0px;
@@ -1265,7 +1305,6 @@ td > i {
     width: 50%;
     padding: 5px 5px 5px 40px;
 }
-
 
 .summary-item {
     margin: 10px;
@@ -1369,6 +1408,7 @@ td > i {
     width: 30px;
     background: transparent;
     border: none;
+    color: black;
 }
 
 .button-setting:hover {
@@ -1380,6 +1420,16 @@ td > i {
     background: transparent;
     border: none;
     cursor: pointer;
+}
+
+.list-info {
+    position: absolute;
+    left: 200px;
+    top: 200px;
+    height: 460px;
+    width: 400px;
+    border: 1px solid #707070;
+    overflow-y: scroll;
 }
 
 .team-desc-page {
