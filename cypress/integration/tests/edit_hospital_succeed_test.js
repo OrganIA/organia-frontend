@@ -1,19 +1,19 @@
-describe('Add receiver', () => {
+describe('Edit receiver', () => {
     it('Tries to open modal in the receiver panel should succeed', () => {
       cy.visit('http://localhost:8080/')
   
       cy.get('.cypress-to-register').click()
   
       cy.get('.cypress-to-login').click()
-  
+      
       cy.get('.cypress-email')
-        .type('nicolas.yapobi@epitech.eu')
-        .should('have.value', 'nicolas.yapobi@epitech.eu')
+        .type('saber@saber.com')
+        .should('have.value', 'saber@saber.com')
   
       cy.get('.cypress-password')
-        .type('string')
-        .should('have.value', 'string')
-  
+        .type('saber')
+        .should('have.value', 'saber')
+    
       cy.get('.cypress-login').click()
   
       cy.url().should('eq', 'http://localhost:8080/')

@@ -1,49 +1,21 @@
 /* eslint-disable no-undef */
-describe('Add receiver', () => {
+describe('Add receiver success', () => {
   it('Tries to add a receiver should succeed', () => {
     cy.visit('http://localhost:8080/')
 
     cy.get('.cypress-to-register').click()
 
     cy.get('.cypress-to-login').click()
-  
-    cy.get('.cypress-organ')
-    .select('HEART')
-    .should('have.value', 'HEART')
-  
-  
-    cy.get('.cypress-tumors-number')
-    .type('3')
-    .should('have.value', '3')
-  
-    cy.get('.cypress-is-dialyse')
-    .select('true')
-    .should('have.value', 'true')
 
-    cy.get('.cypress-is-retransplantation')
-    .select('false')
-    .should('have.value', 'false')
-  
-    cy.get('.cypress-beginning-dialyse')
-      .type('2000-10-22')
-      .should('have.value', '2000-10-22')
+    cy.get('.cypress-email')
+    .type('saber@saber.com')
+    .should('have.value', 'saber@saber.com')
 
-    cy.get('.cypress-end-dialyse')
-      .type('2000-10-22')
-      .should('have.value', '2000-10-22')
+    cy.get('.cypress-password')
+    .type('saber')
+    .should('have.value', 'saber')
 
-    cy.get('.cypress-blood')
-      .select('A')
-      .should('have.value', 'A')
-
-    cy.get('.cypress-rhesus')
-      .select('+')
-      .should('have.value', '+')
-
-    cy.get('.cypress-gender')
-      .select('MALE')
-      .should('have.value', 'MALE')
-      cy.get('.cypress-login').click()
+    cy.get('.cypress-login').click()
 
     cy.url().should('eq', 'http://localhost:8080/')
 
@@ -80,6 +52,7 @@ describe('Add receiver', () => {
     .should('have.value', 'HEART')
   
     cy.get('.cypress-tumors-number')
+      .clear()
       .type('3')
       .should('have.value', '3')
     

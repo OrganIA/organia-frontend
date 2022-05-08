@@ -36,6 +36,9 @@
     </table>
   </div>
   <button class="cypress-add button is-info mx-auto mr-6" @click="updateRoles()" type="submit"> Confirmer</button>
+  <router-link :to="`/administrator/role/add`">
+    <i class="cypress-to-add fas fa-edit button is-primary">Créer un nouveau rôle</i>
+  </router-link>
 </template>
 
 <script>

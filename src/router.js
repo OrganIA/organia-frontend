@@ -17,6 +17,7 @@ export default createRouter({
         { path: "/administrator/edit/user/:id", component: () => import("./views/AdministratorEditUser"), props: true },
         { path: "/actions", component: () => import("./views/ActionLogPanel") },
         { path: "/administrator/role", component: () => import("./views/RolePanel") },
+        { path: "/administrator/role/add", component: () => import("./views/NewRoles.vue")},
         { path: "/eventcalendar", component: () => import("./views/EventCalendar.vue") },
         { path: "/eventlist", component: () => import("./views/EventPanel.vue") },
         { path: "/eventlist/add", component: () => import("./views/NewEvent.vue") },

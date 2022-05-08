@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-describe('Add receiver', () => {
+describe('Add receiver fail', () => {
   it('Tries to add a receiver should fail', () => {
     cy.visit('http://localhost:8080/')
 
@@ -8,15 +8,14 @@ describe('Add receiver', () => {
     cy.get('.cypress-to-login').click()
 
     cy.get('.cypress-email')
-      .type('nicolas.yapobi@epitech.eu')
-      .should('have.value', 'nicolas.yapobi@epitech.eu')
+    .type('saber@saber.com')
+    .should('have.value', 'saber@saber.com')
 
-    cy.get('.cypress-password')
-      .type('test')
-      .should('have.value', 'test')
+  cy.get('.cypress-password')
+    .type('saber')
+    .should('have.value', 'saber')
 
-
-    cy.get('.cypress-login').click()
+  cy.get('.cypress-login').click()
 
     cy.url().should('eq', 'http://localhost:8080/')
 
