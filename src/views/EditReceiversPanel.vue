@@ -223,7 +223,6 @@ export default {
         });
     },
     submitForm() {
-      console.log("IN LISTING RETRANSPLANTATION: ", this.receiver.isRetransplantation)
       this.$http
         .post(`/listings/${this.id}`, {
           notes: this.receiver.notes,

@@ -64,7 +64,6 @@ export default {
           .get("/hospitals")
           .then((response) => {
             this.hospitals = response.data;
-            console.log(this.hospitals)
           })
           .catch((error) => {
             console.log(error);

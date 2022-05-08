@@ -246,7 +246,6 @@ export default {
         });
     },
     updatePerson() {
-      console.log(this.donor.isDialyse)
       this.person.isDialyse = this.donor.isDialyse
       this.$http
         .post(`/persons/${this.person.id}`, {

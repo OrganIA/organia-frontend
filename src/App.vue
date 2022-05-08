@@ -80,7 +80,6 @@ export default {
     };
   },
   created() {
-    console.log("Bien mis a jour")
     if (this.$cookies.get("token")) {
       this.$http.defaults.headers.common[
         "Authorization"

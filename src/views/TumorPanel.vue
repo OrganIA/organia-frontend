@@ -63,12 +63,10 @@ export default {
           this.person = response.data;
           this.person.forEach((element) => {
               if (element.tumors_number > 0) {
-                console.log(element);
                 this.person_tumors.push(element);
               }
           });
           this.personBackup = this.person_tumors;
-          console.log("TUMORS: ", this.person_tumors)
         })
         .catch((error) => {
           console.log(error);
