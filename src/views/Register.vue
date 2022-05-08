@@ -59,7 +59,9 @@ export default {
           password: this.password,
           role_id:1
         })
-        .then(() => {
+        .then((data) => {
+          console.log("Register")
+          console.log(data)
           this.login();
         })
         .catch((error) => {
