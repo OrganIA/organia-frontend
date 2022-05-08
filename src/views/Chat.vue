@@ -2,7 +2,7 @@
   <div class="main-container-chat">
     <div class="chat-list">
       <div class="chat-room">
-        <p>Salle de Chat</p>
+        <p>Salle de Tchat</p>
         <button class="add-chat-room cypress-add" @click="windowSate('create')"><i class="far fa-plus-square"></i></button>
       </div>
       <div
@@ -29,7 +29,12 @@
         <div class="chat-room-name">
           <div class="chat-room-name-logo"> {{ profilePicture(this.selected_chat.chat_name) }} </div>
           <p class="chat-room-name-text"> {{ this.selected_chat.chat_name }} </p>
-          <button @click="windowSate('modif')" class="fas fa-cog button-setting"></button>
+          <div v-if="selected_chat.creator_id == id">
+            <button @click="windowSate('modif')" class="fas fa-cog button-setting"></button>
+          </div>
+          <div v-else>
+            <button @click="windowSate('info')" class="fas fa-info-circle button-setting"></button>
+          </div>
         </div>
         <div class="chat-msg" ref="chat-msg">
           <div v-for="msg in messages_list" :key="msg" class="all-messages">
@@ -67,12 +72,43 @@
           ></button>
         </div>
       </div>
+      <div v-if="state == 'info'">
+        <div class="chat-room-name">
+          <div class="chat-room-name-logo"> {{ profilePicture(this.selected_chat.chat_name) }} </div>
+          <p class="chat-room-name-text"> {{ this.selected_chat.chat_name }} </p>
+          <button class="chat-exit-button-info" @click="windowSate('none')"><i class="fas fa-times"></i></button>
+        </div>
+        <h1>
+          Administrateur du Tchat
+          <br>
+          {{ selected_chat_info.creator_id }}
+        </h1>
+        <div class="list-info">
+          <div
+              v-for="info_users in selected_chat_info.users"
+              :key="info_users"
+              class="chat-users-selection"
+            >
+              <div class="chat-el-sub">
+                <div class="chat-users-selection-icon">
+                  <p>{{ info_users[0] }}</p>
+                </div>
+                <h2 class="chat-users-selection-desc">
+                  <i class="fas fa-id-card"></i> {{ info_users }}
+                </h2>
+              </div>
+            </div>
+        </div>
+      </div>
       <!-- WINDOW: STATE = CREATE OR MODIF -->
       <div v-if="state == 'create' || state == 'modif'" class="create-chat-section">
         <div class="create-chat-top-bar">
-          <p v-if="state == 'create'">Fenêtre de creation d'une salle de chat</p>
-          <p v-else>Fenêtre de modification d'une salle de chat</p>
+          <p v-if="state == 'create'">Fenêtre de creation d'une salle de tchat</p>
+          <p v-else>Fenêtre de modification d'une salle de tchat</p>
           <button class="chat-exit-button" @click="windowSate('none')"><i class="fas fa-times"></i></button>
+          <div v-if="state == 'modif'" class="chat-remove-button-position">
+            <button class="chat-remove-button" @click="removeChat"><i class="fas fa-trash-alt"></i></button>
+          </div>
         </div>
         <div class="create-chat-left-list">
           <div class="user-list">Liste des utilisateurs</div>
@@ -133,10 +169,10 @@
             placeholder="Nom de la salle de chat"
           />
           <button v-if="this.state == 'create'" class="chat-create-button button is-info cypress-to-add mb-6 cypress-create" @click="createChat">
-            Créer une salle de chat
+            Créer une salle de tchat
           </button>
           <button v-else class="chat-create-button button is-info cypress-to-add mb-6 cypress-create" @click="changeChat">
-            Modifier une salle de chat
+            Modifier une salle de tchat
           </button>
         </div>
       </div>
@@ -159,6 +195,7 @@ export default {
       chats: [],
       latest_messages: [],
       selected_chat: {},
+      selected_chat_info: {},
       filterText: "",
       filterTextAdd: "",
       messages_list: [],
@@ -309,6 +346,25 @@ export default {
       return `${h}:${m} - ${day}/${month + 1}`;
     },
     windowSate(state) {
+      if (state == "info") {
+        var info_list_users = []
+        this.selected_chat.users_ids.forEach((element_ids) => {
+          if (element_ids != this.selected_chat.creator_id) {
+            this.users_backup.forEach((element_b_ids) =>{
+              if (element_ids == element_b_ids.id) {
+                info_list_users.push(element_b_ids.email);
+              }
+            })
+          }
+        })
+        this.selected_chat_info.users = info_list_users
+        this.users_backup.forEach((element_b_ids_s) => {
+          if (element_b_ids_s.id == this.selected_chat.creator_id)
+            this.selected_chat_info.creator_id = element_b_ids_s.email;
+        })
+        this.state = "info";
+        return;
+      }
       if (state == "modif") {
         this.users_not_added = this.users_backup.slice();
         this.users_added = [];
@@ -343,6 +399,7 @@ export default {
         this.created_chat_name = "";
         this.users_added = [];
         this.users_added_filtered = [];
+        this.selected_chat_info = {};
       }
     },
     inviteUsers(user) {
@@ -431,6 +488,22 @@ export default {
         })
         .then(() => {
           this.$toast.success("Modification de la salle de Chat réussi !");
+          setTimeout(this.$toast.clear, 3000);
+          this.reset();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    removeChat() {
+      this.$http
+        .delete(`/chats/${this.selected_chat.chat_id}`)
+        .then(() => {
+          this.$toast.success("Suppression de la salle de Chat réussi !");
           setTimeout(this.$toast.clear, 3000);
           this.reset();
         })
