@@ -57,7 +57,7 @@
         <span class="nav-text">Chats</span>
       </router-link>
       <router-link class="block button is-info" to="/searchmap">
-        <i class="fas fa-terminal cypress-to-maps"></i>
+        <i class="fas fa-map-marker cypress-to-maps"></i>
         <span class="nav-text">Carte</span>
       </router-link>
       <router-link class="block button is-info" to="/hospitals">
