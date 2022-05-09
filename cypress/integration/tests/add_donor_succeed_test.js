@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-describe('Add receiver', () => {
+describe('Add donor success', () => {
   it('Tries to open modal in the receiver panel should succeed', () => {
     cy.visit('http://localhost:8080/')
 
@@ -8,12 +8,12 @@ describe('Add receiver', () => {
     cy.get('.cypress-to-login').click()
 
     cy.get('.cypress-email')
-      .type('nicolas.yapobi@epitech.eu')
-      .should('have.value', 'nicolas.yapobi@epitech.eu')
+      .type('saber@saber.com')
+      .should('have.value', 'saber@saber.com')
 
     cy.get('.cypress-password')
-      .type('test')
-      .should('have.value', 'test')
+      .type('saber')
+      .should('have.value', 'saber')
 
     cy.get('.cypress-login').click()
 
@@ -50,6 +50,7 @@ describe('Add receiver', () => {
       .should('have.value', 'HEART')
     
     cy.get('.cypress-tumors-number')
+      .clear()
       .type('3')
       .should('have.value', '3')
     

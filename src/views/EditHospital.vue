@@ -1,10 +1,10 @@
 <template>
   <div>
-    <form class="form-control" @submit.prevent="submitForm">
+    <form class="form-control" @submit.prevent="submitForm()">
       <div class="form-fields">
         <label class="label">Nom</label>
         <input 
-          v-model="data.name" 
+          v-model="hospital.name" 
           type="text" 
           class="input mb-6 cypress-name"
           placeholder="Nom du centre"
@@ -13,7 +13,7 @@
         <div class="form-input small">
           <label class="label">Ville</label>
           <input 
-            v-model="data.city.name" 
+            v-model="city.name" 
             type="text" 
             class="input mb-6 cypress-city"
             placeholder="Nom du centre"
@@ -23,7 +23,7 @@
         <div class="form-input small">
           <label class="label">Code de département</label>
           <input 
-            v-model="data.city.department_code" 
+            v-model="city.department_code" 
             type="text" 
             class="input mb-6 cypress-department" 
             placeholder="Nom du centre"
@@ -33,7 +33,7 @@
         <div class="form-input small">
           <label class="label">Numéro de téléphone</label>
           <input 
-            v-model="data.phone_number" 
+            v-model="hospital.phone_number" 
             type="text" 
             class="input mb-6 cypress-phone-number" 
             placeholder="Nom du centre"
@@ -55,31 +55,36 @@ export default {
   },
   data() {
     return {
-      data: {},
+      hospital: {},
+      city: {},
     };
+  },
+
+  created() {
+    this.getHospital();
   },
   methods: {
     getHospital() {
       this.$http
           .get(`/hospitals/${this.id}`)
           .then((response) => {
-            this.data = response.data;
-            console.log(this.data);
+            this.hospital = response.data;
+            this.city = response.data.city;
+
           })
           .catch((error) => {
             console.log(error);
           });
     },
     submitForm() {
-      console.log(this.data);
       this.$http
         .post(`/hospitals/${this.id}`, {
           city: {
-            "name": this.data.city.name,
-            "department_code": this.data.city.department_code
+            "name": this.hospital.city.name,
+            "department_code": this.hospital.city.department_code
           },
-          name: this.data.name,
-          phone_number: this.data.phone_number,
+          name: this.hospital.name,
+          phone_number: this.hospital.phone_number,
         })
         .then(() => {
           this.$toast.success("Modification de l'hopital réussi !");
@@ -92,9 +97,6 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-  },
-  created() {
-    this.getHospital();
   },
 };
 </script>

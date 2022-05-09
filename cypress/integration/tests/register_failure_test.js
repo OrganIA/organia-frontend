@@ -2,7 +2,7 @@
 import { emailGenerator } from "../utils"
 var email = emailGenerator();
 
-describe('Register Test Success', () => {
+describe('Register Test Failure', () => {
   it('Tries to register should succeed', () => {
     cy.visit('http://localhost:8080/')
 

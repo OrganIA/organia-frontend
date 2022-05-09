@@ -1,41 +1,44 @@
 <template>
   <h1>Panel Administrateur</h1>
   <h2 class="align-left">Gestion des Rôles</h2>
-  <div class="main-container">
-    <table class="table-list">
+  <div class="main">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-info">
       <thead>
-      <tr>
-        <th>Rôle</th>
-        <th>Gestion des Utilisateurs</th>
-        <th>Gestion des Personnes</th>
-        <th>Gestion des Rôles</th>
-        <th>Gestion des Hopitaux</th>
-        <th>Gestion des Invitations</th>
-      </tr>
+        <tr>
+          <th>Rôle</th>
+          <th>Gestion des Utilisateurs</th>
+          <th>Gestion des Personnes</th>
+          <th>Gestion des Rôles</th>
+          <th>Gestion des Hopitaux</th>
+          <th>Gestion des Invitations</th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="role in roles" :key="role">
-        <td>{{ role.name }}</td>
-        <td>
-          <input class="center-checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
-        </td>
-        <td>
-          <input class="center-checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
-        </td>
-        <td>
-          <input class="center-checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
-        </td>
-        <td>
-          <input class="center-checkbox" v-model="role.can_manage_hospitals" true=true false=false type="checkbox">
-        </td>
-        <td>
-          <input class="center-checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
-        </td>
-      </tr>
+        <tr v-for="role in roles" :key="role">
+          <td>{{ role.name }}</td>
+          <td>
+            <input class="center-checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
+          </td>
+          <td>
+            <input class="center-checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
+          </td>
+          <td>
+            <input class="center-checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
+          </td>
+          <td>
+            <input class="center-checkbox" v-model="role.can_manage_hospitals" true=true false=false type="checkbox">
+          </td>
+          <td>
+            <input class="center-checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
-  <input @click="updateRoles()" type="submit">
+  <button class="cypress-add button is-info mx-auto mr-6" @click="updateRoles()" type="submit"> Confirmer</button>
+  <router-link :to="`/administrator/role/add`">
+    <i class="cypress-to-add fas fa-edit button is-primary">Créer un nouveau rôle</i>
+  </router-link>
 </template>
 
 <script>
