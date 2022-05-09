@@ -87,7 +87,7 @@ export default {
       this.login();
     } else {
       this.$router.isReady().then(() => {
-        if (this.$route.path != "/register" && this.$route.path != "/login")
+        if (this.$route.path != "/register" && this.$route.path != "/login" && this.$route.path != "/team")
           this.$router.push("/login");
       });
     }
