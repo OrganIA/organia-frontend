@@ -6,20 +6,6 @@
       >Ajouter</router-link
       >
     </p>
-    <p class="search content">Rechercher par</p>
-    <div class="search-block">
-      <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
-        <option value="first_name">Prénom</option>
-        <option value="last_name">Nom</option>
-        <option value="birthday">Date de naissance</option>
-        <option value="gender">Sexe</option>
-        <option value="blood_type">ABO</option>
-        <option value="organ">Organe</option>
-        <option value="created_at">Arrivée</option>
-      </select>
-      <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-      <br />
-    </div>
     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
       <thead>
       <tr>
