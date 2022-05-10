@@ -41,5 +41,4 @@ In an other terminal run:
 ```
 npm run test-run
 ```
-Then simply click on the test you want to run.
 
