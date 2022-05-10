@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import PersonDetails from "../components/PersonDetails.vue";
+import PersonDetails from "@/components/PersonDetails.vue";
 
 export default {
   components: { PersonDetails },

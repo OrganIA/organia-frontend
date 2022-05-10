@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import PresentationNavbar from "../components/PresentationNavbar";
+import PresentationNavbar from "@/components/PresentationNavbar";
 
 export default {
   name: "Login",
