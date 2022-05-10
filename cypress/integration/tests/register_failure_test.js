@@ -4,7 +4,7 @@ var email = emailGenerator();
 
 describe('Register Test Failure', () => {
   it('Tries to register should succeed', () => {
-    cy.visit('http://localhost:8080/')
+    cy.visit('http://organia.savatier.fr/')
 
     cy.get('.cypress-to-register').click()
 
@@ -18,7 +18,7 @@ describe('Register Test Failure', () => {
 
     cy.get('.cypress-register').click()
 
-    cy.url().should('eq', 'http://localhost:8080/register')
+    cy.url().should('eq', 'http://organia.savatier.fr/register')
 
     cy.getCookie("token").should('be.null')
   })

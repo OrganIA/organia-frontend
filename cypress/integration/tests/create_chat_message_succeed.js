@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe('Add message to a chat room', () => {
     it('Tries to add a message to a chat room should succeed', () => {
-      cy.visit('http://localhost:8080/')
+      cy.visit('http://organia.savatier.fr/')
   
       cy.get('.cypress-to-register').click()
   
@@ -17,13 +17,13 @@ describe('Add message to a chat room', () => {
   
       cy.get('.cypress-login').click()
   
-      cy.url().should('eq', 'http://localhost:8080/')
+      cy.url().should('eq', 'http://organia.savatier.fr/')
   
       cy.getCookie("token").should('not.be.null')
 
       cy.get('.cypress-to-chats').click();
   
-      cy.url().should('eq', 'http://localhost:8080/chat')
+      cy.url().should('eq', 'http://organia.savatier.fr/chat')
   
       cy.get('.cypress-chat-room').eq(0).click();
 
@@ -33,6 +33,6 @@ describe('Add message to a chat room', () => {
   
       cy.get('.cypress-send-msg').click();
   
-      cy.url().should('eq', 'http://localhost:8080/chat')
+      cy.url().should('eq', 'http://organia.savatier.fr/chat')
     })
   })

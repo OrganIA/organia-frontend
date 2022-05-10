@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe('Add receiver success', () => {
   it('Tries to add a receiver should succeed', () => {
-    cy.visit('http://localhost:8080/')
+    cy.visit('http://organia.savatier.fr/')
 
     cy.get('.cypress-to-register').click()
 
@@ -17,13 +17,13 @@ describe('Add receiver success', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://localhost:8080/')
+    cy.url().should('eq', 'http://organia.savatier.fr/')
 
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-receivers').click();
     
-    cy.url().should('eq', 'http://localhost:8080/receivers')
+    cy.url().should('eq', 'http://organia.savatier.fr/receivers')
 
     cy.get('.cypress-to-add').click();
 
@@ -86,6 +86,6 @@ describe('Add receiver success', () => {
 
     cy.get('.cypress-add').click();
 
-    cy.url().should('eq', 'http://localhost:8080/receivers')
+    cy.url().should('eq', 'http://organia.savatier.fr/receivers')
     })
 })
