@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe('Go to caledar', () => {
   it('Tries to go to the calendar page should succeed', () => {
-    cy.visit('http://localhost:8080/')
+    cy.visit('http://organia.savatier.fr/')
 
     cy.get('.cypress-to-register').click()
 
@@ -17,12 +17,12 @@ describe('Go to caledar', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://localhost:8080/')
+    cy.url().should('eq', 'http://organia.savatier.fr/')
 
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-calendar').click();
 
-    cy.url().should('eq', 'http://localhost:8080/eventcalendar')
+    cy.url().should('eq', 'http://organia.savatier.fr/eventcalendar')
   })
 })

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe('Add donor success', () => {
   it('Tries to open modal in the receiver panel should succeed', () => {
-    cy.visit('http://localhost:8080/')
+    cy.visit('http://organia.savatier.fr/')
 
     cy.get('.cypress-to-register').click()
 
@@ -17,17 +17,17 @@ describe('Add donor success', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://localhost:8080/')
+    cy.url().should('eq', 'http://organia.savatier.fr/')
 
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-donors').click();
 
-    cy.url().should('eq', 'http://localhost:8080/donors')
+    cy.url().should('eq', 'http://organia.savatier.fr/donors')
 
     cy.get('.cypress-to-add').click();
 
-    cy.url().should('eq', 'http://localhost:8080/donors/add')
+    cy.url().should('eq', 'http://organia.savatier.fr/donors/add')
 
     cy.get('.cypress-first-name')
       .type('Prénom')
@@ -84,6 +84,6 @@ describe('Add donor success', () => {
 
     cy.get('.cypress-add').click();
 
-    cy.url().should('eq', 'http://localhost:8080/donors')
+    cy.url().should('eq', 'http://organia.savatier.fr/donors')
   })
 })

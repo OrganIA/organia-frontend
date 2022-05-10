@@ -2,7 +2,7 @@
 
 describe('Check logs page', () => {
   it('Tries to register should succeed', () => {
-    cy.visit('http://localhost:8080/')
+    cy.visit('http://organia.savatier.fr/')
 
     cy.get('.cypress-to-register').click()
 
@@ -18,7 +18,7 @@ describe('Check logs page', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://localhost:8080/')
+    cy.url().should('eq', 'http://organia.savatier.fr/')
 
     cy.getCookie("token").should('not.be.null')
     cy.get('.cypress-to-logs').click()
