@@ -1,4 +1,4 @@
-FROM node:alpine as install-deps
+FROM node:16-slim as install-deps
 
 WORKDIR /app
 COPY package.json .
