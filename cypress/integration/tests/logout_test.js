@@ -15,8 +15,7 @@ describe('Logout', () => {
 
         cy.url().should('eq', 'http://organia.savatier.fr/')
 
-        cy.get(".cypress-dropdown").trigger('mouseover')
-        cy.get(".cypress-logout").click()
+        cy.get(".cypress-logout").click({force: true})
         cy.url().should('eq', "http://organia.savatier.fr/login")
         cy.getCookie("token").should('be.null')
     })
