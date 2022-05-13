@@ -1,12 +1,24 @@
 <template>
-  <div>
-      <h1 style="text-align: center">Liste des patients sous tumeurs</h1>
-      <div class="search-block">
+  <div id="main">
+    <h1 style="text-align: center">Liste d'attente receveurs</h1>
+    <p>
+      <router-link to="/receivers/add" class="button is-info cypress-to-add mb-6">
+        Ajouter
+      </router-link>
+    </p>
+    <p class="search content">Rechercher par</p>
+    <div class="search-block">
       <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
         <option value="first_name">Prénom</option>
         <option value="last_name">Nom</option>
         <option value="birthday">Date de naissance</option>
-        <option value="tumor">Sous tumeurs</option>
+        <option value="gender">Sexe</option>
+        <option value="blood_type">ABO</option>
+        <option value="organ">Organe</option>
+        <option value="tumors_number">Nombre de tumeurs</option>
+        <option value="isDialyse">Dialysé ?</option>
+        <option value="isRetransplantation">Retransplantation</option>
+        <option value="created_at">Arrivée</option>
       </select>
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
@@ -17,58 +29,86 @@
           <th @click="updateFilter('first_name')">Prénom</th>
           <th @click="updateFilter('last_name')">Nom de famille</th>
           <th @click="updateFilter('birthday')">Date de naissance</th>
-          <th @click="updateFilter('tumor')">Nombre de tumeurs</th>
+          <th @click="updateFilter('gender')">Sexe</th>
+          <th @click="updateFilter('blood_type')">ABO</th>
+          <th @click="updateFilter('organ')">Organe</th>
+          <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
+          <th @click="updateFilter('isDialyse')">Dialysé</th>
+          <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
+          <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
+          <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
+          <th @click="updateFilter('created_at')">Arrivée</th>
+          <th>Éditer</th>
+          <th>Infos</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="person in person_tumors" :key="person">
-          <td>{{ person.person.first_name }}</td>
-          <td>{{ person.person.last_name }}</td>
-          <td>{{ person.person.birthday }}</td>
-          <td>{{ person.tumors_number }}</td>
+        <tr v-for="receiver in receivers" :key="receiver">
+          <td>{{ receiver.person.first_name }}</td>
+          <td>{{ receiver.person.last_name }}</td>
+          <td>{{ receiver.person.birthday }}</td>
+          <td>{{ receiver.person.gender }}</td>
+          <td>{{ receiver.person.blood_type }}</td>
+          <td>{{ receiver.organ }}</td>
+          <td>{{ receiver.tumors_number }}</td>
+          <td>{{ receiver.isDialyse ? "Oui": "Non" }}</td>
+          <td>{{ receiver.isRetransplantation ? "Oui": "Non" }}</td>
+          <td>{{ receiver.startDateDialyse }}</td>
+          <td>{{ receiver.endDateDialyse }}</td>
+          <td>{{ receiver.person.created_at }}</td>
+          <td>
+            <router-link :to="`/receivers/edit/${receiver.person.id}`">
+              <i class="fas fa-edit button is-primary"></i>
+            </router-link>
+          </td>
+          <td>
+            <i class="fas fa-info cypress-receiver-modal" @click="openModal(receiver)"></i>
+          </td>
         </tr>
       </tbody>
     </table>
+    <person-details
+      v-if="showModal == true"
+      :person="currentReceiver"
+      @closeModal="closeModal"
+      class="details"
+    />
   </div>
 </template>
+
 <script>
+import PersonDetails from "@/components/PersonDetails.vue";
+
 export default {
-  name: "TumorPanel",
+  components: { PersonDetails },
+  name: "ReceiversPanel",
   data() {
     return {
-      person: {},
-      person_tumors: [],
+      receivers: {},
       showModal: false,
-      currentperson: {},
+      currentReceiver: {},
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "first_name",
       filterText: "",
-      personBackup: [],
+      receiversBackup: [],
     };
   },
   created() {
-    this.getAllTumors();
+    this.getAllReceivers();
   },
   methods: {
-    getAllTumors() {
+    getAllReceivers() {
       this.$http
-        .get("/listings/")
+        .get("/listings/receivers")
         .then((response) => {
           response.data.forEach((element) => {
             element.person.created_at = new Date(
               element.person.created_at
             ).toDateString();
           });
-          this.person = response.data;
-          this.person.forEach((element) => {
-              if (element.tumors_number > 0) {
-                console.log(element);
-                this.person_tumors.push(element);
-              }
-          });
-          this.personBackup = this.person_tumors;
-          console.log("TUMORS: ", this.person_tumors)
+          this.receivers = response.data;
+          this.receiversBackup = this.receivers;
         })
         .catch((error) => {
           console.log(error);
@@ -76,16 +116,16 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    openModal(person) {
+    openModal(receiver) {
       if (!this.showModal) {
         this.showModal = true;
-        this.currentperson = person;
+        this.currentReceiver = receiver;
         document.getElementById("bodiv").style.display = "initial";
       }
     },
     closeModal() {
       this.showModal = false;
-      this.currentperson = {};
+      this.currentReceiver = {};
       document.getElementById("bodiv").style.display = "none";
     },
     updateFilter(dataName) {
@@ -104,7 +144,7 @@ export default {
     },
     sortData() {
       if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
-        this.person.sort((a, b) => {
+        this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
               b.person[this.sortingKey] == null)
               return this.checkNull(a, b);
@@ -117,7 +157,7 @@ export default {
           );
         });
       } else if (["birthday", "created_at"].includes(this.sortingKey)) {
-        this.person.sort((a, b) => {
+        this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
               b.person[this.sortingKey] == null)
               return this.checkNull(a, b);
@@ -132,7 +172,7 @@ export default {
             : 1;
         });
       } else if (this.sortingKey == "organ") {
-        this.person.sort((a, b) => {
+        this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
               b.person[this.sortingKey] == null)
               return this.checkNull(a, b);
@@ -143,16 +183,16 @@ export default {
     },
     filter() {
       if (this.filterText == "") {
-        this.persons_dialyse = this.personBackup;
+        this.receivers = this.receiversBackup;
         return;
       }
-      if (this.selectFilter in this.personBackup[0].person) {
-        this.persons_dialyse = this.personBackup.filter((el) => {
+      if (this.selectFilter in this.receiversBackup[0].person) {
+        this.receivers = this.receiversBackup.filter((el) => {
           if (el.person[this.selectFilter] != null)
             return el.person[this.selectFilter].includes(this.filterText);
         });
       } else {
-        this.persons_dialyse = this.personBackup.filter((el) => {
+        this.receivers = this.receiversBackup.filter((el) => {
           if (el[this.selectFilter] != null)
             return el[this.selectFilter].includes(this.filterText);
         });

@@ -4,7 +4,7 @@ var email = emailGenerator();
 
 describe('Add roles success', () => {
     it('Tries to add a role should succeed', () => {
-      cy.visit('http://localhost:8080/')
+      cy.visit('http://organia.savatier.fr/')
   
       cy.get('.cypress-to-register').click()
 
@@ -20,17 +20,17 @@ describe('Add roles success', () => {
 
       cy.get('.cypress-login').click()
 
-      cy.url().should('eq', 'http://localhost:8080/')
+      cy.url().should('eq', 'http://organia.savatier.fr/')
 
       cy.getCookie("token").should('not.be.null')  
 
       cy.get('.cypress-to-roles').click();
 
-      cy.url().should('eq', 'http://localhost:8080/administrator/role')
+      cy.url().should('eq', 'http://organia.savatier.fr/administrator/role')
 
       cy.get('.cypress-to-add').click();
 
-      cy.url().should('eq', 'http://localhost:8080/administrator/role/add')
+      cy.url().should('eq', 'http://organia.savatier.fr/administrator/role/add')
 
       cy.get('.cypress-name')
         .type(`${email}`)
@@ -58,6 +58,6 @@ describe('Add roles success', () => {
 
       cy.get('.cypress-add').click();
 
-      cy.url().should('eq', 'http://localhost:8080/administrator/role')
+      cy.url().should('eq', 'http://organia.savatier.fr/administrator/role')
    })
 })

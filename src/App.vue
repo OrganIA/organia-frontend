@@ -80,7 +80,6 @@ export default {
     };
   },
   created() {
-    console.log("Bien mis a jour")
     if (this.$cookies.get("token")) {
       this.$http.defaults.headers.common[
         "Authorization"
@@ -88,7 +87,7 @@ export default {
       this.login();
     } else {
       this.$router.isReady().then(() => {
-        if (this.$route.path != "/register" && this.$route.path != "/login")
+        if (this.$route.path != "/register" && this.$route.path != "/login" && this.$route.path != "/team")
           this.$router.push("/login");
       });
     }

@@ -250,7 +250,6 @@ export default {
       this.sortData();
     },
     selectFilter() {
-      console.log(this.selectFilter);
     },
   }
 };

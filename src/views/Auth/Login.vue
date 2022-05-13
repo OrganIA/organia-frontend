@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import PresentationNavbar from "../components/PresentationNavbar";
+import PresentationNavbar from "@/components/PresentationNavbar";
 
 export default {
   name: "Login",
@@ -52,7 +52,6 @@ export default {
   },
   methods: {
     getRole(data) {
-      console.log(data)
       this.$http
         .get(`/roles/${data.role_id}`)
         .then((response) => {

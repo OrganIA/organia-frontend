@@ -83,7 +83,6 @@ export default {
     this.getHospitals();
     window.setTimeout( () => {        
         for (var i = 0; i < this.markers_length; i += 1) {
-          console.log(this.hospitals[i]);
           if (this.hospitals[i].latitude == null|| this.hospitals[i].longitude == null)
             continue;
           else {

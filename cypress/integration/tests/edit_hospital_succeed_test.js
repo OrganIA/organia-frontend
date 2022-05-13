@@ -1,6 +1,6 @@
 describe('Edit hospital sucesss', () => {
     it('Tries to open modal in the receiver panel should succeed', () => {
-      cy.visit('http://localhost:8080/')
+      cy.visit('http://organia.savatier.fr/')
   
       cy.get('.cypress-to-register').click()
   
@@ -16,19 +16,19 @@ describe('Edit hospital sucesss', () => {
     
       cy.get('.cypress-login').click()
   
-      cy.url().should('eq', 'http://localhost:8080/')
+      cy.url().should('eq', 'http://organia.savatier.fr/')
   
       cy.getCookie("token").should('not.be.null')
   
       cy.get('.cypress-to-hospitals').click();
   
-      cy.url().should('eq', 'http://localhost:8080/hospitals')
+      cy.url().should('eq', 'http://organia.savatier.fr/hospitals')
 
       cy.wait(10000)
 
       cy.get('.cypress-to-hospitals-edit-1').click();
   
-      cy.url().should('eq', 'http://localhost:8080/hospitals/edit/1')
+      cy.url().should('eq', 'http://organia.savatier.fr/hospitals/edit/1')
   
       cy.get('.cypress-name').clear() 
       cy.get('.cypress-city').clear()
@@ -53,6 +53,6 @@ describe('Edit hospital sucesss', () => {
     
       cy.get('.cypress-add').click();
   
-      cy.url().should('eq', 'http://localhost:8080/hospitals')
+      cy.url().should('eq', 'http://organia.savatier.fr/hospitals')
     })
   })

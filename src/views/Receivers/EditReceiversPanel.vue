@@ -1,7 +1,7 @@
 <template>
   <div>
     <form @submit.prevent="submitForm()" class="show-requireds">
-      <h2 class="form-title title is-3">Éditer un donneur</h2>
+      <h2 class="form-title title is-3">Éditer un receveur</h2>
       <div class="form-fields">
         <div class="form-input small required">
           <label class="label">Prénom</label>
@@ -35,7 +35,7 @@
         <div class="form-input small required">
           <label class="label">Organe</label>
           <select
-            v-model="donor.organ"
+            v-model="receiver.organ"
             id="organ-select"
             required
             class="button is-info is-light"
@@ -48,7 +48,7 @@
         <div class="form-input small">
           <label class="label">Date d'admission</label>
           <input
-            v-model="donor.start_date"
+            v-model="receiver.start_date"
             placeholder="start date"
             type="date"
           />
@@ -56,7 +56,7 @@
         <div class="form-input small">
           <label class="label">Date de fin</label>
           <input
-            v-model="donor.end_date"
+            v-model="receiver.end_date"
             placeholder="end date"
             type="date"
             class="input is-info"
@@ -65,7 +65,7 @@
          <div class="form-input small">
           <label class="label">Nombre de tumeurs</label>
           <input
-            v-model="donor.tumors_number"
+            v-model="receiver.tumors_number"
             placeholder="0"
             type="text"
             class="input is-info"
@@ -73,7 +73,7 @@
         </div>
         <div class="form-input small required">
           <label class="label">Le patient est sous dialyse ?</label>
-          <select v-model="donor.isDialyse" 
+          <select v-model="receiver.isDialyse" 
             name="dialyse" 
             id="dialyse-select" 
             class="button is-info is-light"
@@ -81,12 +81,13 @@
           >
             <option value="true">Oui</option>
             <option value="false">Non</option>
+            
           </select>
         </div>
         <div class="form-input small">
           <label class="label">Date de début de dialyse</label>
           <input
-            v-model="donor.startDateDialyse"
+            v-model="receiver.startDateDialyse"
             placeholder="start date"
             type="date"
             class="input is-info"
@@ -95,7 +96,7 @@
         <div class="form-input small">
           <label class="label">Date de fin de dialyse</label>
           <input
-            v-model="donor.endDateDialyse"
+            v-model="receiver.endDateDialyse"
             placeholder="start date"
             type="date"
             class="input is-info"
@@ -103,7 +104,7 @@
         </div>
         <div class="form-input small required">
           <label class="label">A-t-il effectué une retransplantation ?</label>
-          <select v-model="donor.isRetransplantation" 
+          <select v-model="receiver.isRetransplantation" 
             name="retransplantation" 
             id="transplantation-select" 
             class="button is-info is-light"
@@ -167,7 +168,7 @@
           <label class="label">Notes</label>
           <textarea
             class="textarea"
-            v-model="donor.notes"
+            v-model="receiver.notes"
             placeholder="notes"
           />
         </div>
@@ -177,13 +178,13 @@
         <button type="submit" class="cypress-add button is-info mx-auto mr-6">
           Enregistrer
         </button>
-        <router-link to="/donors" class="button is-danger ml-6"
+        <router-link to="/receivers" class="button is-danger ml-6"
           >Retour</router-link
         >
         <button
           type="button"
           class="button is-danger ml-6"
-          @click="delete_donor"
+          @click="delete_receiver"
         >
           Supprimer
         </button>
@@ -194,24 +195,26 @@
 
 <script>
 export default {
-  name: "EditdonorsPanel",
+  name: "EditReceiversPanel",
   props: {
     id: String,
   },
   data() {
     return {
-      donor: {},
+      receiver: {},
       person: {},
       all_organs: [],
+      tumors_number: 0,
     };
   },
   methods: {
-    getdonorByID() {
+    getReceiverByID() {
       this.$http
         .get(`/listings/${this.id}`)
         .then((response) => {
-          this.donor = response.data;
+          this.receiver = response.data;
           this.person = response.data.person;
+          console.log(this.receiver)
         })
         .catch((error) => {
           console.log(error);
@@ -222,19 +225,21 @@ export default {
     submitForm() {
       this.$http
         .post(`/listings/${this.id}`, {
-          notes: this.donor.notes,
-          organ: this.donor.organ,
+          notes: this.receiver.notes,
+          organ: this.receiver.organ,
           person_id: this.id,
-          ...(this.donor.start_date
-            ? { start_date: this.donor.start_date }
+          ...(this.receiver.start_date
+            ? { start_date: this.receiver.start_date }
             : {}),
-          ...(this.donor.end_date ? { end_date: this.donor.end_date } : {}),
-          ...(this.donor.notes ? { notes: this.donor.notes } : {}),
-          ...(this.donor.tumors_number ? { rhesus: this.donor.tumors_number } : {}),
-          isDialyse: this.donor.isDialyse,
-          isRetransplantation: this.donor.isRetransplantation,
-          ...(this.donor.startDateDialyse ? { startDateDialyse: this.donor.startDateDialyse } : {}),
-          ...(this.donor.endDateDialyse ? { endDateDialyse: this.donor.endDateDialyse } : {}),
+          ...(this.receiver.end_date
+            ? { end_date: this.receiver.end_date }
+            : {}),
+          ...(this.receiver.notes ? { notes: this.receiver.notes } : {}),
+          ...(this.receiver.tumors_number ? { rhesus: this.receiver.tumors_number } : {}),
+          isDialyse : this.receiver.isDialyse,
+          isRetransplantation: this.receiver.isRetransplantation,
+          ...(this.receiver.startDateDialyse ? { startDateDialyse: this.receiver.startDateDialyse } : {}),
+          ...(this.receiver.endDateDialyse ? { endDateDialyse: this.receiver.endDateDialyse } : {}),
         })
         .then(() => {
           this.updatePerson();
@@ -246,8 +251,7 @@ export default {
         });
     },
     updatePerson() {
-      console.log(this.donor.isDialyse)
-      this.person.isDialyse = this.donor.isDialyse
+      this.person.isDialyse = this.receiver.isDialyse
       this.$http
         .post(`/persons/${this.person.id}`, {
           first_name: this.person.first_name,
@@ -266,7 +270,7 @@ export default {
           ...(this.person.endDateDialyse ? { endDateDialyse: this.person.endDateDialyse } : {}),
         })
         .then(() => {
-          this.$router.push("/donors");
+          this.$router.push("/receivers");
         })
         .catch((error) => {
           console.log(error);
@@ -275,7 +279,7 @@ export default {
         });
     },
     redirect() {
-      window.location.replace("/donors");
+      window.location.replace("/receivers");
     },
     getAllOrgans() {
       this.$http
@@ -289,7 +293,7 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    delete_donor() {
+    delete_receiver() {
       this.$http
         .delete(`/listings/${this.id}`)
         .then(() => {
@@ -297,7 +301,7 @@ export default {
             .delete(`/persons/${this.person.id}`)
             .then(() => {
               this.$toast.success("Suppression effectué");
-              this.$router.push("/donors");
+              this.$router.push("/receivers");
             })
             .catch((error) => {
               console.log(error);
@@ -313,7 +317,7 @@ export default {
     },
   },
   created() {
-    this.getdonorByID();
+    this.getReceiverByID();
     this.getAllOrgans();
   },
 };

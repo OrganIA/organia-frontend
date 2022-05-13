@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe('Login Test Success', () => {
   it('Tries to login should succeed', () => {
-    cy.visit('http://localhost:8080/')
+    cy.visit('http://organia.savatier.fr/')
 
     cy.get('.cypress-to-register').click()
 
@@ -17,7 +17,7 @@ describe('Login Test Success', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://localhost:8080/')
+    cy.url().should('eq', 'http://organia.savatier.fr/')
 
     cy.getCookie("token").should('not.be.null')
   })
