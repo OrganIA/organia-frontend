@@ -2,12 +2,12 @@
 <template>
   <h1>Bienvenue sur la plateforme ORGANIA</h1>
   <carousel :autoplay="4000" :wrap-around="true" :items-to-show="1.5">
-    <Slide v-for="(content, index) in contents" :key="content.id">
+    <Slide v-for="content, index in contents" :key="content.id">
       <div class="carousel__item">
         <div class="carousel_content">
           <p>{{content.text}}</p>
           <p>{{ index.text }}</p>
-          <router-link to="content.url" class="carousel__link">
+          <router-link :to="content.url" class="carousel__link">
             <span>En savoir plus</span>
           </router-link>
         </div>
