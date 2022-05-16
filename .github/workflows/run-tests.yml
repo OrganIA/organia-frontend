@@ -1,0 +1,22 @@
+name: Run tests
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  cypress-e2e-chrome88:
+    name: Run on Chrome 88
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.17.0-chrome88-ff89
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install a project with a clean slate
+        run: |
+          npm ci
+          $(npm bin)/cypress cache path
+          $(npm bin)/cypress cache list
+          $(npm bin)/cypress verify
+
+      - name: Run Cypress tests
+        run: npm run test-run
+        continue-on-error: true

@@ -4,7 +4,7 @@ var message = emailGenerator();
 
 describe('Send Message', () => {
   it('Tries to send a message', () => {
-    cy.visit('http://localhost:8080/')
+    cy.visit('http://organia.savatier.fr/')
 
     cy.get('.cypress-to-register').click()
 
@@ -20,13 +20,13 @@ describe('Send Message', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://localhost:8080/')
+    cy.url().should('eq', 'http://organia.savatier.fr/')
 
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-chats').click();
 
-    cy.url().should('eq', 'http://localhost:8080/chat')
+    cy.url().should('eq', 'http://organia.savatier.fr/chat')
 
     cy.get('.cypress-chat-room').first().click();
 
