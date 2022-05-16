@@ -18,8 +18,7 @@
         <strong> vous semblent importants.</strong>
         <br>
         <br>
-        Ainsi, si vous avez quelconque recommandation / demande n'hésitez pas à nous envoyer un mail ! METTRE MAIL
-        DE LA BOITE ICI
+        Ainsi, si vous avez quelconque recommandation / demande n'hésitez pas à nous envoyer un mail à  organia_2023@labeip.epitech.eu
 
       </div>
 

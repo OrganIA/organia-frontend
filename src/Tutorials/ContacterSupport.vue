@@ -1,10 +1,11 @@
 <template>
   <div class="content align-left ml-6 pl-1" >
     <div class="tutorial-text-content has-text-justified ">
-      <h1 class="title is-1">Connexion à la plateforme</h1>
+      <h1 class="title is-1">Contacter le support</h1>
       <br><br>
       <div class="is-size-5 has-text-justified">
         Dans le cadre d'une recommandation ou d'un signalement, une discussion avec le support peut avoir lieu, voici les protocoles à suivre.
+        <br>
         <br>
         <div class="is-size-5 has-text-justified">
           <div class="summary-box has-text-left">
@@ -32,7 +33,7 @@
             <div class="field">
               <label class="label is-size-4 has-text-weight-light"></label>
               <div class="control has-icons-left">
-                <input type="text" name="name"  class="input" value="support@organia.com" readonly>
+                <input type="text" name="name"  class="input" value=" organia_2023@labeip.epitech.eu" readonly>
                 <span class="icon is-left">
                         <i class="fa fa-user"></i>
                     </span>
@@ -70,7 +71,7 @@ Veillez toutefois à bien préciser pourquoi vous aimeriez modifier l'applicatio
             <div class="field">
               <label  class="label is-size-4 has-text-weight-light"></label>
               <div class="control has-icons-left">
-                <input type="text" name="name"  class="input" value="support@organia.com" readonly>
+                <input type="text" name="name"  class="input" value=" organia_2023@labeip.epitech.eu" readonly>
                 <span class="icon is-left">
                         <i class="fa fa-user"></i>
                     </span>
@@ -110,7 +111,7 @@ Veillez toutefois à bien préciser pourquoi vous aimeriez modifier l'applicatio
             <div class="field">
               <label  class="label is-size-4 has-text-weight-light"></label>
               <div class="control has-icons-left">
-                <input type="text" name="name"  class="input" value="support@organia.com" readonly>
+                <input type="text" name="name"  class="input" value=" organia_2023@labeip.epitech.eu" readonly>
                 <span class="icon is-left">
                         <i class="fa fa-user"></i>
                     </span>
