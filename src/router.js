@@ -23,7 +23,6 @@ export default createRouter({
         { path: "/eventlist/add", component: () => import("./views/NewEvent.vue") },
         { path: "/eventlist/edit/:id", component: () => import("./views/EditEventPanel.vue"), props: true },
         { path: "/chat", component: () => import("./views/Chat") },
-        { path: "/aboutthegroup", component: () => import("./views/AboutGroup") },
         { path: "/abouttheproject", component: () => import("./views/AboutProject") },
         { path: "/useorgania", component: () => import("./views/HowToUseThePlatform") },
         { path: "/searchmap", component: () => import("./views/SearchMap") },

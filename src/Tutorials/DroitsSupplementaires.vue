@@ -19,7 +19,7 @@
             <div class="field">
               <label  class="label is-size-4 has-text-weight-light"></label>
               <div class="control has-icons-left">
-                <input type="text" name="name"  class="input" value="support@organia.com" readonly>
+                <input type="text" name="name"  class="input" value=" organia_2023@labeip.epitech.eu" readonly>
                 <span class="icon is-left">
                         <i class="fa fa-user"></i>
                     </span>
