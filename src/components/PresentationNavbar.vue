@@ -14,9 +14,6 @@
         <router-link to="/useorgania" class="navbar-item button is-medium is-info is-light">
           Utiliser la plateforme
         </router-link>
-        <router-link to="/team" class="navbar-item button is-medium is-info is-light">
-          Qui sommes nous ?
-        </router-link>
 
         <router-link to="/abouttheproject" class="navbar-item button is-medium is-info is-light">
           Le projet
