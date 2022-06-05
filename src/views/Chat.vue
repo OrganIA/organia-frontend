@@ -3,14 +3,10 @@
     <div class="chat-list">
       <div class="chat-room">
         <p>Salle de Tchat</p>
-        <button class="add-chat-room cypress-add" @click="windowSate('create')"><i class="far fa-plus-square"></i></button>
+        <button class="add-chat-room cypress-add" @click="windowSate('create')"><i
+            class="far fa-plus-square"></i></button>
       </div>
-      <div
-        v-for="chat in chats"
-        :key="chat"
-        class="chat-el cypress-chat-room"
-        @click="getChatsByID(chat.chat_id)"
-      >
+      <div v-for="chat in chats" :key="chat" class="chat-el cypress-chat-room" @click="getChatsByID(chat.chat_id)">
         <div class="chat-el-sub">
           <div class="chat-el-icon">
             {{ profilePicture(chat.chat_name) }}
@@ -60,16 +56,9 @@
           </div>
         </div>
         <div class="chat-section">
-          <input
-            v-model="message_to_send"
-            @keypress.enter="sendMessage"
-            class="chat-bar cypress-chat-box"
-            placeholder="Démarrer un nouveau message"
-          />
-          <button
-            @click="sendMessage()"
-            class="fa fa-paper-plane button-send-msg cypress-send-msg"
-          ></button>
+          <input v-model="message_to_send" @keypress.enter="sendMessage" class="chat-bar cypress-chat-box"
+            placeholder="Démarrer un nouveau message" />
+          <button @click="sendMessage()" class="fa fa-paper-plane button-send-msg cypress-send-msg"></button>
         </div>
       </div>
       <div v-if="state == 'info'">
@@ -84,20 +73,16 @@
           {{ selected_chat_info.creator_id }}
         </h1>
         <div class="list-info">
-          <div
-              v-for="info_users in selected_chat_info.users"
-              :key="info_users"
-              class="chat-users-selection"
-            >
-              <div class="chat-el-sub">
-                <div class="chat-users-selection-icon">
-                  <p>{{ info_users[0] }}</p>
-                </div>
-                <h2 class="chat-users-selection-desc">
-                  <i class="fas fa-id-card"></i> {{ info_users }}
-                </h2>
+          <div v-for="info_users in selected_chat_info.users" :key="info_users" class="chat-users-selection">
+            <div class="chat-el-sub">
+              <div class="chat-users-selection-icon">
+                <p>{{ info_users[0] }}</p>
               </div>
+              <h2 class="chat-users-selection-desc">
+                <i class="fas fa-id-card"></i> {{ info_users }}
+              </h2>
             </div>
+          </div>
         </div>
       </div>
       <!-- WINDOW: STATE = CREATE OR MODIF -->
@@ -112,19 +97,11 @@
         </div>
         <div class="create-chat-left-list">
           <div class="user-list">Liste des utilisateurs</div>
-          <input
-            @input="filter"
-            v-model="filterText"
-            class="user-list-filter input mr-6"
-            placeholder="Recherche d'utilisateurs"
-          />
+          <input @input="filter" v-model="filterText" class="user-list-filter input mr-6"
+            placeholder="Recherche d'utilisateurs" />
           <div class="user-can-be-add">
-            <div
-              v-for="user in users_not_added_filtered"
-              :key="user"
-              class="chat-users-selection cypress-invite"
-              @click="inviteUsers(user)"
-            >
+            <div v-for="user in users_not_added_filtered" :key="user" class="chat-users-selection cypress-invite"
+              @click="inviteUsers(user)">
               <div class="chat-el-sub">
                 <div class="chat-users-selection-icon">
                   <p>{{ user.email[0] }}</p>
@@ -138,19 +115,11 @@
         </div>
         <div class="create-chat-right-list">
           <div class="user-list-r">Liste des utilisateurs ajouté</div>
-          <input
-            @input="filterAdd"
-            v-model="filterTextAdd"
-            class="user-list-filter-r input mr-6"
-            placeholder="Recherche d'utilisateurs"
-          />
+          <input @input="filterAdd" v-model="filterTextAdd" class="user-list-filter-r input mr-6"
+            placeholder="Recherche d'utilisateurs" />
           <div class="user-add">
-            <div
-              v-for="user in users_added_filtered"
-              :key="user"
-              class="chat-users-selection"
-              @click="uninviteUsers(user)"
-            >
+            <div v-for="user in users_added_filtered" :key="user" class="chat-users-selection"
+              @click="uninviteUsers(user)">
               <div class="chat-el-sub">
                 <div class="chat-users-selection-icon">
                   {{ user.email[0] }}
@@ -163,15 +132,14 @@
           </div>
         </div>
         <div class="center-chat-creation-interaction">
-          <input
-            v-model="created_chat_name"
-            class="create-chat-name input mr-6"
-            placeholder="Nom de la salle de chat"
-          />
-          <button v-if="this.state == 'create'" class="chat-create-button button is-info cypress-to-add mb-6 cypress-create" @click="createChat">
+          <input v-model="created_chat_name" class="create-chat-name input mr-6"
+            placeholder="Nom de la salle de chat" />
+          <button v-if="this.state == 'create'"
+            class="chat-create-button button is-info cypress-to-add mb-6 cypress-create" @click="createChat">
             Créer une salle de tchat
           </button>
-          <button v-else class="chat-create-button button is-info cypress-to-add mb-6 cypress-create" @click="changeChat">
+          <button v-else class="chat-create-button button is-info cypress-to-add mb-6 cypress-create"
+            @click="changeChat">
             Modifier une salle de tchat
           </button>
         </div>
@@ -187,7 +155,7 @@
 
 <script>
 export default {
-  name: "Chat",
+  name: "chat",
   emits: ["login"],
   data() {
     return {
@@ -256,7 +224,7 @@ export default {
     async getLatestMessages() {
       this.$http
         .get("/chats/messages/latest")
-        .then((response) =>{
+        .then((response) => {
           this.latest_messages = response.data;
         })
         .catch((error) => {
@@ -350,7 +318,7 @@ export default {
         var info_list_users = []
         this.selected_chat.users_ids.forEach((element_ids) => {
           if (element_ids != this.selected_chat.creator_id) {
-            this.users_backup.forEach((element_b_ids) =>{
+            this.users_backup.forEach((element_b_ids) => {
               if (element_ids == element_b_ids.id) {
                 info_list_users.push(element_b_ids.email);
               }

@@ -7,12 +7,13 @@ import Toaster from '@meforma/vue-toaster';
 import VueAxios from 'vue-axios'
 import axios from "./http"
 import moment from 'moment';
+import 'vue-cal/dist/vuecal.css'
 
-const app = createApp(App);
-app.use(store)
-.use(router)
-.use(cookies)
-.use(Toaster)
-.use(VueAxios, axios)
-.use(moment)
-.mount('#app')
+createApp(App)
+    .use(store)
+    .use(router)
+    .use(cookies)
+    .use(Toaster)
+    .use(VueAxios, axios)
+    .use(moment)
+    .mount('#app')

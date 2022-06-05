@@ -2,9 +2,7 @@
   <div id="main">
     <h1>Liste d'attente donneurs</h1>
     <p>
-      <router-link to="/donors/add" class="button is-info mb-6 cypress-to-add"
-        >Ajouter</router-link
-      >
+      <router-link to="/donors/add" class="button is-info mb-6 cypress-to-add">Ajouter</router-link>
     </p>
     <p class="search content">Rechercher par</p>
     <div class="search-block">
@@ -51,8 +49,8 @@
           <td>{{ donor.person.blood_type }}</td>
           <td>{{ donor.organ }}</td>
           <td>{{ donor.tumors_number }}</td>
-          <td>{{ donor.isDialyse ? "Oui": "Non" }}</td>
-          <td>{{ donor.isRetransplantation ? "Oui": "Non" }}</td>
+          <td>{{ donor.isDialyse ? "Oui" : "Non" }}</td>
+          <td>{{ donor.isRetransplantation ? "Oui" : "Non" }}</td>
           <td>{{ donor.startDateDialyse }}</td>
           <td>{{ donor.endDateDialyse }}</td>
           <td>{{ donor.person.created_at }}</td>
@@ -67,12 +65,7 @@
         </tr>
       </tbody>
     </table>
-    <person-details
-      v-if="showModal == true"
-      :person="currentDonor"
-      @closeModal="closeModal"
-      class="details"
-    />
+    <person-details v-if="showModal == true" :person="currentDonor" @closeModal="closeModal" class="details" />
   </div>
 </template>
 
@@ -81,7 +74,7 @@ import PersonDetails from "@/components/PersonDetails.vue";
 
 export default {
   components: { PersonDetails },
-  name: "DonorsPanel",
+  name: "donors-panel",
   data() {
     return {
       donors: {},

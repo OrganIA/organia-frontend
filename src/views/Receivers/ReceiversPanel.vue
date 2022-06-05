@@ -51,8 +51,8 @@
           <td>{{ receiver.person.blood_type }}</td>
           <td>{{ receiver.organ }}</td>
           <td>{{ receiver.tumors_number }}</td>
-          <td>{{ receiver.isDialyse ? "Oui": "Non" }}</td>
-          <td>{{ receiver.isRetransplantation ? "Oui": "Non" }}</td>
+          <td>{{ receiver.isDialyse ? "Oui" : "Non" }}</td>
+          <td>{{ receiver.isRetransplantation ? "Oui" : "Non" }}</td>
           <td>{{ receiver.startDateDialyse }}</td>
           <td>{{ receiver.endDateDialyse }}</td>
           <td>{{ receiver.person.created_at }}</td>
@@ -67,12 +67,7 @@
         </tr>
       </tbody>
     </table>
-    <person-details
-      v-if="showModal == true"
-      :person="currentReceiver"
-      @closeModal="closeModal"
-      class="details"
-    />
+    <person-details v-if="showModal == true" :person="currentReceiver" @closeModal="closeModal" class="details" />
   </div>
 </template>
 
@@ -81,7 +76,7 @@ import PersonDetails from "@/components/PersonDetails.vue";
 
 export default {
   components: { PersonDetails },
-  name: "ReceiversPanel",
+  name: "receivers-panel",
   data() {
     return {
       receivers: {},
@@ -146,8 +141,8 @@ export default {
       if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
               b.person[this.sortingKey]
@@ -159,8 +154,8 @@ export default {
       } else if (["birthday", "created_at"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
               Date.parse(b.person[this.sortingKey])
@@ -174,8 +169,8 @@ export default {
       } else if (this.sortingKey == "organ") {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder) return a.organ.localeCompare(b.organ);
           return b.organ.localeCompare(a.organ);
         });

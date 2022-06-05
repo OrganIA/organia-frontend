@@ -2,9 +2,7 @@
   <div id="main">
     <h1>Evenements</h1>
     <p>
-      <router-link to="/eventlist/add" class="button is-info mb-6 cypress-to-add"
-        >Ajouter</router-link
-      >
+      <router-link to="/eventlist/add" class="button is-info mb-6 cypress-to-add">Ajouter</router-link>
     </p>
     <p class="search content">Rechercher par</p>
     <div class="search-block">
@@ -16,7 +14,10 @@
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
     </div>
-    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
+    <table class="
+        table
+        is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info
+      ">
       <thead>
         <tr>
           <th @click="updateFilter('date')">Date</th>
@@ -42,10 +43,10 @@
 </template>
 
 <script>
-import moment from 'moment'
+import moment from "moment";
 
 export default {
-  name: "EventPanel",
+  name: "event-panel",
   data() {
     return {
       events: {},
@@ -68,8 +69,12 @@ export default {
         })
         .then((response) => {
           response.data.forEach((element) => {
-            element.date = moment(String(element.date)).format('DD/MM/YYYY hh:mm');
-            element.created_at = moment(String(element.created_at)).format('DD/MM/YYYY hh:mm');
+            element.date = moment(String(element.date)).format(
+              "DD/MM/YYYY hh:mm"
+            );
+            element.created_at = moment(String(element.created_at)).format(
+              "DD/MM/YYYY hh:mm"
+            );
           });
           this.events = response.data;
           this.eventsBackup = this.calendar;
@@ -85,21 +90,14 @@ export default {
       this.sortingKey = dataName;
     },
     checkNull(a, b) {
-      if (
-        a.date[this.sortingKey] == null &&
-        b.date[this.sortingKey] == null
-      )
+      if (a.date[this.sortingKey] == null && b.date[this.sortingKey] == null)
         return 0;
       if (a.date[this.sortingKey] == null) return 1;
       else if (b.date[this.sortingKey] == null) return -1;
       return 0;
     },
     sortData() {
-      if (
-        ["description"].includes(
-          this.sortingKey
-        )
-      ) {
+      if (["description"].includes(this.sortingKey)) {
         this.events.sort((a, b) => {
           if (
             a.date[this.sortingKey] == null ||
@@ -110,9 +108,7 @@ export default {
             return a.date[this.sortingKey].localeCompare(
               b.date[this.sortingKey]
             );
-          return b.date[this.sortingKey].localeCompare(
-            a.date[this.sortingKey]
-          );
+          return b.date[this.sortingKey].localeCompare(a.date[this.sortingKey]);
         });
       } else if (["date"].includes(this.sortingKey)) {
         this.events.sort((a, b) => {
@@ -158,8 +154,7 @@ export default {
     sortingOrder() {
       this.sortData();
     },
-    selectFilter() {
-    },
+    selectFilter() { },
   },
 };
 </script>

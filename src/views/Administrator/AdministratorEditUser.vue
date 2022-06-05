@@ -12,16 +12,14 @@
         </select>
         <button type="submit" class="button is-info">Enregistrer</button>
       </div>
-      <router-link class="button is-danger ml-6" to="/administrator"
-        >Retour</router-link
-      >
+      <router-link class="button is-danger ml-6" to="/administrator">Retour</router-link>
     </form>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AdministratorEditUser",
+  name: "administrator-edit-user",
   props: {
     id: String,
   },

@@ -8,8 +8,8 @@
         et
         que vous ne possédez pas encore les droits d'administrateur (nécessaires pour l'envoi d'invitation
         notamment), envoyez
-        nous une demande par mail (voir <a v-on:click="updateValue( 'askRights')">Demander des droits
-        supplémentaires</a>
+        nous une demande par mail (voir <a v-on:click="updateValue('askRights')">Demander des droits
+          supplémentaires</a>
 
       </div>
 
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "Invitations",
+  name: "invitations",
   methods: {
     updateValue: function (activePanel) {
       this.$emit('changePanel', activePanel);
@@ -30,5 +30,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

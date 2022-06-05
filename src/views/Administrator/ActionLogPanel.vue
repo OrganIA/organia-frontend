@@ -2,7 +2,7 @@
   <p>Action Log</p>
   <div id="actions-container">
     <p v-for="action in actions" :key="action" class="action">
-      [{{action.created_at}}] {{ action.action }} {{action.target_type }} of id
+      [{{ action.created_at }}] {{ action.action }} {{ action.target_type }} of id
       {{ action.target_id }} by user {{ action.author_id }}. {{ action.message }}
     </p>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "ActionLogPanel",
+  name: "action-log-panel",
   emits: ["login"],
   created() {
     this.getActions();
