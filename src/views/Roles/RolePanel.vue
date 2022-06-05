@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: "RolePanel",
+  name: "role-panel",
   emits: ["login"],
   data() {
     return {
@@ -95,7 +95,7 @@ export default {
         });
     },
     updateRoles() {
-      for(let i in this.roles) {
+      for (let i in this.roles) {
         if (JSON.stringify(this.roles[i]) === JSON.stringify(this.backup[i])) {
           continue;
         }

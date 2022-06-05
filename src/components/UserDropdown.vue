@@ -4,8 +4,9 @@
       <button class="button dropdown-trigger" aria-haspopup="true" aria-controls="dropdown-menu3">
         <span class="name-display-dropdown">{{ cutMail($store.getters.getEmail) }}</span>
         <span class="avatar-container">
-        <img class="avatar-display" src="https://synergy-it.gitlab.io/speekio/speekio-portal/assets/img/img_avatar.png"/>
-      </span>
+          <img class="avatar-display"
+            src="https://synergy-it.gitlab.io/speekio/speekio-portal/assets/img/img_avatar.png" />
+        </span>
       </button>
     </div>
     <div class="dropdown-menu" id="dropdown-menu3" role="menu">
@@ -17,10 +18,7 @@
           Demande au support
         </router-link>
         <hr class="dropdown-divider">
-        <button
-            @click="logout"
-            class="block button is-danger is-light is-outlined cypress-logout"
-        >
+        <button @click="logout" class="block button is-danger is-light is-outlined cypress-logout">
           Se déconnecter
         </button>
       </div>
@@ -30,7 +28,7 @@
 
 <script>
 export default {
-  name: "UserDropdown",
+  name: "user-dropdown",
   emits: ["logout"],
   methods: {
     logout() {
@@ -46,5 +44,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

@@ -1,13 +1,8 @@
 <template>
   <div>
     <h1>Calendrier des evenements</h1>
-    <vue-cal
-      class="vuecal--rounded-theme vuecal--blue-theme"
-      locale="fr"
-      active-view="month"
-      :time="false"
-      :events="events"
-    >
+    <vue-cal class="vuecal--rounded-theme vuecal--blue-theme" locale="fr" active-view="month" :time="false"
+      :events="events">
     </vue-cal>
   </div>
 </template>
@@ -16,7 +11,9 @@
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import "vue-cal/dist/i18n/fr.js";
+
 export default {
+  name: "event-calendar",
   components: { VueCal },
   data() {
     return {

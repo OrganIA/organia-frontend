@@ -18,7 +18,8 @@
         <strong> vous semblent importants.</strong>
         <br>
         <br>
-        Ainsi, si vous avez quelconque recommandation / demande n'hésitez pas à nous envoyer un mail à  organia_2023@labeip.epitech.eu
+        Ainsi, si vous avez quelconque recommandation / demande n'hésitez pas à nous envoyer un mail à
+        organia_2023@labeip.epitech.eu
 
       </div>
 
@@ -30,10 +31,9 @@
 
 <script>
 export default {
-  name: "Plateforme"
+  name: "plateforme"
 }
 </script>
 
 <style scoped>
-
 </style>

@@ -8,7 +8,7 @@
         Nouvelle invitation
       </button>
     </div>
-    <div class="modal " v-bind:class="{'is-invisible' : (state !== 'clicked'), 'is-active' : (state === 'clicked') }">
+    <div class="modal " v-bind:class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
       <div class="modal-background"></div>
       <div class="modal-card invit-modale">
         <header class="modal-card-head">
@@ -16,16 +16,17 @@
           <button class="delete" aria-label="close" v-on:click="openModal()"></button>
         </header>
         <section class="modal-card-body">
-            <div class="form-fields">
-              <label class="label">Mail de la personne</label>
-              <input type="text" class="input mb-6" placeholder="jean.dupond@mail.com" required/>
-              <div class="form-input">
-                <textarea class="textarea" placeholder="exemple: Bonjour, voici le lien d'invitation pour la plateforme..."></textarea>
+          <div class="form-fields">
+            <label class="label">Mail de la personne</label>
+            <input type="text" class="input mb-6" placeholder="jean.dupond@mail.com" required />
+            <div class="form-input">
+              <textarea class="textarea"
+                placeholder="exemple: Bonjour, voici le lien d'invitation pour la plateforme..."></textarea>
 
-              </div>
             </div>
-            <button type="submit" class="button is-info">Enregistrer</button>
-            <router-link class="button is-danger ml-6" to="/invitations">Retour</router-link>
+          </div>
+          <button type="submit" class="button is-info">Enregistrer</button>
+          <router-link class="button is-danger ml-6" to="/invitations">Retour</router-link>
 
         </section>
         <footer class="modal-card-foot">
@@ -40,7 +41,7 @@
 
 <script>
 export default {
-  name: "Invitations",
+  name: "invitations",
   data() {
 
     return {
@@ -53,7 +54,7 @@ export default {
     },
     openModal() {
       if (this.state === "clicked") {
-        this.state =""
+        this.state = ""
       } else {
         this.state = "clicked"
       }
@@ -63,5 +64,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

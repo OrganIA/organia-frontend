@@ -1,7 +1,7 @@
 <template>
   <div>
-      <h1 style="text-align: center">Liste des patients sous dialyse</h1>
-      <div class="search-block">
+    <h1 style="text-align: center">Liste des patients sous dialyse</h1>
+    <div class="search-block">
       <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
         <option value="first_name">Prénom</option>
         <option value="last_name">Nom</option>
@@ -36,7 +36,7 @@
 </template>
 <script>
 export default {
-  name: "DialysePanel",
+  name: "dialyse-panel",
   data() {
     return {
       receivers: {},
@@ -65,11 +65,11 @@ export default {
           });
           this.receivers = response.data;
           this.receivers.forEach((element) => {
-              if (element.isDialyse == true) {
-                this.receivers_dialyse.push(element);
-                if (element.startDateDialyse == null)
-                  element.startDateDialyse = "Aucune date informée";
-              }
+            if (element.isDialyse == true) {
+              this.receivers_dialyse.push(element);
+              if (element.startDateDialyse == null)
+                element.startDateDialyse = "Aucune date informée";
+            }
           });
           this.receiversBackup = this.receivers_dialyse;
         })
@@ -109,8 +109,8 @@ export default {
       if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
               b.person[this.sortingKey]
@@ -122,8 +122,8 @@ export default {
       } else if (["birthday", "created_at"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
               Date.parse(b.person[this.sortingKey])
@@ -137,8 +137,8 @@ export default {
       } else if (this.sortingKey == "organ") {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder) return a.organ.localeCompare(b.organ);
           return b.organ.localeCompare(a.organ);
         });

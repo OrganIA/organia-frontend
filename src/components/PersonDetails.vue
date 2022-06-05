@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "PersonDetails",
+  name: "person-details",
   emits: ["closeModal"],
   props: ["person"],
   data() {
@@ -43,6 +43,6 @@ export default {
       this.$emit("closeModal");
     },
   },
-  created() {},
+  created() { },
 };
 </script>

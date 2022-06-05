@@ -17,12 +17,12 @@
         <div class="container my-5 mt-5 px-5">
           <form action="" method="post" class="form-full-width">
             <div class="field">
-              <label  class="label is-size-4 has-text-weight-light"></label>
+              <label class="label is-size-4 has-text-weight-light"></label>
               <div class="control has-icons-left">
-                <input type="text" name="name"  class="input" value=" organia_2023@labeip.epitech.eu" readonly>
+                <input type="text" name="name" class="input" value=" organia_2023@labeip.epitech.eu" readonly>
                 <span class="icon is-left">
-                        <i class="fa fa-user"></i>
-                    </span>
+                  <i class="fa fa-user"></i>
+                </span>
               </div>
             </div>
             <div class="field">
@@ -30,19 +30,19 @@
               <div class="control has-icons-left">
                 <input type="email" name="email" class="input" value="Demande de droits [NOM PRENOM]" readonly>
                 <span class="icon is-left">
-                        <i class="fa fa-envelope"></i>
-                    </span>
+                  <i class="fa fa-envelope"></i>
+                </span>
               </div>
             </div>
             <div class="field">
               <label class="label is-size-4 has-text-weight-light"></label>
-              <textarea name="message" rows="5" class="textarea is-medium" placeholder=""
-                        readonly>Afin de pouvoir traiter votre demande nous aimerions avoir les informations supplémentaires :
+              <textarea name="message" rows="5" class="textarea is-medium" placeholder="" readonly>Afin de pouvoir traiter votre demande nous aimerions avoir les informations supplémentaires :
                 - Votre Nom
                 - Votre Prenom
                 - Votre Profession
                 - Un court détail concernant votre demande.
-                </textarea></div>
+                </textarea>
+            </div>
           </form>
         </div>
       </div>
@@ -82,10 +82,9 @@
 
 <script>
 export default {
-  name: "DroitsSupplémentaires"
+  name: "droits-supplémentaires"
 }
 </script>
 
 <style scoped>
-
 </style>
