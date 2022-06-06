@@ -1,13 +1,10 @@
 <template>
   <div class="main-container" :class="{ 'background-white': logged_in }">
     <SideBar v-if="logged_in" @logout="logout" />
-    <div
-      class="secondary-container"
-      :class="{
-        'background-transparent': !logged_in,
-        'background-white': logged_in,
-      }"
-    >
+    <div class="secondary-container" :class="{
+      'background-transparent': !logged_in,
+      'background-white': logged_in,
+    }">
       <router-view @login="handleLogin" />
     </div>
   </div>

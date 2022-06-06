@@ -5,17 +5,12 @@
       <div class="form-fields">
         <div class="form-input small required">
           <label class="label">Date</label>
-          <input
-            v-model="date"
-            placeholder="date"
-            type="datetime-local"
-            class="cypress-datetime input is-info"
-            required
-          />
+          <input v-model="date" placeholder="date" type="datetime-local" class="cypress-datetime input is-info"
+            required />
         </div>
         <div class="form-input small">
           <label class="label">Description</label>
-          <textarea v-model="description" placeholder="description" class="cypress-textarea" required/>
+          <textarea v-model="description" placeholder="description" class="cypress-textarea" required />
           <p class="required-notice">* Obligatoire</p>
 
         </div>
@@ -30,7 +25,7 @@
 
 <script>
 export default {
-  name: "NewEvent",
+  name: "new-event",
   data() {
     return {
       date: "",

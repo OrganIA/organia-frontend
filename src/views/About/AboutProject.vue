@@ -2,8 +2,8 @@
   <nav class="navbar base-navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand logo-placeholder">
       <div class="navbar-item logo">
-        <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
-             alt="logo" class="logo-img-align">
+        <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
+          class="logo-img-align">
       </div>
     </div>
     <div id="navbarBasicExample" class="navbar-menu main-menu-navbar">
@@ -31,14 +31,15 @@
       <div class="" id="eipmodeemploi">
         <h1 class="is-size-2 has-text-centered titre-about">L'EIP : mode d'emploi</h1>
 
-         <img class="align-middle"
-                                   src="https://newsroom.ionis-group.com/wp-content/uploads/2021/10/LOGO-EPITECH-BASELINE-QUADRI-2021.png"
-                                   alt="logo epitech" height="100px" width="700px">
+        <img class="align-middle"
+          src="https://newsroom.ionis-group.com/wp-content/uploads/2021/10/LOGO-EPITECH-BASELINE-QUADRI-2021.png"
+          alt="logo epitech" height="100px" width="700px">
         <br>
         <br>
         <br>
         <div class="has-text-justified container is-max-desktop">
-          L’Epitech Innovative Project de l’EPITECH (European Institute of Technology), réalisé en groupes en 4ème et 5ème Années, a pour objectif
+          L’Epitech Innovative Project de l’EPITECH (European Institute of Technology), réalisé en groupes en 4ème et
+          5ème Années, a pour objectif
           principal de faire passer les étudiants de la réalisation pédagogique, à la réalisation de projet
           d’entreprise. Il a de plus vocation à faciliter l’entrée des étudiants dans le monde professionnel, car il
           doit servir à l’étudiant de carte de visite à l’extérieur de l’école, le cas échéant, lui permettre de trouver
@@ -57,7 +58,8 @@
       </div>
       <br>
       <div class="has-text-justified container is-max-desktop">
-        <textarea class="textarea is-danger is-medium not-resizable" readonly>Aujourd'hui 60% des cœurs et poumons destines a être greffes sont  jetés car inutilisables faute de temps. Ces délais dans le processus de distribution des organes ainsi que le délai d'établissement d'une liste classée de receveurs potentiels sont chaque année responsables de 500 morts.</textarea>
+        <textarea class="textarea is-danger is-medium not-resizable"
+          readonly>Aujourd'hui 60% des cœurs et poumons destines a être greffes sont  jetés car inutilisables faute de temps. Ces délais dans le processus de distribution des organes ainsi que le délai d'établissement d'une liste classée de receveurs potentiels sont chaque année responsables de 500 morts.</textarea>
 
         <br>
         <br>
@@ -81,17 +83,20 @@
         <br>
         <br>
         <div class="has-text-justified container is-max-desktop">
-          Au cours du développement de notre application censée être une amélioration de la base de données existante CRISTAL
+          Au cours du développement de notre application censée être une amélioration de la base de données existante
+          CRISTAL
           nous avons pu rentrer en contact avec les administrateurs de ladite plateforme : l'Agence de Biomédecine.
           <br>
           Nous leur avons parlé de notre projet et de notre vision du futur et notre solution les a fortement interessé.
-          En effet suite à plusieurs discussions et réunions nous avons réussi à trouver une dynamique d'entente pour que
+          En effet suite à plusieurs discussions et réunions nous avons réussi à trouver une dynamique d'entente pour
+          que
           nous puissions développper notre plateforme avec l'aide de ces professionnels.
           Chaque algorithme est soigneusement testé et validé par l'agence de biomédecine afin d'assurer
-          la qualité de notre travail et pour pouvoir proposer à nos utilisateurs une application qui corresponde à leurs besoins.
+          la qualité de notre travail et pour pouvoir proposer à nos utilisateurs une application qui corresponde à
+          leurs besoins.
 
         </div>
-        </div>
+      </div>
 
       <div class="" id="timeline">
         <h1 class="is-size-2 has-text-centered titre-about">Timeline de la solution</h1>
@@ -144,7 +149,7 @@
               </li>
               <li class="list-tl tl-li">
                 <div class="time">2023</div>
-                  <p>Mise à disposition de l'outil OrganIA pour les professionnels de santé</p>
+                <p>Mise à disposition de l'outil OrganIA pour les professionnels de santé</p>
               </li>
             </ul>
           </div>
@@ -181,10 +186,10 @@
               <div class="team-right">
                 <div class="team-text">
                   Passionné de système d'exploitation, je rêve de pouvoir un jour créer
-                  mon propre système d'exploitation depuis mon plus jeune âge.<br/>
-                  La realité augmenté et l'inteligence artificielle m'attire aussi.<br/>
-                  Travaillant principalement sur le front du Organ-IA.<br/>
-                  Epitech 4ème année.<br/>
+                  mon propre système d'exploitation depuis mon plus jeune âge.<br />
+                  La realité augmenté et l'inteligence artificielle m'attire aussi.<br />
+                  Travaillant principalement sur le front du Organ-IA.<br />
+                  Epitech 4ème année.<br />
                 </div>
               </div>
             </div>
@@ -397,9 +402,11 @@
               <div class="team-middle"></div>
               <div class="team-right">
                 <div class="team-text">
-                  Je m'appelle LAKHDARI Okil Saber, jeune développeur, <br>je suis passionné par le développement mobile Flutter
+                  Je m'appelle LAKHDARI Okil Saber, jeune développeur, <br>je suis passionné par le développement mobile
+                  Flutter
                   <br>
-                  et aimerait en faire ma carrière. <br>Je suis un énorme fan de sport automobile, de la F1 au Gr.3,<br> je porte
+                  et aimerait en faire ma carrière. <br>Je suis un énorme fan de sport automobile, de la F1 au Gr.3,<br>
+                  je porte
                   Mercedes et Porsche dans mon cœur.<br> Je suis aussi un amateur de sim-racing.
 
                 </div>
@@ -468,10 +475,9 @@
 
 <script>
 export default {
-  name: "AboutProject"
+  name: "about-project"
 }
 </script>
 
 <style scoped>
-
 </style>

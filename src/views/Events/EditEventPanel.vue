@@ -5,22 +5,11 @@
       <div class="form-fields">
         <div class="form-input small required">
           <label class="label">Date</label>
-          <input
-            v-model="calendar.date"
-            placeholder="date"
-            type="datetime-local"
-            class="input is-info"
-            required
-          />
+          <input v-model="calendar.date" placeholder="date" type="datetime-local" class="input is-info" required />
         </div>
         <div class="form-input small required">
           <label class="label">Description</label>
-          <textarea
-            class="textarea"
-            v-model="calendar.description"
-            placeholder="description"
-            required
-          />
+          <textarea class="textarea" v-model="calendar.description" placeholder="description" required />
         </div>
         <p class="required-notice">* Obligatoire</p>
       </div>
@@ -28,14 +17,8 @@
         <button type="submit" class="cypress-add button is-info mx-auto mr-6">
           Enregistrer
         </button>
-        <router-link to="/eventlist" class="button is-danger ml-6"
-          >Retour</router-link
-        >
-        <button
-          type="button"
-          class="button is-danger ml-6"
-          @click="delete_event"
-        >
+        <router-link to="/eventlist" class="button is-danger ml-6">Retour</router-link>
+        <button type="button" class="button is-danger ml-6" @click="delete_event">
           Supprimer
         </button>
       </div>
@@ -45,7 +28,7 @@
 
 <script>
 export default {
-  name: "EditEventPanel",
+  name: "edit-event-panel",
   props: {
     id: String,
   },

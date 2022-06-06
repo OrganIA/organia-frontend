@@ -1,7 +1,7 @@
 <template>
   <div>
-      <h1 style="text-align: center">Liste des patients sous tumeurs</h1>
-      <div class="search-block">
+    <h1 style="text-align: center">Liste des patients sous tumeurs</h1>
+    <div class="search-block">
       <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
         <option value="first_name">Prénom</option>
         <option value="last_name">Nom</option>
@@ -33,7 +33,7 @@
 </template>
 <script>
 export default {
-  name: "TumorPanel",
+  name: "tumor-panel",
   data() {
     return {
       person: {},
@@ -62,9 +62,9 @@ export default {
           });
           this.person = response.data;
           this.person.forEach((element) => {
-              if (element.tumors_number > 0) {
-                this.person_tumors.push(element);
-              }
+            if (element.tumors_number > 0) {
+              this.person_tumors.push(element);
+            }
           });
           this.personBackup = this.person_tumors;
         })
@@ -104,8 +104,8 @@ export default {
       if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
         this.person.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
               b.person[this.sortingKey]
@@ -117,8 +117,8 @@ export default {
       } else if (["birthday", "created_at"].includes(this.sortingKey)) {
         this.person.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
               Date.parse(b.person[this.sortingKey])
@@ -132,8 +132,8 @@ export default {
       } else if (this.sortingKey == "organ") {
         this.person.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
-              return this.checkNull(a, b);
+            b.person[this.sortingKey] == null)
+            return this.checkNull(a, b);
           if (this.sortingOrder) return a.organ.localeCompare(b.organ);
           return b.organ.localeCompare(a.organ);
         });

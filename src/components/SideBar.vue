@@ -3,14 +3,12 @@
     <header>
       <h1>
         <router-link to="/">
-          <img
-              id="navbar-logo"
-              src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
-          />
+          <img id="navbar-logo"
+            src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" />
         </router-link>
       </h1>
     </header>
-    <UserDropdown @logout="handle_logout"/>
+    <UserDropdown @logout="handle_logout" />
     <div id="navlinks">
       <router-link class="block button is-info" to="/receivers">
         <i class="fa fa-address-card"></i>
@@ -73,16 +71,13 @@
 import UserDropdown from "@/components/UserDropdown";
 
 export default {
-  components: {UserDropdown},
+  components: { UserDropdown },
   name: "SideBar",
   emits: ["logout"],
   methods: {
     handle_logout() {
       this.$emit("logout");
     },
-  },
-  data() {
-    return {};
   },
 };
 </script>

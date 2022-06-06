@@ -1,44 +1,29 @@
-# organia-frontend
+# organiafrontend
 
-This is the repository used to create the front-end side of OrganIA.
-It was made using VueJS v3.
-
-## Run the project locally in dev mode:
+## Project setup
 ```
 npm install
 ```
+
+### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
-## Run the project locally in production mode:
-```
-npm install
-```
+
+### Compiles and minifies for production
 ```
 npm run build
 ```
-## Open automatic tests:
-```
-npm install
-```
-```
-npm run serve
-```
-In an other terminal run:
-```
-npm run test-open
-```
-Then simply click on the test you want to run.
 
-## Run automatic tests:
+### Run your end-to-end tests
 ```
-npm install
-```
-```
-npm run serve
-```
-In an other terminal run:
-```
-npm run test-run
+npm run test:e2e
 ```
 
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

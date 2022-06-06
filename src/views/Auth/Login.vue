@@ -7,32 +7,19 @@
       </div>
       <div class="field">
         <div class="control">
-          <input
-            v-model="email"
-            placeholder="email"
-            type="email"
-            class="cypress-email input"
-            required
-          />
+          <input v-model="email" placeholder="email" type="email" class="cypress-email input" required />
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <input
-            v-model="password"
-            placeholder="mot de passe"
-            type="password"
-            class="cypress-password input"
-            required
-          />
+          <input v-model="password" placeholder="mot de passe" type="password" class="cypress-password input"
+            required />
         </div>
       </div>
       <button type="submit" class="cypress-login button is-info mr-6">
         Confirmer
       </button>
-      <router-link to="/register" class="cypress-to-register button is-link"
-        >S'inscrire</router-link
-      >
+      <router-link to="/register" class="cypress-to-register button is-link">S'inscrire</router-link>
     </form>
   </div>
 </template>
@@ -41,7 +28,7 @@
 import PresentationNavbar from "@/components/PresentationNavbar";
 
 export default {
-  name: "Login",
+  name: "login",
   emits: ["login"],
   components: { PresentationNavbar },
   data() {
