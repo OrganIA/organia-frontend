@@ -2,8 +2,8 @@
   <nav class="navbar base-navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand logo-placeholder">
       <div class="navbar-item logo">
-        <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
-             alt="logo" class="logo-img-align">
+        <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
+          class="logo-img-align">
       </div>
     </div>
 
@@ -178,15 +178,14 @@
       </div>
     </div>
   </div>
-<footer class="footer large-footer"></footer>
+  <footer class="footer large-footer"></footer>
 </template>
 
 <script>
 export default {
-  name: "AboutGroup"
+  name: "about-group"
 }
 </script>
 
 <style scoped>
-
 </style>

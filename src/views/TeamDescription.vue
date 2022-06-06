@@ -2,8 +2,8 @@
   <nav class="navbar base-navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand logo-placeholder">
       <div class="navbar-item logo">
-        <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
-             alt="logo" class="logo-img-align">
+        <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
+          class="logo-img-align">
       </div>
     </div>
     <div id="navbarBasicExample" class="navbar-menu main-menu-navbar">
@@ -14,9 +14,9 @@
       </div>
     </div>
   </nav>
-    <br/>
-    <br/>
-    <br/>
+  <br />
+  <br />
+  <br />
 
 
   <div class="resized-container">
@@ -49,10 +49,10 @@
           <div class="team-right">
             <div class="team-text">
               Passionné de système d'exploitation, je rêve de pouvoir un jour créer
-              mon propre système d'exploitation depuis mon plus jeune âge.<br/>
-              La realité augmenté et l'inteligence artificielle m'attire aussi.<br/>
-              Travaillant principalement sur le front du Organ-IA.<br/>
-              Epitech 4ème année.<br/>
+              mon propre système d'exploitation depuis mon plus jeune âge.<br />
+              La realité augmenté et l'inteligence artificielle m'attire aussi.<br />
+              Travaillant principalement sur le front du Organ-IA.<br />
+              Epitech 4ème année.<br />
             </div>
           </div>
         </div>
@@ -238,7 +238,7 @@
             <div class="team-text">Depuis que je suis jeune je me suis intéressé à l'informatique,
               j'adore construire différents projets via mes connaissances tout en apprenant et en perfectionnant
               d'autres compétences que j'acquiers au cours de ces "aventures", également passionné de biologie
-            moléculaire, je souhaite m'orienter dans un travail me permettant d'améliorer la
+              moléculaire, je souhaite m'orienter dans un travail me permettant d'améliorer la
               compréhension du fonctionnement des protéines à l'aide de l'informatique</div>
           </div>
         </div>
@@ -268,9 +268,11 @@
           <div class="team-middle"></div>
           <div class="team-right">
             <div class="team-text">
-              Je m'appelle LAKHDARI Okil Saber, jeune développeur, <br>je suis passionné par le développement mobile Flutter
+              Je m'appelle LAKHDARI Okil Saber, jeune développeur, <br>je suis passionné par le développement mobile
+              Flutter
               <br>
-              et aimerait en faire ma carrière. <br>Je suis un énorme fan de sport automobile, de la F1 au Gr.3,<br> je porte
+              et aimerait en faire ma carrière. <br>Je suis un énorme fan de sport automobile, de la F1 au Gr.3,<br> je
+              porte
               Mercedes et Porsche dans mon cœur.<br> Je suis aussi un amateur de sim-racing.
 
             </div>
@@ -314,6 +316,6 @@
 
 <script>
 export default {
-  name: "TeamDescription",
+  name: "team-description",
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="content align-left ml-6 pl-1" >
+  <div class="content align-left ml-6 pl-1">
     <div class="tutorial-text-content has-text-justified ">
       <h1 class="title is-1">Connexion à la plateforme</h1>
       <br><br>
@@ -11,8 +11,8 @@
         l'invitation) il suffit de vous connecter avec vos informations sur le portail :
         <br>
         <div class="has-text-centered">
-          <img src="https://media.discordapp.net/attachments/885854807120810045/942995932172156928/unknown.png"
-               alt="" class="bordered-image">
+          <img src="https://media.discordapp.net/attachments/885854807120810045/942995932172156928/unknown.png" alt=""
+            class="bordered-image">
 
         </div>
 
@@ -25,10 +25,9 @@
 
 <script>
 export default {
-  name: "Connexion"
+  name: "connexion"
 }
 </script>
 
 <style scoped>
-
 </style>

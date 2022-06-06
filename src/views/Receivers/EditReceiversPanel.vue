@@ -5,41 +5,19 @@
       <div class="form-fields">
         <div class="form-input small required">
           <label class="label">Prénom</label>
-          <input
-            class="input is-info"
-            v-model="person.first_name"
-            placeholder="first_name"
-            type="text"
-            required
-          />
+          <input class="input is-info" v-model="person.first_name" placeholder="first_name" type="text" required />
         </div>
         <div class="form-input small required">
           <label class="label">Nom de Famille</label>
-          <input
-            class="input is-info"
-            v-model="person.last_name"
-            placeholder="last_name"
-            type="text"
-            required
-          />
+          <input class="input is-info" v-model="person.last_name" placeholder="last_name" type="text" required />
         </div>
         <div class="form-input small required">
           <label class="label">Date de naissance</label>
-          <input
-            v-model="person.birthday"
-            placeholder="birthday"
-            type="date"
-            class="input is-info"
-          />
+          <input v-model="person.birthday" placeholder="birthday" type="date" class="input is-info" />
         </div>
         <div class="form-input small required">
           <label class="label">Organe</label>
-          <select
-            v-model="receiver.organ"
-            id="organ-select"
-            required
-            class="button is-info is-light"
-          >
+          <select v-model="receiver.organ" id="organ-select" required class="button is-info is-light">
             <option v-for="element in all_organs" :key="element">
               {{ element }}
             </option>
@@ -47,91 +25,48 @@
         </div>
         <div class="form-input small">
           <label class="label">Date d'admission</label>
-          <input
-            v-model="receiver.start_date"
-            placeholder="start date"
-            type="date"
-          />
+          <input v-model="receiver.start_date" placeholder="start date" type="date" />
         </div>
         <div class="form-input small">
           <label class="label">Date de fin</label>
-          <input
-            v-model="receiver.end_date"
-            placeholder="end date"
-            type="date"
-            class="input is-info"
-          />
+          <input v-model="receiver.end_date" placeholder="end date" type="date" class="input is-info" />
         </div>
-         <div class="form-input small">
+        <div class="form-input small">
           <label class="label">Nombre de tumeurs</label>
-          <input
-            v-model="receiver.tumors_number"
-            placeholder="0"
-            type="text"
-            class="input is-info"
-          />
+          <input v-model="receiver.tumors_number" placeholder="0" type="text" class="input is-info" />
         </div>
         <div class="form-input small required">
           <label class="label">Le patient est sous dialyse ?</label>
-          <select v-model="receiver.isDialyse" 
-            name="dialyse" 
-            id="dialyse-select" 
-            class="button is-info is-light"
-            required
-          >
+          <select v-model="receiver.isDialyse" name="dialyse" id="dialyse-select" class="button is-info is-light"
+            required>
             <option value="true">Oui</option>
             <option value="false">Non</option>
-            
+
           </select>
         </div>
         <div class="form-input small">
           <label class="label">Date de début de dialyse</label>
-          <input
-            v-model="receiver.startDateDialyse"
-            placeholder="start date"
-            type="date"
-            class="input is-info"
-          />
+          <input v-model="receiver.startDateDialyse" placeholder="start date" type="date" class="input is-info" />
         </div>
         <div class="form-input small">
           <label class="label">Date de fin de dialyse</label>
-          <input
-            v-model="receiver.endDateDialyse"
-            placeholder="start date"
-            type="date"
-            class="input is-info"
-          />
+          <input v-model="receiver.endDateDialyse" placeholder="start date" type="date" class="input is-info" />
         </div>
         <div class="form-input small required">
           <label class="label">A-t-il effectué une retransplantation ?</label>
-          <select v-model="receiver.isRetransplantation" 
-            name="retransplantation" 
-            id="transplantation-select" 
-            class="button is-info is-light"
-            required
-          >
+          <select v-model="receiver.isRetransplantation" name="retransplantation" id="transplantation-select"
+            class="button is-info is-light" required>
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
         </div>
         <div class="form-input small">
           <label class="label">Description</label>
-          <input
-            class="input is-info"
-            v-model="person.description"
-            placeholder="description"
-            type="text"
-          />
+          <input class="input is-info" v-model="person.description" placeholder="description" type="text" />
         </div>
         <div class="form-input small required">
           <label class="label">Groupe sanguin</label>
-          <select
-            v-model="person.abo"
-            name="abo"
-            id="abo-select"
-            class="button is-info is-light"
-            required
-          >
+          <select v-model="person.abo" name="abo" id="abo-select" class="button is-info is-light" required>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="O">O</option>
@@ -140,37 +75,21 @@
         </div>
         <div class="form-input small required">
           <label class="label">Rhésus</label>
-          <select
-            class="button is-info is-light"
-            v-model="person.rhesus"
-            name="rhesus"
-            id="rhesus-select"
-            required
-          >
+          <select class="button is-info is-light" v-model="person.rhesus" name="rhesus" id="rhesus-select" required>
             <option value="+">+</option>
             <option value="-">-</option>
           </select>
         </div>
         <div class="form-input small required">
           <label class="label">Sexe</label>
-          <select
-            v-model="person.gender"
-            name="gender"
-            id="gender-select"
-            class="button is-info is-light"
-            required
-          >
+          <select v-model="person.gender" name="gender" id="gender-select" class="button is-info is-light" required>
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
           </select>
         </div>
         <div class="form-input small">
           <label class="label">Notes</label>
-          <textarea
-            class="textarea"
-            v-model="receiver.notes"
-            placeholder="notes"
-          />
+          <textarea class="textarea" v-model="receiver.notes" placeholder="notes" />
         </div>
         <p class="required-notice">* Obligatoire</p>
       </div>
@@ -178,14 +97,8 @@
         <button type="submit" class="cypress-add button is-info mx-auto mr-6">
           Enregistrer
         </button>
-        <router-link to="/receivers" class="button is-danger ml-6"
-          >Retour</router-link
-        >
-        <button
-          type="button"
-          class="button is-danger ml-6"
-          @click="delete_receiver"
-        >
+        <router-link to="/receivers" class="button is-danger ml-6">Retour</router-link>
+        <button type="button" class="button is-danger ml-6" @click="delete_receiver">
           Supprimer
         </button>
       </div>
@@ -195,7 +108,7 @@
 
 <script>
 export default {
-  name: "EditReceiversPanel",
+  name: "edit-receivers-panel",
   props: {
     id: String,
   },
@@ -236,7 +149,7 @@ export default {
             : {}),
           ...(this.receiver.notes ? { notes: this.receiver.notes } : {}),
           ...(this.receiver.tumors_number ? { rhesus: this.receiver.tumors_number } : {}),
-          isDialyse : this.receiver.isDialyse,
+          isDialyse: this.receiver.isDialyse,
           isRetransplantation: this.receiver.isRetransplantation,
           ...(this.receiver.startDateDialyse ? { startDateDialyse: this.receiver.startDateDialyse } : {}),
           ...(this.receiver.endDateDialyse ? { endDateDialyse: this.receiver.endDateDialyse } : {}),

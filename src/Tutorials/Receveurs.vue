@@ -16,7 +16,8 @@
       <div class="is-size-5 has-text-justified">
         <h1 class="title is-1" id="receivlist">Interface de gestion des receveurs</h1>
 
-        La gestion des receveurs a également été simplifiée au possible afin de rendre le processus de correspondance le plus
+        La gestion des receveurs a également été simplifiée au possible afin de rendre le processus de correspondance le
+        plus
         clair possible.
         <br>
         <br>
@@ -32,8 +33,8 @@
         <br>
         <div class="has-text-centered">
           <img
-              src="https://media.discordapp.net/attachments/885854807120810045/942998806448967700/unknown.png?width=302&height=700"
-              alt="" class="bordered-image">
+            src="https://media.discordapp.net/attachments/885854807120810045/942998806448967700/unknown.png?width=302&height=700"
+            alt="" class="bordered-image">
         </div>
         <br>
         <br>
@@ -42,14 +43,15 @@
         <br>
         <div class="has-text-centered">
           <img
-              src="https://media.discordapp.net/attachments/959068123187773570/972487174182277120/unknown.png?width=1093&height=551"
-              alt="" class="bordered-image">
+            src="https://media.discordapp.net/attachments/959068123187773570/972487174182277120/unknown.png?width=1093&height=551"
+            alt="" class="bordered-image">
         </div>
       </div>
-      <br>      <div class="is-size-5">
+      <br>
+      <div class="is-size-5">
 
-      (Dans cet exemple la liste des receveurs est vide)
-    </div>
+        (Dans cet exemple la liste des receveurs est vide)
+      </div>
       <br>
       <br>
       <h1 class="title is-1" id="addreceiv">Ajouter un receveur</h1>
@@ -64,8 +66,8 @@
 
       <div class="has-text-centered">
         <img
-            src="https://media.discordapp.net/attachments/959068123187773570/972487598385819680/unknown.png?width=388&height=550"
-            alt="" class="bordered-image">
+          src="https://media.discordapp.net/attachments/959068123187773570/972487598385819680/unknown.png?width=388&height=550"
+          alt="" class="bordered-image">
       </div>
       <br>
       <br>
@@ -88,8 +90,8 @@
         <br>
         <div class="has-text-centered">
           <img
-              src="https://media.discordapp.net/attachments/959068123187773570/972488445018656788/unknown.png?width=383&height=551"
-              alt="" class="bordered-image">
+            src="https://media.discordapp.net/attachments/959068123187773570/972488445018656788/unknown.png?width=383&height=551"
+            alt="" class="bordered-image">
         </div>
         <br>
         <br>
@@ -98,51 +100,53 @@
         <br>
         <div class="has-text-centered">
           <img
-              src="https://media.discordapp.net/attachments/959068123187773570/972488958065926184/unknown.png?width=1118&height=551"
-              alt="" class="bordered-image">
+            src="https://media.discordapp.net/attachments/959068123187773570/972488958065926184/unknown.png?width=1118&height=551"
+            alt="" class="bordered-image">
         </div>
         <br>
         <br>
         <h1 class="title is-1" id="editreceiv">Modifier un receveur</h1>
         <br>
         <br>
-        Lorsqu'un utilisateur est dans la liste, ses données ne sont pas "figées" et vous pourrez modifier les informations des
+        Lorsqu'un utilisateur est dans la liste, ses données ne sont pas "figées" et vous pourrez modifier les
+        informations des
         receveurs déjà présents dans la liste via l'utilisation de ce bouton :
         <br>
         <br>
         <div class="has-text-centered">
-          <img
-              src="https://media.discordapp.net/attachments/959068123187773570/972436642449203230/unknown.png"
-              alt="" class="bordered-image">
+          <img src="https://media.discordapp.net/attachments/959068123187773570/972436642449203230/unknown.png" alt=""
+            class="bordered-image">
         </div>
         <br>
         <br>
-        Une fois cliqué ce bouton vous emmennera dans la page d'édition des receveurs qui ressemble à la page d'addition,
-        toutefois les informations seront préremplies en accord avec le receveur que vous voulez modifier, reprenons l'exemple de Jean
+        Une fois cliqué ce bouton vous emmennera dans la page d'édition des receveurs qui ressemble à la page
+        d'addition,
+        toutefois les informations seront préremplies en accord avec le receveur que vous voulez modifier, reprenons
+        l'exemple de Jean
         Dupont, si je clique sur "Editer" je me retrouve sur cette page :
         <br><br>
         <div class="has-text-centered">
           <img
-              src="https://media.discordapp.net/attachments/959068123187773570/972489175699980308/unknown.png?width=385&height=551"
-              alt="" class="bordered-image">
+            src="https://media.discordapp.net/attachments/959068123187773570/972489175699980308/unknown.png?width=385&height=551"
+            alt="" class="bordered-image">
         </div>
         <br><br>
         Je souhaite par exemple modifier son prénom qui a mal été saisi lors de l'enregistrement comme ceci :
         <br><br>
         <div class="has-text-centered">
-          <img
-              src="https://media.discordapp.net/attachments/959068123187773570/972489253705637919/unknown.png"
-              alt="" class="bordered-image">
+          <img src="https://media.discordapp.net/attachments/959068123187773570/972489253705637919/unknown.png" alt=""
+            class="bordered-image">
         </div>
         <br><br>
-        Une fois mes informations saisies je souhaite enregistrer ces nouvelles données (je peux également les supprimer via
+        Une fois mes informations saisies je souhaite enregistrer ces nouvelles données (je peux également les supprimer
+        via
         le bouton "supprimer"), une fois enregistrée les données apparaissent correctement dans la liste :
         <br>
         <br>
         <div class="has-text-centered">
           <img
-              src="https://media.discordapp.net/attachments/959068123187773570/972489548846202920/unknown.png?width=1256&height=65"
-              alt="" class="bordered-image">
+            src="https://media.discordapp.net/attachments/959068123187773570/972489548846202920/unknown.png?width=1256&height=65"
+            alt="" class="bordered-image">
         </div>
         <br>
         <br>
@@ -174,7 +178,7 @@
 
 <script>
 export default {
-  name: "Receveurs",
+  name: "receveurs",
   methods: {
     updateValue: function (activePanel) {
       this.$emit('changePanel', activePanel);
@@ -184,5 +188,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
