@@ -98,4 +98,14 @@ export default {
 </script>
 
 <style scoped>
+
+.form-editor {
+    display: flex;
+    flex-direction: column;
+}
+
+.half-table {
+    max-width: 50%;
+}
+
 </style>

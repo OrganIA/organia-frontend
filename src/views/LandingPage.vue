@@ -47,3 +47,41 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.carousel__item {
+  min-height: 200px;
+  width: 100%;
+  background-color: #0f2c59;
+  color: var(--vc-clr-white);
+  font-size: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel__slide {
+  padding: 10px;
+}
+
+.carousel__prev,
+.carousel__next {
+  box-sizing: content-box;
+  border: 5px solid white;
+}
+
+
+.carousel__prev--in-active,
+.carousel__next--in-active {
+  display: none;
+}
+
+.carousel__content {
+  display: inline;
+}
+
+.carousel__link {
+  color: white;
+}
+</style>

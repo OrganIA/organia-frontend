@@ -94,28 +94,30 @@ export default {
 </script>
 
 <style scoped>
+
 .tutorial-container {
-  margin-top: 50px;
-  padding-top: 20px;
-  width: 100vw;
-  background-color: white;
-  display: flex;
+    margin-top: 50px;
+    padding-top: 20px;
+    width: 100vw;
+    background-color: white;
+    display: flex;
 }
 
 .tabs ul {
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  align-content: start;
-  min-width: 100%;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    align-content: start;
+    min-width: 100%;
 }
 
 .tutorial-tab {
-  width: 320px;
-  margin-top: 15px;
-  overflow-x: hidden;
+    width: 320px;
+    margin-top: 15px;
+    overflow-x: hidden;
 }
 
 .tab-container {
-  min-width: 330px;
+    min-width: 330px;
 }
+
 </style>
