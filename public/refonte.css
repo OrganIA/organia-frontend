@@ -1,0 +1,89 @@
+
+div.wave{
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    z-index: 99;
+}
+
+.wave svg{
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+#container {
+    position: relative;
+    background:  #0e2536;
+    height: 90vh;
+}
+
+
+.base-navbar {
+    height: 12vh;
+    width: 100%;
+    background-color: #EFF5FB;
+}
+
+
+.logo-placeholder {
+    position: relative;
+    width: 10%;
+    height: 70%;
+    vertical-align: center;
+    margin-left: 10%;
+}
+
+
+.logo {
+    background-color:  #0e2536;;
+    border-radius: 20px;
+    text-align: center;
+    align-content: center;
+    width: 17.5vw;
+    height: 100%;
+    vertical-align: center;
+    margin-top: 10%;
+}
+
+.start-from-end-hor {
+    float: right;
+}
+
+.navbar-home-controllers {
+    margin-right: 30%;
+    align-items: center;
+}
+
+.navbar-home-controller {
+    border-radius: 0;
+    height: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.img-comp-1 {
+    position: relative;
+    float: right;
+    margin-right: 7%;
+    margin-top: 2%;
+}
+
+.img-comp-2 {
+    position: relative;
+    float: left;
+    margin-left: 7%;
+    margin-top: 20%;
+    transform: scaleY(-1);
+}
+
+.img-main {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-img-container {
+    align-items: center;
+    width: 100%;
+}

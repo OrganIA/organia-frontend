@@ -1064,29 +1064,6 @@ td>i {
     transform: translate(-50%, -70%);
 }
 
-.logo {
-    background-color: var(--logo-dark-blue);
-    border-radius: 30px;
-    color: white;
-    text-align: center;
-    align-content: center;
-    width: 17.5vw;
-    height: 140%;
-    margin-left: 20px;
-}
-
-.base-navbar {
-    margin-top: -40px;
-    height: 80px;
-    width: 130%;
-    background-color: transparent;
-}
-
-.logo-placeholder {
-    width: 300px;
-    height: 90%;
-    margin-left: 30px;
-}
 
 .logo-img-align {
     margin-left: 20%;
@@ -1140,18 +1117,10 @@ td>i {
     border-radius: 50%;
 }
 
-.main-menu-navbar {
-    margin-top: 13px;
-    background-color: transparent;
-}
-
 .reset-bg {
     background-color: white;
 }
 
-.navbar-correction {
-    margin-left: 50%;
-}
 
 .main-container-admin-panel {
     display: flex;

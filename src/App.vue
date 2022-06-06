@@ -1,24 +1,14 @@
 <template>
-  <div class="main-container" :class="{ 'background-white': logged_in }">
-    <SideBar v-if="logged_in" @logout="logout" />
-    <div
-      class="secondary-container"
-      :class="{
-        'background-transparent': !logged_in,
-        'background-white': logged_in,
-      }"
-    >
-      <router-view @login="handleLogin" />
-    </div>
-  </div>
+  <Home></Home>
+  <router-view @login="handleLogin" />
 </template>
 
 <script>
-import SideBar from "./components/SideBar";
+import Home from "./Home"
 
 export default {
   name: "App",
-  components: { SideBar },
+  components: { Home },
   methods: {
     getRole(data) {
       this.$http
@@ -33,6 +23,18 @@ export default {
             role: response.data,
           });
           this.$emit("login", true);
+  //        <div class="main-container" :class="{ 'background-white': logged_in }">
+  //            <SideBar v-if="logged_in" @logout="logout" />
+  //            <div
+  //        class="secondary-container"
+  //      :class="{
+  //        'background-transparent': !logged_in,
+  //            'background-white': logged_in,
+  //      }"
+  //    >
+  //    <router-view @login="handleLogin" />
+  //        </div>
+  //  </div>
         })
         .catch((error) => {
           console.log(error.response.data.detail);
@@ -51,7 +53,7 @@ export default {
         .catch((error) => {
           console.log(error.response);
           this.$cookies.remove("token");
-          this.$router.push("/login");
+          this.$router.push("/home");
           this.$toast.error(
             "Erreur lors de la connexion : " + error.response.data.detail
           );
@@ -64,7 +66,7 @@ export default {
     logout() {
       this.logged_in = false;
       this.$store.commit("logout");
-      this.$router.push("/login");
+      this.$router.push("/home");
     },
   },
   data() {
@@ -87,8 +89,8 @@ export default {
       this.login();
     } else {
       this.$router.isReady().then(() => {
-        if (this.$route.path != "/register" && this.$route.path != "/login" && this.$route.path != "/team")
-          this.$router.push("/login");
+        if (this.$route.path != "/register" && this.$route.path != "/home" && this.$route.path != "/team")
+          this.$router.push("/home");
       });
     }
   },
