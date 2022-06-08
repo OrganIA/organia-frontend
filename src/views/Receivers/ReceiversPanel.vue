@@ -62,7 +62,8 @@
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info cypress-receiver-modal" @click="openModal(receiver)"></i>
+            <!-- <router-link class="block button is-info" to="/pdf"></router-link> -->
+            <i class="fas fa-info cypress-receiver-modal" @click="createPDF()"></i>
           </td>
         </tr>
       </tbody>
@@ -73,6 +74,7 @@
 
 <script>
 import PersonDetails from "@/components/PersonDetails.vue";
+import jsPDF from 'jspdf'
 
 export default {
   components: { PersonDetails },
@@ -93,6 +95,12 @@ export default {
     this.getAllReceivers();
   },
   methods: {
+    createPDF () {
+      let pdfName = 'test';
+      var doc = new jsPDF();
+      doc.text("Hello World", 10, 10);
+      doc.save(pdfName + '.pdf');
+    },
     getAllReceivers() {
       this.$http
         .get("/listings/receivers")
