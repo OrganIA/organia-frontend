@@ -41,7 +41,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="donor in donors" :key="donor">
+        <!-- eslint-disable-next-line no-unused-vars -->
+        <tr v-for="(donor, index) in donors" :key="donor">
           <td>{{ donor.person.first_name }}</td>
           <td>{{ donor.person.last_name }}</td>
           <td>{{ donor.person.birthday }}</td>
@@ -60,17 +61,35 @@
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info cypress-donor-modal" @click="openModal(donor)"></i>
+            <i class="fas fa-info cypress-donor-modal" @click="createPDF(index)"></i>
           </td>
         </tr>
       </tbody>
     </table>
     <person-details v-if="showModal == true" :person="currentDonor" @closeModal="closeModal" class="details" />
   </div>
+  <div ref="content" data-html2canvas-ignore="true">
+    <div v-if="donors != undefined">
+      <h1>Bilan d'informations Receveur</h1>
+      <p>Prénom: {{donors[this.index].person.first_name}} </p>
+      <p>Nom de famille: {{donors[index].person.last_name}}</p>
+      <p>Date de naissance: {{donors[index].person.birthday}}</p>
+      <p>Sexe: {{donors[index].person.gender}}</p>
+      <p>Type sanguin (ABO): {{donors[index].person.blood_type}}</p>
+      <p>Organe: {{donors[index].organ}}</p>
+      <p>Nombre de tumeurs: {{donors[index].tumors_number}}</p>
+      <p>Dialysé: {{donors[index].isDialyse}}</p>
+      <p>Retransplantation: {{donors[index].isRetransplantation}}</p>
+      <p>Date de début de dialyse: {{donors[index].startDateDialyse}}</p>
+      <p>Date de fin de dialyse: {{donors[index].endDateDialyse}}</p>
+      <p>Arrivée: {{donors[index].person.created_at}}</p>
+      </div>
+  </div>
 </template>
 
 <script>
 import PersonDetails from "@/components/PersonDetails.vue";
+import jsPDF from 'jspdf'
 
 export default {
   components: { PersonDetails },
@@ -79,6 +98,7 @@ export default {
     return {
       donors: {},
       showModal: false,
+      index: 0,
       currentDonor: {},
       sortingOrder: true,
       sortingKey: "created_at",
@@ -91,6 +111,18 @@ export default {
     this.getAllDonors();
   },
   methods: {
+    createPDF(index) {
+      this.index = index
+      console.log(this.donors[index].person.first_name)
+      let pdfName = 'test';
+      const doc = new jsPDF();
+      /** WITHOUT CSS */
+      const contentHtml = this.$refs.content.innerHTML;
+      doc.fromHTML(contentHtml, 15, 15, {
+          width: 170
+        });
+      doc.save(pdfName + ".pdf");
+    },
     getAllDonors() {
       this.$http
         .get("/listings/donors", {
