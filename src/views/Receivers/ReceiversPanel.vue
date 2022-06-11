@@ -43,7 +43,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="receiver in receivers" :key="receiver">
+        <!-- eslint-disable-next-line no-unused-vars -->
+        <tr v-for="(receiver, index) in receivers" :key="receiver">
           <td>{{ receiver.person.first_name }}</td>
           <td>{{ receiver.person.last_name }}</td>
           <td>{{ receiver.person.birthday }}</td>
@@ -63,18 +64,34 @@
           </td>
           <td>
             <!-- <router-link class="block button is-info" to="/pdf"></router-link> -->
-            <i class="fas fa-info cypress-receiver-modal" @click="createPDF()"></i>
+            <i class="fas fa-info cypress-receiver-modal" @click="createPDF(index)"></i>
           </td>
         </tr>
       </tbody>
     </table>
     <person-details v-if="showModal == true" :person="currentReceiver" @closeModal="closeModal" class="details" />
   </div>
+  <div ref="content" data-html2canvas-ignore="true">
+    <h1>Bilan d'informations Receveur</h1>
+    <p>Prénom: {{receivers[this.index].person.first_name}} </p>
+    <p>Nom de famille: {{receivers[index].person.last_name}}</p>
+    <p>Date de naissance: {{receivers[index].person.birthday}}</p>
+    <p>Sexe: {{receivers[index].person.gender}}</p>
+    <p>Type sanguin (ABO): {{receivers[index].person.blood_type}}</p>
+    <p>Organe: {{receivers[index].organ}}</p>
+    <p>Nombre de tumeurs: {{receivers[index].tumors_number}}</p>
+    <p>Dialysé: {{receivers[index].isDialyse}}</p>
+    <p>Retransplantation: {{receivers[index].isRetransplantation}}</p>
+    <p>Date de début de dialyse: {{receivers[index].startDateDialyse}}</p>
+    <p>Date de fin de dialyse: {{receivers[index].endDateDialyse}}</p>
+    <p>Arrivée: {{receivers[index].person.created_at}}</p>
+  </div>
 </template>
 
 <script>
 import PersonDetails from "@/components/PersonDetails.vue";
 import jsPDF from 'jspdf'
+// import html2canvas from "html2canvas"
 
 export default {
   components: { PersonDetails },
@@ -82,6 +99,7 @@ export default {
   data() {
     return {
       receivers: {},
+      index: 0,
       showModal: false,
       currentReceiver: {},
       sortingOrder: true,
@@ -95,11 +113,17 @@ export default {
     this.getAllReceivers();
   },
   methods: {
-    createPDF () {
+    createPDF(index) {
+      this.index = index
+      console.log(this.receivers[index].person.first_name)
       let pdfName = 'test';
-      var doc = new jsPDF();
-      doc.text("Hello World", 10, 10);
-      doc.save(pdfName + '.pdf');
+      const doc = new jsPDF();
+      /** WITHOUT CSS */
+      const contentHtml = this.$refs.content.innerHTML;
+      doc.fromHTML(contentHtml, 15, 15, {
+          width: 170
+        });
+      doc.save(pdfName + ".pdf");
     },
     getAllReceivers() {
       this.$http
