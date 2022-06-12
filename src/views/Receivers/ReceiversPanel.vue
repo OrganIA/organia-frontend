@@ -71,7 +71,7 @@
     </table>
     <person-details v-if="showModal == true" :person="currentReceiver" @closeModal="closeModal" class="details" />
   </div>
-  <div ref="content" data-html2canvas-ignore="true">
+  <div ref="content" data-html2canvas-ignore="true" hidden>
     <h1>Bilan d'informations Receveur</h1>
     <p>Prénom: {{receivers[this.index].person.first_name}} </p>
     <p>Nom de famille: {{receivers[index].person.last_name}}</p>

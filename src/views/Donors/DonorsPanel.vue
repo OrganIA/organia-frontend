@@ -68,7 +68,7 @@
     </table>
     <person-details v-if="showModal == true" :person="currentDonor" @closeModal="closeModal" class="details" />
   </div>
-  <div ref="content" data-html2canvas-ignore="true">
+  <div ref="content" data-html2canvas-ignore="true" hidden>
     <div v-if="donors != undefined">
       <h1>Bilan d'informations Receveur</h1>
       <p>Prénom: {{donors[this.index].person.first_name}} </p>
