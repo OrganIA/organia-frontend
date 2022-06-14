@@ -131,3 +131,32 @@ export default {
 
 <style scoped>
 </style>
+
+<style scoped>
+
+.vignette-card {
+    position: relative;
+    left: 110%;
+    bottom: 100%;
+}
+
+.vignette-container {
+    position: relative;
+    top: 5px;
+    height: 130px;
+    width: 200px;
+    border-radius: 10px;
+    margin: 2%;
+    background: #3e8ed0;
+    border: none;
+    color: white;
+}
+
+.map {
+    height: 80%;
+    width: 50vw;
+    position: relative;
+    left: 10%;
+}
+
+</style>

@@ -8,7 +8,7 @@
         Nouvelle invitation
       </button>
     </div>
-    <div class="modal " v-bind:class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+    <div class="modal " v-bind:class="{ 'is-invisible': (state !== 'clicked'), 'is-': (state === 'clicked') }">
       <div class="modal-background"></div>
       <div class="modal-card invit-modale">
         <header class="modal-card-head">
@@ -64,4 +64,13 @@ export default {
 </script>
 
 <style scoped>
+
+.invit-block-padding {
+    height: 200px;
+}
+
+.invit-modale {
+    width: 50%;
+}
+
 </style>

@@ -110,4 +110,9 @@ export default {
 </script>
 
 <style scoped>
+
+.center-checkbox {
+    transform: translate(500%, 0px);
+}
+
 </style>
