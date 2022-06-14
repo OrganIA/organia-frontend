@@ -1,46 +1,9 @@
 <template>
-  <div class="window-container" :class="{ 'window-mobile': isDevice }">
-    <div class="modal" v-bind:class="{ 'is-invisible': (state !== 'newRoom'), 'is-active': (state === 'newRoom') }">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title is-3">Créer une nouvelle conversation</p>
-          <button class="delete" aria-label="close" @click="closeModal"></button>
-        </header>
-        <section class="modal-card-users">
-          <form @submit.prevent="createRoom">
-            <label class="label">Nom de la conversation</label>
-            <input class="input" type="text" placeholder="Nom de la conversation" v-model="newRoomName" required>
-            <div class="select is-multiple user-list">
-              <label class="label">Utilisateurs non ajoutés
-                <select multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
-                  <option v-for="user, index in usersNotAdded" :key="user.id" :value="user.id"
-                    @click="addUser(user, index)">{{ user.email }}</option>
-                </select>
-              </label>
-            </div>
-            <div class="select is-multiple user-list">
-              <label class="label">Utilisateurs ajoutés
-                <select multiple v-if="usersToAdd.length > 0" :size="usersToAdd.length">
-                  <option v-for="user in usersToAdd" :key="user.id" :value="user.id" @click="removeUser(user, index)">{{
-                      user.email
-                  }}</option>
-                </select>
-              </label>
-            </div>
-          </form>
-        </section>
-        <footer class="modal-card-foot">
-          <button @click="createRoom" class="button is-success">Sauvegarder</button>
-          <button class="button is-danger" @click="closeModal">
-            Annuler
-          </button>
-        </footer>
-      </div>
-    </div>
-
+  <div class="window-container">
+    <chat-create-modal-vue id="createRoomModal" :users="users" :currentUserId="currentUserId"
+      :class="{ 'is-invisible': (state !== 'newRoom'), 'is-active': (state === 'newRoom') }" @closeModal="closeModal" />
     <chat-window :text-messages="text_messages" :current-user-id="currentUserId" :rooms="rooms" :messages="messages"
-      @fetch-messages="getMessages" @add-room="addRoom" :show-files="false" :show-audio="false" :height="'800px'"
+      @fetch-messages="getMessages" @add-room="openModal" :show-files="false" :show-audio="false"
       :load-first-room="false" :loading-rooms="loadingRooms" :rooms-loaded="roomsLoaded"
       :messages-loaded="messagesLoaded" :show-new-messages-divider="false" />
   </div>
@@ -48,25 +11,23 @@
 
 <script>
 import ChatWindow from 'vue-advanced-chat'
+import ChatCreateModalVue from '@/components/ChatCreateModal.vue'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 
 export default {
   components: {
-    ChatWindow
+    ChatWindow,
+    ChatCreateModalVue,
   },
   emits: [],
   data() {
     return {
-      addNewRoom: false,
       rooms: [],
       messages: [],
       currentUserId: 0,
       latest_messages: [],
       users: [],
       state: "",
-      newRoomName: "",
-      usersNotAdded: [],
-      usersToAdd: [],
       loadingRooms: true,
       roomsLoaded: false,
       messagesLoaded: false,
@@ -81,7 +42,7 @@ export default {
       }
     }
   },
-  async mounted() {
+  async created() {
     await this.getMe()
     await this.getUsers()
     await this.getRooms()
@@ -209,66 +170,16 @@ export default {
         })
 
     },
-    addRoom() {
-      this.newRoomName = ""
+    openModal() {
       this.usersNotAdded = this.users.filter(user => user.id != this.currentUserId)
       this.usersToAdd = []
       this.state = "newRoom"
     },
-    closeModal() {
+    closeModal(refresh) {
       this.state = ""
-    },
-    async addUser(user, index) {
-      this.usersNotAdded.splice(index, 1)
-      this.usersToAdd.push(user)
-    },
-    async removeUser(user, index) {
-      this.usersToAdd.splice(index, 1)
-      this.usersNotAdded.push(user)
-    },
-    createRoom() {
-      if (this.newRoomName == "") {
-        this.$toast.error(
-          "Erreur: un nom est requis"
-        );
-        return
-      }
-      else if (this.usersToAdd.length == 0) {
-        this.$toast.error(
-          "Erreur: vous n'avez ajouté aucun utilisateur a la conversation"
-        );
-        return
-      }
-      const users = {
-        users_ids: [],
-      };
-      users.users_ids.push({
-        user_id: this.currentUserId,
-      });
-      this.usersToAdd.forEach((user) => {
-        users.users_ids.push({
-          user_id: user.id,
-        });
-      });
-      this.$http
-        .post("/chats", {
-          users_ids: users.users_ids,
-          chat_name: this.newRoomName,
-          creator_id: this.currentUserId,
-        })
-        .then(() => {
-          this.$toast.success("Création réussie!");
-          setTimeout(this.$toast.clear, 3000);
-          this.refreshChatList()
-          this.closeModal()
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
+      if (refresh)
+        this.refreshChatList()
+
     },
     async refreshChatList() {
       this.rooms = []
@@ -278,9 +189,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.user-list {
-  margin: 10px
-}
-</style>
