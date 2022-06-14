@@ -65,21 +65,130 @@
         </tr>
       </tbody>
     </table>
-    <person-details v-if="showModal == true" :person="currentDonor" @closeModal="closeModal" class="details" />
+    <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+      <div class="modal-background">
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title is-3">Informations du donneur</p>
+            <button class="delete" aria-label="close" @click="closeModal"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="container">
+              <div class="columns">
+                <div class="column is-half">
+                  <button class="button is-medium is-fullwidth elements">Nom de Famille</button>
+                  <button class="button is-link is-light contents">{{ currentPerson.last_name }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Prénom</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.first_name }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Âge</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.age }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de naissance</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.birthday }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Genre</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.gender }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Groupe Sanguin</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.blood_type }}</button>
+                </div>
+              </div>
+              <div v-if="currentPerson.description != null">
+                <p class="button is-medium is-fullwidth elements">Description</p>
+                <button class="button is-light contents">{{
+                    currentPerson.description
+                }}</button>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de création</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.created_at }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
+                  <button v-if="currentPerson.updated_at != null" class="button is-link is-light contents">{{
+                      currentPerson.updated_at
+                  }}</button>
+                  <button v-else class="button is-link is-light contents">Aucune modification effectuée.</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Organe</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.organ }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Nombres de tumeurs</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.tumors_number }}</button>
+                </div>
+              </div>
+              <div class="column is-half">
+                <p class="button is-medium is-fullwidth elements">Le patient est sous dialyse ?</p>
+                <button v-if="currentPerson.isDialyse == FALSE" class="button is-link is-light contents">{{
+                    NON
+                }}</button>
+                <button v-else class="button is-link is-light contents">OUI</button>
+              </div>
+              <div class="column is-half">
+                <p class="button is-medium is-fullwidth elements">A-t-il effectué une retransplantation ?</p>
+                <button v-if="currentPerson.isRetransplantation == FALSE" class="button is-link is-light contents">{{
+                    NON
+                }}</button>
+                <button v-else class="button is-link is-light contents">OUI</button>
+              </div>
+              <div v-if="currentPerson.startDateDialyse != null">
+                <p class="button is-medium is-fullwidth elements">Date de début de dialyse</p>
+                <button class="button is-light contents">{{
+                    currentPerson.startDateDialyse
+                }}</button>
+              </div>
+              <div v-if="currentPerson.EndDateDialyse != null">
+                <p class="button is-medium is-fullwidth elements">Date de fin de dialyse</p>
+                <button class="button is-light contents">{{
+                    currentPerson.EndDateDialyse
+                }}</button>
+              </div>
+              <div v-if="currentPerson.ReRegistrationDate != null">
+                <p class="button is-medium is-fullwidth elements">Date d'admission</p>
+                <button class="button is-light contents">{{
+                    currentPerson.ReRegistrationDate
+                }}</button>
+              </div>
+              <div v-if="currentPerson.notes != null">
+                <p class="button is-medium is-fullwidth elements">Notes</p>
+                <button class="button is-light contents">{{
+                    currentPerson.notes
+                }}</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import PersonDetails from "@/components/PersonDetails.vue";
 
 export default {
-  components: { PersonDetails },
   name: "donors-panel",
   data() {
     return {
       donors: {},
       showModal: false,
       currentDonor: {},
+      currentPerson: {},
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "first_name",
@@ -112,16 +221,15 @@ export default {
         });
     },
     openModal(donor) {
-      if (!this.showModal) {
-        this.showModal = true;
-        this.currentDonor = donor;
-        document.getElementById("bodiv").style.display = "initial";
-      }
+      this.currentDonor = donor
+      this.currentPerson = donor.person
+      console.log(donor)
+      this.state = "clicked"
     },
     closeModal() {
-      this.showModal = false;
-      this.currentDonor = {};
-      document.getElementById("bodiv").style.display = "none";
+      this.currentDonor = false;
+      this.currentPerson = {};
+      this.state = ""
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
