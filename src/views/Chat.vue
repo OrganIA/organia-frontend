@@ -5,7 +5,8 @@
     <chat-window :text-messages="text_messages" :current-user-id="currentUserId" :rooms="rooms" :messages="messages"
       @fetch-messages="getMessages" @add-room="openModal" :show-files="false" :show-audio="false"
       :load-first-room="false" :loading-rooms="loadingRooms" :rooms-loaded="roomsLoaded"
-      :messages-loaded="messagesLoaded" :show-new-messages-divider="false" />
+      :messages-loaded="messagesLoaded" :show-new-messages-divider="false" :menu-actions="menu_actions"
+      @menu-action-handler="menuActionHandler" />
   </div>
 </template>
 
@@ -39,7 +40,13 @@ export default {
         CONVERSATION_STARTED: 'La conversation a commencée le :',
         TYPE_MESSAGE: 'Tapez votre message',
         SEARCH: 'Rechercher',
-      }
+      },
+      menu_actions: [
+        {
+          name: 'infos',
+          title: 'Informations'
+        },
+      ],
     }
   },
   async created() {
@@ -71,7 +78,8 @@ export default {
             chats.push({
               roomId: chat.chat_id,
               roomName: chat.chat_name,
-              users: users
+              users: users,
+              creatorId: chat.creator_id
             })
           });
           this.rooms = JSON.parse(JSON.stringify(chats));
@@ -110,6 +118,27 @@ export default {
       return users
     },
     async getMessages(chat) {
+      console.log(chat)
+      console.log(this.currentUserId)
+      if (chat.room.creatorId == this.currentUserId) {
+        this.menu_actions = [
+          {
+            name: 'infos',
+            title: 'Informations'
+          },
+          {
+            name: 'edit',
+            title: 'Éditer'
+          },
+        ]
+      } else {
+        this.menu_actions = [
+          {
+            name: 'infos',
+            title: 'Informations'
+          },
+        ]
+      }
       this.messagesLoaded = false
       this.messages = []
       await this.$http
@@ -185,7 +214,15 @@ export default {
       this.rooms = []
       await this.getRooms()
       await this.getLatestMessages()
-    }
+    },
+    menuActionHandler({ action, roomId }) {
+      switch (action.name) {
+        case 'infos':
+          return this.showinfos(roomId)
+        case 'edit':
+          return this.showEdit(roomId)
+      }
+    },
   },
 }
 </script>
