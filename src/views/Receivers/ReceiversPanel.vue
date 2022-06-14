@@ -67,21 +67,82 @@
         </tr>
       </tbody>
     </table>
-    <person-details v-if="showModal == true" :person="currentReceiver" @closeModal="closeModal" class="details" />
+    <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+      <div class="modal-background">
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title is-3">Informations du receveur</p>
+            <button class="delete" aria-label="close" @click="closeModal"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="container">
+              <div class="columns">
+                <div class="column is-half">
+                  <button class="button is-medium is-fullwidth elements">Nom</button>
+                  <button class="button is-link is-light contents">{{ currentPerson.last_name }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Prénom</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.first_name }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Âge</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.age }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de naissance</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.birthday }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Genre</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.gender }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Groupe Sanguin</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.blood_type }}</button>
+                </div>
+              </div>
+              <p class="button is-medium is-fullwidth elements">Description</p>
+              <button v-if="currentPerson.description != null" class="button is-light contents">{{
+                  currentPerson.description
+              }}</button>
+              <button v-else class="button is-light contents">Pas de description fournie.</button>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de création</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.created_at }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
+                  <button v-if="currentPerson.updated_at != null" class="button is-link is-light contents">{{
+                      currentPerson.updated_at
+                  }}</button>
+                  <button v-else class="button is-link is-light contents">Aucune modification effectuée.</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import PersonDetails from "@/components/PersonDetails.vue";
 
 export default {
-  components: { PersonDetails },
   name: "receivers-panel",
   data() {
     return {
+      state: "",
       receivers: {},
       showModal: false,
       currentReceiver: {},
+      currentPerson: {},
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "first_name",
@@ -112,16 +173,15 @@ export default {
         });
     },
     openModal(receiver) {
-      if (!this.showModal) {
-        this.showModal = true;
-        this.currentReceiver = receiver;
-        document.getElementById("bodiv").style.display = "initial";
-      }
+      this.currentReceiver = receiver
+      this.currentPerson = receiver.person
+      console.log(receiver)
+      this.state = "clicked"
     },
     closeModal() {
-      this.showModal = false;
-      this.currentReceiver = {};
-      document.getElementById("bodiv").style.display = "none";
+      this.currentReceiver = {}
+      this.currentPerson = {}
+      this.state = ""
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -206,3 +266,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.elements {
+  margin: 5px;
+}
+
+.contents {
+  margin: 10px;
+  margin-top: 0px;
+}
+</style>
