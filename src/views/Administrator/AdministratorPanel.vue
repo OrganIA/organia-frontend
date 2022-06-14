@@ -27,26 +27,26 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user" v-bind:class="{ 'is-selected': user.id === $data.user.id }">
-          <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+        <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id }">
+          <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
             {{ user.id }}
           </td>
-          <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+          <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
             {{ user.person ? user.person.first_name : "-" }}
           </td>
-          <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+          <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
             {{ user.person ? user.person.last_name : "-" }}
           </td>
-          <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+          <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
             {{ user.email }}
           </td>
-          <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+          <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
             {{ user.created_at }}
           </td>
-          <td v-on:click="loadSelectedUser(user.id)" v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+          <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
             {{ user.updated_at }}
           </td>
-          <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+          <td :class="{ 'selected-element': user.id === $data.user.id }">
             <router-link :to="`/administrator/edit/user/${user.id}`" class="button is-primary">
               <i class="fas fa-edit"></i>
             </router-link>
@@ -54,12 +54,12 @@
         </tr>
       </tbody>
     </table>
-    <div class="modal" v-bind:class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+    <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title is-3">Informations de l'utilisateur</p>
-          <button class="delete" aria-label="close" v-on:click="loadSelectedUser(this.user.id)"></button>
+          <button class="delete" aria-label="close" @click="loadSelectedUser(this.user.id)"></button>
         </header>
         <section class="modal-card-body">
           <div class="row mt-4">
@@ -69,33 +69,33 @@
           </div>
           <div class="row mt-4">
             <div class="button is-light mx-auto role-btn"
-              v-bind:class="{ 'is-primary': this.role.can_manage_users, 'is-danger': !this.role.can_manage_users }">
+              :class="{ 'is-primary': this.role.can_manage_users, 'is-danger': !this.role.can_manage_users }">
               Peut gérer les utilisateurs
             </div>
             <div class="button is-light mx-auto role-btn"
-              v-bind:class="{ 'is-primary': this.role.can_manage_persons, 'is-danger': !this.role.can_manage_persons }">
+              :class="{ 'is-primary': this.role.can_manage_persons, 'is-danger': !this.role.can_manage_persons }">
               Peut gérer les patients
             </div>
           </div>
           <div class="row mt-4">
             <div class="button is-light mx-auto role-btn"
-              v-bind:class="{ 'is-primary': this.role.can_manage_roles, 'is-danger': !this.role.can_manage_roles }">
+              :class="{ 'is-primary': this.role.can_manage_roles, 'is-danger': !this.role.can_manage_roles }">
               Peut gérer les rôles
             </div>
             <div class="button is-light mx-auto role-btn"
-              v-bind:class="{ 'is-primary': this.role.can_manage_hospitals, 'is-danger': !this.role.can_manage_hospitals }">
+              :class="{ 'is-primary': this.role.can_manage_hospitals, 'is-danger': !this.role.can_manage_hospitals }">
               Peut gérer les hôpitaux
             </div>
           </div>
           <div class="row mt-4">
             <div class="button is-light mx-auto role-btn"
-              v-bind:class="{ 'is-primary': this.role.can_invite, 'is-danger': !this.role.can_invite }">
+              :class="{ 'is-primary': this.role.can_invite, 'is-danger': !this.role.can_invite }">
               Peut créer des invitations
             </div>
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success" v-on:click="loadSelectedUser(this.user.id)">Sauvegarder</button>
+          <button class="button is-success" @click="loadSelectedUser(this.user.id)">Sauvegarder</button>
         </footer>
       </div>
     </div>
