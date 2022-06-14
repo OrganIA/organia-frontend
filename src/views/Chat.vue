@@ -7,10 +7,10 @@
           <p class="modal-card-title is-3">Créer une nouvelle conversation</p>
           <button class="delete" aria-label="close" @click="closeModal"></button>
         </header>
-        <section class="modal-card-body">
+        <section class="modal-card-users">
           <form @submit.prevent="createRoom">
             <label class="label">Nom de la conversation</label>
-            <input class="input" type="text" placeholder="Nom de la conversation" required>
+            <input class="input" type="text" placeholder="Nom de la conversation" v-model="newRoomName" required>
             <div class="select is-multiple user-list">
               <label class="label">Utilisateurs non ajoutés
                 <select multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
@@ -31,7 +31,7 @@
           </form>
         </section>
         <footer class="modal-card-foot">
-          <button type="submit" class="button is-success">Sauvegarder</button>
+          <button @click="createRoom" class="button is-success">Sauvegarder</button>
           <button class="button is-danger" @click="closeModal">
             Annuler
           </button>
@@ -39,8 +39,10 @@
       </div>
     </div>
 
-    <chat-window :current-user-id="currentUserId" :rooms="rooms" :messages="messages" @fetch-messages="getMessages"
-      @add-room="addRoom" :show-files="false" />
+    <chat-window :text-messages="text_messages" :current-user-id="currentUserId" :rooms="rooms" :messages="messages"
+      @fetch-messages="getMessages" @add-room="addRoom" :show-files="false" :show-audio="false" :height="'800px'"
+      :load-first-room="false" :loading-rooms="loadingRooms" :rooms-loaded="roomsLoaded"
+      :messages-loaded="messagesLoaded" :show-new-messages-divider="false" />
   </div>
 </template>
 
@@ -65,12 +67,25 @@ export default {
       newRoomName: "",
       usersNotAdded: [],
       usersToAdd: [],
+      loadingRooms: true,
+      roomsLoaded: false,
+      messagesLoaded: false,
+      text_messages: {
+        ROOMS_EMPTY: 'Aucune conversation',
+        ROOM_EMPTY: 'Aucune conversation sélectionnée',
+        NEW_MESSAGES: 'Nouveaux messages',
+        MESSAGES_EMPTY: 'Aucun message',
+        CONVERSATION_STARTED: 'La conversation a commencée le :',
+        TYPE_MESSAGE: 'Tapez votre message',
+        SEARCH: 'Rechercher',
+      }
     }
   },
   async mounted() {
     await this.getMe()
     await this.getUsers()
     await this.getRooms()
+    await this.getLatestMessages()
   },
   methods: {
     async getMe() {
@@ -84,6 +99,8 @@ export default {
         });
     },
     async getRooms() {
+      this.loadingRooms = true
+      this.roomsLoaded = false
       await this.$http
         .get("/chats")
         .then((response) => {
@@ -97,6 +114,8 @@ export default {
             })
           });
           this.rooms = JSON.parse(JSON.stringify(chats));
+          this.loadingRooms = false
+          this.roomsLoaded = true
         })
         .catch((error) => {
           this.$toast.error(
@@ -129,8 +148,10 @@ export default {
       })
       return users
     },
-    getMessages(chat) {
-      this.$http
+    async getMessages(chat) {
+      this.messagesLoaded = false
+      this.messages = []
+      await this.$http
         .get(`/chats/${chat.room.roomId}/messages`)
         .then((response) => {
           const messages = []
@@ -144,12 +165,12 @@ export default {
               _id: message.id,
               content: message.content,
               senderId: message.sender_id,
-              date: date.toString(),
               timestamp: date.toLocaleTimeString(),
               username: this.users.find(user => user.id == message.sender_id).email,
             })
           })
           this.messages = messages
+          this.messagesLoaded = true
         })
         .catch((error) => {
           console.log(error);
@@ -158,6 +179,35 @@ export default {
           );
           setTimeout(this.$toast.clear, 3000);
         });
+    },
+    async getLatestMessages() {
+      const rooms = JSON.parse(JSON.stringify(this.rooms))
+      await this.$http
+        .get("/chats/messages/latest")
+        .then((response) => {
+          response.data.forEach(message => {
+            const tmp_date = Date.parse(message.created_at)
+            const date = new Date()
+            date.setUTCSeconds(tmp_date)
+            rooms.find(room => room.roomId == message.chat_id).lastMessage = {
+              disableActions: true,
+              disableReactions: true,
+              _id: message.id,
+              content: message.content,
+              senderId: message.sender_id,
+              timestamp: date.toLocaleTimeString(),
+              username: this.users.find(user => user.id == message.sender_id).email,
+            }
+          })
+          this.rooms = rooms
+        })
+        .catch((error) => {
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        })
+
     },
     addRoom() {
       this.newRoomName = ""
@@ -175,6 +225,55 @@ export default {
     async removeUser(user, index) {
       this.usersToAdd.splice(index, 1)
       this.usersNotAdded.push(user)
+    },
+    createRoom() {
+      if (this.newRoomName == "") {
+        this.$toast.error(
+          "Erreur: un nom est requis"
+        );
+        return
+      }
+      else if (this.usersToAdd.length == 0) {
+        this.$toast.error(
+          "Erreur: vous n'avez ajouté aucun utilisateur a la conversation"
+        );
+        return
+      }
+      const users = {
+        users_ids: [],
+      };
+      users.users_ids.push({
+        user_id: this.currentUserId,
+      });
+      this.usersToAdd.forEach((user) => {
+        users.users_ids.push({
+          user_id: user.id,
+        });
+      });
+      this.$http
+        .post("/chats", {
+          users_ids: users.users_ids,
+          chat_name: this.newRoomName,
+          creator_id: this.currentUserId,
+        })
+        .then(() => {
+          this.$toast.success("Création réussie!");
+          setTimeout(this.$toast.clear, 3000);
+          this.refreshChatList()
+          this.closeModal()
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
+    async refreshChatList() {
+      this.rooms = []
+      await this.getRooms()
+      await this.getLatestMessages()
     }
   },
 }
