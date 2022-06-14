@@ -127,13 +127,7 @@
               </div>
 
               <div v-if="currentPerson.DateTransplantation != null">
-                <p class="button is-medium is-fullwidth elements">Date de transplantation</p>
-                <button class="button is-light contents">{{
-                    currentPerson.DateTransplantation
-                }}</button>
-              </div>
-              <div v-if="currentPerson.DateTransplantation != null">
-                <p class="button is-medium is-fullwidth elements">Date de transplantation</p>
+                <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
                     currentPerson.DateTransplantation
                 }}</button>
