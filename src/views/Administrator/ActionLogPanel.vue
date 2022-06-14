@@ -11,7 +11,6 @@
 <script>
 export default {
   name: "action-log-panel",
-  emits: ["login"],
   created() {
     this.getActions();
     setInterval(this.getActions, 2000);

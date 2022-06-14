@@ -106,7 +106,6 @@
 <script>
 export default {
   name: "administrator-panel",
-  emits: ["login"],
   data() {
 
     return {
