@@ -6,7 +6,7 @@
                 <p class="modal-card-title is-3">Créer une nouvelle conversation</p>
                 <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
-            <section class="modal-card-users">
+            <section class="modal-card-body">
                 <form @submit.prevent="createRoom">
                     <label class="label">Nom de la conversation</label>
                     <input class="input" type="text" placeholder="Nom de la conversation" v-model="newRoomName"
@@ -43,7 +43,7 @@
 
 <script>
 export default {
-    name: "ChateCreateModal",
+    name: "ChatCreateModal",
     props: {
         users: {
             type: Array,
