@@ -3,11 +3,11 @@
   <h1>Bienvenue sur la plateforme ORGANIA</h1>
   <carousel :autoplay="4000" :wrap-around="true" :items-to-show="1.5">
     <Slide v-for="content, index in contents" :key="content.id">
-      <div class="carousel__item">
-        <div class="carousel_content">
+      <div class="carousel-item">
+        <div class="carousel-content">
           <p>{{ content.text }}</p>
           <p>{{ index.text }}</p>
-          <router-link :to="content.url" class="carousel__link">
+          <router-link :to="content.url" class="carousel-link">
             <span>En savoir plus</span>
           </router-link>
         </div>
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style scoped>
-.carousel__item {
+.carousel-item {
   min-height: 200px;
   width: 100%;
   background-color: #0f2c59;
@@ -61,27 +61,27 @@ export default {
   align-items: center;
 }
 
-.carousel__slide {
+.carousel-slide {
   padding: 10px;
 }
 
-.carousel__prev,
-.carousel__next {
+.carousel-prev,
+.carousel--next {
   box-sizing: content-box;
   border: 5px solid white;
 }
 
 
-.carousel__prev--in-active,
-.carousel__next--in-active {
+.carousel-prev--in-active,
+.carousel-next--in-active {
   display: none;
 }
 
-.carousel__content {
+.carousel-content {
   display: inline;
 }
 
-.carousel__link {
+.carousel-link {
   color: white;
 }
 </style>
