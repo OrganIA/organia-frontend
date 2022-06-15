@@ -3,6 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 const routes = [
     {path: "/landing", component: () => import("./views/LandingPage.vue")},
     {path: "/", component: () => import("./Home.vue")},
+    {path: "/home", component: () => import("./Home.vue")},
     {path: "/abouttheproject", component: () => import("./views/About/AboutProject.vue")},
     {path: "/receivers", component: () => import("./views/Receivers/ReceiversPanel.vue")},
     {path: "/receivers/add", component: () => import("./views/Receivers/NewReceiver.vue")},

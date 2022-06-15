@@ -50,7 +50,7 @@ export default {
             role: response.data,
           });
           this.$emit("login", true);
-          this.$router.push("/");
+          this.$router.push("/landing");
         })
         .catch((error) => {
           console.log(error.response.data.detail);

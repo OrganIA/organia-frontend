@@ -1,7 +1,7 @@
 <template>
   <PresentationNavbar></PresentationNavbar>
   <div class="wave">
-    <svg width="100%" height="200px" fill="none" version="1.1"
+    <svg width="100%" height="auto" fill="none" version="1.1"
          xmlns="http://www.w3.org/2000/svg">
       <path
           fill="white"
@@ -36,5 +36,60 @@ export default {
 </script>
 
 <style scoped>
+
+div.wave{
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  z-index: 99;
+}
+
+.wave svg{
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+#container {
+  position: relative;
+  background:  #0e2536;
+  height: 90vh;
+  width: auto;
+}
+
+
+.img-comp-1 {
+  position: relative;
+  float: right;
+  margin-right: 7%;
+  margin-top: 2%;
+  width: 20%;
+  height: auto;
+}
+
+.img-comp-2 {
+  position: relative;
+  float: left;
+  margin-left: 7%;
+  margin-top: 20%;
+  transform: scaleY(-1);
+  width: 20%;
+  height: auto;
+}
+
+.img-main {
+  position: absolute;
+  display: block;
+  margin-left: 25vw;
+  margin-top: 20vh;
+  resize: none;
+  width: 50%;
+  height: auto;
+}
+
+.main-img-container {
+  align-items: center;
+  width: 100%;
+}
 
 </style>

@@ -1,14 +1,11 @@
 <template>
-  <Home></Home>
   <router-view @login="handleLogin" />
 </template>
 
 <script>
-import Home from "./Home"
 
 export default {
   name: "App",
-  components: { Home },
   methods: {
     getRole(data) {
       this.$http
