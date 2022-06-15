@@ -81,3 +81,51 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+.nav-text {
+    margin-left: 10px;
+}
+
+#navlinks {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 20px;
+    margin-top: 50%;
+    font-size: var(--font-big);
+}
+
+#navbar header {
+    background-color: var(--logo-dark-blue);
+    border-radius: 30px;
+    color: white;
+    padding: 0 0.5em;
+    text-align: center;
+    align-content: center;
+    width: 80%;
+    margin: 20px auto auto;
+}
+
+#navbar header a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#navbar {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+#navbar header img {
+    max-height: 180px;
+    max-width: 200px;
+}
+
+.reset-bg {
+    background-color: white;
+}
+
+</style>

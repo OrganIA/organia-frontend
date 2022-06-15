@@ -480,4 +480,94 @@ export default {
 </script>
 
 <style scoped>
+
+.align-middle {
+    vertical-align: middle;
+}
+
+.not-resizable {
+    resize: none;
+}
+
+.titre-about {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+.linkedin-saber {
+    position: absolute;
+    top: 350px;
+    left: 110px;
+    background: #071f49;
+}
+
+.list-tl {
+    list-style: none;
+    padding: 0;
+}
+
+.container-timeline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    background: linear-gradient(45deg, var(--dark-blue), var(--logo-light-blue));
+    padding: 3rem 0;
+}
+
+.wrapper {
+    background: #eaf6ff;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.timeline-title {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.sessions {
+    margin-top: 2rem;
+    border-radius: 12px;
+    position: relative;
+}
+
+li.tl-li {
+    padding-bottom: 2rem;
+    border-left: 3px solid #abaaed;
+    position: relative;
+    padding-left: 20px;
+    margin-left: 10px;
+}
+
+li.tl-li:last-child {
+    padding-bottom: 0;
+}
+
+li.tl-li:before {
+    content: '';
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1px solid #4e5ed3;
+    box-shadow: 3px 3px 0px #bab5f8;
+    box-shadow: 3px 3px 0px #bab5f8;
+    border-radius: 50%;
+    position: absolute;
+    left: -20px;
+    top: 25px;
+}
+
+.time {
+    color: #2a2839;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-top: 0rem;
+}
+
+.titre-about {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
 </style>

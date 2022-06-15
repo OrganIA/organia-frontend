@@ -319,3 +319,13 @@ export default {
   name: "team-description",
 };
 </script>
+
+<style scoped>
+
+.titre-team {
+    margin-left: 15%;
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+</style>
