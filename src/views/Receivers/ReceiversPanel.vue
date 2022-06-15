@@ -159,41 +159,43 @@
               <div class="columns">
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Organe</p>
-                  <button class="button is-link is-light contents">{{ currentPerson.organ }}</button>
+                  <button class="button is-link is-light contents">{{ currentReceiver.organ }}</button>
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Nombres de tumeurs</p>
-                  <button class="button is-link is-light contents">{{ currentPerson.tumors_number }}</button>
+                  <button class="button is-link is-light contents">{{ currentReceiver.tumors_number }}</button>
                 </div>
               </div>
-              <div class="column is-half">
-                <p class="button is-medium is-fullwidth elements">Le patient est sous dialyse ?</p>
-                <button v-if="currentPerson.isDialyse == FALSE" class="button is-link is-light contents">{{
-                    NON
-                }}</button>
-                <button v-else class="button is-link is-light contents">OUI</button>
-              </div>
-              <div class="column is-half">
-                <p class="button is-medium is-fullwidth elements">A-t-il effectué une retransplantation ?</p>
-                <button v-if="currentPerson.isRetransplantation == FALSE" class="button is-link is-light contents">{{
-                    NON
-                }}</button>
-                <button v-else class="button is-link is-light contents">OUI</button>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium elements">Le patient est sous dialyse ?</p>
+                  <button v-if="currentPerson.isDialyse" class="button is-link is-light contents">{{
+                      Oui
+                  }}</button>
+                  <button v-else class="button is-link is-light contents">Non</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium elements is-size-6">A-t-il effectué une retransplantation ?</p>
+                  <button v-if="currentPerson.isRetransplantation" class="button is-link is-light contents ">{{
+                      Oui
+                  }}</button>
+                  <button v-else class="button is-link is-light contents">Non</button>
+                </div>
               </div>
               <div v-if="currentPerson.startDateDialyse != null">
-                <p class="button is-medium is-fullwidth elements">Date de début de dialyse</p>
+                <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
                     currentPerson.startDateDialyse
                 }}</button>
               </div>
               <div v-if="currentPerson.EndDateDialyse != null">
-                <p class="button is-medium is-fullwidth elements">Date de fin de dialyse</p>
+                <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
                     currentPerson.EndDateDialyse
                 }}</button>
               </div>
               <div v-if="currentPerson.notes != null">
-                <p class="button is-medium is-fullwidth elements">Notes</p>
+                <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
                     currentPerson.notes
                 }}</button>
