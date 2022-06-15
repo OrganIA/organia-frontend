@@ -14,7 +14,7 @@
                 <div class="select is-multiple user-list">
                     <label class="label">Utilisateurs ajoutés</label>
                     <select multiple v-if="users.length > 0" :size="users.length">
-                        <option v-for="user in users" :key="user.id" :value="user.id">{{ user.email }}</option>
+                        <option v-for="user in users" :key="user._id" :value="user._id">{{ user.username }}</option>
                     </select>
                 </div>
             </section>

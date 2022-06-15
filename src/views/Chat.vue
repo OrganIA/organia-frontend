@@ -1,9 +1,13 @@
 <template>
   <div class="window-container">
-    <chat-create-modal-vue :users="users" :currentUserId="currentUserId"
+    <chat-create-modal :users="users" :currentUserId="currentUserId"
       :class="{ 'is-invisible': (state !== 'newRoom'), 'is-active': (state === 'newRoom') }" @closeModal="closeModal" />
-    <chat-infos-modal-vue :users="users" :room="currentRoom"
+    <chat-infos-modal :users="currentRoom.users" :room="currentRoom"
       :class="{ 'is-invisible': (state !== 'roomInfos'), 'is-active': (state === 'roomInfos') }"
+      @closeModal="closeModal" />
+    <chat-edit-modal :users="users" :currentUserId="currentUserId" :usersAdded="currentRoom.users"
+      :roomName="currentRoom.roomName" :roomId="currentRoom.roomId"
+      :class="{ 'is-invisible': (state !== 'editRoom'), 'is-active': (state === 'editRoom') }"
       @closeModal="closeModal" />
     <chat-window :text-messages="text_messages" :current-user-id="currentUserId" :rooms="rooms" :messages="messages"
       @fetch-messages="getMessages" @add-room="openCreateModal" :show-files="false" :show-audio="false"
@@ -15,17 +19,18 @@
 
 <script>
 import ChatWindow from 'vue-advanced-chat'
-import ChatCreateModalVue from '@/components/ChatModals/ChatCreateModal.vue'
-import ChatInfosModalVue from '@/components/ChatModals/ChatInfosModal.vue'
+import ChatCreateModal from '@/components/ChatModals/ChatCreateModal.vue'
+import ChatInfosModal from '@/components/ChatModals/ChatInfosModal.vue'
+import ChatEditModal from '@/components/ChatModals/ChatEditModal.vue'
 import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 
 export default {
   components: {
     ChatWindow,
-    ChatCreateModalVue,
-    ChatInfosModalVue,
+    ChatCreateModal,
+    ChatInfosModal,
+    ChatEditModal,
   },
-  emits: [],
   data() {
     return {
       rooms: [],
@@ -80,7 +85,7 @@ export default {
         .then((response) => {
           const chats = [];
           response.data.forEach(chat => {
-            const creator = this.users.filter(user => user.id == chat.creator_id)[0]
+            const creator = this.users.find(user => user.id == chat.creator_id)
             const users = this.getUsersOfChat(chat.users_ids)
             chats.push({
               roomId: chat.chat_id,
@@ -119,7 +124,7 @@ export default {
       users_ids.forEach((user) => {
         users.push({
           _id: user,
-          username: this.users.filter(elem => elem.id == user)[0].email
+          username: this.users.find(elem => elem.id == user).email
         })
       })
       return users
@@ -205,11 +210,19 @@ export default {
         })
 
     },
+    async refreshChatList() {
+      this.rooms = []
+      await this.getRooms()
+      await this.getLatestMessages()
+    },
     openCreateModal() {
       this.state = "newRoom"
     },
     openInfosModal() {
       this.state = "roomInfos"
+    },
+    openEditModal() {
+      this.state = "editRoom"
     },
     closeModal(refresh) {
       this.state = ""
@@ -217,17 +230,12 @@ export default {
         this.refreshChatList()
 
     },
-    async refreshChatList() {
-      this.rooms = []
-      await this.getRooms()
-      await this.getLatestMessages()
-    },
-    menuActionHandler({ action, roomId }) {
+    menuActionHandler({ action }) {
       switch (action.name) {
         case 'infos':
           return this.openInfosModal()
         case 'edit':
-          return this.showEdit(roomId)
+          return this.openEditModal()
       }
     },
   },
