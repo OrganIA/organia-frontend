@@ -1,6 +1,6 @@
 
 <template>
-  <h1>Bienvenue sur la plateforme ORGANIA</h1>
+  <button class="button is-link is-light is-large is-responsive is-rounded is-focused">BIENVENUE SUR ORGANIA</button>
 </template>
 
 <script>
