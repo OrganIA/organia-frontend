@@ -1,6 +1,15 @@
 
 <template>
-  <button class="button is-link is-light is-large is-responsive is-rounded is-focused">BIENVENUE SUR ORGANIA</button>
+  <button class="button is-link is-light is-large is-responsive is-rounded is-focused">BIENVENUE SUR
+    ORGANIA</button><br><br>
+  <router-link class="block button is-info is-light button-style" to="/chat">
+    <i class="fas fa-envelope cypress-to-chats"></i>
+    <span class="nav-text">Chats</span>
+  </router-link>
+  <router-link class="block button is-info is-light button-style" to="/">
+    <i class="fas fa-user cypress-to-chats"></i>
+    <span class="nav-text">Compte</span>
+  </router-link>
 </template>
 
 <script>
@@ -24,4 +33,9 @@ export default {
 </script>
 
 <style scoped>
+.button-style {
+  height: 10em;
+  font-weight: bold;
+  font-size: 1.1em;
+}
 </style>
