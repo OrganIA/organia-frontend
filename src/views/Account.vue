@@ -1,5 +1,6 @@
 <template>
-    <h1>Mon compte</h1><br>
+    <button class="button is-link is-light is-large is-responsive is-rounded is-focused"><strong>MON
+            COMPTE</strong></button><br><br>
     <article class="message is-info">
         <div class="message-header">
             <p>Nom</p>
