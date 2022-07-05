@@ -12,10 +12,6 @@
     <span class="nav-text">Compte</span>
   </router-link>
   <p class="title is-5 is-spaced">Liste des prochains évènements</p><br>
-  <!-- <table class="
-        table
-        is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info
-      ">-->
   <table class="table is-striped is-fullwidth is-narrow is-hoverable">
     <thead>
       <tr>
