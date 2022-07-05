@@ -70,7 +70,6 @@ export default {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
-          console.log(response.data);
           response.data.forEach((element) => {
             element.date = moment(String(element.date)).format(
               "DD/MM/YYYY hh:mm"
