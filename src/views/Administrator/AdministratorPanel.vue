@@ -94,9 +94,6 @@
             </div>
           </div>
         </section>
-        <footer class="modal-card-foot">
-          <button class="button is-success" @click="loadSelectedUser(this.user.id)">Sauvegarder</button>
-        </footer>
       </div>
     </div>
   </div>
@@ -256,25 +253,23 @@ export default {
 </script>
 
 <style scoped>
-
 .main-container-admin-panel {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-top: 3%;
-    max-width: 90%;
-    margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: 3%;
+  max-width: 90%;
+  margin-left: 50px;
 }
 
 .icon-dropdown-correction {
-    position: relative;
-    margin-top: 12px;
-    margin-left: -30px;
-    margin-right: 40px;
+  position: relative;
+  margin-top: 12px;
+  margin-left: -30px;
+  margin-right: 40px;
 }
 
 .role-btn {
-    width: 15vw;
+  width: 15vw;
 }
-
 </style>
