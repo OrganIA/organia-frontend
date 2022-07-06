@@ -84,13 +84,13 @@ export default {
     watch: {
         usersAdded() {
             this.newRoomName = this.roomName
+            this.usersToAdd = []
             this.usersAdded.forEach(user => {
                 this.usersToAdd.push({
                     id: user._id,
                     email: user.username
                 })
             })
-            console.log(this.usersToAdd)
             this.usersNotAdded = this.users.filter(user => !this.usersToAdd.find(elem => elem.id == user.id))
         }
     },
@@ -168,7 +168,7 @@ export default {
                     );
                     setTimeout(this.$toast.clear, 3000);
                 });
-                this.$toast.success("Suppression en cour");
+            this.$toast.success("Suppression en cour");
         },
     },
 }

@@ -10,10 +10,10 @@
       :class="{ 'is-invisible': (state !== 'editRoom'), 'is-active': (state === 'editRoom') }"
       @closeModal="closeModal" />
     <chat-window :text-messages="text_messages" :current-user-id="currentUserId" :rooms="rooms" :messages="messages"
-      @fetch-messages="getMessages" @add-room="openCreateModal" :show-files="false" :show-audio="false"
+      @fetch-messages="getMessages" @add-room="openModal('newRoom')" :show-files="false" :show-audio="false"
       :load-first-room="false" :loading-rooms="loadingRooms" :rooms-loaded="roomsLoaded"
       :messages-loaded="messagesLoaded" :show-new-messages-divider="false" :menu-actions="menu_actions"
-      @menu-action-handler="menuActionHandler" />
+      @send-message="sendMessage" @menu-action-handler="menuActionHandler" />
   </div>
 </template>
 
@@ -43,6 +43,7 @@ export default {
       roomsLoaded: false,
       messagesLoaded: false,
       currentRoom: {},
+      websocket: null,
       text_messages: {
         ROOMS_EMPTY: 'Aucune conversation',
         ROOM_EMPTY: 'Aucune conversation sélectionnée',
@@ -180,6 +181,7 @@ export default {
           );
           setTimeout(this.$toast.clear, 3000);
         });
+      this.websocketSetup(chat.room.roomId)
     },
     async getLatestMessages() {
       const rooms = JSON.parse(JSON.stringify(this.rooms))
@@ -215,27 +217,69 @@ export default {
       await this.getRooms()
       await this.getLatestMessages()
     },
-    openCreateModal() {
-      this.state = "newRoom"
-    },
-    openInfosModal() {
-      this.state = "roomInfos"
-    },
-    openEditModal() {
-      this.state = "editRoom"
+    openModal(state) {
+      this.state = state
     },
     closeModal(refresh) {
       this.state = ""
       if (refresh)
         this.refreshChatList()
-
     },
     menuActionHandler({ action }) {
       switch (action.name) {
         case 'infos':
-          return this.openInfosModal()
+          return this.openModal("roomInfos")
         case 'edit':
-          return this.openEditModal()
+          return this.openModal("editRoom")
+      }
+    },
+    websocketSetup(chatId) {
+      if (this.websocket != null)
+        this.websocket.close();
+      this.websocket = new WebSocket(
+        `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${chatId}`
+      );
+      this.websocket.onopen = async () => {
+        this.websocket.send(
+          JSON.stringify({
+            event: "login",
+            token: `Bearer ${this.$cookies.get("token")}`,
+          })
+        );
+        this.websocket.onmessage = async (data) => {
+          let resp = JSON.parse(data.data);
+          if (resp.status != 200) {
+            this.$toast.error(resp.error);
+            this.websocket.close();
+          }
+          if (resp.event == "message_received" || resp.event == "message_sent") {
+            const tmp_date = Date.parse( resp.data.created_at)
+            const date = new Date()
+            date.setUTCSeconds(tmp_date)
+            this.messages.push({
+              disableActions: true,
+              disableReactions: true,
+              _id: resp.data.id,
+              content: resp.data.content,
+              senderId: resp.data.sender_id,
+              timestamp: date.toLocaleTimeString(),
+              username: this.users.find(user => user.id == resp.data.sender_id).email,
+            })
+          }
+        };
+      };
+    },
+    async sendMessage(params) {
+      if (this.websocket != null && this.websocket.readyState == WebSocket.OPEN) {
+        this.websocket.send(
+          JSON.stringify({
+            event: "send_message",
+            chat_id: params.roomId,
+            content: params.content,
+            sender_id: this.currentUserId,
+          })
+        );
+        this.message_to_send = "";
       }
     },
   },
