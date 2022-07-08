@@ -7,7 +7,7 @@
     <input class="form-control my-0 py-1" type="text" placeholder="Rerchercher" aria-label="Search" v-model="search" />
     <div class="ui cards" style="margin: 10px">
       <div class="card ui fluid" v-for="item in filteredHospitals" :key="item.id" style="margin: 0"
-        v-on:click="clickHospital">
+        @click="clickHospital">
         <div class="content">
           <div class="header">{{ item.name }}</div>
           <div class="meta">

@@ -44,7 +44,6 @@
 <script>
 export default {
   name: "role-panel",
-  emits: ["login"],
   data() {
     return {
       backup: {},
