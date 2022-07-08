@@ -12,6 +12,7 @@
 export default {
   name: "action-log-panel",
   emits: ["login"],
+
   created() {
     this.getActions();
     setInterval(this.getActions, 2000);
@@ -38,7 +39,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #actions-container {
   display: flex;
   flex-direction: column;

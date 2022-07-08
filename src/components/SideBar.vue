@@ -66,19 +66,30 @@
         </router-link>
       </nav>
 
+
+      <div id="events" tabindex="1" class="block button sidebar-btn">
+        <i class="fas fa-calendar-alt"></i>
+        <span class="nav-text">Évènements</span>
+        <i class="gg-chevron-down" aria-hidden="true"></i>
+      </div>
+
+      <nav class="events-menu">
+        <router-link class="block button sidebar-btn-dropdown" to="/eventcalendar">
+          <i class="fas fa-calendar cypress-to-calendar"></i>
+          <span class="nav-text">Calendrier d'evenements</span>
+        </router-link>
+        <router-link class="block button sidebar-btn-dropdown" to="/eventlist">
+          <i class="fas fa-list cypress-to-eventlist"></i>
+          <span class="nav-text">Liste d'evenements</span>
+        </router-link>
+      </nav>
+
       <router-link class="block button sidebar-btn" to="/invitations">
         <i class="fa fa-user-shield" aria-hidden="true"></i>
         <span class="nav-text">Invitations</span>
       </router-link>
 
-      <router-link class="block button sidebar-btn" to="/eventcalendar">
-        <i class="fas fa-calendar cypress-to-calendar"></i>
-        <span class="nav-text">Calendrier d'evenements</span>
-      </router-link>
-      <router-link class="block button sidebar-btn" to="/eventlist">
-        <i class="fas fa-list cypress-to-eventlist"></i>
-        <span class="nav-text">Liste d'evenements</span>
-      </router-link>
+
       <router-link class="block button sidebar-btn" to="/chat">
         <i class="fas fa-envelope cypress-to-chats"></i>
         <span class="nav-text">Chats</span>
@@ -279,6 +290,36 @@ export default {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
+
+
+
+#events:focus ~ .events-menu {
+  height: calc(var(--btnsize) * 2px);
+}
+
+.events-menu:hover {
+  height: calc(var(--btnsize) * 2px);
+}
+
+.events-menu {
+  width: 100%;
+  background-color: #EFF5FB;
+  margin: 0;
+  display: -ms-grid;
+  display: grid;
+  grid-template-rows: 1fr repeat(4, 0.5fr);
+  padding: 0;
+  list-style: none;
+  clear: both;
+  width: auto;
+  text-align: center;
+  height: 0px;
+  overflow: hidden;
+  transition: height .9s ease;
+  z-index: 120;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
 .gg-chevron-down {
   box-sizing: border-box;
   position: absolute;
@@ -308,8 +349,11 @@ export default {
   top: 2px;
 
 }
-*:focus {
+.sidebar-btn:focus {
   box-shadow: none;
+  outline: none;
+  border: none;
 }
+
 
 </style>

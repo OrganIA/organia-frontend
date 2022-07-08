@@ -25,7 +25,6 @@ const routes = [
     },
     {path: "/actions", component: () => import("./views/Administrator/ActionLogPanel.vue")},
     {path: "/administrator/role", component: () => import("./views/Roles/RolePanel.vue")},
-    {path: "/administrator/role/add", component: () => import("./views/Roles/NewRoles.vue")},
     {path: "/eventcalendar", component: () => import("./views/Events/EventCalendar.vue")},
     {path: "/eventlist", component: () => import("./views/Events/EventPanel.vue")},
     {path: "/eventlist/add", component: () => import("./views/Events/NewEvent.vue")},

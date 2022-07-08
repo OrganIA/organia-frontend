@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar base-navbar" role="navigation" aria-label="main navigation">
     <div>
-      <router-link to="/home" class="button is-danger return-btn is-large" v-bind:class="{ 'is-invisible': this.$route.path === '/home' }">Retour</router-link>
+      <router-link to="/home" class="button is-danger return-btn is-large" v-bind:class="{ 'is-invisible': this.$route.path === '/home' || '/'}">Retour</router-link>
     </div>
-    <div class="navbar-brand logo-placeholder"  v-bind:class="{ 'is-invisible-correction': this.$route.path === '/home' }">
+    <div class="navbar-brand logo-placeholder"  v-bind:class="{ 'is-invisible-correction': this.$route.path === '/home' || '/' }">
       <div class="navbar-item logo">
         <img src="https://cdn.discordapp.com/attachments/559512661717417986/843782837072297994/Asset_9.png"
              alt="logo" class="logo-img-align">
