@@ -22,7 +22,7 @@
         <br>
         <br>
         Pour d'accéder à la liste des receveurs il vous faudra d'abord vous connecter via le portail de connexion
-        (voir la partie <a v-on:click="updateValue('connexion')">Se connecter</a>),
+        (voir la partie <a @click="updateValue('connexion')">Se connecter</a>),
         étape obligatoire avant d'accéder aux informations
         de la plateforme.
         <br>
@@ -59,7 +59,7 @@
 
         Lorsque que vous cliquez sur le bouton d'ajout une nouvelle page devrait apparaître afin de vous laisser
         remplir certains champs d'informations tels que montré ci dessous, en cas de comportement non documenté dans
-        cette aide veuillez<a v-on:click="updateValue('support')"> contacter le support</a>
+        cette aide veuillez<a @click="updateValue('support')"> contacter le support</a>
         <br>
         <br>
       </div>

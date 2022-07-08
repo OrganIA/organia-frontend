@@ -13,7 +13,7 @@
         cliquant
         sur le bouton "Historique d'actions".
         Si vous ne voyez pas ce bouton où si vous n'avez tout simplement pas accès à ce panel, consultez la rubrique
-        <a v-on:click="updateValue('askRights')">Demander des droits supplémentaires</a>
+        <a @click="updateValue('askRights')">Demander des droits supplémentaires</a>
         <br>
         <br>
         Les journeaux se présentent comme ceci :

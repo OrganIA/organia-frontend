@@ -48,7 +48,6 @@ import ApplicationNavbar from "@/components/ApplicationNavbar";
 
 export default {
   name: "landing-page",
-  emits: ["login"],
   components: {
     //Carousel,
     //Slide,
