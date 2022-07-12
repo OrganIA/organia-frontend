@@ -44,7 +44,6 @@
 <script>
 export default {
   name: "role-panel",
-  emits: ["login"],
   data() {
     return {
       backup: {},
@@ -110,4 +109,9 @@ export default {
 </script>
 
 <style scoped>
+
+.center-checkbox {
+    transform: translate(500%, 0px);
+}
+
 </style>

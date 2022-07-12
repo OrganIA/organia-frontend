@@ -91,3 +91,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+.secondary-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 3%;
+    max-width: 79%;
+}
+
+.background-transparent {
+    background-color: transparent;
+}
+
+.background-white {
+    background-color: white;
+}
+</style>

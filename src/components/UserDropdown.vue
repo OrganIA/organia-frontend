@@ -44,4 +44,38 @@ export default {
 </script>
 
 <style scoped>
+
+.avatar-dropdown {
+    margin-top: 50px;
+    margin-left: 4%;
+    min-width: 300px;
+}
+
+.dropdown-trigger {
+    width: 93%;
+}
+
+.dropdown-correction {
+    margin-left: -100px;
+    width: 260px;
+}
+
+.name-display-dropdown {
+    align-content: flex-start;
+    font-size: 19px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.avatar-display {
+    width: 100px;
+    border-radius: 50%;
+}
+
+.avatar-container {
+    width: 100px;
+    border: solid black 3px;
+    border-radius: 50%;
+}
+
 </style>

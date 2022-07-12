@@ -39,4 +39,12 @@ export default {
 </script>
 
 <style scoped>
+
+.presentation-message {
+    position: absolute;
+    top: 26.8vh;
+    width: 17.5vw;
+    margin-left: 50px;
+}
+
 </style>

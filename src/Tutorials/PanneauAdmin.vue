@@ -19,7 +19,7 @@
         Afin de pouvoir visualiser et gérer les utilisateurs de la plateforme, ce prérequis est obligatoire, si vous
         êtes un
         administrateur mais que vous ne possédez pas les droits sur l'application, consultez <a
-          v-on:click="updateValue('askRights')">Demander des droits
+          @click="updateValue('askRights')">Demander des droits
           supplémentaires</a>
       </div>
       <br>

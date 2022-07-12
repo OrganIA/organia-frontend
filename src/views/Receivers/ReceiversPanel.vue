@@ -69,7 +69,144 @@
         </tr>
       </tbody>
     </table>
-    <person-details v-if="showModal == true" :person="currentReceiver" @closeModal="closeModal" class="details" />
+    <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+      <div class="modal-background">
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title is-3">Informations du receveur</p>
+            <button class="delete" aria-label="close" @click="closeModal"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="container">
+              <div class="columns">
+                <div class="column is-half">
+                  <button class="button is-medium is-fullwidth elements">Nom de Famille</button>
+                  <button class="button is-link is-light contents">{{ currentPerson.last_name }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Prénom</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.first_name }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Âge</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.age }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de naissance</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.birthday }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Genre</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.gender }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Groupe Sanguin</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.blood_type }}</button>
+                </div>
+              </div>
+              <div v-if="currentPerson.description != null">
+                <p class="button is-medium is-fullwidth elements">Description</p>
+                <button class="button is-light contents">{{
+                    currentPerson.description
+                }}</button>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de création</p>
+                  <button class="button is-link is-light contents">{{ currentPerson.created_at }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
+                  <button v-if="currentPerson.updated_at != null" class="button is-link is-light contents">{{
+                      currentPerson.updated_at
+                  }}</button>
+                  <button v-else class="button is-link is-light contents">Aucune modification effectuée.</button>
+                </div>
+              </div>
+
+              <div v-if="currentPerson.DateTransplantation != null">
+                <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
+                <button class="button is-light contents">{{
+                    currentPerson.DateTransplantation
+                }}</button>
+              </div>
+              <div v-if="currentPerson.ReRegistrationDate != null">
+                <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
+                <button class="button is-light contents">{{
+                    currentPerson.ReRegistrationDate
+                }}</button>
+              </div>
+              <div v-if="currentPerson.alpha_fetoprotein != null">
+                <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
+                <button class="button is-light contents">{{
+                    currentPerson.alpha_fetoprotein
+                }}</button>
+              </div>
+              <div v-if="currentPerson.biggest_tumor_size != null">
+                <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
+                <button class="button is-light contents">{{
+                    currentPerson.biggest_tumor_size
+                }}</button>
+              </div>
+              <div v-if="currentPerson.end_date != null">
+                <p class="button is-medium is-fullwidth elements">Date de fin</p>
+                <button class="button is-light contents">{{
+                    currentPerson.end_date
+                }}</button>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Organe</p>
+                  <button class="button is-link is-light contents">{{ currentReceiver.organ }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Nombres de tumeurs</p>
+                  <button class="button is-link is-light contents">{{ currentReceiver.tumors_number }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium elements">Le patient est sous dialyse ?</p>
+                  <button v-if="currentPerson.isDialyse" class="button is-link is-light contents">{{
+                      Oui
+                  }}</button>
+                  <button v-else class="button is-link is-light contents">Non</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium elements is-size-6">A-t-il effectué une retransplantation ?</p>
+                  <button v-if="currentPerson.isRetransplantation" class="button is-link is-light contents ">{{
+                      Oui
+                  }}</button>
+                  <button v-else class="button is-link is-light contents">Non</button>
+                </div>
+              </div>
+              <div v-if="currentPerson.startDateDialyse != null">
+                <p class="button column is-medium elements">Date de début de dialyse</p>
+                <button class="button is-light contents">{{
+                    currentPerson.startDateDialyse
+                }}</button>
+              </div>
+              <div v-if="currentPerson.EndDateDialyse != null">
+                <p class="button column is-medium elements">Date de fin de dialyse</p>
+                <button class="button is-light contents">{{
+                    currentPerson.EndDateDialyse
+                }}</button>
+              </div>
+              <div v-if="currentPerson.notes != null">
+                <p class="button column is-medium elements">Notes</p>
+                <button class="button is-light contents">{{
+                    currentPerson.notes
+                }}</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
   </div>
   <div ref="content" data-html2canvas-ignore="true" hidden>
     <h1>Bilan d'informations Receveur</h1>
@@ -94,14 +231,15 @@ import jsPDF from 'jspdf'
 // import html2canvas from "html2canvas"
 
 export default {
-  components: { PersonDetails },
   name: "receivers-panel",
   data() {
     return {
+      state: "",
       receivers: {},
       index: 0,
       showModal: false,
       currentReceiver: {},
+      currentPerson: {},
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "first_name",
@@ -144,16 +282,15 @@ export default {
         });
     },
     openModal(receiver) {
-      if (!this.showModal) {
-        this.showModal = true;
-        this.currentReceiver = receiver;
-        document.getElementById("bodiv").style.display = "initial";
-      }
+      this.currentReceiver = receiver
+      this.currentPerson = receiver.person
+      console.log(receiver)
+      this.state = "clicked"
     },
     closeModal() {
-      this.showModal = false;
-      this.currentReceiver = {};
-      document.getElementById("bodiv").style.display = "none";
+      this.currentReceiver = {}
+      this.currentPerson = {}
+      this.state = ""
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -238,3 +375,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.elements {
+  margin: 5px;
+}
+
+.contents {
+  margin: 10px;
+  margin-top: 0px;
+}
+</style>

@@ -3,11 +3,11 @@
   <h1>Bienvenue sur la plateforme ORGANIA</h1>
   <carousel :autoplay="4000" :wrap-around="true" :items-to-show="1.5">
     <Slide v-for="content, index in contents" :key="content.id">
-      <div class="carousel__item">
-        <div class="carousel_content">
+      <div class="carousel-item">
+        <div class="carousel-content">
           <p>{{ content.text }}</p>
           <p>{{ index.text }}</p>
-          <router-link :to="content.url" class="carousel__link">
+          <router-link :to="content.url" class="carousel-link">
             <span>En savoir plus</span>
           </router-link>
         </div>
@@ -28,7 +28,6 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
 export default {
   name: "landing-page",
-  emits: ["login"],
   components: {
     Carousel,
     Slide,
@@ -47,3 +46,41 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.carousel-item {
+  min-height: 200px;
+  width: 100%;
+  background-color: #0f2c59;
+  color: var(--vc-clr-white);
+  font-size: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-slide {
+  padding: 10px;
+}
+
+.carousel-prev,
+.carousel--next {
+  box-sizing: content-box;
+  border: 5px solid white;
+}
+
+
+.carousel-prev--in-active,
+.carousel-next--in-active {
+  display: none;
+}
+
+.carousel-content {
+  display: inline;
+}
+
+.carousel-link {
+  color: white;
+}
+</style>
