@@ -70,7 +70,7 @@
   </div>
   <div ref="content" data-html2canvas-ignore="true" hidden>
     <div v-if="donors != undefined">
-      <h1>Bilan d'informations Receveur</h1>
+      <h1>Bilan d'informations Donneur</h1>
       <p>Prénom: {{donors[this.index].person.first_name}} </p>
       <p>Nom de famille: {{donors[index].person.last_name}}</p>
       <p>Date de naissance: {{donors[index].person.birthday}}</p>
