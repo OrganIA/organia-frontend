@@ -44,7 +44,7 @@
       </thead>
       <tbody>
         <!-- eslint-disable-next-line no-unused-vars -->
-        <tr v-for="(receiver, index) in receivers" :key="receiver">
+        <tr v-for="(receiver) in receivers" :key="receiver">
           <td>{{ receiver.person.first_name }}</td>
           <td>{{ receiver.person.last_name }}</td>
           <td>{{ receiver.person.birthday }}</td>
@@ -63,8 +63,7 @@
             </router-link>
           </td>
           <td>
-            <!-- <router-link class="block button is-info" to="/pdf"></router-link> -->
-            <i class="fas fa-info cypress-receiver-modal" @click="createPDF(index)"></i>
+            <i class="fas fa-info cypress-receiver-modal" @click="openModal(receiver)"></i>
           </td>
         </tr>
       </tbody>
@@ -202,6 +201,11 @@
                     currentPerson.notes
                 }}</button>
               </div>
+              <div>
+                <button class="button is-light contents" @click="createPDF()">
+                  <p>Télécharger la version PDF</p>
+                </button>
+              </div>
             </div>
           </section>
         </div>
@@ -210,25 +214,46 @@
   </div>
   <div ref="content" data-html2canvas-ignore="true" hidden>
     <h1>Bilan d'informations Receveur</h1>
-    <p>Prénom: {{receivers[this.index].person.first_name}} </p>
-    <p>Nom de famille: {{receivers[index].person.last_name}}</p>
-    <p>Date de naissance: {{receivers[index].person.birthday}}</p>
-    <p>Sexe: {{receivers[index].person.gender}}</p>
-    <p>Type sanguin (ABO): {{receivers[index].person.blood_type}}</p>
-    <p>Organe: {{receivers[index].organ}}</p>
-    <p>Nombre de tumeurs: {{receivers[index].tumors_number}}</p>
-    <p>Dialysé: {{receivers[index].isDialyse}}</p>
-    <p>Retransplantation: {{receivers[index].isRetransplantation}}</p>
-    <p>Date de début de dialyse: {{receivers[index].startDateDialyse}}</p>
-    <p>Date de fin de dialyse: {{receivers[index].endDateDialyse}}</p>
-    <p>Arrivée: {{receivers[index].person.created_at}}</p>
+    <p>Prénom: {{currentPerson.first_name}} </p>
+    <p>Nom de famille: {{currentPerson.last_name}}</p>
+    <p>Date de naissance: {{currentPerson.birthday}}</p>
+    <div v-if="currentPerson.gender == 'MALE'">
+     <p>Sexe: Masculin</p>
+    </div>
+    <div v-else>
+      <p>Sexe: Féminin</p>
+    </div>
+    <p>Type sanguin (ABO): {{currentPerson.blood_type}}</p>
+    <div v-if="currentReceiver.organ == 'HEART'">
+        <p>Organe: Coeur</p>
+      </div>
+      <div v-else-if="currentReceiver.organ == 'LIVER'">
+        <p>Organe: Foie</p>
+      </div>
+      <div v-else>
+        <p>Organe: Poumons</p>
+      </div>
+    <p>Nombre de tumeurs: {{currentReceiver.tumors_number}}</p>
+    <div v-if="currentReceiver.isDialyse == true">
+      <p>Dialysé: Oui</p>
+    </div>
+    <div v-else>
+      <p>Dialysé: Non</p>
+    </div>    
+    <div v-if="currentReceiver.isRetransplantation == true">
+      <p>Retransplantation: Oui</p>
+    </div>
+    <div v-else>
+      <p>Retransplantation: Non</p>
+    </div>    
+    <p>Date de début de dialyse: {{currentReceiver.startDateDialyse}}</p>
+    <p>Date de fin de dialyse: {{currentReceiver.endDateDialyse}}</p>
+    <p>Arrivée: {{currentPerson.created_at}}</p>
   </div>
 </template>
 
 <script>
-import PersonDetails from "@/components/PersonDetails.vue";
 import jsPDF from 'jspdf'
-// import html2canvas from "html2canvas"
 
 export default {
   name: "receivers-panel",
@@ -251,10 +276,8 @@ export default {
     this.getAllReceivers();
   },
   methods: {
-    createPDF(index) {
-      this.index = index
-      console.log(this.receivers[index].person.first_name)
-      let pdfName = 'test';
+    createPDF() {
+      let pdfName = 'receiver_' + this.currentPerson.last_name;
       const doc = new jsPDF();
       /** WITHOUT CSS */
       const contentHtml = this.$refs.content.innerHTML;

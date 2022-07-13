@@ -42,7 +42,7 @@
       </thead>
       <tbody>
         <!-- eslint-disable-next-line no-unused-vars -->
-        <tr v-for="(donor, index) in donors" :key="donor">
+        <tr v-for="donor in donors" :key="donor">
           <td>{{ donor.person.first_name }}</td>
           <td>{{ donor.person.last_name }}</td>
           <td>{{ donor.person.birthday }}</td>
@@ -61,7 +61,8 @@
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info cypress-donor-modal" @click="createPDF(index)"></i>
+            <!-- <i class="fas fa-info cypress-donor-modal" @click="createPDF(index)"></i> -->
+            <i class="fas fa-info cypress-donor-modal" @click="openModal(donor)"></i>
           </td>
         </tr>
       </tbody>
@@ -137,36 +138,47 @@
               <div class="columns">
                 <div class="column is-half">
                   <p class="button is-medium elements">Le patient est sous dialyse ?</p>
-                  <button v-if="currentPerson.isDialyse" class="button is-link is-light contents">{{
-                      Oui
-                  }}</button>
+                  <button v-if="currentDonor.isDialyse == true" class="button is-link is-light contents">
+                    <p class= "button is-link is-light contents">Oui</p>    
+                  </button>
                   <button v-else class="button is-link is-light contents">Non</button>
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium elements is-size-6">A-t-il effectué une retransplantation ?</p>
-                  <button v-if="currentPerson.isRetransplantation" class="button is-link is-light contents ">{{
+                  <button v-if="currentDonor.isRetransplantation" class="button is-link is-light contents ">{{
                       Oui
                   }}</button>
                   <button v-else class="button is-link is-light contents">Non</button>
                 </div>
               </div>
-              <div v-if="currentPerson.startDateDialyse != null">
-                <p class="button column is-medium elements">Date de début de dialyse</p>
-                <button class="button is-light contents">{{
-                    currentPerson.startDateDialyse
-                }}</button>
+              <div class="columns">
+                <div class="column is-half">
+                  <div v-if="currentDonor.startDateDialyse != null">
+                    <p class="button column is-medium elements">Date de début de dialyse</p>
+                    <button class="button is-link is-light contents">{{
+                        currentDonor.startDateDialyse
+                    }}</button>
+                  </div>
+                </div>
+                <div class="column is-half">
+                  <div v-if="currentDonor.EndDateDialyse != null">
+                    <p class="button column is-medium elements">Date de fin de dialyse</p>
+                    <button class="button is-light contents">{{
+                        currentDonor.EndDateDialyse
+                    }}</button>
+                  </div>
+                </div>
               </div>
-              <div v-if="currentPerson.EndDateDialyse != null">
-                <p class="button column is-medium elements">Date de fin de dialyse</p>
-                <button class="button is-light contents">{{
-                    currentPerson.EndDateDialyse
-                }}</button>
-              </div>
-              <div v-if="currentPerson.notes != null">
+              <div v-if="currentDonor.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
-                    currentPerson.notes
+                    currentDonor.notes
                 }}</button>
+              </div>
+              <div>
+                <button class="button is-light contents" @click="createPDF()">
+                  <p>Télécharger la version PDF</p>
+                </button>
               </div>
             </div>
           </section>
@@ -177,24 +189,46 @@
   <div ref="content" data-html2canvas-ignore="true" hidden>
     <div v-if="donors != undefined">
       <h1>Bilan d'informations Donneur</h1>
-      <p>Prénom: {{donors[this.index].person.first_name}} </p>
-      <p>Nom de famille: {{donors[index].person.last_name}}</p>
-      <p>Date de naissance: {{donors[index].person.birthday}}</p>
-      <p>Sexe: {{donors[index].person.gender}}</p>
-      <p>Type sanguin (ABO): {{donors[index].person.blood_type}}</p>
-      <p>Organe: {{donors[index].organ}}</p>
-      <p>Nombre de tumeurs: {{donors[index].tumors_number}}</p>
-      <p>Dialysé: {{donors[index].isDialyse}}</p>
-      <p>Retransplantation: {{donors[index].isRetransplantation}}</p>
-      <p>Date de début de dialyse: {{donors[index].startDateDialyse}}</p>
-      <p>Date de fin de dialyse: {{donors[index].endDateDialyse}}</p>
-      <p>Arrivée: {{donors[index].person.created_at}}</p>
+      <p>Prénom: {{currentPerson.first_name}} </p>
+      <p>Nom de famille: {{currentPerson.last_name}}</p>
+      <p>Date de naissance: {{currentPerson.birthday}}</p>
+      <div v-if="currentPerson.gender == 'MALE'">
+        <p>Sexe: Masculin</p>
+      </div>
+      <div v-else>
+        <p>Sexe: Féminin</p>
+      </div>
+      <p>Type sanguin (ABO): {{currentPerson.blood_type}}</p>
+      <div v-if="currentDonor.organ == 'HEART'">
+        <p>Organe: Coeur</p>
+      </div>
+      <div v-else-if="currentDonor.organ == 'LIVER'">
+        <p>Organe: Foie</p>
+      </div>
+      <div v-else>
+        <p>Organe: Poumons</p>
+      </div>
+      <p>Nombre de tumeurs: {{currentDonor.tumors_number}}</p>
+      <div v-if="currentDonor.isDialyse == true">
+        <p>Dialysé: Oui</p>
+      </div>
+      <div v-else>
+        <p>Dialysé: Non</p>
+      </div>
+      <div v-if="currentDonor.isRetransplantation == true">
+        <p>Retransplantation: Oui</p>
+      </div>
+      <div v-else>
+        <p>Retransplantation: Non</p>
+      </div>
+      <p>Date de début de dialyse: {{currentDonor.startDateDialyse}}</p>
+      <p>Date de fin de dialyse: {{currentDonor.endDateDialyse}}</p>
+      <p>Arrivée: {{currentPerson.created_at}}</p>
       </div>
   </div>
 </template>
 
 <script>
-import PersonDetails from "@/components/PersonDetails.vue";
 import jsPDF from 'jspdf'
 
 export default {
@@ -217,10 +251,8 @@ export default {
     this.getAllDonors();
   },
   methods: {
-    createPDF(index) {
-      this.index = index
-      console.log(this.donors[index].person.first_name)
-      let pdfName = 'test';
+    createPDF() {
+      let pdfName = 'donor_' + this.currentPerson.last_name;
       const doc = new jsPDF();
       /** WITHOUT CSS */
       const contentHtml = this.$refs.content.innerHTML;
@@ -253,6 +285,8 @@ export default {
       this.currentDonor = donor
       this.currentPerson = donor.person
       this.state = "clicked"
+            console.log(this.currentDonor)
+
     },
     closeModal() {
       this.currentDonor = false;
