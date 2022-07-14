@@ -202,8 +202,8 @@
       <div v-if="currentDonor.organ == 'HEART'">
         <p>Organe: Coeur</p>
       </div>
-      <div v-else-if="currentDonor.organ == 'LIVER'">
-        <p>Organe: Foie</p>
+      <div v-else-if="currentDonor.organ == 'KIDNEY'">
+        <p>Organe: Reins</p>
       </div>
       <div v-else>
         <p>Organe: Poumons</p>

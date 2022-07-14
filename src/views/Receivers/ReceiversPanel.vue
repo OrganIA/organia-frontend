@@ -227,8 +227,8 @@
     <div v-if="currentReceiver.organ == 'HEART'">
         <p>Organe: Coeur</p>
       </div>
-      <div v-else-if="currentReceiver.organ == 'LIVER'">
-        <p>Organe: Foie</p>
+      <div v-else-if="currentReceiver.organ == 'KIDNEY'">
+        <p>Organe: Reins</p>
       </div>
       <div v-else>
         <p>Organe: Poumons</p>
