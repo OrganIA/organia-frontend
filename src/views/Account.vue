@@ -7,7 +7,7 @@
                 <p>Nom</p>
             </div>
             <div class="message-body">
-                <strong>CHAOUCH</strong>
+                <strong>{{ lastname }}</strong>
             </div>
         </article>
         <article class="message is-info column">
@@ -15,7 +15,7 @@
                 <p>Prénom</p>
             </div>
             <div class="message-body">
-                <strong>Irama</strong>
+                <strong>{{ firstname }}</strong>
             </div>
         </article>
     </div>
@@ -25,7 +25,7 @@
                 <p>Numéro de téléphone</p>
             </div>
             <div class="message-body">
-                <strong>+33 6 41 02 70 22</strong>
+                <strong>{{ phone_number }}</strong>
             </div>
         </article>
         <article class="message is-info column">
@@ -61,6 +61,9 @@ export default {
                 .then((response) => {
                     console.log(response);
                     this.email = response.data.email;
+                    this.firstname = response.data.firstname;
+                    this.lastname = response.data.lastname;
+                    this.phone_number = response.data.phone_number;
                 })
         },
     },
