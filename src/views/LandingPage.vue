@@ -4,14 +4,18 @@
     ORGANIA</button><br><br>
   <p class="title is-5 is-spaced">Raccourci</p>
   <div class="columns">
-    <router-link class="block button is-info is-light button-style" to="/chat">
-      <i class="fas fa-envelope cypress-to-chats"></i>
-      <span class="nav-text">Chats</span>
-    </router-link>
-    <router-link class="block button is-info is-light button-style" to="/account">
-      <i class="fas fa-user cypress-to-chats"></i>
-      <span class="nav-text">Compte</span>
-    </router-link>
+    <div class="column">
+      <router-link class="block button is-info is-light button-style" to="/chat">
+        <i class="fas fa-envelope cypress-to-chats"></i>
+        <span class="nav-text">Chats</span>
+      </router-link>
+    </div>
+    <div class="column">
+      <router-link class="block button is-info is-light button-style" to="/account">
+        <i class="fas fa-user cypress-to-chats"></i>
+        <span class="nav-text">Compte</span>
+      </router-link>
+    </div>
   </div>
   <p class="title is-5 is-spaced">Liste des prochains évènements</p><br>
   <table class="table is-striped is-fullwidth is-narrow is-hoverable">
