@@ -14,19 +14,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user" v-on:click="loadSelectedUser(user.id)"
-          v-bind:class="{ 'selected-line': user.id === $data.user.id }">
-          <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">{{ user.id }}</td>
-          <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.first_name :
+        <tr v-for="user in users" :key="user" @click="loadSelectedUser(user.id)"
+          :class="{ 'selected-line': user.id === $data.user.id }">
+          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.id }}</td>
+          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.first_name :
               "-"
           }}</td>
-          <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.last_name :
+          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.last_name :
               "-"
           }}</td>
-          <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">{{ user.email }}</td>
-          <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">{{ user.created_at }}</td>
-          <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">{{ user.updated_at }}</td>
-          <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.email }}</td>
+          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.created_at }}</td>
+          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.updated_at }}</td>
+          <td :class="{ 'selected-element': user.id === $data.user.id }">
             <router-link :to="`/administrator/edit/user/${user.id}`">
               <i class="fas fa-edit"></i>
             </router-link>

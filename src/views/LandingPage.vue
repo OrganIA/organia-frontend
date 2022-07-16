@@ -42,7 +42,6 @@ import moment from "moment";
 
 export default {
   name: "landing-page",
-  emits: ["login"],
   components: {
   },
   data() {
