@@ -20,7 +20,6 @@ export default {
       events: [],
     };
   },
-  emits: ["login"],
   mounted() {
     this.calendarFiller();
   },

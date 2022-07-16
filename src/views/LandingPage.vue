@@ -28,7 +28,6 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
 export default {
   name: "landing-page",
-  emits: ["login"],
   components: {
     Carousel,
     Slide,

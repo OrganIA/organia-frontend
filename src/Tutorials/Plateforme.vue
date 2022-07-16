@@ -1,5 +1,5 @@
 <template>
-  <div class="content align-left ml-6 pl-1 " v-bind:class="{ 'is-active': isActive === 'plateforme' }">
+  <div class="content align-left ml-6 pl-1 " :class="{ 'is-active': isActive === 'plateforme' }">
     <div class="tutorial-text-content has-text-justified ">
       <h1 class="title is-1">La plateforme</h1>
       <br><br>
