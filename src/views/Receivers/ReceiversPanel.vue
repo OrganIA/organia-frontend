@@ -37,6 +37,7 @@
           <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
           <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
           <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
+          <th @click="updateFilter('score')">Score</th>
           <th @click="updateFilter('created_at')">Arrivée</th>
           <th>Éditer</th>
           <th>Infos</th>
@@ -55,6 +56,8 @@
           <td>{{ receiver.isRetransplantation ? "Oui" : "Non" }}</td>
           <td>{{ receiver.startDateDialyse }}</td>
           <td>{{ receiver.endDateDialyse }}</td>
+          <td v-if="receiver.score != null">{{ receiver.score }}</td>
+          <td v-else>{{ 'N/A' }}</td>
           <td>{{ receiver.person.created_at }}</td>
           <td>
             <router-link :to="`/receivers/edit/${receiver.person.id}`">
