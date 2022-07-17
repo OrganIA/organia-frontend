@@ -18,28 +18,21 @@
     </div>
   </div>
   <p class="title is-5 is-spaced">Liste des prochains évènements</p><br>
-  <table class="table is-striped is-fullwidth is-narrow is-hoverable">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Description</th>
-        <th>Date de creation</th>
-        <th>Éditer</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="calendar in events" :key="calendar">
-        <td>{{ calendar.date }}</td>
-        <td>{{ calendar.description }}</td>
-        <td>{{ calendar.created_at }}</td>
-        <td>
-          <router-link :to="`/eventlist/edit/${calendar.id}`">
-            <i class="fas fa-edit button is-primary"></i>
-          </router-link>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="columns">
+    <div class="column" v-for="event in events" :key="event">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            {{ event.description }} </p>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            <p>{{ event.date }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 
@@ -71,6 +64,7 @@ export default {
           headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
         })
         .then((response) => {
+          response.data.splice(5, response.data.length - 5)
           response.data.forEach((element) => {
             element.date = moment(String(element.date)).format(
               "DD/MM/YYYY hh:mm"
