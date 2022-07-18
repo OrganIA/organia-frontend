@@ -1,5 +1,14 @@
 
 <template>
+  <div class="app-navbar-container">
+    <ApplicationNavbar></ApplicationNavbar>
+  </div>
+  <div class="columns">
+    <div class="column sidebar-column">
+      <SideBar></SideBar>
+    </div>
+    <div class="column page-container">
+      <div class="page-content">
   <button class="button is-link is-light is-large is-responsive is-rounded is-focused">BIENVENUE SUR
     ORGANIA</button><br><br>
   <p class="title is-5 is-spaced">Raccourci</p>
@@ -33,15 +42,21 @@
       </div>
     </div>
   </div>
+  </div>
+  </div>
+  </div>
 </template>
 <script>
 
 import moment from "moment";
+import ApplicationNavbar from "@/components/ApplicationNavbar";
+import SideBar from "@/components/SideBar";
 
 
 export default {
   name: "landing-page",
   components: {
+    ApplicationNavbar, SideBar
   },
   data() {
     return {
@@ -89,7 +104,7 @@ export default {
 
 td:nth-child(even),
 th:nth-child(even) {
-  background-color: #D6EEEE;
+  background-color: #D6EEEE;}
 
 .landing-container {
   max-width: 83%;
