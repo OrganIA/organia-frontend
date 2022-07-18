@@ -1,75 +1,95 @@
+
 <template>
-  <div class="app-navbar-container">
-    <ApplicationNavbar></ApplicationNavbar>
-  </div>
-  <div class="columns landing-content">
-    <div class="column sidebar-column">
-      <SideBar></SideBar>
+  <button class="button is-link is-light is-large is-responsive is-rounded is-focused">BIENVENUE SUR
+    ORGANIA</button><br><br>
+  <p class="title is-5 is-spaced">Raccourci</p>
+  <div class="columns">
+    <div class="column">
+      <router-link class="block button is-info is-light button-style" to="/chat">
+        <i class="fas fa-envelope cypress-to-chats"></i>
+        <span class="nav-text">Chats</span>
+      </router-link>
     </div>
-    <div class="column landing-container">
-      <div class="columns">
-        <div class="column">
-          <p class="bd-notification is-info">First column</p>
-          <div class="columns is-mobile">
-            <div class="column">
-              <p class="bd-notification is-info">First nested column</p>
-            </div>
-            <div class="column">
-              <p class="bd-notification is-info">Second nested column</p>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <p class="bd-notification is-danger">Second column</p>
-          <div class="columns is-mobile">
-            <div class="column is-half">
-              <p class="bd-notification is-danger">50%</p>
-            </div>
-            <div class="column">
-              <p class="bd-notification is-danger">Auto</p>
-            </div>
-            <div class="column">
-              <p class="bd-notification is-danger">Auto</p>
-            </div>
+    <div class="column">
+      <router-link class="block button is-info is-light button-style" to="/account">
+        <i class="fas fa-user cypress-to-chats"></i>
+        <span class="nav-text">Compte</span>
+      </router-link>
+    </div>
+  </div>
+  <p class="title is-5 is-spaced">Liste des prochains évènements</p><br>
+  <div class="columns">
+    <div class="column" v-for="event in events" :key="event">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            {{ event.description }} </p>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            <p>{{ event.date }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
-
 <script>
-// If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import 'vue3-carousel/dist/carousel.css';
-//import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
-import SideBar from "@/components/SideBar";
-import ApplicationNavbar from "@/components/ApplicationNavbar";
+
+import moment from "moment";
+
 
 export default {
   name: "landing-page",
   components: {
-    //Carousel,
-    //Slide,
-    //Pagination,
-    //Navigation,
-    SideBar,
-    ApplicationNavbar
   },
   data() {
     return {
       contents: [
-        {id: 1, text: "Souhaitez-vous rechercher les centres de France ?", url: '/searchmap'},
-        {id: 2, text: "Essayez notre nouveau service de communication.", url: "/chat"},
-        {id: 3, text: "Ne ratez aucun évènement grâce au calendrier.", url: "/eventcalendar"},
-        {id: 4, text: "La liste des évènements est disponible.", url: "/eventlist"},
-      ]
+        { id: 1, text: "Souhaitez-vous rechercher les centres de France ?", url: '/searchmap' },
+        { id: 2, text: "Essayez notre nouveau service de communication.", url: "/chat" },
+        { id: 3, text: "Ne ratez aucun évènement grâce au calendrier.", url: "/eventcalendar" },
+        { id: 4, text: "La liste des évènements est disponible.", url: "/eventlist" },
+      ],
+      events: {}
     }
+  },
+  created() {
+    this.getAllevents();
+  },
+  methods: {
+    getAllevents() {
+      this.$http
+        .get("/calendar", {
+          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
+        })
+        .then((response) => {
+          response.data.splice(5, response.data.length - 5)
+          response.data.forEach((element) => {
+            element.date = moment(String(element.date)).format(
+              "DD/MM/YYYY hh:mm"
+            );
+            element.created_at = moment(String(element.created_at)).format(
+              "DD/MM/YYYY hh:mm"
+            );
+          });
+          this.events = response.data;
+        })
+    },
   },
 };
 </script>
 
 <style scoped>
+.button-style {
+  height: 10em;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+td:nth-child(even),
+th:nth-child(even) {
+  background-color: #D6EEEE;
 
 .landing-container {
   max-width: 83%;
