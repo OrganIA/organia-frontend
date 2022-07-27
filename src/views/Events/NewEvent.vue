@@ -4,15 +4,18 @@
       <h2 class="form-title title is-3">Ajouter un evenement</h2>
       <div class="form-fields">
         <div class="form-input small required">
-          <label class="label">Date</label>
-          <input v-model="date" placeholder="date" type="datetime-local" class="cypress-datetime input is-info"
-            required />
+          <label class="label">Date de debut</label>
+          <input v-model="start_date" placeholder="date de debut" type="datetime-local" class="cypress-datetime input is-info"
+            required/>
+          <label class="label">Date de fin</label>
+          <input v-model="end_date" placeholder="date de fin" type="datetime-local" class="cypress-datetime input is-info"
+            required/>
         </div>
-        <div class="form-input small">
+        <div class="form-input small required">
+          <label class="label">Titre</label>
+          <textarea v-model="title" placeholder="titre" class="cypress-textarea" required/>
           <label class="label">Description</label>
-          <textarea v-model="description" placeholder="description" class="cypress-textarea" required />
-          <p class="required-notice">* Obligatoire</p>
-
+          <textarea v-model="description" placeholder="description" class="cypress-textarea"/>
         </div>
         <div class="form-submit is-center">
           <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>
@@ -28,7 +31,9 @@ export default {
   name: "new-event",
   data() {
     return {
-      date: "",
+      start_date: "",
+      end_date: "",
+      title: "",
       description: "",
     };
   },
@@ -36,7 +41,9 @@ export default {
     createEvent() {
       this.$http
         .post("/calendar", {
-          date: this.date,
+          start_date: this.start_date,
+          end_date: this.end_date,
+          ...(this.title ? { title: this.title } : {}),
           ...(this.description ? { description: this.description } : {}),
         })
         .then((response) => {

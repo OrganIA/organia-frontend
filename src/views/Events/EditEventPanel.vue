@@ -4,14 +4,17 @@
       <h2 class="form-title title is-3">Éditer un evenement</h2>
       <div class="form-fields">
         <div class="form-input small required">
-          <label class="label">Date</label>
-          <input v-model="calendar.date" placeholder="date" type="datetime-local" class="input is-info" required />
+          <label class="label">Date de debut</label>
+          <input v-model="calendar.start_date" placeholder="date de debut" type="datetime-local" class="input is-info" required />
+          <label class="label">Date de fin</label>
+          <input v-model="calendar.end_date" placeholder="date de fin" type="datetime-local" class="input is-info" required />
         </div>
         <div class="form-input small required">
+          <label class="label">Titre</label>
+          <textarea class="cypress-textarea" v-model="calendar.title" placeholder="titre" required />
           <label class="label">Description</label>
-          <textarea class="textarea" v-model="calendar.description" placeholder="description" required />
+          <textarea class="cypress-textarea" v-model="calendar.description" placeholder="description" required />
         </div>
-        <p class="required-notice">* Obligatoire</p>
       </div>
       <div class="form-submit is-center">
         <button type="submit" class="cypress-add button is-info mx-auto mr-6">
