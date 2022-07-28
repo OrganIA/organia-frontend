@@ -55,13 +55,14 @@ export default {
         .then((response) => {
           new Date();
           response.data.forEach((item) => {
-            const date = new Date(item.date);
+            const start_date = new Date(item.start_date);
+            const end_date = new Date(item.end_date)
             this.events.push({
               title: item.title,
               description: item.description,
-              start: this.formatDate(item.start_date),
-              end: this.formatDate(item.end_date),
-              content: `<p>${date.getHours()}:${date.getMinutes()}</p>`,
+              start: start_date,
+              end: end_date,
+              class: item.typerdv,
             });
           });
         })

@@ -15,6 +15,13 @@
           <label class="label">Description</label>
           <textarea class="cypress-textarea" v-model="calendar.description" placeholder="description" required />
         </div>
+        <div class="form-input small required">
+          <label class="label">Type de rdv</label>
+          <select v-model="typerdv" class="cypress-select" required>
+            <option value="rdvDdonneur">rdv donneur</option>
+            <option value="rdvReceveur">rdv receveur</option>
+          </select>
+        </div>
       </div>
       <div class="form-submit is-center">
         <button type="submit" class="cypress-add button is-info mx-auto mr-6">
@@ -56,8 +63,11 @@ export default {
     submitForm() {
       this.$http
         .post(`/calendar/${this.id}`, {
-          date: this.calendar.date,
+          start_date: this.calendar.start_date,
+          end_date: this.calendar.end_date,
+          title: this.calendar.title,
           description: this.calendar.description,
+          typerdv: this.calendar.typerdv,
         })
         .then(() => {
           this.$router.push("/eventlist");

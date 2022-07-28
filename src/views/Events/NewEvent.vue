@@ -17,6 +17,13 @@
           <label class="label">Description</label>
           <textarea v-model="description" placeholder="description" class="cypress-textarea"/>
         </div>
+        <div class="form-input small required">
+          <label class="label">Type de rdv</label>
+          <select v-model="typerdv" class="cypress-select" required>
+            <option value="rdvDonneur">rdv donneur</option>
+            <option value="rdvReceveur">rdv receveur</option>
+          </select>
+        </div>
         <div class="form-submit is-center">
           <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>
           <router-link to="/eventlist" class="button is-danger ml-6">Retour</router-link>
@@ -35,6 +42,7 @@ export default {
       end_date: "",
       title: "",
       description: "",
+      typerdv: "",
     };
   },
   methods: {
@@ -45,6 +53,7 @@ export default {
           end_date: this.end_date,
           ...(this.title ? { title: this.title } : {}),
           ...(this.description ? { description: this.description } : {}),
+          ...(this.typerdv ? { typerdv: this.typerdv } : {}),
         })
         .then((response) => {
           this.event_id = response.data.id;
