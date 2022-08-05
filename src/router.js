@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   { path: "/", component: () => import("./views/LandingPage.vue") },
-  { path: "/abouttheproject", component: () => import("./views/About/AboutProject.vue") },
+  { path: "/vitrine", component: () => import("./views/Vitrine.vue") },
   { path: "/receivers", component: () => import("./views/Receivers/ReceiversPanel.vue") },
   { path: "/receivers/add", component: () => import("./views/Receivers/NewReceiver.vue") },
   { path: "/receivers/edit/:id", component: () => import("./views/Receivers/EditReceiversPanel.vue"), props: true },
