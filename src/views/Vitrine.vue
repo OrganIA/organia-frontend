@@ -1,16 +1,44 @@
 <template>
-  <nav class="navbar base-navbar" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand logo-placeholder">
-      <div class="navbar-item logo">
+      <a class=" navbar-item logo">
         <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
           class="logo-img-align">
+      </a>
+    </div>
+
+    <div id="navbarExampleTransparentExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="#eipmodeemploi">
+          Acceuil
+        </a>
+        <a class="navbar-item" href="#organiaeip">
+          Notre Projet
+        </a>
+        <a class="navbar-item" href="#solutionvalide">
+          Description
+        </a>
+        <a class="navbar-item" href="#timeline">
+          Timeline
+        </a>
+        <a class="navbar-item" href="#team">
+          L'équipe
+        </a>
+        <a class="navbar-item" href="#contact">
+          Contact
+        </a>
       </div>
     </div>
-    <div id="navbarBasicExample" class="navbar-menu main-menu-navbar">
-      <div class="navbar-start navbar-correction-tutorial">
-        <router-link to="/login" class="navbar-item button is-medium is-danger is-large">
-          Retour
-        </router-link>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <p class="control">
+            <router-link to="/login" class=" navbar-item button nav-button is-rounded">
+              Retour
+            </router-link>
+          </p>
+        </div>
       </div>
     </div>
   </nav>
@@ -18,15 +46,6 @@
   <div class="about-container">
     <div class="container">
       <div class="is-size-5 has-text-justified">
-        <div class="summary-box has-text-left">
-          <ol>
-            <li class="summary-item"><a href="#eipmodeemploi">L'EIP : mode d'emploi</a></li>
-            <li class="summary-item"><a href="#organiaeip">ORGANIA : Un Epitech Innovative Project</a></li>
-            <li class="summary-item"><a href="#solutionvalide">Une solution validée par les professionnels</a></li>
-            <li class="summary-item"><a href="#timeline">Timeline de la solution</a></li>
-            <li class="summary-item"><a href="#team">L'équipe</a></li>
-          </ol>
-        </div>
       </div>
       <div class="" id="eipmodeemploi">
         <h1 class="is-size-2 has-text-centered titre-about">L'EIP : mode d'emploi</h1>
@@ -480,94 +499,108 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+  height: auto;
+}
+
+.navbar-start {
+  margin: auto;
+  font-weight: bold;
+  font-size: large;
+}
+
+.nav-button {
+  background-color: #071f49;
+}
+
+
 
 .align-middle {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .not-resizable {
-    resize: none;
+  resize: none;
 }
 
 .titre-about {
-    background-color: var(--dark-blue);
-    color: white;
+  background-color: var(--dark-blue);
+  color: white;
 }
 
 .linkedin-saber {
-    position: absolute;
-    top: 350px;
-    left: 110px;
-    background: #071f49;
+  position: absolute;
+  top: 350px;
+  left: 110px;
+  background: #071f49;
 }
 
 .list-tl {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .container-timeline {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 1rem;
-    background: linear-gradient(45deg, var(--dark-blue), var(--logo-light-blue));
-    padding: 3rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  background: linear-gradient(45deg, var(--dark-blue), var(--logo-light-blue));
+  padding: 3rem 0;
 }
 
 .wrapper {
-    background: #eaf6ff;
-    padding: 2rem;
-    border-radius: 15px;
+  background: #eaf6ff;
+  padding: 2rem;
+  border-radius: 15px;
 }
 
 .timeline-title {
-    font-size: 4rem;
-    font-weight: bold;
+  font-size: 4rem;
+  font-weight: bold;
 }
 
 .sessions {
-    margin-top: 2rem;
-    border-radius: 12px;
-    position: relative;
+  margin-top: 2rem;
+  border-radius: 12px;
+  position: relative;
 }
 
 li.tl-li {
-    padding-bottom: 2rem;
-    border-left: 3px solid #abaaed;
-    position: relative;
-    padding-left: 20px;
-    margin-left: 10px;
+  padding-bottom: 2rem;
+  border-left: 3px solid #abaaed;
+  position: relative;
+  padding-left: 20px;
+  margin-left: 10px;
 }
 
 li.tl-li:last-child {
-    padding-bottom: 0;
+  padding-bottom: 0;
 }
 
 li.tl-li:before {
-    content: '';
-    width: 40px;
-    height: 40px;
-    background: white;
-    border: 1px solid #4e5ed3;
-    box-shadow: 3px 3px 0px #bab5f8;
-    box-shadow: 3px 3px 0px #bab5f8;
-    border-radius: 50%;
-    position: absolute;
-    left: -20px;
-    top: 25px;
+  content: '';
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: 1px solid #4e5ed3;
+  box-shadow: 3px 3px 0px #bab5f8;
+  box-shadow: 3px 3px 0px #bab5f8;
+  border-radius: 50%;
+  position: absolute;
+  left: -20px;
+  top: 25px;
 }
 
 .time {
-    color: #2a2839;
-    font-weight: bold;
-    font-size: 2.5rem;
-    margin-top: 0rem;
+  color: #2a2839;
+  font-weight: bold;
+  font-size: 2.5rem;
+  margin-top: 0rem;
 }
 
 .titre-about {
-    background-color: var(--dark-blue);
-    color: white;
+  background-color: var(--dark-blue);
+  color: white;
 }
-
 </style>
