@@ -45,41 +45,58 @@
 
   <div class="about-container">
     <div class="container">
-      <div class="is-size-5 has-text-justified">
-      </div>
-      <div class="" id="eipmodeemploi">
-        <h1 class="is-size-2 has-text-centered titre-about">L'EIP : mode d'emploi</h1>
-
+      <!--<div class="" id="eipmodeemploi">
         <img class="align-middle"
-          src="https://newsroom.ionis-group.com/wp-content/uploads/2021/10/LOGO-EPITECH-BASELINE-QUADRI-2021.png"
-          alt="logo epitech" height="100px" width="700px">
+          src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
+          height="100px" width="700px">
         <br>
         <br>
         <br>
-        <div class="has-text-justified container is-max-desktop">
-          L’Epitech Innovative Project de l’EPITECH (European Institute of Technology), réalisé en groupes en 4ème et
-          5ème Années, a pour objectif
-          principal de faire passer les étudiants de la réalisation pédagogique, à la réalisation de projet
-          d’entreprise. Il a de plus vocation à faciliter l’entrée des étudiants dans le monde professionnel, car il
-          doit servir à l’étudiant de carte de visite à l’extérieur de l’école, le cas échéant, lui permettre de trouver
-          un stage et convaincre le recruteur, grâce à l’expérience acquise durant l’EIP.
-
-        </div>
-      </div>
-      <h1 class="is-size-2 titre-about" id="organiaeip">
-        ORGANIA : Un Epitech Innovative Project
+      </div> -->
+      <h1 class="title" id="organiaeip">
+        QUI SOMMES-NOUS ?
       </h1>
-      <div class=" has-text-justified container is-max-desktop">
+      <br>
+      <br>
+      <div class=" has-text-justified container is-max-desktop text-style">
         OrganIA est une solution informatique ergonomique et simple d'utilisation permettant au corps médical
         d'automatiser tout le processus administratif de l'inscription du donneur et du receveur d'organes au matching
         donneur/receveur tout en répondant aux besoins régionaux spécifiques en permettant une personnalisation des
         paramètres de priorisation des receveurs.
       </div>
       <br>
-      <div class="has-text-justified container is-max-desktop">
-        <textarea class="textarea is-danger is-medium not-resizable"
-          readonly>Aujourd'hui 60% des cœurs et poumons destines a être greffes sont  jetés car inutilisables faute de temps. Ces délais dans le processus de distribution des organes ainsi que le délai d'établissement d'une liste classée de receveurs potentiels sont chaque année responsables de 500 morts.</textarea>
-
+      <br>
+      <div class=" has-text-justified container is-max-desktop">
+        <article class="media">
+          <div class="media-left">
+            <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--value:60"></div>
+          </div>
+          <div class="media-content">
+            <div class="content text-circlebar">
+              Aujourd'hui <strong>60%</strong> des cœurs et poumons destines a être greffes sont jetés car inutilisables
+              faute de
+              temps.
+            </div>
+          </div>
+        </article>
+      </div>
+      <br>
+      <div class=" has-text-justified container is-max-desktop">
+        <article class="media">
+          <div class="media-left">
+            <div class="circle">
+              <p>500</p>
+            </div>
+          </div>
+          <div class="media-content">
+            <div class="content text-circlebar">
+              Ces délais dans le processus de distribution des organes ainsi que le délai d'établissement d'une liste
+              classée de receveurs potentiels sont chaque année responsables de <strong> 500 morts</strong>.
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="has-text-justified container is-max-desktop text-style">
         <br>
         <br>
         En effet aujourd'hui dans l’établissement des priorités dans la notation des receveurs d'organes de nombreuses
@@ -96,29 +113,37 @@
         rhésus ou la localisation géographique, de suggérer le candidat idéal, remplaçant ainsi différentes couches
         administratives.
       </div>
-      <div class="" id="solutionvalide">
-        <h1 class="is-size-2 has-text-centered titre-about">Une solution validée par les professionnels</h1>
+      <br>
+      <br>
+      <div>
+        <h1 class="is-size-2 has-text-centered title" id="solutionvalide">NOUS VOUS PROPOSONS
+          <br>
+          Une solution validée par les professionnels
+        </h1>
         <br>
         <br>
         <br>
-        <div class="has-text-justified container is-max-desktop">
+        <div class="has-text-justified container is-max-desktop text-style">
           Au cours du développement de notre application censée être une amélioration de la base de données existante
-          CRISTAL
-          nous avons pu rentrer en contact avec les administrateurs de ladite plateforme : l'Agence de Biomédecine.
+          <strong> CRISTAL, </strong>
+          nous avons pu rentrer en contact avec les administrateurs de ladite plateforme : <strong> l'Agence de
+            Biomédecine</strong>.
           <br>
           Nous leur avons parlé de notre projet et de notre vision du futur et notre solution les a fortement interessé.
           En effet suite à plusieurs discussions et réunions nous avons réussi à trouver une dynamique d'entente pour
           que
-          nous puissions développper notre plateforme avec l'aide de ces professionnels.
+          nous puissions développper notre plateforme <strong> ORGANIA </strong>avec l'aide de ces professionnels.
           Chaque algorithme est soigneusement testé et validé par l'agence de biomédecine afin d'assurer
           la qualité de notre travail et pour pouvoir proposer à nos utilisateurs une application qui corresponde à
           leurs besoins.
 
         </div>
       </div>
+      <br>
+      <br>
 
-      <div class="" id="timeline">
-        <h1 class="is-size-2 has-text-centered titre-about">Timeline de la solution</h1>
+      <div id="timeline">
+        <h1 class="is-size-2 has-text-centered title">Timeline de la solution</h1>
         <div class="container-timeline">
           <div class="wrapper">
             <h1 class="timeline-title">Le travail réalisé...</h1>
@@ -499,6 +524,72 @@ export default {
 </script>
 
 <style scoped>
+@keyframes growProgressBar {
+
+  0%,
+  33% {
+    --pgPercentage: 0;
+  }
+
+  100% {
+    --pgPercentage: var(--value);
+  }
+}
+
+@property --pgPercentage {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+div[role="progressbar"] {
+  --size: 12rem;
+  --fg: #369;
+  --bg: #def;
+  --pgPercentage: var(--value);
+  animation: growProgressBar 3s 1 forwards;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(closest-side, white 80%, transparent 0 99.9%, white 0),
+    conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size) / 5);
+  color: var(--fg);
+}
+
+div[role="progressbar"]::before {
+  counter-reset: percentage var(--value);
+  content: counter(percentage) '%';
+}
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.circle {
+  border: 0.1em solid #369;
+  border-radius: 100%;
+  height: 12em;
+  width: 12em;
+  border-style: dashed;
+}
+
+.circle p {
+  margin-top: 1.2em;
+  font-size: 3em;
+  font-family: sans-serif;
+  color: #369;
+  text-align: center;
+}
+
 .logo {
   height: auto;
 }
@@ -513,7 +604,24 @@ export default {
   background-color: #071f49;
 }
 
+.title {
+  color: #369;
+  text-shadow: 5px 5px 10px;
+}
 
+strong {
+  color: #369;
+  text-shadow: 5px 5px 10px;
+}
+
+.text-style {
+  font-weight: bold;
+}
+
+.text-circlebar {
+  font-weight: bold;
+  margin-top: 5em;
+}
 
 .align-middle {
   vertical-align: middle;
