@@ -144,60 +144,123 @@
 
       <div id="timeline">
         <h1 class="is-size-2 has-text-centered title">Timeline de la solution</h1>
-        <div class="container-timeline">
-          <div class="wrapper">
-            <h1 class="timeline-title">Le travail réalisé...</h1>
-            <ul class="sessions list-tl">
-              <li class="list-tl tl-li">
-                <div class="time">Mars 2021</div>
-                <p>Choix des technologies</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">Avril 2021</div>
-                <p>Mise en place d'une charte graphique simple et direct</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">Avril - Juillet 2021</div>
-                <p>Documentation sur les calculs</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">Juin 2021 - Mars 2022</div>
-                <p>Implémentation de systèmes de gestion des patients et de leurs données</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">Janvier 2022 - Mai 2022</div>
-                <p>Implémentation de la gestion des hôpitaux</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">Janvier 2022 - Mai 2022</div>
-                <p>Ajout de la messagerie instantanée</p>
-              </li>
-            </ul>
-            <h1 class="timeline-title">...et le travail restant</h1>
-            <ul class="sessions list-tl">
-              <li class="list-tl tl-li">
-                <div class="time">Juin 2022</div>
-                <p>Implémentation du calcul du score dans l'interface</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">Juin/Juillet 2022</div>
-                <p>Ajout d'un début d'XIA</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">Juin 2022 - 2023</div>
-                <p>Échanges avec l'agence de Bio-médecine française pour l'ajout ou correction de fonctionnalités</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">2023</div>
-                <p>Améliorations UI/UX en accord avec les retours utilisateurs</p>
-              </li>
-              <li class="list-tl tl-li">
-                <div class="time">2023</div>
-                <p>Mise à disposition de l'outil OrganIA pour les professionnels de santé</p>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <br>
+        <ul class="sessions list-tl">
+          <li class="list-tl tl-li">
+            <div class="time">Mars 2021</div>
+            <br>
+            <article class="message is-link box-style-left">
+              <div class="message-body body-style-left">
+                Choix des technologies
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-right-2">Avril 2021</div>
+            <br>
+            <article class="message is-link box-style-right">
+              <div class="message-body body-style-right">
+                Mise en place d'une charte graphique simple et direct
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-1">Avril - Juillet 2021</div>
+            <br>
+            <article class="message is-link box-style-left">
+              <div class="message-body body-style-left">
+                Documentation sur les calculs
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-right-3">Juin 2021 - Mars 2022</div>
+            <br>
+            <article class="message is-link box-style-right">
+              <div class="message-body body-style-right">
+                Implémentation de systèmes de gestion des patients et de leurs données
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-2">Janvier 2022 - Mai 2022</div>
+            <br>
+            <article class="message is-link box-style-left">
+              <div class="message-body body-style-left">
+                Implémentation de la gestion des hôpitaux
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-right-3">Janvier 2022 - Mai 2022</div>
+            <br>
+            <article class="message is-link box-style-right">
+              <div class="message-body body-style-right">
+                Ajout de la messagerie instantanée
+              </div>
+            </article>
+            <br>
+          </li>
+        </ul>
+        <br>
+        <h1 class="is-size-2 has-text-centered title">...et le travail restant</h1>
+        <ul>
+          <li class="list-tl tl-li">
+            <div class="time">Juin 2022</div>
+            <br>
+            <article class="message is-link box-style-left">
+              <div class="message-body body-style-left">
+                Implémentation du calcul du score dans l'interface
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-right">Juin/Juillet 2022</div>
+            <br>
+            <article class="message is-link box-style-right">
+              <div class="message-body body-style-right">
+                Ajout d'un début d'XIA
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-1">Juin 2022 - 2023</div>
+            <br>
+            <article class="message is-link box-style-left">
+              <div class="message-body body-style-left">
+                Échanges avec l'agence de Bio-médecine française pour l'ajout ou correction de fonctionnalités
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-right-1">2023</div>
+            <br>
+            <article class="message is-link box-style-right">
+              <div class="message-body body-style-right">
+                Améliorations UI/UX en accord avec les retours utilisateurs
+              </div>
+            </article>
+            <br>
+          </li>
+          <li class="list-tl tl-li">
+            <div class="time-3">2023</div>
+            <br>
+            <article class="message is-link box-style-left">
+              <div class="message-body body-style-left">
+                Mise à disposition de l'outil OrganIA pour les professionnels de santé
+              </div>
+            </article>
+            <br>
+          </li>
+        </ul>
       </div>
       <h1 class="is-size-2 has-text-centered titre-about" id="team">L'équipe</h1>
 
@@ -606,12 +669,10 @@ body {
 
 .title {
   color: #369;
-  text-shadow: 5px 5px 10px;
 }
 
 strong {
   color: #369;
-  text-shadow: 5px 5px 10px;
 }
 
 .text-style {
@@ -657,6 +718,28 @@ strong {
   padding: 3rem 0;
 }
 
+.box-style-left {
+  width: 35em;
+  height: 7em;
+  margin-left: 48em;
+  font-weight: bold;
+}
+
+.box-style-right {
+  width: 35em;
+  height: 7em;
+  margin-left: 4em;
+  font-weight: bold;
+}
+
+.body-style-left {
+  height: 7em;
+}
+
+.body-style-right {
+  height: 7em;
+}
+
 .wrapper {
   background: #eaf6ff;
   padding: 2rem;
@@ -675,36 +758,89 @@ strong {
 }
 
 li.tl-li {
-  padding-bottom: 2rem;
-  border-left: 3px solid #abaaed;
-  position: relative;
-  padding-left: 20px;
-  margin-left: 10px;
+  /*border-left: 3px solid #abaaed;*/
 }
 
-li.tl-li:last-child {
-  padding-bottom: 0;
-}
+
+
 
 li.tl-li:before {
   content: '';
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background: white;
   border: 1px solid #4e5ed3;
   box-shadow: 3px 3px 0px #bab5f8;
   box-shadow: 3px 3px 0px #bab5f8;
   border-radius: 50%;
   position: absolute;
-  left: -20px;
-  top: 25px;
+  left: auto;
+  top: auto;
+
 }
 
 .time {
   color: #2a2839;
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   margin-top: 0rem;
+  margin-left: -8em;
+}
+
+.time-right {
+  color: #2a2839;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0rem;
+  margin-left: 15em;
+}
+
+.time-right-1 {
+  color: #2a2839;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0rem;
+  margin-left: 10em;
+}
+
+.time-right-2 {
+  color: #2a2839;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0rem;
+  margin-left: 12em;
+}
+
+.time-right-3 {
+  color: #2a2839;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0rem;
+  margin-left: 18em;
+}
+
+.time-1 {
+  color: #2a2839;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0rem;
+  margin-left: -12em;
+}
+
+.time-2 {
+  color: #2a2839;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0rem;
+  margin-left: -14em;
+}
+
+.time-3 {
+  color: #2a2839;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0rem;
+  margin-left: -7em;
 }
 
 .titre-about {
