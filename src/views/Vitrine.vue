@@ -9,7 +9,7 @@
 
     <div id="navbarExampleTransparentExample" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="#eipmodeemploi">
+        <a class="navbar-item" href="#acceuil">
           Acceuil
         </a>
         <a class="navbar-item" href="#organiaeip">
@@ -45,14 +45,12 @@
 
   <div class="about-container">
     <div class="container">
-      <!--<div class="" id="eipmodeemploi">
-        <img class="align-middle"
-          src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
-          height="100px" width="700px">
-        <br>
-        <br>
-        <br>
-      </div> -->
+      <figure class="image is-5by4" id="acceuil">
+        <img src="@/assets/photo-vitrine/Affiche-ORGANIA.png">
+      </figure>
+      <br>
+      <br>
+      <br>
       <h1 class="title" id="organiaeip">
         QUI SOMMES-NOUS ?
       </h1>
@@ -365,6 +363,10 @@
                     <div class="media-left">
                       <p class="title is-4">Felix Burdot</p>
                       <p class="subtitle is-6">Développeur BackEnd et Algo</p>
+                      <!--<a class="team-button linkedin" href="https://www.linkedin.com/in/f%C3%A9lix-burdot-8b0686159/">
+                        <div class="fab fa-linkedin"></div>
+                        Linkedin
+                      </a>-->
                     </div>
                   </div>
                 </div>
@@ -460,6 +462,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <br>
+    <br>
+    <div id="contact">
+      <h1 class="is-size-2 has-text-centered title">Contactez-nous</h1>
     </div>
   </div>
 
