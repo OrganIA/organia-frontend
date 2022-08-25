@@ -149,7 +149,7 @@
           <li class="list-tl tl-li">
             <div class="time">Mars 2021</div>
             <br>
-            <article class="message is-link box-style-left">
+            <article class="message is-info box-style-left">
               <div class="message-body body-style-left">
                 Choix des technologies
               </div>
@@ -159,7 +159,7 @@
           <li class="list-tl tl-li">
             <div class="time-right-2">Avril 2021</div>
             <br>
-            <article class="message is-link box-style-right">
+            <article class="message is-info box-style-right">
               <div class="message-body body-style-right">
                 Mise en place d'une charte graphique simple et direct
               </div>
@@ -169,7 +169,7 @@
           <li class="list-tl tl-li">
             <div class="time-1">Avril - Juillet 2021</div>
             <br>
-            <article class="message is-link box-style-left">
+            <article class="message is-info box-style-left">
               <div class="message-body body-style-left">
                 Documentation sur les calculs
               </div>
@@ -179,7 +179,7 @@
           <li class="list-tl tl-li">
             <div class="time-right-3">Juin 2021 - Mars 2022</div>
             <br>
-            <article class="message is-link box-style-right">
+            <article class="message is-info box-style-right">
               <div class="message-body body-style-right">
                 Implémentation de systèmes de gestion des patients et de leurs données
               </div>
@@ -189,7 +189,7 @@
           <li class="list-tl tl-li">
             <div class="time-2">Janvier 2022 - Mai 2022</div>
             <br>
-            <article class="message is-link box-style-left">
+            <article class="message is-info box-style-left">
               <div class="message-body body-style-left">
                 Implémentation de la gestion des hôpitaux
               </div>
@@ -199,7 +199,7 @@
           <li class="list-tl tl-li">
             <div class="time-right-3">Janvier 2022 - Mai 2022</div>
             <br>
-            <article class="message is-link box-style-right">
+            <article class="message is-info box-style-right">
               <div class="message-body body-style-right">
                 Ajout de la messagerie instantanée
               </div>
@@ -213,7 +213,7 @@
           <li class="list-tl tl-li">
             <div class="time">Juin 2022</div>
             <br>
-            <article class="message is-link box-style-left">
+            <article class="message is-info box-style-left">
               <div class="message-body body-style-left">
                 Implémentation du calcul du score dans l'interface
               </div>
@@ -223,7 +223,7 @@
           <li class="list-tl tl-li">
             <div class="time-right">Juin/Juillet 2022</div>
             <br>
-            <article class="message is-link box-style-right">
+            <article class="message is-info box-style-right">
               <div class="message-body body-style-right">
                 Ajout d'un début d'XIA
               </div>
@@ -233,7 +233,7 @@
           <li class="list-tl tl-li">
             <div class="time-1">Juin 2022 - 2023</div>
             <br>
-            <article class="message is-link box-style-left">
+            <article class="message is-info box-style-left">
               <div class="message-body body-style-left">
                 Échanges avec l'agence de Bio-médecine française pour l'ajout ou correction de fonctionnalités
               </div>
@@ -243,7 +243,7 @@
           <li class="list-tl tl-li">
             <div class="time-right-1">2023</div>
             <br>
-            <article class="message is-link box-style-right">
+            <article class="message is-info box-style-right">
               <div class="message-body body-style-right">
                 Améliorations UI/UX en accord avec les retours utilisateurs
               </div>
@@ -253,7 +253,7 @@
           <li class="list-tl tl-li">
             <div class="time-3">2023</div>
             <br>
-            <article class="message is-link box-style-left">
+            <article class="message is-info box-style-left">
               <div class="message-body body-style-left">
                 Mise à disposition de l'outil OrganIA pour les professionnels de santé
               </div>
@@ -264,182 +264,64 @@
       </div>
       <h1 class="is-size-2 has-text-centered title" id="team">L'équipe</h1>
       <br>
-      <div class="resized-container">
-
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="./photo-vitrine/david.farjon.jpg" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">David Farjon</p>
-                    <p class="subtitle is-6">Développeur FrontEnd</p>
+      <div class="columns is-mobile is-variable">
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/saber.jpg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">Okil Saber Lakhdari</p>
+                      <p class="subtitle is-6">Lead projet, développeur FullStack et mobile</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <br>
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="./photo-vitrine/william.jpeg" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">William Winqwist</p>
-                    <p class="subtitle is-6">Développeur </p>
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/victor.jpg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">Victor Hamon</p>
+                      <p class="subtitle is-6">Lead FrontEnd </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <br>
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">Damien Savatier</p>
-                    <p class="subtitle is-6">Développeur </p>
-                  </div>
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/damien.jpg" alt="Placeholder image">
+                  </figure>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="./photo-vitrine/felix.jpg" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">Felix Burdot</p>
-                    <p class="subtitle is-6">Développeur </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="./photo-vitrine/guillaume.jpg" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">Guillaume Braux</p>
-                    <p class="subtitle is-6">Développeur </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <br>
-          </div>
-        </div>
-        <br>
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="./photo-vitrine/nicolas.jpg" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">Nicolas Yapobi</p>
-                    <p class="subtitle is-6">Développeur </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="./photo-vitrine/victor.jpg" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">Victor Hamon</p>
-                    <p class="subtitle is-6">Développeur </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="./photo-vitrine/saber.jpg" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">Okil Saber Lakhdari</p>
-                    <p class="subtitle is-6">Développeur </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="card card-style">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="./photo-vitrine/irama.jpg" alt="Placeholder image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="media media-style">
-                  <div class="media-left">
-                    <p class="title is-4">Irama Chaouch</p>
-                    <p class="subtitle is-6">Développeuse FrontEnd </p>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">Damien Savatier</p>
+                      <p class="subtitle is-6">Lead BackEnd et Devops</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -447,33 +329,158 @@
           </div>
         </div>
       </div>
-
-      <div class="resized-container">
-        <div class="columns is-2">
+      <div class="columns is-mobile is-variable">
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/irama.jpg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">Irama Chaouch</p>
+                      <p class="subtitle is-6">Développeuse FrontEnd </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/felix.jpg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">Felix Burdot</p>
+                      <p class="subtitle is-6">Développeur BackEnd et Algo</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/nicolas.jpg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">Nicolas Yapobi</p>
+                      <p class="subtitle is-6">Développeur BackEnd</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-mobile is-variable">
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/william.jpeg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">William Winqwist</p>
+                      <p class="subtitle is-6">Développeur FullStack, Algorithme et IA</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/david.farjon.jpg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">David Farjon</p>
+                      <p class="subtitle is-6">Développeur FrontEnd et IA</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card card-style">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/guillaume.jpg" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="media media-style">
+                    <div class="media-left">
+                      <p class="title is-4">Guillaume Braux</p>
+                      <p class="subtitle is-6">Développeur Algo et IA </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
   </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
   <footer class="footer large-footer"></footer>
 
 </template>
@@ -667,9 +674,9 @@ li.tl-li:before {
   width: 30px;
   height: 30px;
   background: white;
-  border: 1px solid #4e5ed3;
-  box-shadow: 3px 3px 0px #bab5f8;
-  box-shadow: 3px 3px 0px #bab5f8;
+  border: 1px solid #0f2c59;
+  box-shadow: 3px 3px 0px #0f2c59;
+  box-shadow: 3px 3px 0px #0f2c59;
   border-radius: 50%;
   position: absolute;
   left: auto;
@@ -747,8 +754,8 @@ li.tl-li:before {
 }
 
 .card-style {
-  width: 30em;
-  height: 14em;
+  width: 31em;
+  height: 11em;
 }
 
 .media-style {
