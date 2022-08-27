@@ -1,13 +1,13 @@
 <template>
-  <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand logo-placeholder">
-      <a class=" navbar-item logo">
+      <router-link class="navbar-item logo" to="/">
         <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
           class="logo-img-align">
-      </a>
+      </router-link>
     </div>
 
-    <div id="navbarExampleTransparentExample" class="navbar-menu">
+    <div class="navbar-menu">
       <div class="navbar-start">
         <a class="navbar-item" href="#acceuil">
           Acceuil
@@ -34,7 +34,7 @@
       <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control">
-            <router-link to="/login" class=" navbar-item button nav-button is-rounded">
+            <router-link to="/login" class=" navbar-item button nav-button is-rounded back-button">
               Retour
             </router-link>
           </p>
@@ -45,10 +45,9 @@
 
   <div class="about-container">
     <div class="container">
-      <figure class="image is-5by4" id="acceuil">
+      <figure id="acceuil">
         <img src="@/assets/photo-vitrine/Affiche-ORGANIA.png">
       </figure>
-      <br>
       <br>
       <br>
       <h1 class="title" id="organiaeip">
@@ -268,8 +267,8 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-128x128">
-                    <img class="is-rounded" src="@/assets/photo-vitrine/saber.jpg" alt="Placeholder image">
+                  <figure class="image is-96x96">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/saber.jpeg" alt="Placeholder image">
                   </figure>
                 </div>
                 <div class="media-content">
@@ -289,7 +288,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-128x128">
+                  <figure class="image is-96x96">
                     <img class="is-rounded" src="@/assets/photo-vitrine/victor.jpg" alt="Placeholder image">
                   </figure>
                 </div>
@@ -310,7 +309,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-128x128">
+                  <figure class="image is-64x64">
                     <img class="is-rounded" src="@/assets/photo-vitrine/damien.jpg" alt="Placeholder image">
                   </figure>
                 </div>
@@ -333,7 +332,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-128x128">
+                  <figure class="image is-96x96">
                     <img class="is-rounded" src="@/assets/photo-vitrine/irama.jpg" alt="Placeholder image">
                   </figure>
                 </div>
@@ -362,11 +361,7 @@
                   <div class="media media-style">
                     <div class="media-left">
                       <p class="title is-4">Felix Burdot</p>
-                      <p class="subtitle is-6">Développeur BackEnd et Algo</p>
-                      <!--<a class="team-button linkedin" href="https://www.linkedin.com/in/f%C3%A9lix-burdot-8b0686159/">
-                        <div class="fab fa-linkedin"></div>
-                        Linkedin
-                      </a>-->
+                      <p class="subtitle is-6">Développeur BackEnd et Algorithme</p>
                     </div>
                   </div>
                 </div>
@@ -379,7 +374,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-128x128">
+                  <figure class="image is-96x96">
                     <img class="is-rounded" src="@/assets/photo-vitrine/nicolas.jpg" alt="Placeholder image">
                   </figure>
                 </div>
@@ -402,7 +397,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-128x128">
+                  <figure class="image is-96x96">
                     <img class="is-rounded" src="@/assets/photo-vitrine/william.jpeg" alt="Placeholder image">
                   </figure>
                 </div>
@@ -423,7 +418,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-128x128">
+                  <figure class="image is-96x96">
                     <img class="is-rounded" src="@/assets/photo-vitrine/david.png" alt="Placeholder image">
                   </figure>
                 </div>
@@ -444,7 +439,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-128x128">
+                  <figure class="image is-96x96">
                     <img class="is-rounded" src="@/assets/photo-vitrine/guillaume.jpg" alt="Placeholder image">
                   </figure>
                 </div>
@@ -452,7 +447,7 @@
                   <div class="media media-style">
                     <div class="media-left">
                       <p class="title is-4">Guillaume Braux</p>
-                      <p class="subtitle is-6">Développeur Algo et IA </p>
+                      <p class="subtitle is-6">Développeur Algorithme et IA </p>
                     </div>
                   </div>
                 </div>
@@ -464,51 +459,39 @@
       </div>
     </div>
     <br>
-    <br>
     <div id="contact">
       <h1 class="is-size-2 has-text-centered title">Contactez-nous</h1>
     </div>
     <br>
-    <div class="card">
-      <a class=" navbar-item logo mail-box-logo">
-        <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
-          class="logo-img-align">
-      </a>
-      <br>
-      <br>
-      <span class="icon-text mail-link">
-        <span class="icon">
-          <i class="fas fa-envelope-open-text"></i>
-        </span>
-        <span>Envoyez-nous un E-mail :</span>
-      </span>
-      <br>
-      <br>
-      <a class="mail-link mail-link-color"
-        href="mailto:organia_2023@labeip.epitech.eu">organia_2023@labeip.epitech.eu</a>
+    <div class="columns is-mobile is-variable">
+      <div class="column"></div>
+      <div class="column">
+        <div class="card">
+          <div class="card-content">
+            <a class=" navbar-item logo mail-box-logo">
+              <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
+                alt="logo" class="logo-img-align">
+            </a>
+            <br>
+            <br>
+            <span class="icon-text mail-link">
+              <span class="icon">
+                <i class="fas fa-envelope-open-text"></i>
+              </span>
+              <span>Envoyez-nous un E-mail :</span>
+            </span>
+            <br>
+            <br>
+            <a class="mail-link mail-link-color"
+              href="mailto:organia_2023@labeip.epitech.eu">organia_2023@labeip.epitech.eu</a>
+          </div>
+        </div>
+      </div>
+      <div class="column"></div>
     </div>
   </div>
-
   <br>
   <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <footer class="footer large-footer"></footer>
-
 </template>
 
 <script>
@@ -519,6 +502,7 @@ export default {
 
 <style scoped>
 @keyframes growProgressBar {
+
 
   0%,
   33% {
@@ -568,6 +552,12 @@ body {
   height: 100vh;
 }
 
+.navbar {
+  background-color: var(--light-gray);
+  height: 110px;
+  padding: 10px;
+}
+
 .circle {
   border: 0.1em solid #369;
   border-radius: 100%;
@@ -615,24 +605,9 @@ strong {
   margin-top: 5em;
 }
 
-.align-middle {
-  vertical-align: middle;
-}
-
-.not-resizable {
-  resize: none;
-}
-
 .titre-about {
   background-color: var(--dark-blue);
   color: white;
-}
-
-.linkedin-saber {
-  position: absolute;
-  top: 350px;
-  left: 110px;
-  background: #071f49;
 }
 
 .list-tl {
@@ -686,10 +661,6 @@ strong {
   margin-top: 2rem;
   border-radius: 12px;
   position: relative;
-}
-
-li.tl-li {
-  /*border-left: 3px solid #abaaed;*/
 }
 
 li.tl-li:before {
@@ -801,5 +772,12 @@ li.tl-li:before {
 .mail-box-logo {
   margin: auto;
   height: 5em;
+}
+a {
+  color: #296fa8;
+}
+
+.back-button {
+  color: white;
 }
 </style>
