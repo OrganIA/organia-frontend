@@ -469,20 +469,23 @@
       <h1 class="is-size-2 has-text-centered title">Contactez-nous</h1>
     </div>
     <br>
-    <div class="notification is-info mail-box">
+    <div class="card">
       <a class=" navbar-item logo mail-box-logo">
         <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
           class="logo-img-align">
       </a>
       <br>
       <br>
-      <span class="icon-text">
+      <span class="icon-text mail-link">
         <span class="icon">
-          <i class="fas fa-envelope-open-text envelope-size"></i>
+          <i class="fas fa-envelope-open-text"></i>
         </span>
-        <span><a class="mail-link" href="mailto:email@example.com"> Envoyez-nous un E-mail</a>
-        </span>
+        <span>Envoyez-nous un E-mail :</span>
       </span>
+      <br>
+      <br>
+      <a class="mail-link mail-link-color"
+        href="mailto:organia_2023@labeip.epitech.eu">organia_2023@labeip.epitech.eu</a>
     </div>
   </div>
 
@@ -689,9 +692,6 @@ li.tl-li {
   /*border-left: 3px solid #abaaed;*/
 }
 
-
-
-
 li.tl-li:before {
   content: '';
   width: 30px;
@@ -794,8 +794,8 @@ li.tl-li:before {
   font-size: 1.5rem;
 }
 
-.envelope-size {
-  font-size: 1.5rem;
+.mail-link-color {
+  color: #369;
 }
 
 .mail-box-logo {
