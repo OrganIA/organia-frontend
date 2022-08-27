@@ -468,6 +468,22 @@
     <div id="contact">
       <h1 class="is-size-2 has-text-centered title">Contactez-nous</h1>
     </div>
+    <br>
+    <div class="notification is-info mail-box">
+      <a class=" navbar-item logo mail-box-logo">
+        <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
+          class="logo-img-align">
+      </a>
+      <br>
+      <br>
+      <span class="icon-text">
+        <span class="icon">
+          <i class="fas fa-envelope-open-text envelope-size"></i>
+        </span>
+        <span><a class="mail-link" href="mailto:email@example.com"> Envoyez-nous un E-mail</a>
+        </span>
+      </span>
+    </div>
   </div>
 
   <br>
@@ -767,5 +783,23 @@ li.tl-li:before {
 
 .media-style {
   text-align: center;
+}
+
+.mail-box {
+  height: 13em;
+}
+
+.mail-link {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.envelope-size {
+  font-size: 1.5rem;
+}
+
+.mail-box-logo {
+  margin: auto;
+  height: 5em;
 }
 </style>
