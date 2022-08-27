@@ -31,7 +31,6 @@ const routes = [
   { path: "/hospitals/add", component: () => import("./views/Hospitals/NewHospital.vue") },
   { path: "/hospitals/info/:id", component: () => import("./views/Hospitals/DisplayHospitalInfo.vue"), props: true },
   { path: "/hospitals/edit/:id", component: () => import("./views/Hospitals/EditHospital.vue"), props: true },
-  { path: "/team", component: () => import("./views/TeamDescription.vue") },
   { path: "/account", component: () => import("./views/Account.vue") },
 ]
 
