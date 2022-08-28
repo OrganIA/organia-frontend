@@ -46,7 +46,7 @@
   <div class="about-container">
     <div class="container">
       <figure id="acceuil">
-        <img src="@/assets/photo-vitrine/Affiche-ORGANIA.png">
+        <img src="@/assets/photo-vitrine/affiche.png">
       </figure>
       <br>
       <br>
@@ -300,8 +300,8 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <figure class="image is-96x96">
-                    <img class="is-rounded" src="@/assets/photo-vitrine/david.png" alt="Placeholder image">
+                  <figure class="image is-128x128">
+                    <img class="is-rounded" src="@/assets/photo-vitrine/david.jpg" alt="Placeholder image">
                   </figure>
                 </div>
                 <div class="media-content">
