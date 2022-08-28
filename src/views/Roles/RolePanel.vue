@@ -66,10 +66,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error(
-            "Erreur de la reception des rôles : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     changeRole(r) {
@@ -87,10 +83,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error(
-            "Erreur de la modification du rôle : " + r.name
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     updateRoles() {

@@ -147,10 +147,6 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.$toast.error(
-                        "Erreur lors de la connexion : " + error.response.data.detail
-                    );
-                    setTimeout(this.$toast.clear, 3000);
                 });
         },
         deleteChat() {
@@ -163,10 +159,6 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.$toast.error(
-                        "Erreur lors de la connexion : " + error.response.data.detail
-                    );
-                    setTimeout(this.$toast.clear, 3000);
                 });
             this.$toast.success("Suppression en cour");
         },

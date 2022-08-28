@@ -26,6 +26,7 @@
 
 <script>
 import PresentationNavbar from "@/components/PresentationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "login",
@@ -54,10 +55,6 @@ export default {
         })
         .catch((error) => {
           console.log(error.response.data.detail);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     login() {
@@ -76,7 +73,7 @@ export default {
         .catch((error) => {
           console.log(error.response.data.detail);
           this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
+            "Erreur lors de la connexion : " + translate[error.response.data.detail]
           );
           setTimeout(this.$toast.clear, 3000);
         });

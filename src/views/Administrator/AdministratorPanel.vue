@@ -207,8 +207,6 @@ export default {
         })
         .catch((error) => {
           console.log(error)
-          this.$toast.error(error.message);
-          setTimeout(this.$toast.clear, 3000)
         });
 
     },
@@ -220,8 +218,6 @@ export default {
         })
         .catch((error) => {
           console.log(error)
-          this.$toast.error(error.message);
-          setTimeout(this.$toast.clear, 3000)
         });
     },
     loadSelectedUser(userId) {
