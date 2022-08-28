@@ -44,6 +44,7 @@
 
 <script>
 import PresentationNavbar from "@/components/PresentationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "register",
@@ -83,9 +84,14 @@ export default {
         .catch((error) => {
           console.log(error);
           console.log(error.response);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
+          if (error.response.data.detail.includes("email"))
+            this.$toast.error(
+              "Erreur lors de l'inscription : Email déjà utilisé"
+            );
+          else
+            this.$toast.error(
+              "Erreur lors de l'inscription : " + translate[error.response.data.detail]
+            );
           setTimeout(this.$toast.clear, 3000);
         });
     },
@@ -104,10 +110,6 @@ export default {
         })
         .catch((error) => {
           console.log(error.response.data.detail);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     login() {
@@ -125,10 +127,6 @@ export default {
         })
         .catch((error) => {
           console.log(error.response.data.detail);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
   },

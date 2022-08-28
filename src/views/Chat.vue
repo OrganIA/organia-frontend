@@ -100,8 +100,9 @@ export default {
           this.roomsLoaded = true
         })
         .catch((error) => {
+          console.log(error);
           this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
+            "Erreur lors du chargement des conversations"
           );
           setTimeout(this.$toast.clear, 3000);
         });
@@ -114,10 +115,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     getUsersOfChat(users_ids) {
@@ -176,10 +173,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
       this.websocketSetup(chat.room.roomId)
     },
@@ -205,10 +198,7 @@ export default {
           this.rooms = rooms
         })
         .catch((error) => {
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
+          console.log(error)
         })
 
     },
@@ -253,7 +243,7 @@ export default {
             this.websocket.close();
           }
           if (resp.event == "message_received" || resp.event == "message_sent") {
-            const tmp_date = Date.parse( resp.data.created_at)
+            const tmp_date = Date.parse(resp.data.created_at)
             const date = new Date()
             date.setUTCSeconds(tmp_date)
             this.messages.push({

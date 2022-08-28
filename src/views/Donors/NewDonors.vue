@@ -178,10 +178,7 @@ export default {
           this.$router.push("/donors");
         })
         .catch((error) => {
-          this.$toast.error(
-            "Erreur : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
+          console.log(error)
         });
     },
     getAllOrgans() {
@@ -192,10 +189,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error(
-            "Erreur : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
   },
