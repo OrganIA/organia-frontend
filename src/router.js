@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   { path: "/", component: () => import("./views/LandingPage.vue") },
-  { path: "/abouttheproject", component: () => import("./views/About/AboutProject.vue") },
+  { path: "/vitrine", component: () => import("./views/Vitrine.vue") },
   { path: "/receivers", component: () => import("./views/Receivers/ReceiversPanel.vue") },
   { path: "/receivers/add", component: () => import("./views/Receivers/NewReceiver.vue") },
   { path: "/receivers/edit/:id", component: () => import("./views/Receivers/EditReceiversPanel.vue"), props: true },
@@ -31,7 +31,6 @@ const routes = [
   { path: "/hospitals/add", component: () => import("./views/Hospitals/NewHospital.vue") },
   { path: "/hospitals/info/:id", component: () => import("./views/Hospitals/DisplayHospitalInfo.vue"), props: true },
   { path: "/hospitals/edit/:id", component: () => import("./views/Hospitals/EditHospital.vue"), props: true },
-  { path: "/team", component: () => import("./views/TeamDescription.vue") },
   { path: "/account", component: () => import("./views/Account.vue") },
 ]
 

@@ -15,7 +15,7 @@
           Utiliser la plateforme
         </router-link>
 
-        <router-link to="/abouttheproject" class="navbar-item button is-medium is-info is-light">
+        <router-link to="/vitrine" class="navbar-item button is-medium is-info is-light">
           Le projet
         </router-link>
       </div>
@@ -39,12 +39,10 @@ export default {
 </script>
 
 <style scoped>
-
 .presentation-message {
-    position: absolute;
-    top: 26.8vh;
-    width: 17.5vw;
-    margin-left: 50px;
+  position: absolute;
+  top: 26.8vh;
+  width: 17.5vw;
+  margin-left: 50px;
 }
-
 </style>
