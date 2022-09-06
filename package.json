@@ -18,7 +18,7 @@
     "moment": "^2.29.3",
     "pdfjs-dist": "^2.7.570",
     "vue": "^3.2.13",
-    "vue-advanced-chat": "https://github.com/antoine92190/vue-advanced-chat/tarball/next",
+    "vue-advanced-chat": "^1.5.7",
     "vue-axios": "^3.4.1",
     "vue-cal": "^4.2.0",
     "vue-pdf": "^4.3.0",
@@ -26,6 +26,7 @@
     "vue3-carousel": "^0.1.40",
     "vue3-cookies": "^1.0.6",
     "vue3-html2pdf": "^1.1.2",
+    "vue3-tel-input": "^1.0.4",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

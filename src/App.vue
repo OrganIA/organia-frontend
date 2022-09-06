@@ -12,6 +12,7 @@
 
 <script>
 import SideBar from "./components/SideBar";
+import translate from "@/translate"
 
 export default {
   name: "App",
@@ -33,10 +34,6 @@ export default {
         })
         .catch((error) => {
           console.log(error.response.data.detail);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     login() {
@@ -50,7 +47,7 @@ export default {
           this.$cookies.remove("token");
           this.$router.push("/login");
           this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
+            "Erreur lors de la connexion : " + translate[error.response.data.detail]
           );
           setTimeout(this.$toast.clear, 3000);
         });

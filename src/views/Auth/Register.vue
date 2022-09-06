@@ -7,6 +7,23 @@
       </div>
       <div class="field">
         <div class="control">
+          <input v-model="lastname" class="cypress-lastname input" placeholder="Nom de famille" type="text" required />
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input v-model="firstname" class="cypress-firstname input" placeholder="Prénom" type="text" required />
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <vue-tel-input class="cypress-phone-number input"
+            :inputOptions="{ placeholder: 'Numéro de téléphone', required: true }" :value="phone" @input="onInput"
+            required></vue-tel-input>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
           <input v-model="email" class="cypress-email input" placeholder="email" type="email" required />
         </div>
       </div>
@@ -27,6 +44,7 @@
 
 <script>
 import PresentationNavbar from "@/components/PresentationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "register",
@@ -34,16 +52,30 @@ export default {
   components: { PresentationNavbar },
   data() {
     return {
-      email: "",
+      lastname: "",
+      firstname: "",
+      phone: "",
       password: "",
+      email: "",
+      country: ""
     };
   },
   methods: {
+    onInput(phone, phoneObject) {
+      if (phoneObject?.formatted) {
+        this.country = phoneObject.country.iso2
+        this.phone = phoneObject.nationalNumber
+      }
+    },
     register() {
       this.$http
         .post("/users/", {
           email: this.email,
           password: this.password,
+          firstname: this.firstname,
+          lastname: this.lastname,
+          phone_number: this.phone,
+          country: this.country,
           role_id: 1
         })
         .then(() => {
@@ -52,9 +84,14 @@ export default {
         .catch((error) => {
           console.log(error);
           console.log(error.response);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
+          if (error.response.data.detail.includes("email"))
+            this.$toast.error(
+              "Erreur lors de l'inscription : Email déjà utilisé"
+            );
+          else
+            this.$toast.error(
+              "Erreur lors de l'inscription : " + translate[error.response.data.detail]
+            );
           setTimeout(this.$toast.clear, 3000);
         });
     },
@@ -73,10 +110,6 @@ export default {
         })
         .catch((error) => {
           console.log(error.response.data.detail);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     login() {
@@ -94,10 +127,6 @@ export default {
         })
         .catch((error) => {
           console.log(error.response.data.detail);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
   },

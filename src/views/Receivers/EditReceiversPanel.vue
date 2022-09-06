@@ -131,8 +131,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     submitForm() {
@@ -159,8 +157,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     updatePerson() {
@@ -187,8 +183,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     redirect() {
@@ -202,8 +196,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     delete_receiver() {
@@ -218,14 +210,11 @@ export default {
             })
             .catch((error) => {
               console.log(error);
-              this.$toast.error("Erreur : " + error.response.data.detail);
-              setTimeout(this.$toast.clear, 3000);
+
             });
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
   },

@@ -7,6 +7,8 @@ import Toaster from '@meforma/vue-toaster';
 import VueAxios from 'vue-axios'
 import axios from "./http"
 import moment from 'moment';
+import VueTelInput from 'vue3-tel-input'
+import 'vue3-tel-input/dist/vue3-tel-input.css'
 import 'vue-cal/dist/vuecal.css'
 
 createApp(App)
@@ -16,4 +18,5 @@ createApp(App)
     .use(Toaster)
     .use(VueAxios, axios)
     .use(moment)
+    .use(VueTelInput)
     .mount('#app')
