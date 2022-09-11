@@ -210,7 +210,31 @@
     <div class="modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
       <div class="modal-background">
         <div class="modal-card">
-          <button class="button is-link is-light" @click="openInfoModal(currentReceiver)">Retour</button>
+          <header class="modal-card-head">
+            <p class="modal-card-title is-3">Créer une conversation</p>
+            <button class="button is-danger is-light" @click="openInfoModal(currentReceiver)">Retour</button>
+          </header>
+          <section class="modal-card-body">
+            <div class="container">
+              <div class="columns">
+                <div class="column">
+                  <input class="input is-info" placeholder="Titre de la conversation" type="text" />
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <div class="box">
+                    <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
+                  </div>
+                </div>
+                <div class="column is-half">
+                  <div class="box">
+                    <button class="button is-medium is-fullwidth elements">Utilisateur à ajouter</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
