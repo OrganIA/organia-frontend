@@ -62,12 +62,12 @@
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info cypress-receiver-modal" @click="openModal(receiver)"></i>
+            <i class="fas fa-info cypress-receiver-modal" @click="openInfoModal(receiver)"></i>
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+    <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active': (state === 'info') }">
       <div class="modal-background">
         <div class="modal-card">
           <header class="modal-card-head">
@@ -200,8 +200,17 @@
                     currentPerson.notes
                 }}</button>
               </div>
+              <button class="button is-link is-light" @click="openChatModal()">Créer une
+                conversation</button>
             </div>
           </section>
+        </div>
+      </div>
+    </div>
+    <div class="modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
+      <div class="modal-background">
+        <div class="modal-card">
+          <button class="button is-link is-light" @click="openInfoModal(currentReceiver)">Retour</button>
         </div>
       </div>
     </div>
@@ -246,11 +255,14 @@ export default {
           console.log(error);
         });
     },
-    openModal(receiver) {
+    openInfoModal(receiver) {
       this.currentReceiver = receiver
       this.currentPerson = receiver.person
       console.log(receiver)
-      this.state = "clicked"
+      this.state = "info"
+    },
+    openChatModal() {
+      this.state = "chat"
     },
     closeModal() {
       this.currentReceiver = {}
