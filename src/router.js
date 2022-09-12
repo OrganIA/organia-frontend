@@ -24,7 +24,6 @@ const routes = [
   { path: "/eventlist", component: () => import("./views/Events/EventPanel.vue") },
   { path: "/eventlist/add", component: () => import("./views/Events/NewEvent.vue") },
   { path: "/eventlist/edit/:id", component: () => import("./views/Events/EditEventPanel.vue"), props: true },
-  { path: "/chat", component: () => import("./views/Chat.vue") },
   { path: "/useorgania", component: () => import("./views/HowToUseThePlatform.vue") },
   { path: "/searchmap", component: () => import("./views/Hospitals/SearchMap.vue") },
   { path: "/hospitals", component: () => import("./views/Hospitals/HospitalsPanel.vue") },

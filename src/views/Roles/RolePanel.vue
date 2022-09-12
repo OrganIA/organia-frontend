@@ -249,7 +249,7 @@ export default {
 
 .create-new-role {
   float: right;
-  width: 15%;
+  width: 200px;
   height: 50px;
   background-color: #6799c4;
   margin-bottom: 25px;
@@ -290,6 +290,7 @@ tr {width:100%}
 
 .page-content {
   max-width: 96%;
+  margin-left: 10px;
 
 }
 

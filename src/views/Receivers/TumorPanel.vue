@@ -186,6 +186,7 @@ export default {
 
 .page-content {
   max-width: 96%;
+  margin-left: 60px;
 
 }
 

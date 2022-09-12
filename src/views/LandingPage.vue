@@ -1,5 +1,14 @@
 
 <template>
+    <div class="app-navbar-container">
+      <ApplicationNavbar></ApplicationNavbar>
+    </div>
+    <div class="columns">
+      <div class="column sidebar-column">
+        <SideBar></SideBar>
+      </div>
+      <div class="column page-container">
+        <div class="page-content">
   <h1>Bienvenue sur la plateforme ORGANIA</h1>
   <carousel :autoplay="4000" :wrap-around="true" :items-to-show="1.5">
     <Slide v-for="content, index in contents" :key="content.id">
@@ -19,16 +28,21 @@
       <pagination />
     </template>
   </carousel>
+        </div></div></div>
 </template>
 
 <script>
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import SideBar from "@/components/SideBar";
+import ApplicationNavbar from "@/components/ApplicationNavbar";
 
 export default {
   name: "landing-page",
   components: {
+    SideBar,
+    ApplicationNavbar,
     Carousel,
     Slide,
     Pagination,

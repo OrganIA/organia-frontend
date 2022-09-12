@@ -421,6 +421,8 @@ p {
 
 
 table {
+    display: table;
+    table-layout: fixed;
     border-collapse: separate;
     border-radius: 15px;
     border:solid rgba(29, 48, 143, 0.85) 2px;
@@ -431,7 +433,7 @@ table {
 }
 
 th {
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     border-bottom: solid rgba(29, 48, 143, 0.45) 2px;
 }
 
@@ -457,7 +459,7 @@ tr:nth-child(even):hover {
 }
 
 td {
-    padding: 0.75rem 2rem;
+    padding: 1rem 1rem;
 }
 
 tr:nth-child(even) {

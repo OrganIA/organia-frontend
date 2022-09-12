@@ -203,6 +203,8 @@ thead tr {
 
 .page-content {
   max-width: 96%;
+  margin-left: 60px;
+
 }
 
 </style>

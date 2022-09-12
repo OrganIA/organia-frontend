@@ -228,16 +228,17 @@ export default {
 </script>
 <style scoped>
 .table-scroll {
-  display: block;
   overflow-x: scroll;
-  white-space: nowrap;
-  max-width: 85vw;
+  display: flex;
+  flex-direction: column;
+  white-space: break-spaces;
+  table-layout: fixed;
+  max-width: 1100px;
 }
-table tbody {
-  display: table;
-  width: 100%;
+th,td {
+  text-align: left;
+  min-width: 160px;
 }
-
 .role-panel-btn-container {
   padding: 25px 0 25px 25px;
 
@@ -247,9 +248,9 @@ table tbody {
   flex-direction: row;
 }
 
-
 .page-content {
   max-width: 96%;
+  margin-left: 10px;
 
 }
 
@@ -260,14 +261,12 @@ table tbody {
 
 }
 
-.table-scroll {
-  width: 100%;
-}
 
 .add-btn {
   float: right;
-  width: 10%;
+  width: 150px;
   height: 50px;
+  margin-right: 15px;
   background-color: #6799c4;
 }
 
@@ -282,10 +281,6 @@ table tbody {
 .btn-add-text {
   color: white;
   margin-left: 5px;
-}
-
-thead tr {
-  width: 100% !important;
 }
 
 .icon-add-btn-correction {color: white;

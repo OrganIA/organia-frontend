@@ -235,14 +235,16 @@ export default {
 
 <style scoped>
 .table-scroll {
-  display: block;
   overflow-x: scroll;
-  white-space: nowrap;
-  max-width: 85vw;
+  display: flex;
+  flex-direction: column;
+  white-space: break-spaces;
+  table-layout: fixed;
+  max-width: 1100px;
 }
-table tbody {
-  display: table;
-  width: 100%;
+th,td {
+  text-align: left;
+  min-width: 160px;
 }
 
 .role-panel-btn-container {
@@ -254,9 +256,9 @@ table tbody {
   flex-direction: row;
 }
 
-
 .page-content {
   max-width: 96%;
+  margin-left: 10px;
 
 }
 
