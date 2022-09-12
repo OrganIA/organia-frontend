@@ -1,10 +1,20 @@
 <template>
+  <div class="app-navbar-container">
+    <ApplicationNavbar></ApplicationNavbar>
+  </div>
+  <div class="columns">
+    <div class="column sidebar-column">
+      <SideBar></SideBar>
+    </div>
+    <div class="column page-container">
+      <div class="page-content">
   <div id="main">
-    <h1>Evenements</h1>
-    <p>
-      <router-link to="/eventlist/add" class="button is-info mb-6 cypress-to-add">Ajouter</router-link>
-    </p>
-    <p class="search content">Rechercher par</p>
+    <div class="event-panel-btn-container">
+      <router-link to="/eventlist/add" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
+        <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
+        <span class="btn-add-text">Ajouter</span>
+      </router-link>
+    </div>
     <div class="search-block">
       <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
         <option value="date">Date</option>
@@ -14,10 +24,7 @@
       <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
       <br />
     </div>
-    <table class="
-        table
-        is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info
-      ">
+    <table>
       <thead>
         <tr>
           <th @click="updateFilter('date')">Date</th>
@@ -40,13 +47,17 @@
       </tbody>
     </table>
   </div>
+      </div></div></div>
 </template>
 
 <script>
 import moment from "moment";
+import ApplicationNavbar from "@/components/ApplicationNavbar";
+import SideBar from "@/components/SideBar";
 
 export default {
   name: "event-panel",
+  components: {SideBar, ApplicationNavbar},
   data() {
     return {
       events: {},
@@ -156,3 +167,45 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.add-btn {
+  float: right;
+  width: 10%;
+  height: 50px;
+  background-color: #6799c4;
+  margin-right: 40px;
+}
+
+
+.add-btn:hover {
+  background-color: #2d6594;
+  outline: none;
+  text-decoration: none;
+
+}
+.btn-add-text {
+  color: white;
+  margin-left: 5px;
+}
+
+.icon-add-btn-correction {
+  color: white;
+  margin-right: 5px;
+  margin-top: -1px;
+}
+.event-panel-btn-container {
+  margin-top: 30px;
+
+  padding: 25px 0 -25px 25px;
+  width: 100%;
+  position: relative;
+  display: block;
+  flex-direction: row;
+}
+
+
+.main {
+  margin-top: 30px;
+}
+</style>

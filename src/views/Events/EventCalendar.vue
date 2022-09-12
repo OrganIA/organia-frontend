@@ -81,7 +81,8 @@ export default {
 
 .page-content {
   max-width: 96%;
-  margin-left: 60px;
+  margin-top: 20px;
+  margin-left: 30px;
 
 }
 
@@ -89,6 +90,7 @@ export default {
   margin-left: 20px;
   padding: 12px 0 0 0;
 }
+
 
 .organia-calendar {
   height: 75vh;
