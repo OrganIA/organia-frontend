@@ -50,24 +50,22 @@ export default {
     },
     calendarFiller() {
       this.$http
-          .get("/calendar")
-          .then((response) => {
-            new Date();
-            response.data.forEach((item) => {
-              const date = new Date(item.date);
-              this.events.push({
-                title: item.description,
-                start: this.formatDate(item.date),
-                end: this.formatDate(item.date),
-                content: `<p>${date.getHours()}:${date.getMinutes()}</p>`,
-              });
+        .get("/calendar")
+        .then((response) => {
+          new Date();
+          response.data.forEach((item) => {
+            const date = new Date(item.date);
+            this.events.push({
+              title: item.description,
+              start: this.formatDate(item.date),
+              end: this.formatDate(item.date),
+              content: `<p>${date.getHours()}:${date.getMinutes()}</p>`,
             });
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$toast.error(`Erreur: ${error.response.data.detail}`);
-            setTimeout(this.$toast.clear, 3000);
           });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

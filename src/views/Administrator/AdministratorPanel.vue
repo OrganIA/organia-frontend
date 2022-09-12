@@ -254,29 +254,25 @@ export default {
     },
     getUserByID() {
       this.$http
-          .get(`/users/${this.user.id}`)
-          .then((response) => {
-            this.user = response.data;
-            this.getRoleById(this.user.role_id)
-          })
-          .catch((error) => {
-            console.log(error)
-            this.$toast.error(error.message);
-            setTimeout(this.$toast.clear, 3000)
-          });
+        .get(`/users/${this.user.id}`)
+        .then((response) => {
+          this.user = response.data;
+          this.getRoleById(this.user.role_id)
+        })
+        .catch((error) => {
+          console.log(error)
+        });
 
     },
     getRoleById(id) {
       this.$http
-          .get(`/roles/${id}`)
-          .then((response) => {
-            this.role = response.data;
-          })
-          .catch((error) => {
-            console.log(error)
-            this.$toast.error(error.message);
-            setTimeout(this.$toast.clear, 3000)
-          });
+        .get(`/roles/${id}`)
+        .then((response) => {
+          this.role = response.data;
+        })
+        .catch((error) => {
+          console.log(error)
+        });
     },
     loadSelectedUser(userId) {
       if (this.user.id === userId) {

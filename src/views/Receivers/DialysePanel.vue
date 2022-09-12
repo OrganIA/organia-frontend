@@ -70,28 +70,26 @@ export default {
   methods: {
     getAllDialyse() {
       this.$http
-          .get("/listings/")
-          .then((response) => {
-            response.data.forEach((element) => {
-              element.person.created_at = new Date(
-                  element.person.created_at
-              ).toDateString();
-            });
-            this.receivers = response.data;
-            this.receivers.forEach((element) => {
-              if (element.isDialyse == true) {
-                this.receivers_dialyse.push(element);
-                if (element.startDateDialyse == null)
-                  element.startDateDialyse = "Aucune date informée";
-              }
-            });
-            this.receiversBackup = this.receivers_dialyse;
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$toast.error("Erreur : " + error.response.data.detail);
-            setTimeout(this.$toast.clear, 3000);
+        .get("/listings/")
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.person.created_at = new Date(
+              element.person.created_at
+            ).toDateString();
           });
+          this.receivers = response.data;
+          this.receivers.forEach((element) => {
+            if (element.isDialyse == true) {
+              this.receivers_dialyse.push(element);
+              if (element.startDateDialyse == null)
+                element.startDateDialyse = "Aucune date informée";
+            }
+          });
+          this.receiversBackup = this.receivers_dialyse;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     openModal(receiver) {
       if (!this.showModal) {

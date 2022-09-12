@@ -155,41 +155,33 @@ export default {
   methods: {
     getRoles() {
       this.$http
-          .get(`/roles`)
-          .then((response) => {
-            this.backup = response.data;
-            this.roles = response.data.map(role => Object.assign({}, role));
-            this.$toast.success("Reception des rôles reussie !");
-            setTimeout(this.$toast.clear, 3000);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$toast.error(
-                "Erreur de la reception des rôles : " + error.response.data.detail
-            );
-            setTimeout(this.$toast.clear, 3000);
-          });
+        .get(`/roles`)
+        .then((response) => {
+          this.backup = response.data;
+          this.roles = response.data.map(role => Object.assign({}, role));
+          this.$toast.success("Reception des rôles reussie !");
+          setTimeout(this.$toast.clear, 3000);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     changeRole(r) {
       this.$http
-          .post(`/roles/${r.id}`, {
-            can_manage_users: r.can_manage_users,
-            can_manage_persons: r.can_manage_persons,
-            can_manage_roles: r.can_manage_roles,
-            can_manage_hospitals: r.can_manage_hospitals,
-            can_invite: r.can_invite,
-          })
-          .then(() => {
-            this.$toast.success("Reception du rôle: " + r.name + " reussite !");
-            setTimeout(this.$toast.clear, 3000);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$toast.error(
-                "Erreur de la modification du rôle : " + r.name
-            );
-            setTimeout(this.$toast.clear, 3000);
-          });
+        .post(`/roles/${r.id}`, {
+          can_manage_users: r.can_manage_users,
+          can_manage_persons: r.can_manage_persons,
+          can_manage_roles: r.can_manage_roles,
+          can_manage_hospitals: r.can_manage_hospitals,
+          can_invite: r.can_invite,
+        })
+        .then(() => {
+          this.$toast.success("Reception du rôle: " + r.name + " reussite !");
+          setTimeout(this.$toast.clear, 3000);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     updateRoles() {
       for (let i in this.roles) {

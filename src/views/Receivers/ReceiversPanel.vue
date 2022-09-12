@@ -117,21 +117,19 @@ export default {
   methods: {
     getAllReceivers() {
       this.$http
-          .get("/listings/receivers")
-          .then((response) => {
-            response.data.forEach((element) => {
-              element.person.created_at = new Date(
-                  element.person.created_at
-              ).toDateString();
-            });
-            this.receivers = response.data;
-            this.receiversBackup = this.receivers;
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$toast.error("Erreur : " + error.response.data.detail);
-            setTimeout(this.$toast.clear, 3000);
+        .get("/listings/receivers")
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.person.created_at = new Date(
+              element.person.created_at
+            ).toDateString();
           });
+          this.receivers = response.data;
+          this.receiversBackup = this.receivers;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     openModal(receiver) {
       if (!this.showModal) {

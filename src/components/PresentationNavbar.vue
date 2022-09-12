@@ -18,7 +18,7 @@
           Utiliser la plateforme
         </router-link>
 
-        <router-link to="/abouttheproject" class="navbar-item button is-medium is-info is-light navbar-home-controller">
+        <router-link to="/vitrine" class="navbar-item button is-medium is-info is-light">
           Le projet
         </router-link>
 
@@ -76,6 +76,12 @@ export default {
 }
 .start-from-end-hor {
   float: right;
+}
+.presentation-message {
+  position: absolute;
+  top: 26.8vh;
+  width: 17.5vw;
+  margin-left: 50px;
 }
 
 .navbar-home-controllers {

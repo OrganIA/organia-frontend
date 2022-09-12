@@ -67,26 +67,24 @@ export default {
   methods: {
     getAllTumors() {
       this.$http
-          .get("/listings/")
-          .then((response) => {
-            response.data.forEach((element) => {
-              element.person.created_at = new Date(
-                  element.person.created_at
-              ).toDateString();
-            });
-            this.person = response.data;
-            this.person.forEach((element) => {
-              if (element.tumors_number > 0) {
-                this.person_tumors.push(element);
-              }
-            });
-            this.personBackup = this.person_tumors;
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$toast.error("Erreur : " + error.response.data.detail);
-            setTimeout(this.$toast.clear, 3000);
+        .get("/listings/")
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.person.created_at = new Date(
+              element.person.created_at
+            ).toDateString();
           });
+          this.person = response.data;
+          this.person.forEach((element) => {
+            if (element.tumors_number > 0) {
+              this.person_tumors.push(element);
+            }
+          });
+          this.personBackup = this.person_tumors;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     openModal(person) {
       if (!this.showModal) {

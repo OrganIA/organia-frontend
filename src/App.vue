@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import translate from "@/translate"
 
 export default {
   name: "App",
@@ -20,25 +21,9 @@ export default {
             role: response.data,
           });
           this.$emit("login", true);
-  //        <div class="main-container" :class="{ 'background-white': logged_in }">
-  //            <SideBar v-if="logged_in" @logout="logout" />
-  //            <div
-  //        class="secondary-container"
-  //      :class="{
-  //        'background-transparent': !logged_in,
-  //            'background-white': logged_in,
-  //      }"
-  //    >
-  //    <router-view @login="handleLogin" />
-  //        </div>
-  //  </div>
         })
         .catch((error) => {
           console.log(error.response.data.detail);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     login() {
@@ -52,7 +37,7 @@ export default {
           this.$cookies.remove("token");
           this.$router.push("/home");
           this.$toast.error(
-            "Erreur lors de la connexion : " + error.response.data.detail
+            "Erreur lors de la connexion : " + translate[error.response.data.detail]
           );
           setTimeout(this.$toast.clear, 3000);
         });
