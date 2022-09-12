@@ -1,11 +1,13 @@
 /* eslint-disable no-undef */
 describe('Login Test Success', () => {
   it('Tries to login should succeed', () => {
-    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+    cy.visit('http://localhost:8081/login')
 
     cy.get('.cypress-to-register').click()
+    cy.url().should('eq', 'http://localhost:8081/register')
 
     cy.get('.cypress-to-login').click()
+    cy.url().should('eq', 'http://localhost:8081/login')
 
     cy.get('.cypress-email')
       .type('saber@saber.com')
@@ -17,7 +19,7 @@ describe('Login Test Success', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
+    cy.url().should('eq', 'http://localhost:8081/')
 
     cy.getCookie("token").should('not.be.null')
   })
