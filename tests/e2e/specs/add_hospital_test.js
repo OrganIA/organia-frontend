@@ -1,11 +1,15 @@
+var number = Math.floor(Math.random() * 9000000000) + 1000000000;
+
 describe('Add hospital success', () => {
     it('Tries to open modal in the receiver panel should succeed', () => {
-      cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+      cy.visit('http://localhost:8081/login')
   
       cy.get('.cypress-to-register').click()
+      cy.url().should('eq', 'http://localhost:8081/register')
 
       cy.get('.cypress-to-login').click()
-  
+      cy.url().should('eq', 'http://localhost:8081/login')
+      
       cy.get('.cypress-email')
         .type('saber@saber.com')
         .should('have.value', 'saber@saber.com')
@@ -13,20 +17,18 @@ describe('Add hospital success', () => {
       cy.get('.cypress-password')
         .type('saber')
         .should('have.value', 'saber')
-  
+    
       cy.get('.cypress-login').click()
-  
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
-  
+      cy.url().should('eq', 'http://localhost:8081/') 
       cy.getCookie("token").should('not.be.null')
   
       cy.get('.cypress-to-hospitals').click();
   
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals')
+      cy.url().should('eq', 'http://localhost:8081/hospitals')
   
       cy.get('.cypress-to-hospitals-add').click();
   
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals/add')
+      cy.url().should('eq', 'http://localhost:8081/hospitals/add')
   
       cy.get('.cypress-name')
         .type('Hopital TEST')
@@ -41,13 +43,13 @@ describe('Add hospital success', () => {
         .should('have.value', 'DEPARTMENT TEST')
 
       cy.get('.cypress-phone-number')
-        .type('0623049589')
-        .should('have.value', '0623049589')
+        .type(number)
+        .should('have.value', number)
     
       cy.get('.cypress-add').click();
       
       cy.wait(5000);
   
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals')
+      cy.url().should('eq', 'http://localhost:8081/hospitals')
     })
   })
