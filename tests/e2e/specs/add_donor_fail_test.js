@@ -1,11 +1,13 @@
 /* eslint-disable no-undef */
 describe('Add donor fail', () => {
   it('Tries to add a receiver should fail', () => {
-    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+    cy.visit('http://localhost:8081/login')
 
     cy.get('.cypress-to-register').click()
+    cy.url().should('eq', 'http://localhost:8081/register')
 
     cy.get('.cypress-to-login').click()
+    cy.url().should('eq', 'http://localhost:8081/login')
 
     cy.get('.cypress-email')
       .type('saber@saber.com')
@@ -16,18 +18,17 @@ describe('Add donor fail', () => {
       .should('have.value', 'saber')
 
     cy.get('.cypress-login').click()
-
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
+    cy.url().should('eq', 'http://localhost:8081/')
 
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-donors').click();
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/donors')
+    cy.url().should('eq', 'http://localhost:8081/donors')
 
     cy.get('.cypress-to-add').click();
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/donors/add')
+    cy.url().should('eq', 'http://localhost:8081/donors/add')
 
     cy.get('.cypress-first-name')
       .type('Prénom')
@@ -47,6 +48,6 @@ describe('Add donor fail', () => {
 
     cy.get('.cypress-add').click();
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/donors/add')
+    cy.url().should('eq', 'http://localhost:8081/donors/add')
   })
 })
