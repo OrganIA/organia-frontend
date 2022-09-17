@@ -9,7 +9,7 @@
     <div class="column page-container">
       <div class="page-content">
         <div class="role-panel-btn-container">
-          <div  v-on:click="openNewRoleModal(true)" class="create-new-role button is-primary">
+          <div v-on:click="openNewRoleModal(true)" class="create-new-role button is-primary">
             <i class="cypress-to-add fas fa-edit mr-2 pb-1"></i>
             <span>Créer un nouveau rôle</span>
           </div>
@@ -17,34 +17,35 @@
 
         <table>
           <thead>
-          <tr>
-            <th>Rôle</th>
-            <th>Gestion des Utilisateurs</th>
-            <th>Gestion des Personnes</th>
-            <th>Gestion des Rôles</th>
-            <th>Gestion des Hopitaux</th>
-            <th>Gestion des Invitations</th>
-          </tr>
+            <tr>
+              <th>Rôle</th>
+              <th>Gestion des Utilisateurs</th>
+              <th>Gestion des Personnes</th>
+              <th>Gestion des Rôles</th>
+              <th>Gestion des Hopitaux</th>
+              <th>Gestion des Invitations</th>
+            </tr>
           </thead>
           <tbody>
-          <tr v-for="role in roles" :key="role">
-            <td>{{ role.name }}</td>
-            <td>
-              <input class="center-checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
-            </td>
-            <td>
-              <input class="center-checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
-            </td>
-            <td>
-              <input class="center-checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
-            </td>
-            <td>
-              <input class="center-checkbox" v-model="role.can_manage_hospitals" true=true false=false type="checkbox">
-            </td>
-            <td>
-              <input class="center-checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
-            </td>
-          </tr>
+            <tr v-for="role in roles" :key="role">
+              <td>{{ role.name }}</td>
+              <td>
+                <input class="center-checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
+              </td>
+              <td>
+                <input class="center-checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
+              </td>
+              <td>
+                <input class="center-checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
+              </td>
+              <td>
+                <input class="center-checkbox" v-model="role.can_manage_hospitals" true=true false=false
+                  type="checkbox">
+              </td>
+              <td>
+                <input class="center-checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
+              </td>
+            </tr>
           </tbody>
         </table>
         <div class="role-panel-btn-container">
@@ -64,7 +65,8 @@
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Nom du rôle</label>
-                    <input v-model="name" placeholder="Nom du rôle" type="text" class="cypress-name input is-info" required />
+                    <input v-model="name" placeholder="Nom du rôle" type="text" class="cypress-name input is-info"
+                      required />
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les informations des utilisateurs</label>
@@ -111,7 +113,8 @@
               </form>
             </section>
             <footer class="modal-card-foot organia-modal-footer">
-                <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn" v-on:click="reloadRoles()">Ajouter</button>
+              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
+                v-on:click="reloadRoles()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openNewRoleModal(false)">Fermer</button>
             </footer>
           </div>
@@ -133,7 +136,7 @@ import ApplicationNavbar from "@/components/ApplicationNavbar";
 export default {
   name: "role-panel",
   emits: ["login"],
-  components: {SideBar, ApplicationNavbar},
+  components: { SideBar, ApplicationNavbar },
 
   data() {
     return {
@@ -195,25 +198,25 @@ export default {
     },
     createRoles() {
       this.$http
-          .post("/roles", {
-            name: this.name,
-            can_manage_users: this.manage_users,
-            can_manage_persons: this.manage_persons,
-            can_manage_roles: this.manage_roles,
-            can_manage_hospitals: this.manage_hospitals,
-            can_invite: this.manage_invitation,
-          })
-          .then(() => {
-            this.$toast.success("Création du rôle réussie !");
-            setTimeout(this.$toast.clear, 3000);
-            this.$router.push("/administrator/role");
-          })
-          .catch((error) => {
-            this.$toast.error(
-                "Erreur : " + error.response.data.detail
-            );
-            setTimeout(this.$toast.clear, 3000);
-          });
+        .post("/roles", {
+          name: this.name,
+          can_manage_users: this.manage_users,
+          can_manage_persons: this.manage_persons,
+          can_manage_roles: this.manage_roles,
+          can_manage_hospitals: this.manage_hospitals,
+          can_invite: this.manage_invitation,
+        })
+        .then(() => {
+          this.$toast.success("Création du rôle réussie !");
+          setTimeout(this.$toast.clear, 3000);
+          this.$router.push("/administrator/role");
+        })
+        .catch((error) => {
+          this.$toast.error(
+            "Erreur : " + error.response.data.detail
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     openNewRoleModal(val) {
       if (val === true) {
@@ -233,7 +236,6 @@ export default {
 </script>
 
 <style scoped>
-
 .center-checkbox {
   transform: translate(500%, 0px);
 }
@@ -285,7 +287,9 @@ thead tr {
   width: 100% !important;
 }
 
-tr {width:100%}
+tr {
+  width: 100%
+}
 
 
 .page-content {
@@ -293,5 +297,4 @@ tr {width:100%}
   margin-left: 10px;
 
 }
-
 </style>

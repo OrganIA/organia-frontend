@@ -13,7 +13,6 @@
             <router-link to="/donors/add" class="button add-btn cypress-to-add">
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
-
             </router-link>
           </div>
         </div>
@@ -36,46 +35,46 @@
         </div>
         <table class="table-scroll">
           <thead>
-          <tr>
-            <th @click="updateFilter('first_name')">Prénom</th>
-            <th @click="updateFilter('last_name')">Nom de famille</th>
-            <th @click="updateFilter('birthday')">Date de naissance</th>
-            <th @click="updateFilter('gender')">Sexe</th>
-            <th @click="updateFilter('blood_type')">ABO</th>
-            <th @click="updateFilter('organ')">Organe</th>
-            <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
-            <th @click="updateFilter('isDialyse')">Dialysé</th>
-            <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
-            <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
-            <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
-            <th @click="updateFilter('created_at')">Arrivée</th>
-            <th>Éditer</th>
-            <th>Infos</th>
-          </tr>
+            <tr>
+              <th @click="updateFilter('first_name')">Prénom</th>
+              <th @click="updateFilter('last_name')">Nom de famille</th>
+              <th @click="updateFilter('birthday')">Date de naissance</th>
+              <th @click="updateFilter('gender')">Sexe</th>
+              <th @click="updateFilter('blood_type')">ABO</th>
+              <th @click="updateFilter('organ')">Organe</th>
+              <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
+              <th @click="updateFilter('isDialyse')">Dialysé</th>
+              <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
+              <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
+              <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
+              <th @click="updateFilter('created_at')">Arrivée</th>
+              <th>Éditer</th>
+              <th>Infos</th>
+            </tr>
           </thead>
           <tbody>
-          <tr v-for="donor in donors" :key="donor">
-            <td>{{ donor.person.first_name }}</td>
-            <td>{{ donor.person.last_name }}</td>
-            <td>{{ donor.person.birthday }}</td>
-            <td>{{ donor.person.gender }}</td>
-            <td>{{ donor.person.blood_type }}</td>
-            <td>{{ donor.organ }}</td>
-            <td>{{ donor.tumors_number }}</td>
-            <td>{{ donor.isDialyse ? "Oui" : "Non" }}</td>
-            <td>{{ donor.isRetransplantation ? "Oui" : "Non" }}</td>
-            <td>{{ donor.startDateDialyse }}</td>
-            <td>{{ donor.endDateDialyse }}</td>
-            <td>{{ donor.person.created_at }}</td>
-            <td>
-              <router-link :to="`/donors/edit/${donor.person.id}`">
-                <i class="fas fa-edit button is-primary"></i>
-              </router-link>
-            </td>
-            <td>
-              <i class="fas fa-info cypress-donor-modal" @click="openModal(donor)"></i>
-            </td>
-          </tr>
+            <tr v-for="donor in donors" :key="donor">
+              <td>{{ donor.person.first_name }}</td>
+              <td>{{ donor.person.last_name }}</td>
+              <td>{{ donor.person.birthday }}</td>
+              <td>{{ donor.person.gender }}</td>
+              <td>{{ donor.person.blood_type }}</td>
+              <td>{{ donor.organ }}</td>
+              <td>{{ donor.tumors_number }}</td>
+              <td>{{ donor.isDialyse ? "Oui" : "Non" }}</td>
+              <td>{{ donor.isRetransplantation ? "Oui" : "Non" }}</td>
+              <td>{{ donor.startDateDialyse }}</td>
+              <td>{{ donor.endDateDialyse }}</td>
+              <td>{{ donor.person.created_at }}</td>
+              <td>
+                <router-link :to="`/donors/edit/${donor.person.id}`">
+                  <i class="fas fa-edit button is-primary"></i>
+                </router-link>
+              </td>
+              <td>
+                <i class="fas fa-info cypress-donor-modal" @click="openModal(donor)"></i>
+              </td>
+            </tr>
           </tbody>
         </table>
         <person-details v-if="showModal == true" :person="currentDonor" @closeModal="closeModal" class="details" />
@@ -242,7 +241,9 @@ export default {
   table-layout: fixed;
   max-width: 1100px;
 }
-th,td {
+
+th,
+td {
   text-align: left;
   min-width: 160px;
 }

@@ -9,7 +9,7 @@
     <div class="column page-container">
       <div class="page-content">
         <vue-cal class="vuecal--rounded-theme organia-calendar" locale="fr" active-view="month" :time="false"
-                 :events="events">
+          :events="events">
         </vue-cal>
       </div>
     </div>
@@ -25,7 +25,7 @@ import ApplicationNavbar from "@/components/ApplicationNavbar";
 
 export default {
   name: "event-calendar",
-  components: {VueCal, SideBar, ApplicationNavbar},
+  components: { VueCal, SideBar, ApplicationNavbar },
   data() {
     return {
       events: [],
@@ -71,7 +71,6 @@ export default {
 };
 </script>
 <style>
-
 .app-navbar-container {
   height: 14vh;
   max-width: 100%;
@@ -98,7 +97,8 @@ export default {
   border-radius: 15px;
 }
 
-.vuecal__menu, .vuecal__cell-events-count {
+.vuecal__menu,
+.vuecal__cell-events-count {
   background-color: #2d6594;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -109,11 +109,13 @@ export default {
   color: white;
   background-color: #6799c4;
 }
+
 .vuecal__title button {
   color: white;
 }
 
-.vuecal__cell--today, .vuecal__cell--current {
+.vuecal__cell--today,
+.vuecal__cell--current {
   color: white;
 
   background-color: rgba(240, 240, 255, 0.4);

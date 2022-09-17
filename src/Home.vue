@@ -1,11 +1,8 @@
 <template>
   <PresentationNavbar></PresentationNavbar>
   <div class="wave">
-    <svg width="100%" height="auto" fill="none" version="1.1"
-         xmlns="http://www.w3.org/2000/svg">
-      <path
-          fill="white"
-          d="
+    <svg width="100%" height="auto" fill="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path fill="white" d="
             M0 67
             C 273,183
               822,-41
@@ -18,10 +15,13 @@
     </svg>
   </div>
   <div id="container">
-    <img class="img-comp-1" src="https://media.discordapp.net/attachments/959068123187773570/976471787053387866/unknown.png" alt="">
-    <img class="img-comp-2" src="https://media.discordapp.net/attachments/959068123187773570/976471787053387866/unknown.png" alt="">
+    <img class="img-comp-1"
+      src="https://media.discordapp.net/attachments/959068123187773570/976471787053387866/unknown.png" alt="">
+    <img class="img-comp-2"
+      src="https://media.discordapp.net/attachments/959068123187773570/976471787053387866/unknown.png" alt="">
     <div class="main-img-container">
-      <img class="img-main" src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png">
+      <img class="img-main"
+        src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png">
     </div>
   </div>
 </template>
@@ -31,20 +31,19 @@ import PresentationNavbar from "@/components/PresentationNavbar";
 
 export default {
   name: "Home",
-  components: { PresentationNavbar}
+  components: { PresentationNavbar }
 }
 </script>
 
 <style scoped>
-
-div.wave{
+div.wave {
   width: 100%;
   bottom: 0;
   position: absolute;
   z-index: 99;
 }
 
-.wave svg{
+.wave svg {
   width: 100%;
   bottom: 0;
   left: 0;
@@ -52,7 +51,7 @@ div.wave{
 
 #container {
   position: relative;
-  background:  #0e2536;
+  background: #0e2536;
   height: 90vh;
   width: auto;
 }
@@ -91,5 +90,4 @@ div.wave{
   align-items: center;
   width: 100%;
 }
-
 </style>

@@ -12,7 +12,6 @@
           <label class="label">Description</label>
           <textarea v-model="description" placeholder="description" class="cypress-textarea" required />
           <p class="required-notice">* Obligatoire</p>
-
         </div>
         <div class="form-submit is-center">
           <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>

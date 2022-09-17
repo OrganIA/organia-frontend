@@ -1,34 +1,36 @@
 
 <template>
-    <div class="app-navbar-container">
-      <ApplicationNavbar></ApplicationNavbar>
+  <div class="app-navbar-container">
+    <ApplicationNavbar></ApplicationNavbar>
+  </div>
+  <div class="columns">
+    <div class="column sidebar-column">
+      <SideBar></SideBar>
     </div>
-    <div class="columns">
-      <div class="column sidebar-column">
-        <SideBar></SideBar>
-      </div>
-      <div class="column page-container">
-        <div class="page-content">
-  <h1>Bienvenue sur la plateforme ORGANIA</h1>
-  <carousel :autoplay="4000" :wrap-around="true" :items-to-show="1.5">
-    <Slide v-for="content, index in contents" :key="content.id">
-      <div class="carousel-item">
-        <div class="carousel-content">
-          <p>{{ content.text }}</p>
-          <p>{{ index.text }}</p>
-          <router-link :to="content.url" class="carousel-link">
-            <span>En savoir plus</span>
-          </router-link>
-        </div>
-      </div>
-    </Slide>
+    <div class="column page-container">
+      <div class="page-content">
+        <h1>Bienvenue sur la plateforme ORGANIA</h1>
+        <carousel :autoplay="4000" :wrap-around="true" :items-to-show="1.5">
+          <Slide v-for="content, index in contents" :key="content.id">
+            <div class="carousel-item">
+              <div class="carousel-content">
+                <p>{{ content.text }}</p>
+                <p>{{ index.text }}</p>
+                <router-link :to="content.url" class="carousel-link">
+                  <span>En savoir plus</span>
+                </router-link>
+              </div>
+            </div>
+          </Slide>
 
-    <template #addons>
-      <navigation />
-      <pagination />
-    </template>
-  </carousel>
-        </div></div></div>
+          <template #addons>
+            <navigation />
+            <pagination />
+          </template>
+        </carousel>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

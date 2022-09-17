@@ -8,46 +8,48 @@
     </div>
     <div class="column page-container">
       <div class="page-content">
-  <div id="main">
-    <div class="event-panel-btn-container">
-      <router-link to="/eventlist/add" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
-        <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
-        <span class="btn-add-text">Ajouter</span>
-      </router-link>
-    </div>
-    <div class="search-block">
-      <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
-        <option value="date">Date</option>
-        <option value="description">Description</option>
-        <option value="created_at">Date de creation</option>
-      </select>
-      <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-      <br />
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th @click="updateFilter('date')">Date</th>
-          <th @click="updateFilter('description')">Description</th>
-          <th @click="updateFilter('created_at')">Date de creation</th>
-          <th>Éditer</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="calendar in events" :key="calendar">
-          <td>{{ calendar.date }}</td>
-          <td>{{ calendar.description }}</td>
-          <td>{{ calendar.created_at }}</td>
-          <td>
-            <router-link :to="`/eventlist/edit/${calendar.id}`">
-              <i class="fas fa-edit button is-primary"></i>
+        <div id="main">
+          <div class="event-panel-btn-container">
+            <router-link to="/eventlist/add" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
+              <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
+              <span class="btn-add-text">Ajouter</span>
             </router-link>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+          <div class="search-block">
+            <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
+              <option value="date">Date</option>
+              <option value="description">Description</option>
+              <option value="created_at">Date de creation</option>
+            </select>
+            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+            <br />
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th @click="updateFilter('date')">Date</th>
+                <th @click="updateFilter('description')">Description</th>
+                <th @click="updateFilter('created_at')">Date de creation</th>
+                <th>Éditer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="calendar in events" :key="calendar">
+                <td>{{ calendar.date }}</td>
+                <td>{{ calendar.description }}</td>
+                <td>{{ calendar.created_at }}</td>
+                <td>
+                  <router-link :to="`/eventlist/edit/${calendar.id}`">
+                    <i class="fas fa-edit button is-primary"></i>
+                  </router-link>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
-      </div></div></div>
 </template>
 
 <script>
@@ -57,7 +59,7 @@ import SideBar from "@/components/SideBar";
 
 export default {
   name: "event-panel",
-  components: {SideBar, ApplicationNavbar},
+  components: { SideBar, ApplicationNavbar },
   data() {
     return {
       events: {},
@@ -184,6 +186,7 @@ export default {
   text-decoration: none;
 
 }
+
 .btn-add-text {
   color: white;
   margin-left: 5px;
@@ -194,6 +197,7 @@ export default {
   margin-right: 5px;
   margin-top: -1px;
 }
+
 .event-panel-btn-container {
   margin-top: 30px;
 

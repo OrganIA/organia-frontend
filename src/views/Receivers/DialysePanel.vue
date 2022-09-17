@@ -17,27 +17,27 @@
             <option value="endDateDialyse">Date de fin de dialyse</option>
           </select>
           <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
-          <input @input="filter" v-model="filterText" class="search-bar input mr-6"/>
-          <br/>
+          <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+          <br />
         </div>
         <table>
           <thead>
-          <tr>
-            <th @click="updateFilter('first_name')">Prénom</th>
-            <th @click="updateFilter('last_name')">Nom de famille</th>
-            <th @click="updateFilter('birthday')">Date de naissance</th>
-            <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
-            <th @click="updateFilter('endDateDialyse')">Date de fin de dialyse</th>
-          </tr>
+            <tr>
+              <th @click="updateFilter('first_name')">Prénom</th>
+              <th @click="updateFilter('last_name')">Nom de famille</th>
+              <th @click="updateFilter('birthday')">Date de naissance</th>
+              <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
+              <th @click="updateFilter('endDateDialyse')">Date de fin de dialyse</th>
+            </tr>
           </thead>
           <tbody>
-          <tr v-for="receiver in receivers" :key="receiver">
-            <td>{{ receiver.person.first_name }}</td>
-            <td>{{ receiver.person.last_name }}</td>
-            <td>{{ receiver.person.birthday }}</td>
-            <td>{{ receiver.startDateDialyse }}</td>
-            <td>{{ receiver.endDateDialyse }}</td>
-          </tr>
+            <tr v-for="receiver in receivers" :key="receiver">
+              <td>{{ receiver.person.first_name }}</td>
+              <td>{{ receiver.person.last_name }}</td>
+              <td>{{ receiver.person.birthday }}</td>
+              <td>{{ receiver.startDateDialyse }}</td>
+              <td>{{ receiver.endDateDialyse }}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -50,7 +50,7 @@ import ApplicationNavbar from "@/components/ApplicationNavbar";
 
 export default {
   name: "dialyse-panel",
-  components: {SideBar, ApplicationNavbar},
+  components: { SideBar, ApplicationNavbar },
   data() {
     return {
       receivers: {},
@@ -109,8 +109,8 @@ export default {
     },
     checkNull(a, b) {
       if (
-          a.person[this.sortingKey] == null &&
-          b.person[this.sortingKey] == null
+        a.person[this.sortingKey] == null &&
+        b.person[this.sortingKey] == null
       )
         return 0;
       if (a.person[this.sortingKey] == null) return 1;
@@ -121,35 +121,35 @@ export default {
       if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
+            b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
-                b.person[this.sortingKey]
+              b.person[this.sortingKey]
             );
           return b.person[this.sortingKey].localeCompare(
-              a.person[this.sortingKey]
+            a.person[this.sortingKey]
           );
         });
       } else if (["birthday", "created_at"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
+            b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
-            Date.parse(b.person[this.sortingKey])
-                ? -1
-                : 1;
-          return Date.parse(b.person[this.sortingKey]) >
-          Date.parse(a.person[this.sortingKey])
+              Date.parse(b.person[this.sortingKey])
               ? -1
               : 1;
+          return Date.parse(b.person[this.sortingKey]) >
+            Date.parse(a.person[this.sortingKey])
+            ? -1
+            : 1;
         });
       } else if (this.sortingKey == "organ") {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
+            b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder) return a.organ.localeCompare(b.organ);
           return b.organ.localeCompare(a.organ);
@@ -187,7 +187,6 @@ export default {
 };
 </script>
 <style scoped>
-
 thead tr {
   width: 100% !important;
 }
@@ -206,5 +205,4 @@ thead tr {
   margin-left: 60px;
 
 }
-
 </style>
