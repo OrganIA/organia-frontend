@@ -109,7 +109,7 @@
               <div v-if="currentPerson.description != null">
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
-                    currentPerson.description
+                currentPerson.description
                 }}</button>
               </div>
               <div class="columns">
@@ -120,7 +120,7 @@
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentPerson.updated_at != null" class="button is-link is-light contents">{{
-                      currentPerson.updated_at
+                  currentPerson.updated_at
                   }}</button>
                   <button v-else class="button is-link is-light contents">Aucune modification effectuée.</button>
                 </div>
@@ -129,31 +129,31 @@
               <div v-if="currentPerson.DateTransplantation != null">
                 <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
-                    currentPerson.DateTransplantation
+                currentPerson.DateTransplantation
                 }}</button>
               </div>
               <div v-if="currentPerson.ReRegistrationDate != null">
                 <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
                 <button class="button is-light contents">{{
-                    currentPerson.ReRegistrationDate
+                currentPerson.ReRegistrationDate
                 }}</button>
               </div>
               <div v-if="currentPerson.alpha_fetoprotein != null">
                 <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
                 <button class="button is-light contents">{{
-                    currentPerson.alpha_fetoprotein
+                currentPerson.alpha_fetoprotein
                 }}</button>
               </div>
               <div v-if="currentPerson.biggest_tumor_size != null">
                 <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
                 <button class="button is-light contents">{{
-                    currentPerson.biggest_tumor_size
+                currentPerson.biggest_tumor_size
                 }}</button>
               </div>
               <div v-if="currentPerson.end_date != null">
                 <p class="button is-medium is-fullwidth elements">Date de fin</p>
                 <button class="button is-light contents">{{
-                    currentPerson.end_date
+                currentPerson.end_date
                 }}</button>
               </div>
               <div class="columns">
@@ -170,14 +170,14 @@
                 <div class="column is-half">
                   <p class="button is-medium elements">Le patient est sous dialyse ?</p>
                   <button v-if="currentPerson.isDialyse" class="button is-link is-light contents">{{
-                      Oui
+                  Oui
                   }}</button>
                   <button v-else class="button is-link is-light contents">Non</button>
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium elements is-size-6">A-t-il effectué une retransplantation ?</p>
                   <button v-if="currentPerson.isRetransplantation" class="button is-link is-light contents ">{{
-                      Oui
+                  Oui
                   }}</button>
                   <button v-else class="button is-link is-light contents">Non</button>
                 </div>
@@ -185,19 +185,19 @@
               <div v-if="currentPerson.startDateDialyse != null">
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
-                    currentPerson.startDateDialyse
+                currentPerson.startDateDialyse
                 }}</button>
               </div>
               <div v-if="currentPerson.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
-                    currentPerson.EndDateDialyse
+                currentPerson.EndDateDialyse
                 }}</button>
               </div>
               <div v-if="currentPerson.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
-                    currentPerson.notes
+                currentPerson.notes
                 }}</button>
               </div>
               <button class="button is-link is-light" @click="openChatModal()">Créer une
@@ -212,7 +212,6 @@
         <div class="modal-card">
           <header class="modal-card-head">
             <p class="modal-card-title is-3">Créer une conversation</p>
-            <button class="button is-danger is-light" @click="openInfoModal(currentReceiver)">Retour</button>
           </header>
           <section class="modal-card-body">
             <div class="container">
@@ -233,6 +232,12 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <br>
+            <div>
+              <footer>
+                <button class="button is-danger is-light" @click="openInfoModal(currentReceiver)">Retour</button>
+              </footer>
             </div>
           </section>
         </div>
