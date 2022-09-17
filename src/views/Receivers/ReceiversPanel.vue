@@ -234,11 +234,11 @@
               </div>
             </div>
             <br>
-            <div>
-              <footer>
-                <button class="button is-danger is-light" @click="openInfoModal(currentReceiver)">Retour</button>
-              </footer>
-            </div>
+            <footer>
+              <button class="button is-danger is-light btn-margin">Enregistrer</button>
+              <button class="button is-danger is-light btn-margin "
+                @click="openInfoModal(currentReceiver)">Retour</button>
+            </footer>
           </section>
         </div>
       </div>
@@ -390,5 +390,9 @@ export default {
 .contents {
   margin: 10px;
   margin-top: 0px;
+}
+
+.btn-margin {
+  margin: 1.5em;
 }
 </style>
