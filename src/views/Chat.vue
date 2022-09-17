@@ -9,24 +9,24 @@
       :roomName="currentRoom.roomName" :roomId="currentRoom.roomId"
       :class="{ 'is-invisible': (state !== 'editRoom'), 'is-active': (state === 'editRoom') }"
       @closeModal="closeModal" />
-    <chat-window :text-messages="text_messages" :current-user-id="currentUserId" :rooms="rooms" :messages="messages"
+    <!-- <chat-window :text-messages="text_messages" :current-user-id="currentUserId" :rooms="rooms" :messages="messages"
       @fetch-messages="getMessages" @add-room="openModal('newRoom')" :show-files="false" :show-audio="false"
       :load-first-room="false" :loading-rooms="loadingRooms" :rooms-loaded="roomsLoaded"
       :messages-loaded="messagesLoaded" :show-new-messages-divider="false" :menu-actions="menu_actions"
-      @send-message="sendMessage" @menu-action-handler="menuActionHandler" />
+      @send-message="sendMessage" @menu-action-handler="menuActionHandler" /> -->
   </div>
 </template>
 
 <script>
-import ChatWindow from 'vue-advanced-chat'
+// import ChatWindow from 'vue-advanced-chat'
 import ChatCreateModal from '@/components/ChatModals/ChatCreateModal.vue'
 import ChatInfosModal from '@/components/ChatModals/ChatInfosModal.vue'
 import ChatEditModal from '@/components/ChatModals/ChatEditModal.vue'
-import 'vue-advanced-chat/dist/vue-advanced-chat.css'
+// import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 
 export default {
   components: {
-    ChatWindow,
+    // ChatWindow,
     ChatCreateModal,
     ChatInfosModal,
     ChatEditModal,
