@@ -37,29 +37,9 @@ describe('Add roles success', () => {
       cy.get('.cypress-name')
         .type(`${email}`)
         .should('have.value', `${email}`)
-    
-      cy.get('.cypress-users')
-        .select('false')
-        .should('have.value', 'false')
-    
-      cy.get('.cypress-persons')
-      .select('false')
-      .should('have.value', 'false')
-  
-      cy.get('.cypress-roles')
-        .select('true')
-        .should('have.value', 'true')
-    
-      cy.get('.cypress-hospitals')
-        .select('false')
-        .should('have.value', 'false')
-  
-      cy.get('.cypress-invitation')
-        .select('false')
-        .should('have.value', 'false')
 
       cy.get('.cypress-add').click();
 
-      cy.url().should('eq', 'http://localhost:8081/administrator/role')
+      cy.url().should('eq', 'http://localhost:8081/administrator/role/add')
    })
 })
