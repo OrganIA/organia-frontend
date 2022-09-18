@@ -1,4 +1,3 @@
-
 <template>
   <div class="app-navbar-container">
     <ApplicationNavbar></ApplicationNavbar>
@@ -9,46 +8,52 @@
     </div>
     <div class="column page-container">
       <div class="page-content">
-        <h1>Bienvenue sur la plateforme ORGANIA</h1>
-        <carousel :autoplay="4000" :wrap-around="true" :items-to-show="1.5">
-          <Slide v-for="content, index in contents" :key="content.id">
-            <div class="carousel-item">
-              <div class="carousel-content">
-                <p>{{ content.text }}</p>
-                <p>{{ index.text }}</p>
-                <router-link :to="content.url" class="carousel-link">
-                  <span>En savoir plus</span>
-                </router-link>
+        <button class="button is-link is-light is-large is-responsive is-rounded is-focused">BIENVENUE SUR
+          ORGANIA</button><br><br>
+        <p class="title is-5 is-spaced">Raccourci</p>
+        <div class="columns">
+          <div class="column">
+            <router-link class="block button is-info is-light button-style" to="/chat">
+              <i class="fas fa-envelope cypress-to-chats"></i>
+              <span class="nav-text">Chats</span>
+            </router-link>
+          </div>
+          <div class="column">
+            <router-link class="block button is-info is-light button-style" to="/account">
+              <i class="fas fa-user cypress-to-chats"></i>
+              <span class="nav-text">Compte</span>
+            </router-link>
+          </div>
+        </div>
+        <p class="title is-5 is-spaced">Liste des prochains évènements</p><br>
+        <div class="columns">
+          <div class="column" v-for="event in events" :key="event">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  {{ event.description }} </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  <p>{{ event.date }}</p>
+                </div>
               </div>
             </div>
-          </Slide>
-
-          <template #addons>
-            <navigation />
-            <pagination />
-          </template>
-        </carousel>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-// If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import moment from "moment";
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
-
 export default {
   name: "landing-page",
   components: {
     SideBar,
-    ApplicationNavbar,
-    Carousel,
-    Slide,
-    Pagination,
-    Navigation,
+    ApplicationNavbar
   },
   data() {
     return {
@@ -57,46 +62,45 @@ export default {
         { id: 2, text: "Essayez notre nouveau service de communication.", url: "/chat" },
         { id: 3, text: "Ne ratez aucun évènement grâce au calendrier.", url: "/eventcalendar" },
         { id: 4, text: "La liste des évènements est disponible.", url: "/eventlist" },
-      ]
+      ],
+      events: {}
     }
+  },
+  created() {
+    this.getAllevents();
+  },
+  methods: {
+    getAllevents() {
+      this.$http
+        .get("/calendar", {
+          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
+        })
+        .then((response) => {
+          response.data.splice(5, response.data.length - 5)
+          response.data.forEach((element) => {
+            element.date = moment(String(element.date)).format(
+              "DD/MM/YYYY hh:mm"
+            );
+            element.created_at = moment(String(element.created_at)).format(
+              "DD/MM/YYYY hh:mm"
+            );
+          });
+          this.events = response.data;
+        })
+    },
   },
 };
 </script>
 
 <style scoped>
-.carousel-item {
-  min-height: 200px;
-  width: 100%;
-  background-color: #0f2c59;
-  color: var(--vc-clr-white);
-  font-size: 20px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.button-style {
+  height: 10em;
+  font-weight: bold;
+  font-size: 1.1em;
 }
 
-.carousel-slide {
-  padding: 10px;
-}
-
-.carousel-prev,
-.carousel--next {
-  box-sizing: content-box;
-  border: 5px solid white;
-}
-
-
-.carousel-prev--in-active,
-.carousel-next--in-active {
-  display: none;
-}
-
-.carousel-content {
-  display: inline;
-}
-
-.carousel-link {
-  color: white;
+td:nth-child(even),
+th:nth-child(even) {
+  background-color: #D6EEEE;
 }
 </style>
