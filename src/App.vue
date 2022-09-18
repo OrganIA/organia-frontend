@@ -22,6 +22,7 @@ export default {
           });
           this.$emit("login", true);
         })
+        this.$router.push('/landing')
         .catch((error) => {
           console.log(error.response.data.detail);
         });

@@ -3,6 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 const routes = [
   { path: "/landing", component: () => import("./views/LandingPage.vue")},
   { path: "/home", component: () => import("./Home.vue")},
+  { path: "/", component: () => import("./Home.vue")},
   { path: "/vitrine", component: () => import("./views/Vitrine.vue") },
   { path: "/receivers", component: () => import("./views/Receivers/ReceiversPanel.vue") },
   { path: "/receivers/add", component: () => import("./views/Receivers/NewReceiver.vue") },
@@ -32,6 +33,8 @@ const routes = [
   { path: "/hospitals/info/:id", component: () => import("./views/Hospitals/DisplayHospitalInfo.vue"), props: true },
   { path: "/hospitals/edit/:id", component: () => import("./views/Hospitals/EditHospital.vue"), props: true },
   { path: "/account", component: () => import("./views/Account.vue") },
+  { path: "/chat", component: () => import("./views/Chat.vue") },
+  // { path: "/:pathMatch(.*)*", component: () => import("./views/NotFound.vue") },
 ]
 
 const router = createRouter({

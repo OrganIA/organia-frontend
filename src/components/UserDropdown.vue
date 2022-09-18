@@ -9,11 +9,8 @@
     </div>
     <div class="dropdown-menu" id="dropdown-menu3" role="menu">
       <div class="dropdown-content dropdown-correction">
-        <router-link to="#" class="dropdown-item">
-          Demande au support
-        </router-link>
-        <router-link to="/new_invitation" class="dropdown-item">
-          Demande au support
+        <router-link to="/account" class="dropdown-item">
+          Mon compte
         </router-link>
         <hr class="dropdown-divider">
         <button @click="logout" class="block button is-danger is-light is-outlined cypress-logout">

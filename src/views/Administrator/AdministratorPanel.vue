@@ -19,8 +19,6 @@
           <div class="fa  fa-solid fa-angle-down  icon-dropdown-correction"></div>
           <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
           <br />
-
-
         </div>
         <table class="is-organia-table">
           <thead>
@@ -34,32 +32,32 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="user in users" :key="user" v-bind:class="{ 'is-selected': user.id === $data.user.id }">
+            <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id }">
               <td v-on:click="loadSelectedUser(user.id)"
-                v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+                :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.id }}
               </td>
               <td v-on:click="loadSelectedUser(user.id)"
-                v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+                :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.person ? user.person.first_name : "-" }}
               </td>
               <td v-on:click="loadSelectedUser(user.id)"
-                v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+                :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.person ? user.person.last_name : "-" }}
               </td>
               <td v-on:click="loadSelectedUser(user.id)"
-                v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+                :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.email }}
               </td>
               <td v-on:click="loadSelectedUser(user.id)"
-                v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+                :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.created_at }}
               </td>
               <td v-on:click="loadSelectedUser(user.id)"
-                v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+                :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.updated_at }}
               </td>
-              <td v-bind:class="{ 'selected-element': user.id === $data.user.id }">
+              <td :class="{ 'selected-element': user.id === $data.user.id }">
                 <div v-on:click="loadUserToModify(user.id)" class="button is-primary">
                   <i class="fas fa-edit"></i>
                 </div>
@@ -67,7 +65,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="modal" v-bind:class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -83,27 +81,27 @@
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  v-bind:class="{ 'is-primary': this.role.can_manage_users, 'is-danger': !this.role.can_manage_users }">
+                  :class="{ 'is-primary': this.role.can_manage_users, 'is-danger': !this.role.can_manage_users }">
                   Peut gérer les utilisateurs
                 </div>
                 <div class="button is-light mx-auto role-btn"
-                  v-bind:class="{ 'is-primary': this.role.can_manage_persons, 'is-danger': !this.role.can_manage_persons }">
+                  :class="{ 'is-primary': this.role.can_manage_persons, 'is-danger': !this.role.can_manage_persons }">
                   Peut gérer les patients
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  v-bind:class="{ 'is-primary': this.role.can_manage_roles, 'is-danger': !this.role.can_manage_roles }">
+                  :class="{ 'is-primary': this.role.can_manage_roles, 'is-danger': !this.role.can_manage_roles }">
                   Peut gérer les rôles
                 </div>
                 <div class="button is-light mx-auto role-btn"
-                  v-bind:class="{ 'is-primary': this.role.can_manage_hospitals, 'is-danger': !this.role.can_manage_hospitals }">
+                  :class="{ 'is-primary': this.role.can_manage_hospitals, 'is-danger': !this.role.can_manage_hospitals }">
                   Peut gérer les hôpitaux
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  v-bind:class="{ 'is-primary': this.role.can_invite, 'is-danger': !this.role.can_invite }">
+                  :class="{ 'is-primary': this.role.can_invite, 'is-danger': !this.role.can_invite }">
                   Peut créer des invitations
                 </div>
               </div>
@@ -114,7 +112,7 @@
           </div>
         </div>
         <div class="modal"
-          v-bind:class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
+          :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -147,9 +145,7 @@
 
       </div>
     </div>
-
   </div>
-
 </template>
 
 <script>

@@ -52,7 +52,7 @@
           <button class="cypress-add button is-info save-roles" @click="updateRoles()" type="submit"> Confirmer</button>
 
         </div>
-        <div class="modal" v-bind:class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -162,8 +162,6 @@ export default {
         .then((response) => {
           this.backup = response.data;
           this.roles = response.data.map(role => Object.assign({}, role));
-          this.$toast.success("Reception des rôles reussie !");
-          setTimeout(this.$toast.clear, 3000);
         })
         .catch((error) => {
           console.log(error);

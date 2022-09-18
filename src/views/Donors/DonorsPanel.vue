@@ -77,7 +77,142 @@
             </tr>
           </tbody>
         </table>
-        <person-details v-if="showModal == true" :person="currentDonor" @closeModal="closeModal" class="details" />
+        <div class="modal" :class="{ 'is-invisible': !modal, 'is-active': modal }">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Informations du receveur</p>
+              <button class="delete" aria-label="close" @click="closeModal"></button>
+            </header>
+            <section class="modal-card-body">
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Nom de famille</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.last_name }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Prénom</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.first_name }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Âge</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.age }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de naissance</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.birthday }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Genre</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.gender }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Groupe Sanguin</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.blood_type }}</button>
+                </div>
+              </div>
+              <div v-if="currentDonor.person.description != null">
+                <p class="button is-medium is-fullwidth elements">Description</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.description
+                }}</button>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de création</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.created_at }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
+                  <button v-if="currentDonor.person.updated_at != null" class="button is-info is-light contents">{{
+                  currentDonor.person.updated_at
+                  }}</button>
+                  <button v-else class="button is-info is-light contents">Aucune modification effectuée.</button>
+                </div>
+              </div>
+              <div v-if="currentDonor.person.DateTransplantation != null">
+                <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.DateTransplantation
+                }}</button>
+              </div>
+              <div v-if="currentDonor.person.ReRegistrationDate != null">
+                <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.ReRegistrationDate
+                }}</button>
+              </div>
+              <div v-if="currentDonor.person.alpha_fetoprotein != null">
+                <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.alpha_fetoprotein
+                }}</button>
+              </div>
+              <div v-if="currentDonor.person.biggest_tumor_size != null">
+                <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.biggest_tumor_size
+                }}</button>
+              </div>
+              <div v-if="currentDonor.person.end_date != null">
+                <p class="button is-medium is-fullwidth elements">Date de fin</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.end_date
+                }}</button>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Organe</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.organ }}</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium is-fullwidth elements">Nombres de tumeurs</p>
+                  <button class="button is-info is-light contents">{{ currentDonor.tumors_number }}</button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <p class="button is-medium elements">Sous dialyse?</p>
+                  <button v-if="currentDonor.person.isDialyse" class="button is-info is-light contents">{{
+                  Oui
+                  }}</button>
+                  <button v-else class="button is-info is-light contents">Non</button>
+                </div>
+                <div class="column is-half">
+                  <p class="button is-medium elements is-size-6">Retransplantation effectuée?</p>
+                  <button v-if="currentDonor.person.isRetransplantation" class="button is-info is-light contents ">{{
+                  Oui
+                  }}</button>
+                  <button v-else class="button is-info is-light contents">Non</button>
+                </div>
+              </div>
+              <div v-if="currentDonor.person.startDateDialyse != null">
+                <p class="button column is-medium elements">Date de début de dialyse</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.startDateDialyse
+                }}</button>
+              </div>
+              <div v-if="currentDonor.person.EndDateDialyse != null">
+                <p class="button column is-medium elements">Date de fin de dialyse</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.EndDateDialyse
+                }}</button>
+              </div>
+              <div v-if="currentDonor.person.notes != null">
+                <p class="button column is-medium elements">Notes</p>
+                <button class="button is-light contents">{{
+                currentDonor.person.notes
+                }}</button>
+              </div>
+            </section>
+            <footer class="modal-card-foot">
+            </footer>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -85,18 +220,20 @@
 </template>
 
 <script>
-import PersonDetails from "@/components/PersonDetails.vue";
+// import PersonDetails from "@/components/PersonDetails.vue";
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 
 export default {
-  components: { PersonDetails, SideBar, ApplicationNavbar },
+  components: { SideBar, ApplicationNavbar },
   name: "donors-panel",
   data() {
     return {
       donors: {},
-      showModal: false,
-      currentDonor: {},
+      modal: false,
+      currentDonor: {
+        person: {}
+      },
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "first_name",
@@ -127,16 +264,16 @@ export default {
         });
     },
     openModal(donor) {
-      if (!this.showModal) {
-        this.showModal = true;
+      if (!this.modal) {
+        this.modal = true;
         this.currentDonor = donor;
-        document.getElementById("bodiv").style.display = "initial";
       }
     },
     closeModal() {
-      this.showModal = false;
-      this.currentDonor = {};
-      document.getElementById("bodiv").style.display = "none";
+      this.modal = false;
+      this.currentDonor = {
+        person: {}
+      };
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;

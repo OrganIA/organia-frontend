@@ -1,17 +1,20 @@
 <template>
   <nav class="navbar base-navbar" role="navigation" aria-label="main navigation">
     <div>
-      <router-link to="/home" class="button is-danger return-btn is-large" v-bind:class="{ 'is-invisible': this.$route.path === '/home' || '/'}">Retour</router-link>
+      <router-link to="/home" class="button is-danger return-btn is-large"
+        :class="{ 'is-invisible': this.$route.path === '/home' || '/'}">Retour</router-link>
     </div>
-    <div class="navbar-brand logo-placeholder"  v-bind:class="{ 'is-invisible-correction': this.$route.path === '/home' || '/' }">
+    <div class="navbar-brand logo-placeholder"
+      :class="{ 'is-invisible-correction': this.$route.path === '/home' || '/' }">
       <div class="navbar-item logo">
-        <img src="https://cdn.discordapp.com/attachments/559512661717417986/843782837072297994/Asset_9.png"
-             alt="logo" class="logo-img-align">
+        <img src="https://cdn.discordapp.com/attachments/559512661717417986/843782837072297994/Asset_9.png" alt="logo"
+          class="logo-img-align">
       </div>
     </div>
     <div id="navbarBasicExample" class="navbar-menu main-menu-navbar is-active">
       <div class="navbar-start start-from-end-hor navbar-home-controllers">
-        <a href="https://www.agence-biomedecine.fr/" class="navbar-item button is-medium is-info is-light navbar-home-controller">
+        <a href="https://www.agence-biomedecine.fr/"
+          class="navbar-item button is-medium is-info is-light navbar-home-controller">
           Site de l'agence de biomédecine
         </a>
         <router-link to="/useorgania" class="navbar-item button is-medium is-info is-light navbar-home-controller">
@@ -47,7 +50,6 @@ export default {
 </script>
 
 <style scoped>
-
 .base-navbar {
   height: 12vh;
   width: 100%;
@@ -65,7 +67,7 @@ export default {
 
 
 .logo {
-  background-color:  #0e2536;
+  background-color: #0e2536;
   border-radius: 20px;
   text-align: center;
   align-content: center;
@@ -74,9 +76,11 @@ export default {
   vertical-align: center;
   margin-top: 10%;
 }
+
 .start-from-end-hor {
   float: right;
 }
+
 .presentation-message {
   position: absolute;
   top: 26.8vh;
