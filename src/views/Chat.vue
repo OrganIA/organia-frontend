@@ -264,7 +264,7 @@ export default {
       if (this.websocket != null)
         this.websocket.close();
       this.websocket = new WebSocket(
-        `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${chatId}`
+        `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${chatId}`
       );
       this.websocket.onopen = async () => {
         this.websocket.send(
