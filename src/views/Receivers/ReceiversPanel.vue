@@ -217,27 +217,35 @@
             <div class="container">
               <div class="columns">
                 <div class="column">
-                  <input class="input is-info" placeholder="Titre de la conversation" type="text" />
+                  <input class="input is-info" placeholder="Titre de la conversation" type="text" v-model="chatName" />
                 </div>
               </div>
               <div class="columns">
                 <div class="column is-half">
                   <div class="box">
                     <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
+                    <button class="button is-info is-light person-box" v-for="person in personsNotAdded" :key="person">
+                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                      <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
+                    </button>
                   </div>
                 </div>
                 <div class="column is-half">
                   <div class="box">
-                    <button class="button is-medium is-fullwidth elements">Utilisateur à ajouter</button>
+                    <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
+                    <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
+                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                      <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <br>
             <footer>
-              <button class="button is-danger is-light btn-margin">Enregistrer</button>
-              <button class="button is-danger is-light btn-margin "
-                @click="openInfoModal(currentReceiver)">Retour</button>
+              <button class="button is-success is-light btn-margin"
+                @click="saveChat(currentReceiver)">Enregistrer</button>
+              <button class="button is-danger is-light btn-margin " @click="resetChat(currentReceiver)">Retour</button>
             </footer>
           </section>
         </div>
@@ -247,7 +255,6 @@
 </template>
 
 <script>
-
 export default {
   name: "receivers-panel",
   data() {
@@ -262,12 +269,68 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       receiversBackup: [],
+      personsNotAdded: [],
+      personsToAdd: [],
+      chatName: "",
+      me: {},
     };
   },
   created() {
     this.getAllReceivers();
+    this.getAllUsers();
+    this.getMe();
   },
   methods: {
+    getMe() {
+      this.$http.get("/users/me")
+        .then((response) => {
+          this.me = response.data
+        })
+    },
+    saveChat(receiver) {
+      if (this.chatName && this.personsToAdd.length > 0) {
+        const users = {
+          users_ids: [],
+        };
+        users.users_ids.push({
+          user_id: this.me.id,
+        });
+        this.personsToAdd.forEach((user) => {
+          users.users_ids.push({
+            user_id: user.id,
+          });
+        });
+        this.$http
+          .post("/chats", {
+            users_ids: users.users_ids,
+            chat_name: this.chatName,
+            creator_id: this.me.id,
+          })
+          .then(() => {
+            this.$toast.success("Création réussie!");
+            setTimeout(this.$toast.clear, 3000);
+            this.resetChat(receiver)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    addPerson(person) {
+      this.personsToAdd.push(person)
+      this.personsNotAdded = this.personsNotAdded.filter(obj => obj != person)
+    },
+    deletePerson(person) {
+      this.personsNotAdded.push(person)
+      this.personsToAdd = this.personsToAdd.filter(obj => obj != person)
+    },
+    getAllUsers() {
+      this.$http
+        .get("/users")
+        .then((response) => {
+          this.personsNotAdded = response.data
+        })
+    },
     getAllReceivers() {
       this.$http
         .get("/listings/receivers")
@@ -284,10 +347,15 @@ export default {
           console.log(error);
         });
     },
+    resetChat(receiver) {
+      this.openInfoModal(receiver)
+      this.personsToAdd = []
+      this.chatName = ""
+      this.getAllUsers()
+    },
     openInfoModal(receiver) {
       this.currentReceiver = receiver
       this.currentPerson = receiver.person
-      console.log(receiver)
       this.state = "info"
     },
     openChatModal() {
@@ -394,5 +462,22 @@ export default {
 
 .btn-margin {
   margin: 1.5em;
+}
+
+.username {
+  margin: 1em;
+  font-size: medium;
+}
+
+.add-button {
+  color: green;
+}
+
+.person-box {
+  margin: 0.5em;
+}
+
+.delete-button {
+  color: red;
 }
 </style>

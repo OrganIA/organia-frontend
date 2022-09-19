@@ -60,12 +60,12 @@
             </router-link>
           </td>
           <td>
-            <i class="fas fa-info cypress-donor-modal" @click="openModal(donor)"></i>
+            <i class="fas fa-info cypress-donor-modal" @click="openInfoModal(donor)"></i>
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+    <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active': (state === 'info') }">
       <div class="modal-background">
         <div class="modal-card">
           <header class="modal-card-head">
@@ -107,7 +107,7 @@
               <div v-if="currentPerson.description != null">
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
-                    currentPerson.description
+                currentPerson.description
                 }}</button>
               </div>
               <div class="columns">
@@ -118,7 +118,7 @@
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentPerson.updated_at != null" class="button is-link is-light contents">{{
-                      currentPerson.updated_at
+                  currentPerson.updated_at
                   }}</button>
                   <button v-else class="button is-link is-light contents">Aucune modification effectuée.</button>
                 </div>
@@ -137,14 +137,14 @@
                 <div class="column is-half">
                   <p class="button is-medium elements">Le patient est sous dialyse ?</p>
                   <button v-if="currentPerson.isDialyse" class="button is-link is-light contents">{{
-                      Oui
+                  Oui
                   }}</button>
                   <button v-else class="button is-link is-light contents">Non</button>
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium elements is-size-6">A-t-il effectué une retransplantation ?</p>
                   <button v-if="currentPerson.isRetransplantation" class="button is-link is-light contents ">{{
-                      Oui
+                  Oui
                   }}</button>
                   <button v-else class="button is-link is-light contents">Non</button>
                 </div>
@@ -152,29 +152,73 @@
               <div v-if="currentPerson.startDateDialyse != null">
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
-                    currentPerson.startDateDialyse
+                currentPerson.startDateDialyse
                 }}</button>
               </div>
               <div v-if="currentPerson.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
-                    currentPerson.EndDateDialyse
+                currentPerson.EndDateDialyse
                 }}</button>
               </div>
               <div v-if="currentPerson.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
-                    currentPerson.notes
+                currentPerson.notes
                 }}</button>
               </div>
+              <button class="button is-link is-light" @click="openChatModal()">Créer une
+                conversation</button>
             </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
+      <div class="modal-background">
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title is-3">Créer une conversation</p>
+          </header>
+          <section class="modal-card-body">
+            <div class="container">
+              <div class="columns">
+                <div class="column">
+                  <input class="input is-info" placeholder="Titre de la conversation" type="text" v-model="chatName" />
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column is-half">
+                  <div class="box">
+                    <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
+                    <button class="button is-info is-light person-box" v-for="person in personsNotAdded" :key="person">
+                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                      <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="column is-half">
+                  <div class="box">
+                    <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
+                    <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
+                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                      <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <footer>
+              <button class="button is-success is-light btn-margin" @click="saveChat(currentDonor)">Enregistrer</button>
+              <button class="button is-danger is-light btn-margin " @click="resetChat(currentDonor)">Retour</button>
+            </footer>
           </section>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 
 export default {
@@ -190,12 +234,69 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       donorsBackup: [],
+      personsNotAdded: [],
+      personsToAdd: [],
+      chatName: "",
+      me: {},
+      state: "",
     };
   },
   created() {
     this.getAllDonors();
+    this.getAllUsers();
+    this.getMe();
   },
   methods: {
+    getMe() {
+      this.$http.get("/users/me")
+        .then((response) => {
+          this.me = response.data
+        })
+    },
+    saveChat(donor) {
+      if (this.chatName && this.personsToAdd.length > 0) {
+        const users = {
+          users_ids: [],
+        };
+        users.users_ids.push({
+          user_id: this.me.id,
+        });
+        this.personsToAdd.forEach((user) => {
+          users.users_ids.push({
+            user_id: user.id,
+          });
+        });
+        this.$http
+          .post("/chats", {
+            users_ids: users.users_ids,
+            chat_name: this.chatName,
+            creator_id: this.me.id,
+          })
+          .then(() => {
+            this.$toast.success("Création réussie!");
+            setTimeout(this.$toast.clear, 3000);
+            this.resetChat(donor)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    addPerson(person) {
+      this.personsToAdd.push(person)
+      this.personsNotAdded = this.personsNotAdded.filter(obj => obj != person)
+    },
+    deletePerson(person) {
+      this.personsNotAdded.push(person)
+      this.personsToAdd = this.personsToAdd.filter(obj => obj != person)
+    },
+    getAllUsers() {
+      this.$http
+        .get("/users")
+        .then((response) => {
+          this.personsNotAdded = response.data
+        })
+    },
     getAllDonors() {
       this.$http
         .get("/listings/donors", {
@@ -214,10 +315,19 @@ export default {
           console.log(error);
         });
     },
-    openModal(donor) {
+    resetChat(donor) {
+      this.openInfoModal(donor)
+      this.personsToAdd = []
+      this.chatName = ""
+      this.getAllUsers()
+    },
+    openInfoModal(donor) {
       this.currentDonor = donor
       this.currentPerson = donor.person
-      this.state = "clicked"
+      this.state = "info"
+    },
+    openChatModal() {
+      this.state = "chat"
     },
     closeModal() {
       this.currentDonor = false;
@@ -317,3 +427,26 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btn-margin {
+  margin: 1.5em;
+}
+
+.username {
+  margin: 1em;
+  font-size: medium;
+}
+
+.add-button {
+  color: green;
+}
+
+.person-box {
+  margin: 0.5em;
+}
+
+.delete-button {
+  color: red;
+}
+</style>
