@@ -10,10 +10,10 @@
       <div class="page-content">
         <div id="main">
           <div class="event-panel-btn-container">
-            <router-link to="/eventlist/add" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
+            <div @click="openModal(true)"  class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
-            </router-link>
+            </div>
           </div>
           <div class="search-block">
             <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
@@ -39,14 +39,78 @@
                 <td>{{ calendar.description }}</td>
                 <td>{{ calendar.created_at }}</td>
                 <td>
-                  <router-link :to="`/eventlist/edit/${calendar.id}`">
+                  <div @click="openEditModal(true, calendar.id)">
                     <i class="fas fa-edit button is-primary"></i>
-                  </router-link>
+                  </div>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Ajouter un Évènement</p>
+              <button class="delete" aria-label="close" v-on:click="openModal(false)"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <form @submit.prevent="createEvent()" class="show-requireds">
+                <h2 class="form-title title is-3">Ajouter un evenement</h2>
+                <div class="form-fields">
+                  <div class="form-input small required">
+                    <label class="label">Date</label>
+                    <input v-model="date" placeholder="date" type="datetime-local" class="cypress-datetime input is-info"
+                           required />
+                  </div>
+                  <div class="form-input small">
+                    <label class="label">Description</label>
+                    <textarea v-model="description" placeholder="description" class="cypress-textarea" required />
+                    <p class="required-notice">* Obligatoire</p>
+                  </div>
+                </div>
+              </form>
+            </section>
+            <footer class="modal-card-foot organia-modal-footer">
+              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
+                      v-on:click="createEvent()">Ajouter</button>
+              <button class="button modal-admin-btn" v-on:click="openModal(false)">Fermer</button>
+            </footer>
+          </div>
+        </div>
+        <div class="modal" :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Éditer un Évènement</p>
+              <button class="delete" aria-label="close" v-on:click="openEditModal(false, undefined)"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <form @submit.prevent="submitEditForm()" class="show-requireds">
+                <h2 class="form-title title is-3">Éditer un evenement</h2>
+                <div class="form-fields">
+                  <div class="form-input small required">
+                    <label class="label">Date</label>
+                    <input v-model="calendar.date" placeholder="date" type="datetime-local" class="input is-info" required />
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Description</label>
+                    <textarea class="textarea" v-model="calendar.description" placeholder="description" required />
+                  </div>
+                  <p class="required-notice">* Obligatoire</p>
+                </div>
+              </form>
+            </section>
+            <footer class="form-submit modal-card-foot organia-modal-footer">
+              <button @click="submitEditForm" type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn">Enregistrer</button>
+              <button type="button" class="button is-danger ml-6" @click="delete_event">
+                Supprimer
+              </button>
+              <button class="button modal-admin-btn" v-on:click="openEditModal(false, undefined)">Fermer</button>
+            </footer>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -62,6 +126,8 @@ export default {
   components: { SideBar, ApplicationNavbar },
   data() {
     return {
+      state: '',
+      editstate: '',
       events: {},
       currentEvent: {},
       sortingOrder: true,
@@ -69,12 +135,36 @@ export default {
       selectFilter: "date",
       filterText: "",
       eventsBackup: [],
+      date: "",
+      description: "",
+      calendar: {},
+      to_edit_id: 0,
     };
   },
   created() {
     this.getAllevents();
   },
   methods: {
+    openModal(val) {
+      if (val === true) {
+        this.state = "clicked"
+        return;
+      }
+      this.state = ""
+
+
+    },
+    openEditModal(val, id) {
+      if (val === true) {
+        this.editstate = "clicked"
+        this.to_edit_id = id
+        this.geteventByID()
+        return;
+      }
+      this.editstate = ""
+
+
+    },
     getAllevents() {
       this.$http
         .get("/calendar", {
@@ -106,6 +196,55 @@ export default {
       if (a.date[this.sortingKey] == null) return 1;
       else if (b.date[this.sortingKey] == null) return -1;
       return 0;
+    },
+    geteventByID() {
+      this.$http
+          .get(`/calendar/${this.to_edit_id}`)
+          .then((response) => {
+            this.calendar = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    submitEditForm() {
+      this.$http
+          .post(`/calendar/${this.to_edit_id}`, {
+            date: this.calendar.date,
+            description: this.calendar.description,
+          })
+          .then(() => {
+            this.$router.push("/eventlist");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    delete_event() {
+      this.$http
+          .delete(`/calendar/${this.to_edit_id}`)
+          .then(() => {
+            this.$toast.success("Suppression effectuée");
+            this.$router.push("/eventlist");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    createEvent() {
+      this.$http
+          .post("/calendar", {
+            date: this.date,
+            ...(this.description ? { description: this.description } : {}),
+          })
+          .then((response) => {
+            this.event_id = response.data.id;
+            this.$router.push("/eventlist")
+            this.openModal(false)
+          })
+          .catch((error) => {
+            console.log(error)
+          });
     },
     sortData() {
       if (["description"].includes(this.sortingKey)) {
