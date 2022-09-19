@@ -19,7 +19,7 @@
 <script>
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
-// import "vue-cal/dist/i18n/fr.js";
+import 'vue-cal/dist/i18n/fr.js'
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 
