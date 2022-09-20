@@ -1,37 +1,44 @@
 <template>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
-  <div id="main">
-    <h1>Carte de recherche pour les hopitaux</h1>
+  <div class="app-navbar-container">
+    <ApplicationNavbar></ApplicationNavbar>
   </div>
-  <div class="map">
-    <input class="form-control my-0 py-1" type="text" placeholder="Rerchercher" aria-label="Search" v-model="search" />
-    <div class="ui cards" style="margin: 10px">
-      <div class="card ui fluid" v-for="item in filteredHospitals" :key="item.id" style="margin: 0"
-        @click="clickHospital">
-        <div class="content">
-          <div class="header">{{ item.name }}</div>
-          <div class="meta">
-            {{ item.city.name }} | {{ item.city.department_code }}
+  <div class="columns">
+    <div class="column sidebar-column">
+      <SideBar></SideBar>
+    </div>
+    <div class="column page-container">
+      <div class="page-content">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
+        <div id="main">
+          <h1>Carte de recherche pour les hopitaux</h1>
+        </div>
+        <input class="form-control my-0 py-1" type="text" placeholder="Rerchercher" aria-label="Search"
+          v-model="search" />
+          <div class="map">
+            <l-map v-model="zoom" v-model:zoom="zoom" zoomAnimation="true" :center="[this.latpos, this.lngpos]">
+              <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
+              <l-geo-json :geojson="geojson"></l-geo-json>
+              <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng"
+                @l-add="$event.target.openPopup()">
+                <l-popup :content="item.content"></l-popup>
+              </l-marker>
+            </l-map>
+            <div class="ui cards">
+              <div class="card ui fluid" v-for="item in filteredHospitals" :key="item.id" @click="clickHospital">
+                <div class="content">
+                  <div class="meta">
+                    <p>
+                      {{ item.name }}
+                      <br />
+                      Numéro de téléphone: {{ item.phone_number }}
+                      <br />
+                      Nombre de patient: {{ item.patients_count }}
+                    </p>
+                  </div>
+                </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <l-map v-model="zoom" v-model:zoom="zoom" zoomAnimation="true" :center="[this.latpos, this.lngpos]">
-      <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
-      <l-geo-json :geojson="geojson"></l-geo-json>
-      <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng" @l-add="$event.target.openPopup()">
-        <l-popup :content="item.content"></l-popup>
-      </l-marker>
-    </l-map>
-    <div class="vignette-card">
-      <div class="vignette-container" v-for="item in filteredHospitals" :key="item.id">
-        <p>
-          {{ item.name }}
-          <br />
-          Numéro de téléphone: {{ item.phone_number }}
-          <br />
-          Nombre de patient: {{ item.patients_count }}
-        </p>
       </div>
     </div>
   </div>
@@ -45,6 +52,8 @@ import {
   LMarker,
   LPopup,
 } from "@vue-leaflet/vue-leaflet";
+import ApplicationNavbar from "@/components/ApplicationNavbar";
+import SideBar from "@/components/SideBar";
 
 export default {
   name: "search-map",
@@ -54,6 +63,8 @@ export default {
     LGeoJson,
     LMarker,
     LPopup,
+    ApplicationNavbar,
+    SideBar,
   },
   data() {
     return {
@@ -126,35 +137,12 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-</style>
-
-<style scoped>
-
-.vignette-card {
-    position: relative;
-    left: 110%;
-    bottom: 100%;
-}
-
-.vignette-container {
-    position: relative;
-    top: 5px;
-    height: 130px;
-    width: 200px;
-    border-radius: 10px;
-    margin: 2%;
-    background: #3e8ed0;
-    border: none;
-    color: white;
-}
-
 .map {
-    height: 80%;
-    width: 50vw;
-    position: relative;
-    left: 10%;
+  height: 100%;
+  width: 80%;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 10%;
 }
-
 </style>
