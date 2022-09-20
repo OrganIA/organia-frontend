@@ -10,7 +10,7 @@
       <div class="page-content">
         <div class="role-panel-btn-container">
           <div>
-            <div @click="openModal(true)" class="button add-btn cypress-to-add">
+            <div @click="openNewModal()" class="button add-btn cypress-to-add">
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
             </div>
@@ -69,7 +69,7 @@
               <td>{{ receiver.person.created_at }}</td>
               <td>{{ receiver.score }}</td>
               <td>
-                <div @click="openEditModal(true, receiver.person.id)">
+                <div @click="openEditModal(receiver.person.id)">
                   <i class="fas fa-edit button is-primary"></i>
                 </div>
               </td>
@@ -79,7 +79,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="modal" :class="{ 'is-invisible': !modal, 'is-active': modal }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active' : (state === 'info') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
@@ -222,17 +222,20 @@
                 }}
                 </button>
               </div>
+              <button class="button is-link is-light" @click="openChatModal()">
+                Créer une conversation
+              </button>
             </section>
             <footer class="modal-card-foot">
             </footer>
           </div>
         </div>
-        <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'new'), 'is-active': (state === 'new') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Ajouter un receveur</p>
-              <button class="delete" aria-label="close" v-on:click="openNewRoleModal(false)"></button>
+              <button class="delete" aria-label="close" @click="openNewModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <form @submit.prevent="createPerson()" class="show-requireds">
@@ -331,7 +334,6 @@
                     <label class="label">Notes</label>
                     <textarea v-model="new_receiver.notes" placeholder="notes" class="textarea" />
                     <p class="required-notice">* Obligatoire</p>
-
                   </div>
                   <div class="form-submit is-center">
                     <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>
@@ -339,23 +341,21 @@
                   </div>
                 </div>
               </form>
-
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                v-on:click="createPerson()">Ajouter
+                @click="createPerson()">Ajouter
               </button>
-              <button class="button modal-admin-btn" v-on:click="openNewRoleModal(false)">Fermer</button>
+              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
             </footer>
           </div>
         </div>
-        <div class="modal"
-          :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'edit'), 'is-active': (state === 'edit') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Éditer un receveur</p>
-              <button class="delete" aria-label="close" v-on:click="openEditModal(false, undefined)"></button>
+              <button class="delete" aria-label="close" @click="openEditModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <form @submit.prevent="submitForm()" class="show-requireds">
@@ -401,7 +401,6 @@
                       class="button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
-
                     </select>
                   </div>
                   <div class="form-input small">
@@ -464,16 +463,15 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                v-on:click="createPerson()">Enregistrer
+                @click="createPerson()">Enregistrer
               </button>
               <button type="button" class="button is-danger ml-6" @click="delete_receiver">
                 Supprimer
               </button>
-              <button class="button modal-admin-btn" v-on:click="openNewRoleModal(false)">Fermer</button>
+              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
             </footer>
           </div>
         </div>
-
       </div>
     </div>
     <div class="modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
@@ -538,7 +536,6 @@ export default {
       receivers: {},
       modal: false,
       state: '',
-      editstate: '',
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "first_name",
@@ -587,12 +584,11 @@ export default {
   methods: {
     getReceiverScore(receiver) {
       const organ = receiver.organ.toLowerCase()
-      console.log(receiver)
       this.$http.get(`/${organ}/${receiver.person.id}`).then((response) => {
-        console.log(response)
         receiver.score = response.data.score || "N/A"
       }).catch((error) => {
         console.log(error)
+        receiver.score = "N/A"
       })
     },
     getMe() {
@@ -678,25 +674,15 @@ export default {
     openChatModal() {
       this.state = "chat"
     },
-    openModal(val) {
-      if (val === true) {
-        this.state = "clicked"
-        return;
-      }
-      this.state = ""
+    openEditModal(id) {
+      this.getReceiverByID(id)
+      this.state = "edit"
     },
-    openEditModal(val, id) {
-      if (val === true) {
-        this.getReceiverByID(id)
-        this.editstate = "clicked"
-        return;
-      }
-      this.editstate = ""
-
-
+    openNewModal() {
+      this.state = "new"
     },
     closeModal() {
-      this.modal = false;
+      this.state = "";
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -767,15 +753,6 @@ export default {
             return el[this.selectFilter].includes(this.filterText);
         });
       }
-    },
-    openNewRoleModal(val) {
-      if (val === true) {
-        this.state = "clicked"
-        return;
-      }
-      this.state = ""
-
-
     },
     getReceiverByID() {
       this.$http
