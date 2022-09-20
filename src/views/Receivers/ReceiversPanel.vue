@@ -76,6 +76,13 @@
               <td>
                 <i class="fas fa-info cypress-receiver-modal" @click="openInfoModal(receiver)"></i>
               </td>
+              <td>
+                <div>
+                <button class="button is-light contents" @click="createPDF(receiver.person.id)">
+                  <p>Télécharger la version PDF</p>
+                </button>
+              </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -524,6 +531,7 @@
 <script>
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import jsPDF from 'jspdf';
 
 export default {
   components: { SideBar, ApplicationNavbar },
@@ -533,6 +541,7 @@ export default {
       currentReceiver: {
         person: {}
       },
+      receiver:{},
       receivers: {},
       modal: false,
       state: '',
@@ -582,6 +591,30 @@ export default {
     this.new_receiver.tumors_number = 0;
   },
   methods: {
+    createPDF(id) {
+      this.$http
+        .get(`/listings/${id}`)
+        .then((response) => {
+          this.receiver = response.data;
+          this.person = response.data.person;
+          let pdfName = 'donor_' + this.person.last_name;
+          const doc = new jsPDF();
+          let y = 15
+          doc.text("Bilan d'informations Donneur", 15, y);
+          doc.text("Prénom: " + this.person.first_name, 20, y + 10);
+          doc.text("Date de naissance: " + this.person.birthday, 20, y + 20);
+          doc.text("Sexe: " + this.person.gender, 20, y + 30);
+          doc.text("Organe: " + this.receiver.organ, 20, y + 40);
+          doc.text("Type sanguin: " + this.person.blood_type, 20, y + 50);
+          doc.text("Nombre de tumeurs: " + this.receiver.tumors_number, 20, y + 60);
+          doc.text("Date de début de retransplantation: " + this.receiver.startDateDialyse, 20, y + 70);
+          doc.text("Date de fin de retransplantation: " + this.person.first_name, 20, y + 80);
+          doc.save(pdfName + ".pdf");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },   
     getReceiverScore(receiver) {
       const organ = receiver.organ.toLowerCase()
       this.$http.get(`/${organ}/${receiver.person.id}`).then((response) => {
