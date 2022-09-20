@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="form-control" @submit.prevent="submitForm()">
+    <form class="form-control" @submit.prevent="submitEditForm()">
       <div class="form-fields">
         <label class="label">Nom</label>
         <input v-model="hospital.name" type="text" class="input mb-6 cypress-name" placeholder="Nom du centre"
@@ -56,7 +56,7 @@ export default {
           console.log(error);
         });
     },
-    submitForm() {
+    submitEditForm() {
       console.log(this.hospital)
       console.log(this.city)
       this.$http

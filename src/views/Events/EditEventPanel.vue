@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="submitForm()" class="show-requireds">
+    <form @submit.prevent="submitEditForm()" class="show-requireds">
       <h2 class="form-title title is-3">Éditer un evenement</h2>
       <div class="form-fields">
         <div class="form-input small required">
@@ -48,7 +48,7 @@ export default {
           console.log(error);
         });
     },
-    submitForm() {
+    submitEditForm() {
       this.$http
         .post(`/calendar/${this.id}`, {
           date: this.calendar.date,

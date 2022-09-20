@@ -1,22 +1,12 @@
 <template>
-  <div class="main-container" :class="{ 'background-white': logged_in }">
-    <SideBar v-if="logged_in" @logout="logout" />
-    <div class="secondary-container" :class="{
-      'background-transparent': !logged_in,
-      'background-white': logged_in,
-    }">
-      <router-view @login="handleLogin" />
-    </div>
-  </div>
+  <router-view @login="handleLogin" />
 </template>
 
 <script>
-import SideBar from "./components/SideBar";
 import translate from "@/translate"
 
 export default {
   name: "App",
-  components: { SideBar },
   methods: {
     getRole(data) {
       this.$http
@@ -32,6 +22,7 @@ export default {
           });
           this.$emit("login", true);
         })
+        this.$router.push('/landing')
         .catch((error) => {
           console.log(error.response.data.detail);
         });
@@ -45,7 +36,7 @@ export default {
         .catch((error) => {
           console.log(error.response);
           this.$cookies.remove("token");
-          this.$router.push("/login");
+          this.$router.push("/home");
           this.$toast.error(
             "Erreur lors de la connexion : " + translate[error.response.data.detail]
           );
@@ -58,7 +49,7 @@ export default {
     logout() {
       this.logged_in = false;
       this.$store.commit("logout");
-      this.$router.push("/login");
+      this.$router.push("/home");
     },
   },
   data() {
@@ -81,8 +72,8 @@ export default {
       this.login();
     } else {
       this.$router.isReady().then(() => {
-        if (this.$route.path != "/register" && this.$route.path != "/login" && this.$route.path != "/team")
-          this.$router.push("/login");
+        if (this.$route.path != "/register" && this.$route.path != "/home" && this.$route.path != "/team")
+          this.$router.push("/home");
       });
     }
   },
@@ -90,20 +81,19 @@ export default {
 </script>
 
 <style scoped>
-
 .secondary-container {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-top: 3%;
-    max-width: 79%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: 3%;
+  max-width: 79%;
 }
 
 .background-transparent {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .background-white {
-    background-color: white;
+  background-color: white;
 }
 </style>

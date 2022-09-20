@@ -1,7 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 const routes = [
-  { path: "/", component: () => import("./views/LandingPage.vue") },
+  { path: "/landing", component: () => import("./views/LandingPage.vue")},
+  { path: "/home", component: () => import("./Home.vue")},
+  { path: "/", component: () => import("./Home.vue")},
   { path: "/vitrine", component: () => import("./views/Vitrine.vue") },
   { path: "/receivers", component: () => import("./views/Receivers/ReceiversPanel.vue") },
   { path: "/receivers/add", component: () => import("./views/Receivers/NewReceiver.vue") },
@@ -24,7 +26,6 @@ const routes = [
   { path: "/eventlist", component: () => import("./views/Events/EventPanel.vue") },
   { path: "/eventlist/add", component: () => import("./views/Events/NewEvent.vue") },
   { path: "/eventlist/edit/:id", component: () => import("./views/Events/EditEventPanel.vue"), props: true },
-  { path: "/chat", component: () => import("./views/Chat.vue") },
   { path: "/useorgania", component: () => import("./views/HowToUseThePlatform.vue") },
   { path: "/searchmap", component: () => import("./views/Hospitals/SearchMap.vue") },
   { path: "/hospitals", component: () => import("./views/Hospitals/HospitalsPanel.vue") },
@@ -32,11 +33,13 @@ const routes = [
   { path: "/hospitals/info/:id", component: () => import("./views/Hospitals/DisplayHospitalInfo.vue"), props: true },
   { path: "/hospitals/edit/:id", component: () => import("./views/Hospitals/EditHospital.vue"), props: true },
   { path: "/account", component: () => import("./views/Account.vue") },
+  { path: "/chat", component: () => import("./views/Chat.vue") },
+  // { path: "/:pathMatch(.*)*", component: () => import("./views/NotFound.vue") },
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+    history: createWebHistory(process.env.BASE_URL),
+    routes
 })
 
 export default router

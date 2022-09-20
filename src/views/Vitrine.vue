@@ -655,6 +655,7 @@ li.tl-li:before {
   margin: auto;
   height: 5em;
 }
+
 a {
   color: #296fa8;
 }
