@@ -1,42 +1,56 @@
 <template>
-  <div>
-    <h1 style="text-align: center">Liste des patients sous dialyse</h1>
-    <div class="search-block">
-      <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
-        <option value="first_name">Prénom</option>
-        <option value="last_name">Nom</option>
-        <option value="birthday">Date de naissance</option>
-        <option value="startDateDialyse">Date de début de dialyse</option>
-        <option value="endDateDialyse">Date de fin de dialyse</option>
-      </select>
-      <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-      <br />
+  <div class="app-navbar-container">
+    <ApplicationNavbar></ApplicationNavbar>
+  </div>
+  <div class="columns">
+    <div class="column sidebar-column">
+      <SideBar></SideBar>
     </div>
-    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info">
-      <thead>
-        <tr>
-          <th @click="updateFilter('first_name')">Prénom</th>
-          <th @click="updateFilter('last_name')">Nom de famille</th>
-          <th @click="updateFilter('birthday')">Date de naissance</th>
-          <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
-          <th @click="updateFilter('endDateDialyse')">Date de fin de dialyse</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="receiver in receivers" :key="receiver">
-          <td>{{ receiver.person.first_name }}</td>
-          <td>{{ receiver.person.last_name }}</td>
-          <td>{{ receiver.person.birthday }}</td>
-          <td>{{ receiver.startDateDialyse }}</td>
-          <td>{{ receiver.endDateDialyse }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="column page-container">
+      <div class="page-content">
+        <div class="search-block">
+          <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
+            <option value="first_name">Prénom</option>
+            <option value="last_name">Nom</option>
+            <option value="birthday">Date de naissance</option>
+            <option value="startDateDialyse">Date de début de dialyse</option>
+            <option value="endDateDialyse">Date de fin de dialyse</option>
+          </select>
+          <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
+          <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+          <br />
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th @click="updateFilter('first_name')">Prénom</th>
+              <th @click="updateFilter('last_name')">Nom de famille</th>
+              <th @click="updateFilter('birthday')">Date de naissance</th>
+              <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
+              <th @click="updateFilter('endDateDialyse')">Date de fin de dialyse</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="receiver in receivers" :key="receiver">
+              <td>{{ receiver.person.first_name }}</td>
+              <td>{{ receiver.person.last_name }}</td>
+              <td>{{ receiver.person.birthday }}</td>
+              <td>{{ receiver.startDateDialyse }}</td>
+              <td>{{ receiver.endDateDialyse }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import SideBar from "@/components/SideBar";
+import ApplicationNavbar from "@/components/ApplicationNavbar";
+
 export default {
   name: "dialyse-panel",
+  components: { SideBar, ApplicationNavbar },
   data() {
     return {
       receivers: {},
@@ -172,3 +186,23 @@ export default {
   },
 };
 </script>
+<style scoped>
+thead tr {
+  width: 100% !important;
+}
+
+
+.icon-dropdown-correction {
+  position: relative;
+  margin-top: 12px;
+  margin-left: -45px;
+  margin-right: 40px;
+}
+
+
+.page-content {
+  max-width: 96%;
+  margin-left: 60px;
+
+}
+</style>

@@ -8,7 +8,7 @@
             </header>
             <section class="modal-card-body content">
                 <label class="label">Nom de la conversation</label>
-                <p>{{ room.roomName }}</p>
+                <p>{{ chat.chatName }}</p>
                 <label class="label">Créateur:</label>
                 <p>{{ creator.email }}</p>
                 <div class="select is-multiple user-list">
@@ -32,7 +32,7 @@ export default {
                 return []
             },
         },
-        room: {
+        chat: {
             type: Object,
             default() {
                 return {}
@@ -45,8 +45,8 @@ export default {
         }
     },
     watch: {
-        room(newRoom) {
-            this.creator = newRoom.creator
+        chat(newChat) {
+            this.creator = newChat.creator
         }
     },
     emits: ["closeModal"],
