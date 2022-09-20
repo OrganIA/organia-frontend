@@ -9,7 +9,7 @@
             <section class="modal-card-body">
                 <form @submit.prevent="createRoom">
                     <label class="label">Nom de la conversation</label>
-                    <input class="input" type="text" placeholder="Nom de la conversation" v-model="newRoomName"
+                    <input class="input" type="text" placeholder="Nom de la conversation" v-model="newChatName"
                         required>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs non ajoutés
@@ -60,11 +60,11 @@ export default {
                 return []
             },
         },
-        roomId: {
+        chatId: {
             type: Number,
             default: 0,
         },
-        roomName: {
+        chatName: {
             type: String,
             default: "",
         },
@@ -78,16 +78,16 @@ export default {
         return {
             usersNotAdded: [],
             usersToAdd: [],
-            newRoomName: "",
+            newChatName: "",
         }
     },
     watch: {
         usersAdded() {
-            this.newRoomName = this.roomName
+            this.newChatName = this.chatName
             this.usersToAdd = []
             this.usersAdded.forEach(user => {
                 this.usersToAdd.push({
-                    id: user._id,
+                    id: user.id,
                     email: user.username
                 })
             })
@@ -96,7 +96,7 @@ export default {
     },
     methods: {
         closeModal(refresh) {
-            this.newRoomName = ""
+            this.newChatName = ""
             this.usersNotAdded = this.users.filter(user => user.id != this.currentUserId)
             this.usersToAdd = []
             this.$emit("closeModal", refresh)
@@ -110,7 +110,7 @@ export default {
             this.usersNotAdded.push(user)
         },
         editRoom() {
-            if (this.newRoomName == "") {
+            if (this.newChatName == "") {
                 this.$toast.error(
                     "Erreur: un nom est requis"
                 );
@@ -137,7 +137,7 @@ export default {
             this.$http
                 .post(`/chats/${this.roomId}`, {
                     users_ids: users.users_ids,
-                    chat_name: this.newRoomName,
+                    chat_name: this.newChatName,
                     creator_id: this.currentUserId,
                 })
                 .then(() => {
@@ -147,10 +147,6 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.$toast.error(
-                        "Erreur lors de la connexion : " + error.response.data.detail
-                    );
-                    setTimeout(this.$toast.clear, 3000);
                 });
         },
         deleteChat() {
@@ -163,10 +159,6 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.$toast.error(
-                        "Erreur lors de la connexion : " + error.response.data.detail
-                    );
-                    setTimeout(this.$toast.clear, 3000);
                 });
             this.$toast.success("Suppression en cour");
         },

@@ -1,8 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 const routes = [
-  { path: "/", component: () => import("./views/LandingPage.vue") },
-  { path: "/abouttheproject", component: () => import("./views/About/AboutProject.vue") },
+  { path: "/landing", component: () => import("./views/LandingPage.vue")},
+  { path: "/home", component: () => import("./Home.vue")},
+  { path: "/", component: () => import("./Home.vue")},
+  { path: "/vitrine", component: () => import("./views/Vitrine.vue") },
   { path: "/receivers", component: () => import("./views/Receivers/ReceiversPanel.vue") },
   { path: "/receivers/add", component: () => import("./views/Receivers/NewReceiver.vue") },
   { path: "/receivers/edit/:id", component: () => import("./views/Receivers/EditReceiversPanel.vue"), props: true },
@@ -24,20 +26,20 @@ const routes = [
   { path: "/eventlist", component: () => import("./views/Events/EventPanel.vue") },
   { path: "/eventlist/add", component: () => import("./views/Events/NewEvent.vue") },
   { path: "/eventlist/edit/:id", component: () => import("./views/Events/EditEventPanel.vue"), props: true },
-  { path: "/chat", component: () => import("./views/Chat.vue") },
   { path: "/useorgania", component: () => import("./views/HowToUseThePlatform.vue") },
   { path: "/searchmap", component: () => import("./views/Hospitals/SearchMap.vue") },
   { path: "/hospitals", component: () => import("./views/Hospitals/HospitalsPanel.vue") },
   { path: "/hospitals/add", component: () => import("./views/Hospitals/NewHospital.vue") },
   { path: "/hospitals/info/:id", component: () => import("./views/Hospitals/DisplayHospitalInfo.vue"), props: true },
   { path: "/hospitals/edit/:id", component: () => import("./views/Hospitals/EditHospital.vue"), props: true },
-  { path: "/team", component: () => import("./views/TeamDescription.vue") },
   { path: "/account", component: () => import("./views/Account.vue") },
+  { path: "/chat", component: () => import("./views/Chat.vue") },
+  // { path: "/:pathMatch(.*)*", component: () => import("./views/NotFound.vue") },
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+    history: createWebHistory(process.env.BASE_URL),
+    routes
 })
 
 export default router

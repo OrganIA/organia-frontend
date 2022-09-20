@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="submitForm()" class="show-requireds">
+    <form @submit.prevent="submitEditForm()" class="show-requireds">
       <h2 class="form-title title is-3">Éditer un evenement</h2>
       <div class="form-fields">
         <div class="form-input small required">
@@ -46,11 +46,9 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
-    submitForm() {
+    submitEditForm() {
       this.$http
         .post(`/calendar/${this.id}`, {
           date: this.calendar.date,
@@ -61,8 +59,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     redirect() {
@@ -77,8 +73,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
   },

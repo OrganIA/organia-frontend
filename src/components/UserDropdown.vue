@@ -1,21 +1,16 @@
 <template>
-  <div class="dropdown avatar-dropdown is-hoverable cypress-dropdown">
+  <div class="dropdown  is-hoverable cypress-dropdown avatar-dropdown">
     <div class="dropdown-trigger">
       <button class="button dropdown-trigger" aria-haspopup="true" aria-controls="dropdown-menu3">
         <span class="name-display-dropdown">{{ cutMail($store.getters.getEmail) }}</span>
-        <span class="avatar-container">
           <img class="avatar-display"
             src="https://synergy-it.gitlab.io/speekio/speekio-portal/assets/img/img_avatar.png" />
-        </span>
       </button>
     </div>
     <div class="dropdown-menu" id="dropdown-menu3" role="menu">
       <div class="dropdown-content dropdown-correction">
-        <router-link to="#" class="dropdown-item">
-          Demande au support
-        </router-link>
-        <router-link to="/new_invitation" class="dropdown-item">
-          Demande au support
+        <router-link to="/account" class="dropdown-item">
+          Mon compte
         </router-link>
         <hr class="dropdown-divider">
         <button @click="logout" class="block button is-danger is-light is-outlined cypress-logout">
@@ -35,6 +30,7 @@ export default {
       this.$store.commit("logout");
       this.$cookies.remove("token");
       this.$emit("logout");
+      this.$router.push("/home");
     },
     cutMail(mail) {
       return mail.substr(0, mail.indexOf('@'))
@@ -47,7 +43,6 @@ export default {
 
 .avatar-dropdown {
     margin-top: 50px;
-    margin-left: 4%;
     min-width: 300px;
 }
 
@@ -56,7 +51,6 @@ export default {
 }
 
 .dropdown-correction {
-    margin-left: -100px;
     width: 260px;
 }
 
@@ -69,12 +63,6 @@ export default {
 
 .avatar-display {
     width: 100px;
-    border-radius: 50%;
-}
-
-.avatar-container {
-    width: 100px;
-    border: solid black 3px;
     border-radius: 50%;
 }
 

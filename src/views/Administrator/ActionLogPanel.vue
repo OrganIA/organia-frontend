@@ -1,16 +1,31 @@
 <template>
-  <p>Action Log</p>
-  <div id="actions-container">
-    <p v-for="action in actions" :key="action" class="action">
-      [{{ action.created_at }}] {{ action.action }} {{ action.target_type }} of id
-      {{ action.target_id }} by user {{ action.author_id }}. {{ action.message }}
-    </p>
+  <div class="app-navbar-container">
+    <ApplicationNavbar></ApplicationNavbar>
+  </div>
+  <div class="columns">
+    <div class="column sidebar-column">
+      <SideBar></SideBar>
+    </div>
+    <div class="column page-container">
+      <div class="page-content">
+        <div id="actions-container">
+          <p v-for="action in actions" :key="action" class="action">
+            [{{ action.created_at }}] {{ action.action }} {{ action.target_type }} of id
+            {{ action.target_id }} by user {{ action.author_id }}. {{ action.message }}
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import ApplicationNavbar from "@/components/ApplicationNavbar";
+import SideBar from "@/components/SideBar";
 export default {
   name: "action-log-panel",
+  emits: ["login"],
+  components: { ApplicationNavbar, SideBar },
   created() {
     this.getActions();
     setInterval(this.getActions, 2000);
@@ -29,15 +44,13 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 #actions-container {
   display: flex;
   flex-direction: column;
