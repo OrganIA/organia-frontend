@@ -48,6 +48,7 @@
               <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
               <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
               <th @click="updateFilter('created_at')">Arrivée</th>
+              <th>Score</th>
               <th>Éditer</th>
               <th>Infos</th>
             </tr>
@@ -66,6 +67,7 @@
               <td>{{ receiver.startDateDialyse }}</td>
               <td>{{ receiver.endDateDialyse }}</td>
               <td>{{ receiver.person.created_at }}</td>
+              <td>{{ receiver.score }}</td>
               <td>
                 <div @click="openEditModal(true, receiver.person.id)">
                   <i class="fas fa-edit button is-primary"></i>
@@ -583,6 +585,16 @@ export default {
     this.new_receiver.tumors_number = 0;
   },
   methods: {
+    getReceiverScore(receiver) {
+      const organ = receiver.organ.toLowerCase()
+      console.log(receiver)
+      this.$http.get(`/${organ}/${receiver.person.id}`).then((response) => {
+        console.log(response)
+        receiver.score = response.data.score || "N/A"
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
     getMe() {
       this.$http.get("/users/me")
         .then((response) => {
@@ -643,6 +655,9 @@ export default {
             ).toDateString();
           });
           this.receivers = response.data;
+          this.receivers.forEach((receiver) => {
+            this.getReceiverScore(receiver)
+          })
           this.receiversBackup = this.receivers;
         })
         .catch((error) => {
