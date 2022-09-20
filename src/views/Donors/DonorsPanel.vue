@@ -567,7 +567,7 @@ export default {
         alpha_fetoprotein: "",
         gender: "",
       },
-      all_organs: "",
+      all_organs: [],
     };
   },
   created() {
@@ -578,6 +578,26 @@ export default {
     this.new_donor.tumors_number = 0;
   },
   methods: {
+    openModal(val) {
+      if (val === true) {
+        this.state = "clicked"
+        return;
+      }
+      this.state = ""
+    },
+    getMe() {
+      this.$http.get("/users/me")
+        .then((response) => {
+          this.me = response.data
+        })
+    },
+    getAllUsers() {
+      this.$http
+        .get("/users")
+        .then((response) => {
+          this.personsNotAdded = response.data
+        })
+    },
     getAllReceivers() {
       this.$http
         .get("/listings/donors")
@@ -610,7 +630,7 @@ export default {
     },
     openEditModal(val, id) {
       if (val === true) {
-        this.getReceiverByID(id)
+        this.getDonorByID(id)
         this.editstate = "clicked"
         return;
       }
@@ -700,7 +720,7 @@ export default {
 
 
     },
-    getReceiverByID() {
+    getDonorByID() {
       this.$http
         .get(`/listings/${this.id}`)
         .then((response) => {
@@ -761,8 +781,8 @@ export default {
       this.person.isDialyse = this.donor.isDialyse
       this.$http
         .post(`/persons/${this.person.id}`, {
-          first_name: this.person.first_name,
-          last_name: this.person.last_name,
+          firstname: this.person.first_name,
+          lastname: this.person.last_name,
           birthday: this.person.birthday,
           ...(this.person.description
             ? { description: this.person.description }
@@ -787,8 +807,8 @@ export default {
       this.tumors_number = 0;
       this.$http
         .post("/persons", {
-          first_name: this.first_name,
-          last_name: this.last_name,
+          firstname: this.first_name,
+          lastname: this.last_name,
           birthday: this.birthday,
           ...(this.description ? { description: this.description } : {}),
           supervisor_id: this.supervisor_id,
@@ -806,6 +826,7 @@ export default {
           this.createReceiver();
         })
         .catch((error) => {
+          console.log("HEEEEEEEEE")
           console.log(error);
         });
     },
