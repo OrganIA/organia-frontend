@@ -754,9 +754,9 @@ export default {
         });
       }
     },
-    getReceiverByID() {
+    getReceiverByID(id) {
       this.$http
-        .get(`/listings/${this.id}`)
+        .get(`/listings/${id}`)
         .then((response) => {
           this.receiver = response.data;
           this.person = response.data.person;
