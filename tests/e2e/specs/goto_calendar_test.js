@@ -3,8 +3,6 @@ describe('Go to caledar', () => {
   it('Tries to go to the calendar page should succeed', () => {
     cy.visit('http://organia.francecentral.cloudapp.azure.com/')
 
-    cy.get('.cypress-to-register').click()
-
     cy.get('.cypress-to-login').click()
 
     cy.get('.cypress-email')
@@ -18,7 +16,6 @@ describe('Go to caledar', () => {
     cy.get('.cypress-login').click()
 
     cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
-
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-calendar').click();

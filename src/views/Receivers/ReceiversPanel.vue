@@ -225,6 +225,9 @@
               <button class="button is-link is-light" @click="openChatModal()">
                 Créer une conversation
               </button>
+              <button class="button is-link is-light contents" @click="createPDF()">
+                Télécharger la version PDF
+              </button>
             </section>
             <footer class="modal-card-foot">
             </footer>
@@ -524,6 +527,7 @@
 <script>
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import jsPDF from 'jspdf';
 
 export default {
   components: { SideBar, ApplicationNavbar },
@@ -533,6 +537,7 @@ export default {
       currentReceiver: {
         person: {}
       },
+      receiver:{},
       receivers: {},
       modal: false,
       state: '',
@@ -582,6 +587,21 @@ export default {
     this.new_receiver.tumors_number = 0;
   },
   methods: {
+    createPDF() {
+      let pdfName = 'donor_' + this.currentReceiver.person.last_name;
+      const doc = new jsPDF();
+      let y = 15
+      doc.text("Bilan d'informations Receveur", 15, y);
+      doc.text("Prénom: " + this.currentReceiver.person.first_name, 20, y + 10);
+      doc.text("Date de naissance: " + this.currentReceiver.person.birthday, 20, y + 20);
+      doc.text("Sexe: " + this.currentReceiver.person.gender, 20, y + 30);
+      doc.text("Organe: " + this.currentReceiver.organ, 20, y + 40);
+      doc.text("Type sanguin: " + this.currentReceiver.person.blood_type, 20, y + 50);
+      doc.text("Nombre de tumeurs: " + this.currentReceiver.tumors_number, 20, y + 60);
+      doc.text("Date de début de retransplantation: " + this.currentReceiver.start_date, 20, y + 70);
+      doc.text("Date de fin de retransplantation: " + this.currentReceiver.end_date, 20, y + 80);
+      doc.save(pdfName + ".pdf");
+    },  
     getReceiverScore(receiver) {
       const organ = receiver.organ.toLowerCase()
       this.$http.get(`/${organ}/${receiver.person.id}`).then((response) => {
@@ -754,9 +774,9 @@ export default {
         });
       }
     },
-    getReceiverByID(id) {
+    getReceiverByID() {
       this.$http
-        .get(`/listings/${id}`)
+        .get(`/listings/${this.id}`)
         .then((response) => {
           this.receiver = response.data;
           this.person = response.data.person;
