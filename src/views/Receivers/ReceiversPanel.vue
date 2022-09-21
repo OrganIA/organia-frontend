@@ -338,10 +338,6 @@
                     <textarea v-model="new_receiver.notes" placeholder="notes" class="textarea" />
                     <p class="required-notice">* Obligatoire</p>
                   </div>
-                  <div class="form-submit is-center">
-                    <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>
-                    <router-link to="/receivers" class="button is-danger ml-6">Retour</router-link>
-                  </div>
                 </div>
               </form>
             </section>
@@ -466,7 +462,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                @click="createPerson()">Enregistrer
+                @click="updatePerson()">Enregistrer
               </button>
               <button type="button" class="button is-danger ml-6" @click="delete_receiver">
                 Supprimer
@@ -551,6 +547,7 @@ export default {
       chatName: "",
       me: {},
       to_edit: {
+        id: 0,
         receiver: {},
         person: {},
         all_organs: [],
@@ -774,13 +771,15 @@ export default {
         });
       }
     },
-    getReceiverByID() {
+      getReceiverByID(id) {
+      console.log(id)
+        this.to_edit.person.id = id
       this.$http
-        .get(`/listings/${this.id}`)
+        .get(`/listings/${id}`)
         .then((response) => {
-          this.receiver = response.data;
-          this.person = response.data.person;
-          console.log(this.receiver)
+          this.to_edit.receiver = response.data;
+          this.to_edit.person = response.data.person;
+          console.log(this.to_edit.receiver)
         })
         .catch((error) => {
           console.log(error);
@@ -832,51 +831,54 @@ export default {
         });
     },
     updatePerson() {
-      this.person.isDialyse = this.receiver.isDialyse
+      this.to_edit.person.isDialyse = this.receiver.isDialyse
       this.$http
-        .post(`/persons/${this.person.id}`, {
-          first_name: this.person.first_name,
-          last_name: this.person.last_name,
-          birthday: this.person.birthday,
-          ...(this.person.description
-            ? { description: this.person.description }
+        .post(`/persons/${this.to_edit.person.id}`, {
+          first_name: this.to_edit.person.first_name,
+          last_name: this.to_edit.person.last_name,
+          birthday: this.to_edit.person.birthday,
+          ...(this.to_edit.person.description
+            ? { description: this.to_edit.person.description }
             : {}),
-          supervisor_id: this.person.supervisor_id,
-          ...(this.person.abo ? { abo: this.person.abo } : {}),
-          ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
-          ...(this.person.gender ? { gender: this.person.gender } : {}),
-          ...(this.person.isDialyse ? { isDialyse: this.person.isDialyse } : {}),
-          ...(this.person.isRetransplantation ? { isRetransplantation: this.person.isRetransplantation } : {}),
-          ...(this.person.startDateDialyse ? { startDateDialyse: this.person.startDateDialyse } : {}),
-          ...(this.person.endDateDialyse ? { endDateDialyse: this.person.endDateDialyse } : {}),
+          supervisor_id: this.to_edit.person.supervisor_id,
+          ...(this.to_edit.person.abo ? { abo: this.to_edit.person.abo } : {}),
+          ...(this.to_edit.person.rhesus ? { rhesus: this.to_edit.person.rhesus } : {}),
+          ...(this.to_edit.person.gender ? { gender: this.to_edit.person.gender } : {}),
+          ...(this.to_edit.person.isDialyse ? { isDialyse: this.to_edit.person.isDialyse } : {}),
+          ...(this.to_edit.person.isRetransplantation ? { isRetransplantation: this.to_edit.person.isRetransplantation } : {}),
+          ...(this.to_edit.person.startDateDialyse ? { startDateDialyse: this.to_edit.person.startDateDialyse } : {}),
+          ...(this.to_edit.person.endDateDialyse ? { endDateDialyse: this.to_edit.person.endDateDialyse } : {}),
         })
         .then(() => {
           this.$router.push("/receivers");
+          this.getAllReceivers()
+          this.closeModal()
+
         })
         .catch((error) => {
           console.log(error);
         });
     },
     createPerson() {
-      this.tumors_number = 0;
+      this.new_receiver.tumors_number = 0;
       this.$http
         .post("/persons", {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          birthday: this.birthday,
-          ...(this.description ? { description: this.description } : {}),
-          supervisor_id: this.supervisor_id,
-          ...(this.blood_type ? { abo: this.blood_type } : {}),
-          ...(this.rhesus ? { rhesus: this.rhesus } : {}),
-          ...(this.tumors_number ? { tumors_number: this.tumors_number } : {}),
-          ...(this.isDialyse ? { isDialyse: this.isDialyse } : {}),
-          ...(this.isRetransplantation ? { isRetransplantation: this.isRetransplantation } : {}),
-          ...(this.startDateDialyse ? { startDateDialyse: this.startDateDialyse } : {}),
-          ...(this.endDateDialyse ? { endDateDialyse: this.endDateDialyse } : {}),
-          ...(this.gender ? { gender: this.gender } : {}),
+          first_name: this.new_receiver.first_name,
+          last_name: this.new_receiver.last_name,
+          birthday: this.new_receiver.birthday,
+          ...(this.new_receiver.description ? { description: this.new_receiver.description } : {}),
+          supervisor_id: this.new_receiver.supervisor_id,
+          ...(this.new_receiver.blood_type ? { abo: this.new_receiver.blood_type } : {}),
+          ...(this.new_receiver.rhesus ? { rhesus: this.new_receiver.rhesus } : {}),
+          ...(this.new_receiver.tumors_number ? { tumors_number: this.new_receiver.tumors_number } : {}),
+          ...(this.new_receiver.isDialyse ? { isDialyse: this.new_receiver.isDialyse } : {}),
+          ...(this.new_receiver.isRetransplantation ? { isRetransplantation: this.new_receiver.isRetransplantation } : {}),
+          ...(this.new_receiver.startDateDialyse ? { startDateDialyse: this.new_receiver.startDateDialyse } : {}),
+          ...(this.new_receiver.endDateDialyse ? { endDateDialyse: this.new_receiver.endDateDialyse } : {}),
+          ...(this.new_receiver.gender ? { gender: this.new_receiver.gender } : {}),
         })
         .then((response) => {
-          this.person_id = response.data.id;
+          this.new_receiver.person_id = response.data.id;
           this.createReceiver();
         })
         .catch((error) => {
@@ -886,17 +888,18 @@ export default {
     createReceiver() {
       this.$http
         .post("/listings", {
-          ...(this.start_date ? { start_date: this.start_date } : {}),
-          ...(this.notes ? { notes: this.notes } : {}),
-          organ: this.organ,
+          ...(this.new_receiver.start_date ? { start_date: this.new_receiver.start_date } : {}),
+          ...(this.new_receiver.notes ? { notes: this.new_receiver.notes } : {}),
+          organ: this.new_receiver.organ,
           donor: false,
-          person_id: this.person_id,
-          tumors_number: this.tumors_number,
-          isDialyse: this.isDialyse,
-          isRetransplantation: this.isRetransplantation,
+          person_id: this.new_receiver.person_id,
+          tumors_number: this.new_receiver.tumors_number,
+          isDialyse: this.new_receiver.isDialyse,
+          isRetransplantation: this.new_receiver.isRetransplantation,
         })
         .then(() => {
-          this.$router.push("/receivers");
+          this.getAllReceivers()
+          this.closeModal()
         })
         .catch((error) => {
           console.log(error);
