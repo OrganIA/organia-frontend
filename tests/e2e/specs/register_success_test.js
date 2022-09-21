@@ -2,16 +2,13 @@
 import { emailGenerator } from "../utils"
 var email = emailGenerator();
 
-//http://localhost:8081/
-//http://organia.francecentral.cloudapp.azure.com/
 
   
 var number = Math.floor(Math.random() * 9000000000) + 1000000000;
 
 describe('Register Test Success', () => {
   it('Tries to register should succeed', () => {
-    cy.visit('http://localhost:8081/')
-
+    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
     cy.get('.cypress-to-register').click()
 
     cy.url().should('eq', 'http://localhost:8081/register')
@@ -38,8 +35,7 @@ describe('Register Test Success', () => {
 
     cy.get('.cypress-register').click()
 
-    cy.url().should('eq', 'http://localhost:8081/')
-
+    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
     cy.getCookie("token").should('not.be.null')
   })
 })

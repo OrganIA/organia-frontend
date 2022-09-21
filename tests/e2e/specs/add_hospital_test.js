@@ -2,13 +2,10 @@ var number = Math.floor(Math.random() * 9000000000) + 1000000000;
 
 describe('Add hospital success', () => {
     it('Tries to open modal in the receiver panel should succeed', () => {
-      cy.visit('http://localhost:8081/login')
-  
+      cy.visit('http://organia.francecentral.cloudapp.azure.com/')  
       cy.get('.cypress-to-register').click()
-      cy.url().should('eq', 'http://localhost:8081/register')
 
       cy.get('.cypress-to-login').click()
-      cy.url().should('eq', 'http://localhost:8081/login')
       
       cy.get('.cypress-email')
         .type('saber@saber.com')
@@ -19,17 +16,15 @@ describe('Add hospital success', () => {
         .should('have.value', 'saber')
     
       cy.get('.cypress-login').click()
-      cy.url().should('eq', 'http://localhost:8081/') 
+      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/') 
       cy.getCookie("token").should('not.be.null')
   
       cy.get('.cypress-to-hospitals').click();
   
-      cy.url().should('eq', 'http://localhost:8081/hospitals')
-  
+      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals')  
       cy.get('.cypress-to-hospitals-add').click();
   
-      cy.url().should('eq', 'http://localhost:8081/hospitals/add')
-  
+      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals/add')  
       cy.get('.cypress-name')
         .type('Hopital TEST')
         .should('have.value', 'Hopital TEST')
@@ -50,6 +45,6 @@ describe('Add hospital success', () => {
       
       cy.wait(5000);
   
-      cy.url().should('eq', 'http://localhost:8081/hospitals')
+      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals')
     })
   })

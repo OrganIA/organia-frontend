@@ -1,13 +1,10 @@
 /* eslint-disable no-undef */
 describe('Add receiver success', () => {
   it('Tries to add a receiver should succeed', () => {
-    cy.visit('http://localhost:8081/login')
-
+    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
     cy.get('.cypress-to-register').click()
-    cy.url().should('eq', 'http://localhost:8081/register')
 
     cy.get('.cypress-to-login').click()
-    cy.url().should('eq', 'http://localhost:8081/login')
 
     cy.get('.cypress-email')
     .type('saber@saber.com')
@@ -19,14 +16,12 @@ describe('Add receiver success', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://localhost:8081/')
-
+    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-receivers').click();
     
-    cy.url().should('eq', 'http://localhost:8081/receivers')
-
+    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/receivers')
     cy.get('.cypress-to-add').click();
 
     cy.get('.cypress-first-name')
@@ -88,6 +83,6 @@ describe('Add receiver success', () => {
 
     cy.get('.cypress-add').click();
 
-    cy.url().should('eq', 'http://localhost:8081/receivers/add')
+    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/receivers')
     })
 })

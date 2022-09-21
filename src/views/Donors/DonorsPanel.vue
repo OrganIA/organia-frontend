@@ -76,7 +76,7 @@
               </td>
               <td>
                 <div>
-                <button class="button is-light contents" @click="createPDF(donor.person.id)">
+                <button class="button is-light contents cypress-pdf" @click="createPDF(donor.person.id)">
                   <p>Télécharger la version PDF</p>
                 </button>
               </div>
