@@ -807,42 +807,42 @@ export default {
         });
     },
     createPerson() {
-      this.tumors_number = 0;
+      this.new_donor.tumors_number = 0;
       this.$http
         .post("/persons", {
-          firstname: this.first_name,
-          lastname: this.last_name,
-          birthday: this.birthday,
-          ...(this.description ? { description: this.description } : {}),
-          supervisor_id: this.supervisor_id,
-          ...(this.blood_type ? { abo: this.blood_type } : {}),
-          ...(this.rhesus ? { rhesus: this.rhesus } : {}),
-          ...(this.tumors_number ? { tumors_number: this.tumors_number } : {}),
-          ...(this.isDialyse ? { isDialyse: this.isDialyse } : {}),
-          ...(this.isRetransplantation ? { isRetransplantation: this.isRetransplantation } : {}),
-          ...(this.startDateDialyse ? { startDateDialyse: this.startDateDialyse } : {}),
-          ...(this.endDateDialyse ? { endDateDialyse: this.endDateDialyse } : {}),
-          ...(this.gender ? { gender: this.gender } : {}),
+          firstname: this.new_donor.first_name,
+          lastname: this.new_donor.last_name,
+          birthday: this.new_donor.birthday,
+          ...(this.new_donor.description ? { description: this.new_donor.description } : {}),
+          supervisor_id: this.new_donor.supervisor_id,
+          ...(this.new_donor.blood_type ? { abo: this.new_donor.blood_type } : {}),
+          ...(this.new_donor.rhesus ? { rhesus: this.new_donor.rhesus } : {}),
+          ...(this.new_donor.tumors_number ? { tumors_number: this.new_donor.tumors_number } : {}),
+          ...(this.new_donor.isDialyse ? { isDialyse: this.new_donor.isDialyse } : {}),
+          ...(this.new_donor.isRetransplantation ? { isRetransplantation: this.new_donor.isRetransplantation } : {}),
+          ...(this.new_donor.startDateDialyse ? { startDateDialyse: this.new_donor.startDateDialyse } : {}),
+          ...(this.new_donor.endDateDialyse ? { endDateDialyse: this.new_donor.endDateDialyse } : {}),
+          ...(this.new_donor.gender ? { gender: this.new_donor.gender } : {}),
         })
         .then((response) => {
-          this.person_id = response.data.id;
-          this.createReceiver();
+          this.new_donor.person_id = response.data.id;
+          this.createDonor();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    createReceiver() {
+    createDonor() {
       this.$http
         .post("/listings", {
-          ...(this.start_date ? { start_date: this.start_date } : {}),
-          ...(this.notes ? { notes: this.notes } : {}),
-          organ: this.organ,
-          donor: false,
-          person_id: this.person_id,
-          tumors_number: this.tumors_number,
-          isDialyse: this.isDialyse,
-          isRetransplantation: this.isRetransplantation,
+          ...(this.new_donor.start_date ? { start_date: this.new_donor.start_date } : {}),
+          ...(this.new_donor.notes ? { notes: this.new_donor.notes } : {}),
+          organ: this.new_donor.organ,
+          donor: true,
+          person_id: this.new_donor.person_id,
+          tumors_number: this.new_donor.tumors_number,
+          isDialyse: this.new_donor.isDialyse,
+          isRetransplantation: this.new_donor.isRetransplantation,
         })
         .then(() => {
           this.$router.push("/donors");

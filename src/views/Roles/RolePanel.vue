@@ -114,7 +114,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                v-on:click="reloadRoles()">Ajouter</button>
+                v-on:click="createRoles()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openNewRoleModal(false)">Fermer</button>
             </footer>
           </div>
@@ -207,7 +207,7 @@ export default {
         .then(() => {
           this.$toast.success("Création du rôle réussie !");
           setTimeout(this.$toast.clear, 3000);
-          this.$router.push("/administrator/role");
+          this.reloadRoles()
         })
         .catch((error) => {
           this.$toast.error(
