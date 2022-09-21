@@ -10,7 +10,7 @@
       <div class="page-content">
         <div class="role-panel-btn-container">
           <div>
-            <div @click="openModal(true)" class="button add-btn cypress-to-add">
+            <div @click="openNewModal()" class="button add-btn cypress-to-add">
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
             </div>
@@ -67,7 +67,7 @@
               <td>{{ donor.endDateDialyse }}</td>
               <td>{{ donor.person.created_at }}</td>
               <td>
-                <div @click="openEditModal(true, donor.person.id)">
+                <div @click="openEditModal(donor.person.id)">
                   <i class="fas fa-edit button is-primary"></i>
                 </div>
               </td>
@@ -84,11 +84,11 @@
             </tr>
           </tbody>
         </table>
-        <div class="modal" :class="{ 'is-invisible': !modal, 'is-active': modal }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active' : (state === 'info') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
-              <p class="modal-card-title">Informations du donneur</p>
+              <p class="modal-card-title">Informations du receveur</p>
               <button class="delete" aria-label="close" @click="closeModal"></button>
             </header>
             <section class="modal-card-body">
@@ -227,19 +227,20 @@
                 }}
                 </button>
               </div>
-              <button class="button is-link is-light" @click="openChatModal()">Créer une
-                conversation</button>
+              <button class="button is-link is-light" @click="openChatModal()">
+                Créer une conversation
+              </button>
             </section>
             <footer class="modal-card-foot">
             </footer>
           </div>
         </div>
-        <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'new'), 'is-active': (state === 'new') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Ajouter un donneur</p>
-              <button class="delete" aria-label="close" v-on:click="openNewRoleModal(false)"></button>
+              <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <form @submit.prevent="createPerson()" class="show-requireds">
@@ -350,19 +351,18 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                v-on:click="createPerson()">Ajouter
+                @click="createPerson()">Ajouter
               </button>
-              <button class="button modal-admin-btn" v-on:click="openNewRoleModal(false)">Fermer</button>
+              <button class="button modal-admin-btn" @click="openNewModal()">Fermer</button>
             </footer>
           </div>
         </div>
-        <div class="modal"
-          :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'edit'), 'is-active': (state === 'edit') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Éditer un donneur</p>
-              <button class="delete" aria-label="close" v-on:click="openEditModal(false, undefined)"></button>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <form @submit.prevent="submitForm()" class="show-requireds">
@@ -470,58 +470,60 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                v-on:click="createPerson()">Enregistrer
+                @click="createPerson()">Enregistrer
               </button>
               <button type="button" class="button is-danger ml-6" @click="delete_donor">
                 Supprimer
               </button>
-              <button class="button modal-admin-btn" v-on:click="openNewRoleModal(false)">Fermer</button>
+              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
             </footer>
           </div>
         </div>
-
-      </div>
-    </div>
-    <div class="modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
-      <div class="modal-background">
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title is-3">Créer une conversation</p>
-          </header>
-          <section class="modal-card-body">
-            <div class="container">
-              <div class="columns">
-                <div class="column">
-                  <input class="input is-info" placeholder="Titre de la conversation" type="text" v-model="chatName" />
-                </div>
-              </div>
-              <div class="columns">
-                <div class="column is-half">
-                  <div class="box">
-                    <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
-                    <button class="button is-info is-light person-box" v-for="person in personsNotAdded" :key="person">
-                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
-                      <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
-                    </button>
+        <div class="modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
+          <div class="modal-background">
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title is-3">Créer une conversation</p>
+              </header>
+              <section class="modal-card-body">
+                <div class="container">
+                  <div class="columns">
+                    <div class="column">
+                      <input class="input is-info" placeholder="Titre de la conversation" type="text"
+                        v-model="chatName" />
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="column is-half">
+                      <div class="box">
+                        <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
+                        <button class="button is-info is-light person-box" v-for="person in personsNotAdded"
+                          :key="person">
+                          <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                          <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="column is-half">
+                      <div class="box">
+                        <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
+                        <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
+                          <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                          <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="column is-half">
-                  <div class="box">
-                    <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
-                    <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
-                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
-                      <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
+                <br>
+                <footer>
+                  <button class="button is-success is-light btn-margin"
+                    @click="saveChat(currentDonor)">Enregistrer</button>
+                  <button class="button is-danger is-light btn-margin " @click="resetChat(currentDonor)">Retour</button>
+                </footer>
+              </section>
             </div>
-            <br>
-            <footer>
-              <button class="button is-success is-light btn-margin" @click="saveChat(currentDonor)">Enregistrer</button>
-              <button class="button is-danger is-light btn-margin " @click="resetChat(currentDonor)">Retour</button>
-            </footer>
-          </section>
+          </div>
         </div>
       </div>
     </div>
@@ -545,7 +547,6 @@ export default {
       donors: {},
       modal: false,
       state: '',
-      editstate: '',
       sortingOrder: true,
       sortingKey: "created_at",
       selectFilter: "first_name",
@@ -588,37 +589,6 @@ export default {
     this.new_donor.tumors_number = 0;
   },
   methods: {
-    createPDF(id) {
-      this.$http
-        .get(`/listings/${id}`)
-        .then((response) => {
-          this.donor = response.data;
-          this.person = response.data.person;
-          let pdfName = 'donor_' + this.person.last_name;
-          const doc = new jsPDF();
-          let y = 15
-          doc.text("Bilan d'informations Donneur", 15, y);
-          doc.text("Prénom: " + this.person.first_name, 20, y + 10);
-          doc.text("Date de naissance: " + this.person.birthday, 20, y + 20);
-          doc.text("Sexe: " + this.person.gender, 20, y + 30);
-          doc.text("Organe: " + this.donor.organ, 20, y + 40);
-          doc.text("Type sanguin: " + this.person.blood_type, 20, y + 50);
-          doc.text("Nombre de tumeurs: " + this.donor.tumors_number, 20, y + 60);
-          doc.text("Date de début de retransplantation: " + this.person.first_name, 20, y + 70);
-          doc.text("Date de fin de retransplantation: " + this.person.first_name, 20, y + 80);
-          doc.save(pdfName + ".pdf");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    openModal(val) {
-      if (val === true) {
-        this.state = "clicked"
-        return;
-      }
-      this.state = ""
-    },
     getMe() {
       this.$http.get("/users/me")
         .then((response) => {
@@ -662,20 +632,13 @@ export default {
     openChatModal() {
       this.state = "chat"
     },
-    openEditModal(val, id) {
+    openEditModal(id) {
       console.log(id)
-      if (val === true) {
-        console.log(val)
-        this.getDonorByID(id)
-        this.editstate = "clicked"
-        return;
-      }
-      this.editstate = ""
-
-
+      this.state = "edit"
+      this.getDonorByID(id)
     },
     closeModal() {
-      this.modal = false;
+      this.state = "";
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -747,25 +710,18 @@ export default {
         });
       }
     },
-    openNewRoleModal(val) {
-      if (val === true) {
-        this.state = "clicked"
-        return;
-      }
-      this.state = ""
-
-
+    openNewModal() {
+      this.state = "new"
     },
     getDonorByID(id) {
-      this.id = id
       this.$http
-        .get(`/listings/${this.id}`)
+        .get(`/listings/${id}`)
         .then((response) => {
           this.donor = response.data;
           this.person = response.data.person;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error)
         });
     },
     delete_donor() {
