@@ -466,7 +466,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                @click="createPerson()">Enregistrer
+                @click="updatePerson()">Enregistrer
               </button>
               <button type="button" class="button is-danger ml-6" @click="delete_donor">
                 Supprimer
@@ -495,7 +495,7 @@
                         <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
                         <button class="button is-info is-light person-box" v-for="person in personsNotAdded"
                           :key="person">
-                          <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                          <p class="username">{{`${person.last_name} ${person.first_name}`}}</p>
                           <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
                         </button>
                       </div>
@@ -504,7 +504,7 @@
                       <div class="box">
                         <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
                         <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
-                          <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                          <p class="username">{{`${person.last_name} ${person.first_name}`}}</p>
                           <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
                         </button>
                       </div>
@@ -579,7 +579,7 @@ export default {
   },
   created() {
     this.getAllOrgans()
-    this.getAllReceivers();
+    this.getAllDonors();
     this.getAllUsers();
     this.getMe();
     this.new_donor.tumors_number = 0;
@@ -598,7 +598,7 @@ export default {
           this.personsNotAdded = response.data
         })
     },
-    getAllReceivers() {
+    getAllDonors() {
       this.$http
         .get("/listings/donors")
         .then((response) => {
@@ -728,8 +728,8 @@ export default {
       this.$http
         .get(`/listings/${id}`)
         .then((response) => {
-          this.donor = response.data;
-          this.person = response.data.person;
+          this.to_edit.donor = response.data;
+          this.to_edit.person = response.data.person;
         })
         .catch((error) => {
           console.log(error)
@@ -781,26 +781,27 @@ export default {
         });
     },
     updatePerson() {
-      this.person.isDialyse = this.donor.isDialyse
+      this.to_edit.person.isDialyse = this.donor.isDialyse
       this.$http
-        .post(`/persons/${this.person.id}`, {
-          firstname: this.person.first_name,
-          lastname: this.person.last_name,
-          birthday: this.person.birthday,
-          ...(this.person.description
-            ? { description: this.person.description }
+        .post(`/persons/${this.to_edit.person.id}`, {
+          first_name: this.to_edit.person.first_name,
+          last_name: this.to_edit.person.last_name,
+          birthday: this.to_edit.person.birthday,
+          ...(this.to_edit.person.description
+            ? { description: this.to_edit.person.description }
             : {}),
-          supervisor_id: this.person.supervisor_id,
-          ...(this.person.abo ? { abo: this.person.abo } : {}),
-          ...(this.person.rhesus ? { rhesus: this.person.rhesus } : {}),
-          ...(this.person.gender ? { gender: this.person.gender } : {}),
-          ...(this.person.isDialyse ? { isDialyse: this.person.isDialyse } : {}),
-          ...(this.person.isRetransplantation ? { isRetransplantation: this.person.isRetransplantation } : {}),
-          ...(this.person.startDateDialyse ? { startDateDialyse: this.person.startDateDialyse } : {}),
-          ...(this.person.endDateDialyse ? { endDateDialyse: this.person.endDateDialyse } : {}),
+          supervisor_id: this.to_edit.person.supervisor_id,
+          ...(this.to_edit.person.abo ? { abo: this.to_edit.person.abo } : {}),
+          ...(this.to_edit.person.rhesus ? { rhesus: this.to_edit.person.rhesus } : {}),
+          ...(this.to_edit.person.gender ? { gender: this.to_edit.person.gender } : {}),
+          ...(this.to_edit.person.isDialyse ? { isDialyse: this.to_edit.person.isDialyse } : {}),
+          ...(this.to_edit.person.isRetransplantation ? { isRetransplantation: this.to_edit.person.isRetransplantation } : {}),
+          ...(this.to_edit.person.startDateDialyse ? { startDateDialyse: this.to_edit.person.startDateDialyse } : {}),
+          ...(this.to_edit.person.endDateDialyse ? { endDateDialyse: this.to_edit.person.endDateDialyse } : {}),
         })
         .then(() => {
           this.$router.push("/donors");
+          this.closeModal()
         })
         .catch((error) => {
           console.log(error);
@@ -810,8 +811,8 @@ export default {
       this.new_donor.tumors_number = 0;
       this.$http
         .post("/persons", {
-          firstname: this.new_donor.first_name,
-          lastname: this.new_donor.last_name,
+          first_name: this.new_donor.first_name,
+          last_name: this.new_donor.last_name,
           birthday: this.new_donor.birthday,
           ...(this.new_donor.description ? { description: this.new_donor.description } : {}),
           supervisor_id: this.new_donor.supervisor_id,
@@ -846,6 +847,8 @@ export default {
         })
         .then(() => {
           this.$router.push("/donors");
+          this.getAllDonors()
+          this.closeModal()
         })
         .catch((error) => {
           console.log(error);
