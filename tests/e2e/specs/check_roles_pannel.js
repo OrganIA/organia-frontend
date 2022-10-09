@@ -2,7 +2,7 @@
 
 describe('Check logs page', () => {
   it('Tries to register should succeed', () => {
-    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+    cy.visit(Cypress.config().baseUrl)
     cy.get('.cypress-to-register').click()
 
     cy.get('.cypress-to-login').click()
@@ -17,7 +17,7 @@ describe('Check logs page', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+    cy.visit(Cypress.config().baseUrl)
     
     cy.getCookie("token").should('not.be.null')
     cy.get('.cypress-to-roles').click()

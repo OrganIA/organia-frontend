@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe('Go to caledar', () => {
   it('Tries to go to the calendar page should succeed', () => {
-    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+    cy.visit(Cypress.config().baseUrl)
 
     cy.get('.cypress-to-login').click()
 
@@ -15,11 +15,11 @@ describe('Go to caledar', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
+    cy.url().should('eq', Cypress.config().baseUrl + '/')
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-calendar').click();
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/eventcalendar')
+    cy.url().should('eq', Cypress.config().baseUrl + '/eventcalendar')
   })
 })

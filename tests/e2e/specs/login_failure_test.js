@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe('Login Test Failure', () => {
   it('Tries to login should fail', () => {
-    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+    cy.visit(Cypress.config().baseUrl)
     cy.get('.cypress-to-register').click()
 
     cy.get('.cypress-to-login').click()
@@ -16,6 +16,6 @@ describe('Login Test Failure', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
+    cy.url().should('eq', Cypress.config().baseUrl + '/')
   })
 })

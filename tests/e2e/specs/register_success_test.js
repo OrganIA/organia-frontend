@@ -8,7 +8,7 @@ var number = Math.floor(Math.random() * 9000000000) + 1000000000;
 
 describe('Register Test Success', () => {
   it('Tries to register should succeed', () => {
-    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+    cy.visit(Cypress.config().baseUrl)
     cy.get('.cypress-to-register').click()
 
     cy.url().should('eq', 'http://localhost:8081/register')
@@ -35,7 +35,7 @@ describe('Register Test Success', () => {
 
     cy.get('.cypress-register').click()
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
+    cy.url().should('eq', Cypress.config().baseUrl + '/')
     cy.getCookie("token").should('not.be.null')
   })
 })

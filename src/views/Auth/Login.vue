@@ -5,18 +5,18 @@
       <div class="content">
         <h2>Se connecter</h2>
       </div>
-      <div class="field">
-        <div class="control">
+      <div class="field" id="cypress-email-div">
+        <!-- <div class="control"> -->
           <input v-model="email" placeholder="email" type="email" class="cypress-email input" required />
-        </div>
+        <!-- </div> -->
       </div>
       <div class="field">
-        <div class="control">
+        <!-- <div class="control"> -->
           <input v-model="password" placeholder="mot de passe" type="password" class="cypress-password input"
             required />
-        </div>
+        <!-- </div> -->
       </div>
-      <button type="submit" class="cypress-login button is-info mr-6">
+      <button type="submit" class="cypress-submit-login button is-info mr-6">
         Confirmer
       </button>
       <router-link to="/register" class="cypress-to-register button is-link">S'inscrire</router-link>

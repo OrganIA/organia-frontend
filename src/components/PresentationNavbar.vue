@@ -25,7 +25,7 @@
           Le projet
         </router-link>
 
-        <router-link to="/login" class="navbar-item button is-medium is-info is-light navbar-home-controller">
+        <router-link to="/login" class="navbar-item button is-medium is-info is-light navbar-home-controller cypress-to-login">
           Connexion
         </router-link>
       </div>

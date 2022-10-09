@@ -4,7 +4,7 @@ var message = emailGenerator();
 
 describe('Send Message', () => {
   it('Tries to send a message', () => {
-    cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+    cy.visit(Cypress.config().baseUrl)
 
     cy.get('.cypress-to-register').click()
 
@@ -20,13 +20,13 @@ describe('Send Message', () => {
 
     cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
+    cy.url().should('eq', Cypress.config().baseUrl + '/')
 
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-chats').click();
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/chat')
+    cy.url().should('eq', Cypress.config().baseUrl + '/chat')
 
     cy.get('.cypress-chat-room').first().click();
 

@@ -3,7 +3,7 @@
 
 describe('Edit hospital failed', () => {
     it('Tries to open modal in the receiver panel should succeed', () => {
-      cy.visit('http://organia.francecentral.cloudapp.azure.com/')  
+      cy.visit(Cypress.config().baseUrl)  
       cy.get('.cypress-to-register').click()
 
       cy.get('.cypress-to-login').click()
@@ -17,19 +17,19 @@ describe('Edit hospital failed', () => {
         .should('have.value', 'saber')
     
       cy.get('.cypress-login').click()
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
+      cy.url().should('eq', Cypress.config().baseUrl + '/')
 
       cy.getCookie("token").should('not.be.null')
   
       cy.get('.cypress-to-hospitals').click();
   
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals')
+      cy.url().should('eq', Cypress.config().baseUrl + '/hospitals')
 
       cy.wait(5000)
 
       cy.get('.cypress-to-hospitals-edit-1').click();
   
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals/edit/1')  
+      cy.url().should('eq', Cypress.config().baseUrl + '/hospitals/edit/1')  
       cy.get('.cypress-name').clear() 
       cy.get('.cypress-city').clear()
       cy.get('.cypress-department').clear()
@@ -37,6 +37,6 @@ describe('Edit hospital failed', () => {
 
       cy.get('.cypress-add').click();
   
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals/edit/1')
+      cy.url().should('eq', Cypress.config().baseUrl + '/hospitals/edit/1')
     })
   })

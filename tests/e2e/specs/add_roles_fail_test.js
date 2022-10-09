@@ -4,7 +4,7 @@ var email = emailGenerator();
 
 describe('Add roles success', () => {
     it('Tries to add a role should succeed', () => {
-      cy.visit('http://organia.francecentral.cloudapp.azure.com/')
+      cy.visit(Cypress.config().baseUrl)
   
       cy.get('.cypress-to-register').click()
 
@@ -20,17 +20,17 @@ describe('Add roles success', () => {
 
       cy.get('.cypress-login').click()
 
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
+      cy.url().should('eq', Cypress.config().baseUrl + '/')
 
       cy.getCookie("token").should('not.be.null')  
 
       cy.get('.cypress-to-roles').click();
 
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/administrator/role')
+      cy.url().should('eq', Cypress.config().baseUrl + '/administrator/role')
 
       cy.get('.cypress-to-add').click();
 
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/administrator/role/add')
+      cy.url().should('eq', Cypress.config().baseUrl + '/administrator/role/add')
 
       cy.get('.cypress-name')
         .type(`${email}`)
@@ -38,6 +38,6 @@ describe('Add roles success', () => {
 
       cy.get('.cypress-add').click();
 
-      cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/administrator/role/add')
+      cy.url().should('eq', Cypress.config().baseUrl + '/administrator/role/add')
    })
 })
