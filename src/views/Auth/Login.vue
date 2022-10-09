@@ -1,20 +1,20 @@
 <template>
-  <PresentationNavbar />
+  <!-- <PresentationNavbar /> -->
   <div class="centered-container">
     <form @submit.prevent="login()">
       <div class="content">
         <h2>Se connecter</h2>
       </div>
       <div class="field" id="cypress-email-div">
-        <!-- <div class="control"> -->
+        <div class="control">
           <input v-model="email" placeholder="email" type="email" class="cypress-email input" required />
-        <!-- </div> -->
+        </div>
       </div>
       <div class="field">
-        <!-- <div class="control"> -->
+        <div class="control">
           <input v-model="password" placeholder="mot de passe" type="password" class="cypress-password input"
             required />
-        <!-- </div> -->
+        </div>
       </div>
       <button type="submit" class="cypress-submit-login button is-info mr-6">
         Confirmer
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import PresentationNavbar from "@/components/PresentationNavbar";
+// import PresentationNavbar from "@/components/PresentationNavbar";
 import translate from "@/translate"
 
 export default {
   name: "login",
   emits: ["login"],
-  components: { PresentationNavbar },
+  // components: { PresentationNavbar },
   data() {
     return {
       email: "",
