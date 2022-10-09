@@ -9,11 +9,11 @@
             <section class="modal-card-body">
                 <form @submit.prevent="createRoom">
                     <label class="label">Nom de la conversation</label>
-                    <input class="input" type="text" placeholder="Nom de la conversation" v-model="newRoomName"
+                    <input class="input cypress-chat-title" type="text" placeholder="Nom de la conversation" v-model="newRoomName"
                         required>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs non ajoutés
-                            <select multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
+                            <select class="cypress-nonadd-user" multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
                                 <option v-for="user, index in usersNotAdded" :key="user.id" :value="user.id"
                                     @click="addUser(user, index)">{{ user.email }}</option>
                             </select>
@@ -32,7 +32,7 @@
                 </form>
             </section>
             <footer class="modal-card-foot">
-                <button @click="createRoom" class="button is-success">Sauvegarder</button>
+                <button @click="createRoom" class="button is-success cypress-save">Sauvegarder</button>
                 <button class="button is-danger" @click="closeModal(false)">
                     Annuler
                 </button>

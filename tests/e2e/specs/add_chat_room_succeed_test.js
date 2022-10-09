@@ -1,41 +1,39 @@
 /* eslint-disable no-undef */
-describe('Add chat room', () => {
-  it('Tries to add a chat room should succeed', () => {
+describe('New Chat room Test Success', () => {
+  it('Tries to create a new chat room and should succeed', () => {
     cy.visit(Cypress.config().baseUrl)
-
-    cy.get('.cypress-to-register').click()
 
     cy.get('.cypress-to-login').click()
 
     cy.get('.cypress-email')
-      .type('saber@saber.com')
-      .should('have.value', 'saber@saber.com')
+      .type('test@irama.com')
+      .should('have.value', 'test@irama.com')
 
     cy.get('.cypress-password')
-      .type('saber')
-      .should('have.value', 'saber')
+      .type('irama')
+      .should('have.value', 'irama')
 
-    cy.get('.cypress-login').click()
+    cy.get('.cypress-submit-login').click()
+    cy.intercept('POST', '**/auth').as('login')
+    cy.wait('@login', { timeout: 10000 })
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/')
-
+    cy.url().should('eq', 'http://localhost:8080/landing')
     cy.getCookie("token").should('not.be.null')
 
-    cy.get('.cypress-to-chats').click();
-    
-    cy.url().should('eq', Cypress.config().baseUrl + '/chat')
-    
-    cy.intercept({
-      method: 'GET',
-      url: 'http://localhost:8000/api/chats/',
-    }).as('getChats');
+    cy.get('.cypress-to-chats').click()
+    cy.url().should('eq', Cypress.config().baseUrl + 'chat')
 
-    cy.get('.cypress-add').click();
+    cy.get('.header-chat')
+    cy.get('.icon')
+    cy.get('.icon').click()
 
-    cy.get('.cypress-invite').eq(0).click();
+    cy.get('.cypress-chat-title')
+      .type('Conversation de test')
+      .should('have.value', 'Conversation de test')
 
-    cy.get('.cypress-create').click();
+    cy.get('.cypress-nonadd-user').first().select(0)
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/chat')
+    cy.get('.cypress-save').click()
+
   })
 })

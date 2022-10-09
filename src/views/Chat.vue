@@ -39,7 +39,7 @@
                   <div class="header-chat">
                     <p class="name">{{currentChat.chatName}}</p>
                     <div class="actions right">
-                      <i class="icon clickable fas fa-plus-circle" aria-hidden="true" @click="openModal('newChat')"></i>
+                      <i class="icon clickable fas fa-plus-circle " @click="openModal('newChat')"></i>
                       <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')"></i>
                       <i v-if="currentChat.creator.id == currentUser.id" class="icon clickable fas fa-edit"
                         aria-hidden="true" @click="openModal('editChat')"></i>

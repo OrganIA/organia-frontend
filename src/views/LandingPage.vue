@@ -14,13 +14,13 @@
         <div class="columns">
           <div class="column">
             <router-link class="block button is-info is-light button-style" to="/chat">
-              <i class="fas fa-envelope cypress-to-chats"></i>
+              <i class="fas fa-envelope cypress-to-chats-landing"></i>
               <span class="nav-text">Chats</span>
             </router-link>
           </div>
           <div class="column">
             <router-link class="block button is-info is-light button-style" to="/account">
-              <i class="fas fa-user cypress-to-chats"></i>
+              <i class="fas fa-user cypress-to-account"></i>
               <span class="nav-text">Compte</span>
             </router-link>
           </div>
