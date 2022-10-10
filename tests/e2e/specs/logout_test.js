@@ -1,7 +1,10 @@
 /* eslint-disable no-undef */
-describe('Logout', () => {
+describe('Logout Test', () => {
     it('Tries to logout should succeed', () => {
         cy.visit(Cypress.config().baseUrl)
+
+        cy.get('.cypress-to-login').click()
+
         cy.get('.cypress-email')
             .type('saber@saber.com')
             .should('have.value', 'saber@saber.com')
@@ -10,12 +13,16 @@ describe('Logout', () => {
             .type('saber')
             .should('have.value', 'saber')
 
-        cy.get('.cypress-login').click()
+        cy.intercept({method:'POST', url:'**/auth'}).as('login')
+        cy.get('.cypress-submit-login').click()
+        cy.wait('@login', { timeout: 20000 })
 
-        cy.url().should('eq', Cypress.config().baseUrl + '/')
-        cy.get(".cypress-logout").click({force: true})
+        console.log("Here")
+        cy.url().should('eq', `${Cypress.config().baseUrl}landing`)
+        cy.getCookie("token").should('not.be.null')
 
-        cy.url().should('eq', "http://organia.francecentral.cloudapp.azure.com/login")        
-        cy.getCookie("token").should('be.null')
+        cy.get('.cypress-app-navbar')
+        cy.get('.cypress-user-dropdown').realHover()
+        cy.get('.cypress-logout').click()
     })
 })
