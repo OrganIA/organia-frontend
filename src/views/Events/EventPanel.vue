@@ -7,7 +7,7 @@
     <p class="search content">Rechercher par</p>
     <div class="search-block">
       <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
-        <option value="start_date">Date de debut</option>
+                <option value="start_date">Date de debut</option>
         <option value="end_date">Date de fin</option>
         <option value="title">Titre</option>
         <option value="description">Description</option>
@@ -50,11 +50,16 @@
 
 <script>
 import moment from "moment";
+import ApplicationNavbar from "@/components/ApplicationNavbar";
+import SideBar from "@/components/SideBar";
 
 export default {
   name: "event-panel",
+  components: { SideBar, ApplicationNavbar },
   data() {
     return {
+      state: '',
+      editstate: '',
       events: {},
       currentEvent: {},
       sortingOrder: true,
@@ -62,12 +67,36 @@ export default {
       selectFilter: "date",
       filterText: "",
       eventsBackup: [],
+      date: "",
+      description: "",
+      calendar: {},
+      to_edit_id: 0,
     };
   },
   created() {
     this.getAllevents();
   },
   methods: {
+    openModal(val) {
+      if (val === true) {
+        this.state = "clicked"
+        return;
+      }
+      this.state = ""
+
+
+    },
+    openEditModal(val, id) {
+      if (val === true) {
+        this.editstate = "clicked"
+        this.to_edit_id = id
+        this.geteventByID()
+        return;
+      }
+      this.editstate = ""
+
+
+    },
     getAllevents() {
       this.$http
         .get("/calendar", {
@@ -90,8 +119,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$toast.error("Erreur : " + error.response.data.detail);
-          setTimeout(this.$toast.clear, 3000);
         });
     },
     updateFilter(dataName) {
@@ -104,6 +131,59 @@ export default {
       if (a.start_date[this.sortingKey] == null) return 1;
       else if (b.start_date[this.sortingKey] == null) return -1;
       return 0;
+    },
+    geteventByID() {
+      this.$http
+          .get(`/calendar/${this.to_edit_id}`)
+          .then((response) => {
+            this.calendar = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    submitEditForm() {
+      this.$http
+          .post(`/calendar/${this.to_edit_id}`, {
+            title: this.caendar.title,
+            start_date: this.calendar.start_date,
+            end_date: this.calendar.end_date,
+            description: this.calendar.description,
+          })
+          .then(() => {
+            this.$router.push("/eventlist");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    delete_event() {
+      this.$http
+          .delete(`/calendar/${this.to_edit_id}`)
+          .then(() => {
+            this.$toast.success("Suppression effectuée");
+            this.$router.push("/eventlist");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    createEvent() {
+      this.$http
+          .post("/calendar", {
+            title: this.title
+            start_date: this.start_date,
+            end_date: this.end_date,
+            ...(this.description ? { description: this.description } : {}),
+          })
+          .then((response) => {
+            this.event_id = response.data.id;
+            this.$router.push("/eventlist")
+            this.openModal(false)
+          })
+          .catch((error) => {
+            console.log(error)
+          });
     },
     sortData() {
       if (["description"].includes(this.sortingKey)) {
@@ -167,3 +247,47 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.add-btn {
+  float: right;
+  width: 10%;
+  height: 50px;
+  background-color: #6799c4;
+  margin-right: 40px;
+}
+
+
+.add-btn:hover {
+  background-color: #2d6594;
+  outline: none;
+  text-decoration: none;
+
+}
+
+.btn-add-text {
+  color: white;
+  margin-left: 5px;
+}
+
+.icon-add-btn-correction {
+  color: white;
+  margin-right: 5px;
+  margin-top: -1px;
+}
+
+.event-panel-btn-container {
+  margin-top: 30px;
+
+  padding: 25px 0 -25px 25px;
+  width: 100%;
+  position: relative;
+  display: block;
+  flex-direction: row;
+}
+
+
+.main {
+  margin-top: 30px;
+}
+</style>

@@ -64,13 +64,11 @@ export default {
 </script>
 
 <style scoped>
-
 .invit-block-padding {
-    height: 200px;
+  height: 200px;
 }
 
 .invit-modale {
-    width: 50%;
+  width: 50%;
 }
-
 </style>

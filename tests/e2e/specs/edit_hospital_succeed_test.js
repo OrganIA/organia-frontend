@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
+/* execute if there is only one hospital */
+
 describe('Edit hospital sucesss', () => {
     it('Tries to open modal in the receiver panel should succeed', () => {
-      cy.visit('http://organia.francecentral.cloudapp.azure.com/')
-  
+      cy.visit('http://organia.francecentral.cloudapp.azure.com/')  
       cy.get('.cypress-to-register').click()
-  
+
       cy.get('.cypress-to-login').click()
       
       cy.get('.cypress-email')
@@ -14,8 +16,7 @@ describe('Edit hospital sucesss', () => {
         .type('saber')
         .should('have.value', 'saber')
     
-      cy.get('.cypress-login').click()
-  
+      cy.get('.cypress-login').click()  
       cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
   
       cy.getCookie("token").should('not.be.null')
@@ -23,13 +24,12 @@ describe('Edit hospital sucesss', () => {
       cy.get('.cypress-to-hospitals').click();
   
       cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals')
-
-      cy.wait(10000)
+      cy.wait(5000);
 
       cy.get('.cypress-to-hospitals-edit-1').click();
   
       cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/hospitals/edit/1')
-  
+        
       cy.get('.cypress-name').clear() 
       cy.get('.cypress-city').clear()
       cy.get('.cypress-department').clear()

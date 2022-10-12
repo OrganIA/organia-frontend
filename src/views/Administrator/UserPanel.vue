@@ -18,10 +18,10 @@
           :class="{ 'selected-line': user.id === $data.user.id }">
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.id }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.first_name :
-              "-"
+          "-"
           }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.last_name :
-              "-"
+          "-"
           }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.email }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.created_at }}</td>
@@ -85,8 +85,6 @@ export default {
         })
         .catch((error) => {
           console.log(error)
-          this.$toast.error(error.message);
-          setTimeout(this.$toast.clear, 3000)
         });
     },
     loadSelectedUser(userId) {
@@ -98,14 +96,12 @@ export default {
 </script>
 
 <style scoped>
-
 .form-editor {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .half-table {
-    max-width: 50%;
+  max-width: 50%;
 }
-
 </style>

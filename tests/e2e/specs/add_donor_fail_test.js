@@ -2,7 +2,6 @@
 describe('Add donor fail', () => {
   it('Tries to add a receiver should fail', () => {
     cy.visit('http://organia.francecentral.cloudapp.azure.com/')
-
     cy.get('.cypress-to-register').click()
 
     cy.get('.cypress-to-login').click()
@@ -16,15 +15,12 @@ describe('Add donor fail', () => {
       .should('have.value', 'saber')
 
     cy.get('.cypress-login').click()
-
     cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
-
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-donors').click();
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/donors')
-
+    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/donors/')
     cy.get('.cypress-to-add').click();
 
     cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/donors/add')
@@ -48,5 +44,5 @@ describe('Add donor fail', () => {
     cy.get('.cypress-add').click();
 
     cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/donors/add')
-  })
+    })
 })
