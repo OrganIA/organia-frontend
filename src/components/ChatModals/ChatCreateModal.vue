@@ -92,7 +92,7 @@ export default {
                 return
             } else if (this.usersToAdd.length == 0) {
                 this.$toast.error(
-                    "Erreur: vous n'avez ajouté aucun utilisateur a la conversation"
+                    "Erreur: vous n'avez ajouté aucun utilisateur à la conversation"
                 );
                 return
             }
@@ -120,10 +120,6 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.$toast.error(
-                        "Erreur lors de la connexion : " + error.response.data.detail
-                    );
-                    setTimeout(this.$toast.clear, 3000);
                 });
         },
     },

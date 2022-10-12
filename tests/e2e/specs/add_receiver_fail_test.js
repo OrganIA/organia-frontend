@@ -2,7 +2,6 @@
 describe('Add receiver fail', () => {
   it('Tries to add a receiver should fail', () => {
     cy.visit('http://organia.francecentral.cloudapp.azure.com/')
-
     cy.get('.cypress-to-register').click()
 
     cy.get('.cypress-to-login').click()
@@ -17,18 +16,15 @@ describe('Add receiver fail', () => {
 
   cy.get('.cypress-login').click()
 
-    cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
-
+  cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/')
     cy.getCookie("token").should('not.be.null')
 
     cy.get('.cypress-to-receivers').click();
 
     cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/receivers')
-
     cy.get('.cypress-to-add').click();
 
     cy.url().should('eq', 'http://organia.francecentral.cloudapp.azure.com/receivers/add')
-
     cy.get('.cypress-first-name')
       .type('Prénom')
       .should('have.value', 'Prénom')

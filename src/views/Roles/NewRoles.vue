@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <form @submit.prevent="createRoles()" class="show-requireds">
@@ -88,10 +89,7 @@ export default {
           this.$router.push("/administrator/role");
         })
         .catch((error) => {
-          this.$toast.error(
-            "Erreur : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
+          console.log(error)
         });
     },
   },

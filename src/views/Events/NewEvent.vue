@@ -60,10 +60,7 @@ export default {
           this.$router.push("/eventlist")
         })
         .catch((error) => {
-          this.$toast.error(
-            "Erreur : " + error.response.data.detail
-          );
-          setTimeout(this.$toast.clear, 3000);
+          console.log(error)
         });
     },
   },
