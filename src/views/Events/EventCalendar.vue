@@ -1,5 +1,5 @@
 <template>
-    <div class="app-navbar-container">
+  <div class="app-navbar-container">
     <ApplicationNavbar></ApplicationNavbar>
   </div>
   <div class="columns">
@@ -7,37 +7,33 @@
       <SideBar></SideBar>
     </div>
     <div class="column page-container">
+      <h1>Calendrier des evenements</h1>
+
       <div class="page-content">
-        <vue-cal class="vuecal--rounded-theme organia-calendar" locale="fr" active-view="month" :time="false"
-          :events="events">
+        <vue-cal
+          class="class=vuecal--full-height-delete vuecal--blue-theme"
+          locale="fr"
+          active-view="week"
+          today-button
+          :time="true"
+          :time-from="7 * 60"
+          :time-to="23 * 60"
+          hide-weekends
+          resize-x
+          events-on-month-view="short"
+          style="height: 600px"
+          :events="events"
+        >
         </vue-cal>
       </div>
     </div>
-  </div>
-  <div>
-    <h1>Calendrier des evenements</h1>
-    <vue-cal 
-      class="class=vuecal--full-height-delete vuecal--blue-theme" 
-      locale="fr" 
-      active-view="week"
-      today-button
-      :time="true"
-      :time-from="7 * 60"
-      :time-to="23 * 60"
-      hide-weekends
-      resize-x
-      events-on-month-view="short"
-      style="height:600px"
-      :events="events"
-      >
-    </vue-cal>
   </div>
 </template>
 
 <script>
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
-import 'vue-cal/dist/i18n/fr.cjs.js'
+import "vue-cal/dist/i18n/fr.cjs.js";
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 
@@ -73,7 +69,7 @@ export default {
           new Date();
           response.data.forEach((item) => {
             const start_date = new Date(item.start_date);
-            const end_date = new Date(item.end_date)
+            const end_date = new Date(item.end_date);
             this.events.push({
               title: item.title,
               description: item.description,
@@ -97,19 +93,16 @@ export default {
   margin-bottom: 20px;
 }
 
-
 .page-content {
   max-width: 96%;
   margin-top: 20px;
   margin-left: 30px;
-
 }
 
 .page-container {
   margin-left: 20px;
   padding: 12px 0 0 0;
 }
-
 
 .organia-calendar {
   height: 75vh;

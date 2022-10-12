@@ -1,50 +1,75 @@
 <template>
   <div id="main">
-    <h1>Evenements</h1>
-    <p>
-      <router-link to="/eventlist/add" class="button is-info mb-6 cypress-to-add">Ajouter</router-link>
-    </p>
-    <p class="search content">Rechercher par</p>
-    <div class="search-block">
-      <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
-                <option value="start_date">Date de debut</option>
-        <option value="end_date">Date de fin</option>
-        <option value="title">Titre</option>
-        <option value="description">Description</option>
-        <option value="created_at">Date de creation</option>
-      </select>
-      <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-      <br />
+    <div class="app-navbar-container">
+      <ApplicationNavbar></ApplicationNavbar>
     </div>
-    <table class="
-        table
-        is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info
-      ">
-      <thead>
-        <tr>
-          <th @click="updateFilter('start_date')">Date de debut</th>
-          <th @click="updateFilter('end_date')">Date de fin</th>
-          <th @click="updateFilter('title')">Titre</th>
-          <th @click="updateFilter('description')">Description</th>
-          <th @click="updateFilter('created_at')">Date de creation</th>
-          <th>Éditer</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="calendar in events" :key="calendar">
-          <td>{{ calendar.start_date }}</td>
-          <td>{{ calendar.end_date }}</td>
-          <td>{{ calendar.title }}</td>
-          <td>{{ calendar.description }}</td>
-          <td>{{ calendar.created_at }}</td>
-          <td>
-            <router-link :to="`/eventlist/edit/${calendar.id}`">
-              <i class="fas fa-edit button is-primary"></i>
-            </router-link>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="columns">
+      <div class="column sidebar-column">
+        <SideBar></SideBar>
+      </div>
+      <div class="column page-container">
+        <h1>Evenements</h1>
+        <div class="page-content">
+          <p>
+            <router-link
+              to="/eventlist/add"
+              class="button is-info mb-6 cypress-to-add"
+              >Ajouter</router-link
+            >
+          </p>
+          <p class="search content">Rechercher par</p>
+          <div class="search-block" style="width: 100%">
+            <select
+              v-model="selectFilter"
+              class="search-filter button mb-4 ml-6 is-info is-light"
+            >
+              <option value="start_date">Date de debut</option>
+              <option value="end_date">Date de fin</option>
+              <option value="title">Titre</option>
+              <option value="description">Description</option>
+              <option value="created_at">Date de creation</option>
+            </select>
+            <input
+              @input="filter"
+              v-model="filterText"
+              class="search-bar input mr-6"
+            />
+            <br />
+          </div>
+          <table
+            class="
+              table
+              is-bordered is-striped is-narrow is-hoverable is-fullwidth is-info
+            "
+          >
+            <thead>
+              <tr>
+                <th @click="updateFilter('start_date')">Date de debut</th>
+                <th @click="updateFilter('end_date')">Date de fin</th>
+                <th @click="updateFilter('title')">Titre</th>
+                <th @click="updateFilter('description')">Description</th>
+                <th @click="updateFilter('created_at')">Date de creation</th>
+                <th>Éditer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="calendar in events" :key="calendar">
+                <td>{{ calendar.start_date }}</td>
+                <td>{{ calendar.end_date }}</td>
+                <td>{{ calendar.title }}</td>
+                <td>{{ calendar.description }}</td>
+                <td>{{ calendar.created_at }}</td>
+                <td>
+                  <router-link :to="`/eventlist/edit/${calendar.id}`">
+                    <i class="fas fa-edit button is-primary"></i>
+                  </router-link>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -58,8 +83,8 @@ export default {
   components: { SideBar, ApplicationNavbar },
   data() {
     return {
-      state: '',
-      editstate: '',
+      state: "",
+      editstate: "",
       events: {},
       currentEvent: {},
       sortingOrder: true,
@@ -79,23 +104,19 @@ export default {
   methods: {
     openModal(val) {
       if (val === true) {
-        this.state = "clicked"
+        this.state = "clicked";
         return;
       }
-      this.state = ""
-
-
+      this.state = "";
     },
     openEditModal(val, id) {
       if (val === true) {
-        this.editstate = "clicked"
-        this.to_edit_id = id
-        this.geteventByID()
+        this.editstate = "clicked";
+        this.to_edit_id = id;
+        this.geteventByID();
         return;
       }
-      this.editstate = ""
-
-
+      this.editstate = "";
     },
     getAllevents() {
       this.$http
@@ -126,7 +147,10 @@ export default {
       this.sortingKey = dataName;
     },
     checkNull(a, b) {
-      if (a.start_date[this.sortingKey] == null && b.start_date[this.sortingKey] == null)
+      if (
+        a.start_date[this.sortingKey] == null &&
+        b.start_date[this.sortingKey] == null
+      )
         return 0;
       if (a.start_date[this.sortingKey] == null) return 1;
       else if (b.start_date[this.sortingKey] == null) return -1;
@@ -134,56 +158,56 @@ export default {
     },
     geteventByID() {
       this.$http
-          .get(`/calendar/${this.to_edit_id}`)
-          .then((response) => {
-            this.calendar = response.data;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .get(`/calendar/${this.to_edit_id}`)
+        .then((response) => {
+          this.calendar = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     submitEditForm() {
       this.$http
-          .post(`/calendar/${this.to_edit_id}`, {
-            title: this.caendar.title,
-            start_date: this.calendar.start_date,
-            end_date: this.calendar.end_date,
-            description: this.calendar.description,
-          })
-          .then(() => {
-            this.$router.push("/eventlist");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .post(`/calendar/${this.to_edit_id}`, {
+          title: this.caendar.title,
+          start_date: this.calendar.start_date,
+          end_date: this.calendar.end_date,
+          description: this.calendar.description,
+        })
+        .then(() => {
+          this.$router.push("/eventlist");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     delete_event() {
       this.$http
-          .delete(`/calendar/${this.to_edit_id}`)
-          .then(() => {
-            this.$toast.success("Suppression effectuée");
-            this.$router.push("/eventlist");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .delete(`/calendar/${this.to_edit_id}`)
+        .then(() => {
+          this.$toast.success("Suppression effectuée");
+          this.$router.push("/eventlist");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     createEvent() {
       this.$http
-          .post("/calendar", {
-            title: this.title
-            start_date: this.start_date,
-            end_date: this.end_date,
-            ...(this.description ? { description: this.description } : {}),
-          })
-          .then((response) => {
-            this.event_id = response.data.id;
-            this.$router.push("/eventlist")
-            this.openModal(false)
-          })
-          .catch((error) => {
-            console.log(error)
-          });
+        .post("/calendar", {
+          title: this.title,
+          start_date: this.start_date,
+          end_date: this.end_date,
+          ...(this.description ? { description: this.description } : {}),
+        })
+        .then((response) => {
+          this.event_id = response.data.id;
+          this.$router.push("/eventlist");
+          this.openModal(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     sortData() {
       if (["description"].includes(this.sortingKey)) {
@@ -197,7 +221,9 @@ export default {
             return a.start_date[this.sortingKey].localeCompare(
               b.start_date[this.sortingKey]
             );
-          return b.start_date[this.sortingKey].localeCompare(a.start_date[this.sortingKey]);
+          return b.start_date[this.sortingKey].localeCompare(
+            a.start_date[this.sortingKey]
+          );
         });
       } else if (["start_date"].includes(this.sortingKey)) {
         this.events.sort((a, b) => {
@@ -243,7 +269,7 @@ export default {
     sortingOrder() {
       this.sortData();
     },
-    selectFilter() { },
+    selectFilter() {},
   },
 };
 </script>
@@ -257,12 +283,10 @@ export default {
   margin-right: 40px;
 }
 
-
 .add-btn:hover {
   background-color: #2d6594;
   outline: none;
   text-decoration: none;
-
 }
 
 .btn-add-text {
@@ -285,7 +309,6 @@ export default {
   display: block;
   flex-direction: row;
 }
-
 
 .main {
   margin-top: 30px;
