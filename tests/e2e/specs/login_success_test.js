@@ -13,9 +13,11 @@ describe('Login Test Success', () => {
       .type('saber')
       .should('have.value', 'saber')
 
+    cy.intercept({ method: 'POST', url: '**/auth' }).as('login')
     cy.get('.cypress-submit-login').click()
+    cy.wait('@login', { timeout: 20000 })
 
-    cy.url().should('eq', 'http://localhost:8080/landing')
+    cy.url().should('eq', `${Cypress.config().baseUrl}landing`)
     cy.getCookie("token").should('not.be.null')
   })
 })

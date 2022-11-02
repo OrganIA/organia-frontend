@@ -1,25 +1,30 @@
 /* eslint-disable no-undef */
 import { emailGenerator } from "../utils"
 var email = emailGenerator();
-
-describe('Register Test Failure', () => {
-  it('Tries to register should succeed', () => {
+describe('Register Test Fail', () => {
+  it('Tries to register should fail', () => {
     cy.visit(Cypress.config().baseUrl)
-    cy.get('.cypress-to-register').click()
 
-    cy.url().should('eq', 'http://localhost:8081/register')
+    cy.get('.cypress-to-login').click()
+    cy.get('.cypress-to-register').click()
+    cy.url().should('eq', `${Cypress.config().baseUrl}register`)
+
+    cy.get('.cypress-lastname')
+      .type("saber")
+      .should('have.value', "saber")
+
+    cy.get('.cypress-firstname')
+      .type("saber")
+      .should('have.value', "saber")
 
     cy.get('.cypress-email')
-      .type(`${email}@toto1`)
-      .should('have.value', `${email}@toto1`)
+      .type(`${email}@test.com`)
+      .should('have.value', `${email}@test.com`)
 
     cy.get('.cypress-password')
-      .type('cypress')
-      .should('have.value', 'cypress')
+      .type('saber')
+      .should('have.value', 'saber')
 
     cy.get('.cypress-register').click()
-
-    cy.url().should('eq', Cypress.config().baseUrl + '/register')
-    cy.getCookie("token").should('be.null')
   })
 })
