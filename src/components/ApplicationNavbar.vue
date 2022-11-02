@@ -1,8 +1,8 @@
 <template>
-  <nav aria-label="main navigation" class="navbar app-navbar" role="navigation">
+  <nav aria-label="main navigation" class="navbar app-navbar cypress-app-navbar" role="navigation">
     <div id="navbarBasicExample" class="navbar-menu main-menu-navbar is-active">
     </div>
-    <UserDropdown></UserDropdown>
+    <UserDropdown class="cypress-user-dropdown"></UserDropdown>
   </nav>
 
 </template>

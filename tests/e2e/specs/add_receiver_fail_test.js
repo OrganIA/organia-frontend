@@ -2,47 +2,99 @@
 describe('Add receiver fail', () => {
   it('Tries to add a receiver should fail', () => {
     cy.visit(Cypress.config().baseUrl)
-    cy.get('.cypress-to-register').click()
 
     cy.get('.cypress-to-login').click()
 
     cy.get('.cypress-email')
-    .type('saber@saber.com')
-    .should('have.value', 'saber@saber.com')
+      .type('saber@saber.com')
+      .should('have.value', 'saber@saber.com')
 
-  cy.get('.cypress-password')
-    .type('saber')
-    .should('have.value', 'saber')
+    cy.get('.cypress-password')
+      .type('saber')
+      .should('have.value', 'saber')
 
-  cy.get('.cypress-login').click()
+    cy.intercept({ method: 'POST', url: '**/auth' }).as('login')
+    cy.get('.cypress-submit-login').click()
+    cy.wait('@login', { timeout: 20000 })
 
-  cy.url().should('eq', Cypress.config().baseUrl + '/')
+    cy.url().should('eq', `${Cypress.config().baseUrl}landing`)
     cy.getCookie("token").should('not.be.null')
 
+    cy.get('#patients').click();
     cy.get('.cypress-to-receivers').click();
+    cy.url().should('eq', `${Cypress.config().baseUrl}receivers`)
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/receivers')
+    cy.get('.cypress-new-modal.is-invisible')
+
     cy.get('.cypress-to-add').click();
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/receivers/add')
-    cy.get('.cypress-first-name')
-      .type('Prénom')
-      .should('have.value', 'Prénom')
+    cy.get('.cypress-new-modal.is-active')
 
-    cy.get('.cypress-last-name')
-      .type('Nom')
-      .should('have.value', 'Nom')
+    cy.get('.cypress-new-close').click();
 
-    cy.get('.cypress-birth-date')
+    cy.get('.cypress-new-modal.is-invisible')
+
+    cy.get('.cypress-to-add').click();
+
+    cy.get('.cypress-new-modal.is-active')
+
+    cy.get('.cypress-new-last-name')
+      .type('Patient last name')
+      .should('have.value', 'Patient last name')
+
+    cy.get('.cypress-new-birth-date')
       .type('2000-10-22')
       .should('have.value', '2000-10-22')
 
-    cy.get('.cypress-admission-date')
+    cy.get('.cypress-new-organ')
+      .select('HEART')
+      .should('have.value', 'HEART')
+
+    cy.get('.cypress-new-admission-date')
       .type('2000-10-22')
       .should('have.value', '2000-10-22')
 
-    cy.get('.cypress-add').click();
+    cy.get('.cypress-new-tumors-number')
+      .clear()
+      .type('3')
+      .should('have.value', '3')
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/receivers/add')
-  })
+    cy.get('.cypress-new-is-dialyse')
+      .select('true')
+      .should('have.value', 'true')
+
+    cy.get('.cypress-new-is-retransplantation')
+      .select('false')
+      .should('have.value', 'false')
+
+    cy.get('.cypress-new-beginning-dialyse')
+      .type('2000-10-22')
+      .should('have.value', '2000-10-22')
+
+    cy.get('.cypress-new-end-dialyse')
+      .type('2000-10-22')
+      .should('have.value', '2000-10-22')
+
+    cy.get('.cypress-new-description')
+      .type('Une description')
+      .should('have.value', 'Une description')
+
+    cy.get('.cypress-new-blood')
+      .select('A')
+      .should('have.value', 'A')
+
+    cy.get('.cypress-new-rhesus')
+      .select('+')
+      .should('have.value', '+')
+
+    cy.get('.cypress-new-gender')
+      .select('MALE')
+      .should('have.value', 'MALE')
+
+    cy.get('.cypress-new-notes')
+      .type('Des notes')
+      .should('have.value', 'Des notes')
+
+      cy.get('.cypress-new-modal.is-active')
+    })
 })
