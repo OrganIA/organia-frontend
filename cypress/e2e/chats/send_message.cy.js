@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { emailGenerator } from "../utils"
+import { emailGenerator } from "../../utils"
 var message = emailGenerator();
 
 describe('Send Message', () => {
