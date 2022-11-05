@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { emailGenerator } from "../utils"
+import { emailGenerator } from "../../utils"
 var email = emailGenerator();
 
 describe('Add roles success', () => {

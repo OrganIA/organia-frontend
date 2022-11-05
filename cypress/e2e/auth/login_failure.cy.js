@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 describe('Login Test Fail', () => {
   it('Tries to login should Fail', () => {
+    console.log(Cypress.config().baseUrl)
     cy.visit(Cypress.config().baseUrl)
 
     cy.get('.cypress-to-login').click()

@@ -14,8 +14,10 @@ describe('Login Test Success', () => {
       .should('have.value', 'saber')
 
     cy.intercept({ method: 'POST', url: '**/auth' }).as('login')
+    cy.intercept({ method: 'POST', url: '**/auth/' }).as('login')
     cy.get('.cypress-submit-login').click()
-    cy.wait('@login', { timeout: 20000 })
+    cy.wait('@login', { timeout: 20000 }).its('response.statusCode').should('equal', 307)
+    cy.wait('@login', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
 
     cy.url().should('eq', `${Cypress.config().baseUrl}landing`)
     cy.getCookie("token").should('not.be.null')
