@@ -24,7 +24,7 @@
 
       <div id="patients" tabindex="1" class="block button sidebar-btn">
         <i class="fa fa-address-card" aria-hidden="true"></i>
-        <span class="nav-text">Gestion des patients</span>
+        <span class="nav-text cypress-patient">Gestion des patients</span>
         <i class="gg-chevron-down" aria-hidden="true"></i>
       </div>
 
