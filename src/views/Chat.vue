@@ -25,13 +25,13 @@
             <div class="chat-container">
               <div class="row">
                 <section class="discussions">
-                  <div class="discussion message-active" v-for="chat in chats" :key="chat.chatId"
+                  <div class="discussion message-active cypress-this-msg" v-for="chat in chats" :key="chat.chatId"
                     @click="selectChat(chat)">
                     <div class="photo">
                       {{chat.chatName.charAt(0).toUpperCase()}}
                     </div>
                     <div class="desc-contact">
-                      <p class="name">{{chat.chatName}}</p>
+                      <p class="name cypress-chat-name">{{chat.chatName}}</p>
                     </div>
                   </div>
                 </section>
@@ -264,7 +264,7 @@ export default {
       if (this.websocket != null)
         this.websocket.close();
       this.websocket = new WebSocket(
-        `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${chatId}`
+        `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${chatId}`
       );
       this.websocket.onopen = async () => {
         this.websocket.send(
