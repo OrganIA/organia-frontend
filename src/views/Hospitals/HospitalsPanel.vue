@@ -51,25 +51,25 @@
               <form class="form-control" @submit.prevent="submitForm">
                 <div class="form-fields">
                   <label class="label">Nom</label>
-                  <input v-model="name" type="text" class="input mb-6 cypress-name" required />
+                  <input v-model="name" type="text" class="input mb-6 cypress-hospital-name" required />
                   <div class="form-input small">
                     <label class="label">Ville</label>
-                    <input v-model="city_name" type="text" class="input mb-6 cypress-city" required />
+                    <input v-model="city_name" type="text" class="input mb-6 cypress-hospital-city" required />
                   </div>
                   <div class="form-input small">
                     <label class="label">Code de département</label>
-                    <input v-model="department_code" type="text" class="input mb-6 cypress-department" required />
+                    <input v-model="department_code" type="text" class="input mb-6 cypress-hospital-department" required />
                   </div>
                   <div class="form-input small">
                     <label class="label">Numéro de téléphone</label>
-                    <input v-model="phone_number" type="text" class="input mb-6 cypress-phone-number" required />
+                    <input v-model="phone_number" type="text" class="input mb-6 cypress-hospital-phone-number" required />
                   </div>
                 </div>
               </form>
 
             </section>
             <footer class="modal-card-foot organia-modal-footer">
-              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
+              <button type="submit" class="cypress-hospital-add button modal-admin-btn modal-add-role-btn"
                       v-on:click="getAllHospitals()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openAddModal(false)">Fermer</button>
             </footer>
