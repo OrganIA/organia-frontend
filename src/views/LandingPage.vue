@@ -19,9 +19,9 @@
             </router-link>
           </div>
           <div class="column">
-            <router-link class="block button is-info is-light button-style" to="/account">
-              <i class="fas fa-user cypress-to-account"></i>
-              <span class="nav-text">Compte</span>
+            <router-link class="block button is-info is-light button-style cypress-button-account" to="/account">
+              <i class="fas fa-user cypress-to-account cypress-account-icon"></i>
+              <span class="nav-text cypress-account-text">Compte</span>
             </router-link>
           </div>
         </div>

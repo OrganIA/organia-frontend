@@ -28,6 +28,8 @@ describe('Check Landing page element', () => {
         cy.get('.cypress-chat-icon')
         cy.get('.cypress-chat-text')
 
-        
+        cy.get('.cypress-button-account')
+        cy.get('.cypress-account-icon')
+        cy.get('.cypress-account-text')
     })
 })
