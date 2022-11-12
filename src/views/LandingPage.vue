@@ -8,14 +8,14 @@
     </div>
     <div class="column page-container">
       <div class="page-content">
-        <button class="button is-link is-light is-large is-responsive is-rounded is-focused">BIENVENUE SUR
+        <button class="button is-link is-light is-large is-responsive is-rounded is-focused cypress-landing-title">BIENVENUE SUR
           ORGANIA</button><br><br>
-        <p class="title is-5 is-spaced">Raccourci</p>
+        <p class="title is-5 is-spaced cypress-raccourci">Raccourci</p>
         <div class="columns">
           <div class="column">
-            <router-link class="block button is-info is-light button-style" to="/chat">
-              <i class="fas fa-envelope cypress-to-chats-landing"></i>
-              <span class="nav-text">Chats</span>
+            <router-link class="block button is-info is-light button-style cypress-button-chat" to="/chat">
+              <i class="fas fa-envelope cypress-to-chats-landing cypress-chat-icon"></i>
+              <span class="nav-text cypress-chat-text">Chats</span>
             </router-link>
           </div>
           <div class="column">

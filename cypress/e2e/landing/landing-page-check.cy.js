@@ -19,5 +19,15 @@ describe('Check Landing page element', () => {
     
         cy.url().should('eq', 'http://localhost:8080/landing')
         cy.getCookie("token").should('not.be.null')
+
+        cy.get('.cypress-landing-title')
+
+        cy.get('.cypress-raccourci')
+
+        cy.get('.cypress-button-chat')
+        cy.get('.cypress-chat-icon')
+        cy.get('.cypress-chat-text')
+
+        
     })
 })
