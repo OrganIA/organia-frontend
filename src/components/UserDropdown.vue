@@ -2,8 +2,8 @@
   <div class="dropdown  is-hoverable cypress-dropdown avatar-dropdown cypress-avatar">
     <div class="dropdown-trigger">
       <button class="button dropdown-trigger" aria-haspopup="true" aria-controls="dropdown-menu3">
-        <span class="name-display-dropdown">{{ cutMail($store.getters.getEmail) }}</span>
-          <img class="avatar-display"
+        <span class="name-display-dropdown cypress-avatar-name">{{ cutMail($store.getters.getEmail) }}</span>
+          <img class="avatar-display cypress-avatar-display"
             src="https://synergy-it.gitlab.io/speekio/speekio-portal/assets/img/img_avatar.png" />
       </button>
     </div>

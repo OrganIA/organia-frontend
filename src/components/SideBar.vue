@@ -1,98 +1,98 @@
 <template>
   <nav id="navbar" class="reset-bg">
-    <div class="sidebar-container">
-      <div id="Admin" tabindex="1" class="block button sidebar-btn">
-        <i class="fa fa-user-shield" aria-hidden="true"></i>
-        <span class="nav-text">Administrateur</span>
-        <i class="gg-chevron-down" aria-hidden="true"></i>
+    <div class="sidebar-container cypress-sidebar-container">
+      <div id="Admin" tabindex="1" class="block button sidebar-btn cypress-admin-dropdown">
+        <i class="fa fa-user-shield cypress-admin-icon" aria-hidden="true"></i>
+        <span class="nav-text cypress-admin-title">Administrateur</span>
+        <i class="gg-chevron-down cypress-admin-dropdown-icon" aria-hidden="true"></i>
       </div>
 
       <nav class="admin-menu">
-        <router-link class="block button  sidebar-btn-dropdown" to="/administrator">
-          <i class="fa fa-user-shield" aria-hidden="true"></i>
-          <span class="nav-text">Administrateur</span>
+        <router-link class="block button  sidebar-btn-dropdown cypress-sidebar-btn-dropdown" to="/administrator">
+          <i class="fa fa-user-shield cypress-admin-icon2" aria-hidden="true"></i>
+          <span class="nav-text cypress-admin-texte">Administrateur</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/actions">
-          <i class="fas fa-terminal cypress-to-logs"></i>
-          <span class="nav-text">Historique d'actions</span>
+        <router-link class="block button sidebar-btn-dropdown cypress-history" to="/actions">
+          <i class="fas fa-terminal cypress-to-logs cypress-history-icon"></i>
+          <span class="nav-text cypress-history-text">Historique d'actions</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/administrator/role">
-          <i class="fa fa-tasks cypress-to-roles" aria-hidden="true"></i>
-          <span class="nav-text">Rôles</span>
+        <router-link class="block button sidebar-btn-dropdown cypress-rule" to="/administrator/role">
+          <i class="fa fa-tasks cypress-to-roles cypress-rule-icon" aria-hidden="true"></i>
+          <span class="nav-text cypress-rule-text">Rôles</span>
         </router-link>
       </nav>
 
-      <div id="patients" tabindex="1" class="block button sidebar-btn">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        <span class="nav-text cypress-patient">Gestion des patients</span>
-        <i class="gg-chevron-down" aria-hidden="true"></i>
+      <div id="patients" tabindex="1" class="block button sidebar-btn cypress-patient-gestionary">
+        <i class="fa fa-address-card cypress-patient-gestionary-icon" aria-hidden="true"></i>
+        <span class="nav-text cypress-patient cypress-patient-gestionary-text">Gestion des patients</span>
+        <i class="gg-chevron-down cypress-patient-gestionary-chevron" aria-hidden="true"></i>
       </div>
 
       <nav class="patients-menu">
-        <router-link class="block button sidebar-btn-dropdown" to="/receivers">
-          <i class="fa fa-address-card"></i>
-          <span class="nav-text cypress-to-receivers">Receveurs</span>
+        <router-link class="block button sidebar-btn-dropdown cypress-patient-recievers" to="/receivers">
+          <i class="fa fa-address-card cypress-patient-recievers-icon"></i>
+          <span class="nav-text cypress-to-receivers cypress-patient-recievers-text">Receveurs</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/donors">
-          <i class="fa fa-address-card" aria-hidden="true"></i>
-          <span class="nav-text cypress-to-donors">Donneurs</span>
+        <router-link class="block button sidebar-btn-dropdown cypress-patient-donors" to="/donors">
+          <i class="fa fa-address-card cypress-patient-donors-icon" aria-hidden="true"></i>
+          <span class="nav-text cypress-to-donors cypress-patient-donors-text">Donneurs</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/dialyse">
-          <i class="fas fa-address-card"></i>
-          <span class="nav-text">Liste des Dialysés</span>
+        <router-link class="block button sidebar-btn-dropdown cypress-patient-dialyse" to="/dialyse">
+          <i class="fas fa-address-card cypress-patient-dialyse-icon"></i>
+          <span class="nav-text cypress-patient-dialyse-text">Liste des Dialysés</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/tumor">
-          <i class="fas fa-address-card"></i>
-          <span class="nav-text">Liste des Tumeurs</span>
+        <router-link class="block button sidebar-btn-dropdown cypress-patient-tumor" to="/tumor">
+          <i class="fas fa-address-card cypress-patient-tumor-icon"></i>
+          <span class="nav-text cypress-patient-tumor-text">Liste des Tumeurs</span>
         </router-link>
       </nav>
 
-      <div id="hopitaux" tabindex="1" class="block button sidebar-btn">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        <span class="nav-text">Hôpitaux</span>
-        <i class="gg-chevron-down" aria-hidden="true"></i>
+      <div id="hopitaux" tabindex="1" class="block button sidebar-btn cypress-hospital">
+        <i class="fa fa-address-card cypress-hospital-icon" aria-hidden="true"></i>
+        <span class="nav-text cypress-hospital-text">Hôpitaux</span>
+        <i class="gg-chevron-down cypress-hospital-chevron" aria-hidden="true"></i>
       </div>
 
       <nav class="hopitaux-menu">
-        <router-link class="block button sidebar-btn-dropdown
+        <router-link class="block button sidebar-btn-dropdown cypress-map
 " to="/searchmap">
-          <i class="fas fa-map-marker cypress-to-maps"></i>
-          <span class="nav-text">Carte</span>
+          <i class="fas fa-map-marker cypress-to-maps cypress-map-icon"></i>
+          <span class="nav-text cypress-map-text">Carte</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown
+        <router-link class="block button sidebar-btn-dropdown cypress-hospital-dropdown
 " to="/hospitals">
-          <i class="fas fa-hospital-user cypress-to-hospitals"></i>
-          <span class="nav-text">Hôpitaux</span>
+          <i class="fas fa-hospital-user cypress-to-hospitals cypress-hospital-dropdown-icon"></i>
+          <span class="nav-text cypress-hospital-dropdown-text">Hôpitaux</span>
         </router-link>
       </nav>
 
 
-      <div id="events" tabindex="1" class="block button sidebar-btn">
-        <i class="fas fa-calendar-alt"></i>
-        <span class="nav-text">Évènements</span>
-        <i class="gg-chevron-down" aria-hidden="true"></i>
+      <div id="events" tabindex="1" class="block button sidebar-btn cypress-event">
+        <i class="fas fa-calendar-alt cypress-event-icon"></i>
+        <span class="nav-text cypress-event-text">Évènements</span>
+        <i class="gg-chevron-down cypress-event-chevron" aria-hidden="true"></i>
       </div>
 
       <nav class="events-menu">
-        <router-link class="block button sidebar-btn-dropdown" to="/eventcalendar">
-          <i class="fas fa-calendar cypress-to-calendar"></i>
-          <span class="nav-text">Calendrier d'evenements</span>
+        <router-link class="block button sidebar-btn-dropdown cypress-event-calendar" to="/eventcalendar">
+          <i class="fas fa-calendar cypress-to-calendar cypress-event-calendar-icon"></i>
+          <span class="nav-text cypress-event-calendar-text">Calendrier d'evenements</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/eventlist">
-          <i class="fas fa-list cypress-to-eventlist"></i>
-          <span class="nav-text">Liste d'evenements</span>
+        <router-link class="block button sidebar-btn-dropdown cypress-event-list" to="/eventlist">
+          <i class="fas fa-list cypress-to-eventlist cypress-event-list-icon"></i>
+          <span class="nav-text cypress-event-list-text">Liste d'evenements</span>
         </router-link>
       </nav>
 
-      <router-link class="block button sidebar-btn" to="/invitations">
-        <i class="fa fa-user-shield" aria-hidden="true"></i>
-        <span class="nav-text">Invitations</span>
+      <router-link class="block button sidebar-btn cypress-invitation" to="/invitations">
+        <i class="fa fa-user-shield cypress-invitation-icon" aria-hidden="true"></i>
+        <span class="nav-text cypress-invitation-text">Invitations</span>
       </router-link>
 
 
-      <router-link class="block button sidebar-btn" to="/chat">
-        <i class="fas fa-envelope cypress-to-chats"></i>
-        <span class="nav-text">Chats</span>
+      <router-link class="block button sidebar-btn cypress-chat" to="/chat">
+        <i class="fas fa-envelope cypress-to-chats cypress-chat-icon"></i>
+        <span class="nav-text cypress-chat-text">Chats</span>
       </router-link>
 
     </div>
