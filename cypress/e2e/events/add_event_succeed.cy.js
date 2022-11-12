@@ -24,20 +24,16 @@ describe('Add Event', () => {
     cy.get('.cypress-event-list').click()
     cy.url().should('eq', Cypress.config().baseUrl + 'eventlist')
 
-    /*cy.url().should('eq', Cypress.config().baseUrl + '/eventlist')
-    cy.get('.cypress-to-add').click();
+    cy.get('.cypress-add-event').click()
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/eventlist/add')
     cy.get('.cypress-datetime')
-      .type('2022-01-17T14:44')
-      .should('have.value', '2022-01-17T14:44')
+      .type('2022-11-15T14:44')
+      .should('have.value', '2022-11-15T14:44')
 
     cy.get('.cypress-textarea')
-      .type('cypress evenement test')
-      .should('have.value', 'cypress evenement test')
+      .type('Ajout evenement pour un teste sur cypress')
+      .should('have.value', 'Ajout evenement pour un teste sur cypress')
 
-    cy.get('.cypress-add').click();
-
-    cy.url().should('eq', Cypress.config().baseUrl + '/eventlist')*/
+      cy.get('.cypress-add-this-event').click();
   })
 })

@@ -10,7 +10,7 @@
       <div class="page-content">
         <div id="main">
           <div class="event-panel-btn-container">
-            <div @click="openModal(true)"  class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
+            <div @click="openModal(true)"  class="button is-info is-info mb-6 cypress-to-hospitals-add cypress-add-event add-btn">
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
             </div>
@@ -72,7 +72,7 @@
               </form>
             </section>
             <footer class="modal-card-foot organia-modal-footer">
-              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
+              <button type="submit" class="cypress-add-this-event button modal-admin-btn modal-add-role-btn"
                       v-on:click="createEvent()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openModal(false)">Fermer</button>
             </footer>
