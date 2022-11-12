@@ -333,8 +333,8 @@
                   </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
-                    <textarea v-model="new_donor.notes" placeholder="notes" class="textarea" />
-                    <p class="required-notice cypress-note-donor">* Obligatoire</p>
+                    <textarea v-model="new_donor.notes" placeholder="notes" class="textarea cypress-note-donor" />
+                    <p class="required-notice">* Obligatoire</p>
 
                   </div>
                   <div class="form-submit is-center">

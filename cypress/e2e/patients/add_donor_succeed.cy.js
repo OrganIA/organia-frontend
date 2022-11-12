@@ -83,12 +83,18 @@ describe('Add donor success', () => {
       .select('MALE')
       .should('have.value', 'MALE')
 
-    /*cy.get('.cypress-note-donor.')
+    cy.get('.cypress-note-donor')
       .type('RAS')
-      .should('have.value', 'RAS')*/
+      .should('have.value', 'RAS')
 
+    cy.intercept({ method: 'POST', url: '**/listings' }).as('listing')
+    cy.intercept({ method: 'POST', url: '**/persons' }).as('person')
+    cy.intercept({ method: 'GET', url: '**/listings/donors' }).as('donors')
     cy.get('.cypress-add-this-donor').click();
 
-    cy.url().should('eq', Cypress.config().baseUrl + 'donors')
-  })
+    cy.wait('@listing', { timeout: 20000 }).its('response.statusCode').should('equal', 307)
+    cy.wait('@listing', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
+    cy.wait('@person', { timeout: 20000 }).its('response.statusCode').should('equal', 307)
+    cy.wait('@person', { timeout: 20000 }).its('response.statusCode').should('equal', 201)
+    cy.wait('@donors', { timeout: 20000 }).its('response.statusCode').should('equal', 200)  })
 })
