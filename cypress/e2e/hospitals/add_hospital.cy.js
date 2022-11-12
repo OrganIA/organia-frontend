@@ -25,7 +25,7 @@ describe('Add hospital success', () => {
       cy.get('.cypress-hospital-dropdown').click()
       cy.url().should('eq', Cypress.config().baseUrl + 'hospitals')
   
-      cy.get('.cypress-to-hospitals-add').click();
+      cy.get('.cypress-to-hospitals-add').click()
   
       cy.get('.cypress-hospital-name')
         .type('Hopital Des Fleurs')
@@ -43,7 +43,9 @@ describe('Add hospital success', () => {
         .type('04 59 35 62 00')
         .should('have.value', '04 59 35 62 00')
     
-      cy.get('.cypress-hospital-add').click();
+      cy.get('.cypress-hospital-add').click()
+
+      cy.get('.cypress-hospital-check').contains('Hopital Des Fleurs')
         
     })
   })

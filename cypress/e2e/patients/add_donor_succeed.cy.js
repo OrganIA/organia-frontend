@@ -96,5 +96,8 @@ describe('Add donor success', () => {
     cy.wait('@listing', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
     cy.wait('@person', { timeout: 20000 }).its('response.statusCode').should('equal', 307)
     cy.wait('@person', { timeout: 20000 }).its('response.statusCode').should('equal', 201)
-    cy.wait('@donors', { timeout: 20000 }).its('response.statusCode').should('equal', 200)  })
+    cy.wait('@donors', { timeout: 20000 }).its('response.statusCode').should('equal', 200)  
+
+    cy.get('.cypress-donor-list')
+  })
 })

@@ -26,7 +26,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="hospital in hospitals" :key="hospital">
+              <tr class="cypress-hospital-check" v-for="hospital in hospitals" :key="hospital">
                 <td>{{ hospital.name }}</td>
                 <td>{{ hospital.city.name }}</td>
                 <td>{{ hospital.phone_number }}</td>

@@ -53,7 +53,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="donor in donors" :key="donor">
+            <tr class="cypress-donor-list" v-for="donor in donors" :key="donor">
               <td>{{ donor.person.first_name }}</td>
               <td>{{ donor.person.last_name }}</td>
               <td>{{ donor.person.birthday }}</td>
@@ -68,7 +68,7 @@
               <td>{{ donor.person.created_at }}</td>
               <td>
                 <div @click="openEditModal(donor.person.id)">
-                  <i class="fas fa-edit button is-primary"></i>
+                  <i class="fas fa-edit button is-primary cypress-edit-donor"></i>
                 </div>
               </td>
               <td>
