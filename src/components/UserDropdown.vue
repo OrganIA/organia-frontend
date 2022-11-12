@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown  is-hoverable cypress-dropdown avatar-dropdown">
+  <div class="dropdown  is-hoverable cypress-dropdown avatar-dropdown cypress-avatar">
     <div class="dropdown-trigger">
       <button class="button dropdown-trigger" aria-haspopup="true" aria-controls="dropdown-menu3">
         <span class="name-display-dropdown">{{ cutMail($store.getters.getEmail) }}</span>

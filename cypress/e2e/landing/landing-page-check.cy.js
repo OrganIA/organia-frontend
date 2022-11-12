@@ -20,6 +20,8 @@ describe('Check Landing page element', () => {
         cy.url().should('eq', 'http://localhost:8080/landing')
         cy.getCookie("token").should('not.be.null')
 
+        cy.get('.cypress-avatar')
+
         cy.get('.cypress-landing-title')
 
         cy.get('.cypress-raccourci')
@@ -33,5 +35,6 @@ describe('Check Landing page element', () => {
         cy.get('.cypress-account-text')
 
         cy.get('.cypress-event-list-title')
+
     })
 })
