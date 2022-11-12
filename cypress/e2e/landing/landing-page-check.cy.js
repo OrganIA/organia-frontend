@@ -31,5 +31,7 @@ describe('Check Landing page element', () => {
         cy.get('.cypress-button-account')
         cy.get('.cypress-account-icon')
         cy.get('.cypress-account-text')
+
+        cy.get('.cypress-event-list-title')
     })
 })

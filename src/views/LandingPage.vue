@@ -25,7 +25,7 @@
             </router-link>
           </div>
         </div>
-        <p class="title is-5 is-spaced">Liste des prochains évènements</p><br>
+        <p class="title is-5 is-spaced cypress-event-list-title">Liste des prochains évènements</p><br>
         <div class="columns">
           <div class="column" v-for="event in events" :key="event">
             <div class="card">
