@@ -79,7 +79,7 @@
           <span class="nav-text cypress-event-calendar-text">Calendrier d'evenements</span>
         </router-link>
         <router-link class="block button sidebar-btn-dropdown cypress-event-list" to="/eventlist">
-          <i class="fas fa-list cypress-to-eventlist cypress-event-list-icon"></i>
+          <i class="fas fa-list cypress-event-list-icon"></i>
           <span class="nav-text cypress-event-list-text">Liste d'evenements</span>
         </router-link>
       </nav>

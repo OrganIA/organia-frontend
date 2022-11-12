@@ -2,26 +2,29 @@
 describe('Add Event', () => {
   it('Tries to open modal in the event panel should succeed', () => {
     cy.visit(Cypress.config().baseUrl)
-    cy.get('.cypress-to-register').click()
 
     cy.get('.cypress-to-login').click()
 
     cy.get('.cypress-email')
-      .type('saber@saber.com')
-      .should('have.value', 'saber@saber.com')
+      .type('test@irama.com')
+      .should('have.value', 'test@irama.com')
 
     cy.get('.cypress-password')
-      .type('saber')
-      .should('have.value', 'saber')
+      .type('irama')
+      .should('have.value', 'irama')
 
-    cy.get('.cypress-login').click()
+      cy.get('.cypress-submit-login').click()
+      cy.intercept('POST', '**/auth').as('login')
+      //cy.wait('@login', { timeout: 10000 })
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/')
-    cy.getCookie("token").should('not.be.null')
+      cy.url().should('eq', 'http://localhost:8080/landing')
+      cy.getCookie("token").should('not.be.null')
 
-    cy.get('.cypress-to-eventlist').click();
+    cy.get('.cypress-event').click()
+    cy.get('.cypress-event-list').click()
+    cy.url().should('eq', Cypress.config().baseUrl + 'eventlist')
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/eventlist')
+    /*cy.url().should('eq', Cypress.config().baseUrl + '/eventlist')
     cy.get('.cypress-to-add').click();
 
     cy.url().should('eq', Cypress.config().baseUrl + '/eventlist/add')
@@ -35,6 +38,6 @@ describe('Add Event', () => {
 
     cy.get('.cypress-add').click();
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/eventlist')
+    cy.url().should('eq', Cypress.config().baseUrl + '/eventlist')*/
   })
 })
