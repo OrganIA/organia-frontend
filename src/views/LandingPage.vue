@@ -28,13 +28,13 @@
         <p class="title is-5 is-spaced cypress-event-list-title">Liste des prochains évènements</p><br>
         <div class="columns">
           <div class="column" v-for="event in events" :key="event">
-            <div class="card">
-              <header class="card-header">
-                <p class="card-header-title">
+            <div class="card cypress-event-card">
+              <header class="card-header cypress-event-header">
+                <p class="card-header-title cypress-event-header-title">
                   {{ event.description }} </p>
               </header>
-              <div class="card-content">
-                <div class="content">
+              <div class="card-content cypress-event-date-box">
+                <div class="content cypress-event-date">
                   <p>{{ event.date }}</p>
                 </div>
               </div>

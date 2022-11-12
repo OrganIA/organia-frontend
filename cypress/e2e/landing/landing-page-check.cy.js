@@ -37,6 +37,11 @@ describe('Check Landing page element', () => {
         cy.get('.cypress-account-text')
 
         cy.get('.cypress-event-list-title')
+        cy.get('.cypress-event-card')
+        cy.get('.cypress-event-header')
+        cy.get('.cypress-event-header-title')
+        cy.get('.cypress-event-date-box')
+        cy.get('.cypress-event-date')
 
         cy.get('.cypress-sidebar-container')
 
