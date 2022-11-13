@@ -39,6 +39,15 @@
               </tr>
             </tbody>
           </table>
+          <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
         </div>
         <div class="modal" :class="{ 'is-invisible': (addstate !== 'clicked'), 'is-active': (addstate === 'clicked') }">
           <div class="modal-background"></div>
@@ -137,6 +146,8 @@ export default {
       phone_number: "",
       hospital: {},
       city: {},
+      page : 0,
+      hospitalsBackup: [],
     };
   },
   created() {
@@ -149,10 +160,24 @@ export default {
         .then((response) => {
           this.hospitals = response.data;
           this.openAddModal(false)
+      this.hospitalsBackup = response.data
+      this.hospitals = this.hospitals.slice(this.page * 7, this.page * 7 + 7);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.hospitalsBackup.length / 7) > (this.page + 1)) {
+        this.page += 1;
+        this.hospitals = this.hospitalsBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.hospitals = this.hospitalsBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
     },
     openAddModal(val) {
       if (val === true) {
@@ -232,31 +257,27 @@ export default {
   background-color: #6799c4;
   margin-right: 40px;
 }
-
-
 .add-btn:hover {
   background-color: #2d6594;
   outline: none;
   text-decoration: none;
-
 }
-
 .btn-add-text {
   color: white;
   margin-left: 5px;
 }
-
 .icon-add-btn-correction {
   color: white;
   margin-right: 5px;
   margin-top: -1px;
 }
-
 .main {
   margin-top: 30px;
 }
-
 .form-control {
   width: 100%;
+}
+.pages {
+  margin-top: 20px;
 }
 </style>
