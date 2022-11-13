@@ -79,6 +79,15 @@
             </tr>
           </tbody>
         </table>
+        <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
         <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active' : (state === 'info') }">
           <div class="modal-background"></div>
           <div class="modal-card">
@@ -542,6 +551,7 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       receiversBackup: [],
+      page: 0,
       personsNotAdded: [],
       personsToAdd: [],
       chatName: "",
@@ -672,10 +682,23 @@ export default {
             this.getReceiverScore(receiver)
           })
           this.receiversBackup = this.receivers;
+          this.receivers = this.receivers.slice(this.page * 7, this.page * 7 + 7);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.receiversBackup.length / 7) > (this.page + 1)) {
+        this.page += 1;
+        this.receivers = this.receiversBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.receivers = this.receiversBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
     },
     resetChat(receiver) {
       this.openInfoModal(receiver)
@@ -1013,5 +1036,8 @@ td {
 
 .delete-button {
   color: red;
+}
+.pages {
+  margin-top: 20px;
 }
 </style>
