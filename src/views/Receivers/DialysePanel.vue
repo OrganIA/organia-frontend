@@ -209,26 +209,21 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 thead tr {
   width: 100% !important;
 }
-
-
 .icon-dropdown-correction {
   position: relative;
   margin-top: 12px;
   margin-left: -45px;
   margin-right: 40px;
 }
-
-
 .page-content {
   max-width: 96%;
   margin-left: 60px;
-
 }
-
 .pages {
   margin-top: 20px;
 }

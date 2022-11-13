@@ -46,6 +46,15 @@
               </tr>
             </tbody>
           </table>
+          <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
         </div>
         <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
@@ -135,6 +144,7 @@ export default {
       selectFilter: "date",
       filterText: "",
       eventsBackup: [],
+      page : 0,
       date: "",
       description: "",
       calendar: {},
@@ -180,11 +190,24 @@ export default {
             );
           });
           this.events = response.data;
-          this.eventsBackup = this.calendar;
+          this.eventsBackup = this.events;
+          this.events = this.events.slice(this.page * 7, this.page * 7 + 7);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.eventsBackup.length / 7) > (this.page + 1)) {
+        this.page += 1;
+        this.events = this.eventsBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.events = this.eventsBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -317,26 +340,20 @@ export default {
   background-color: #6799c4;
   margin-right: 40px;
 }
-
-
 .add-btn:hover {
   background-color: #2d6594;
   outline: none;
   text-decoration: none;
-
 }
-
 .btn-add-text {
   color: white;
   margin-left: 5px;
 }
-
 .icon-add-btn-correction {
   color: white;
   margin-right: 5px;
   margin-top: -1px;
 }
-
 .event-panel-btn-container {
   margin-top: 30px;
 
@@ -346,9 +363,10 @@ export default {
   display: block;
   flex-direction: row;
 }
-
-
 .main {
   margin-top: 30px;
+}
+.pages {
+  margin-top: 20px;
 }
 </style>
