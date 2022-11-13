@@ -37,6 +37,15 @@
             </tr>
           </tbody>
         </table>
+        <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
       </div>
     </div>
   </div>
@@ -59,6 +68,7 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       personBackup: [],
+      page : 0,
     };
   },
   created() {
@@ -81,10 +91,23 @@ export default {
             }
           });
           this.personBackup = this.person_tumors;
+          this.person_tumors = this.person_tumors.slice(this.page * 7, this.page * 7 + 7);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.donorsBackup.length / 7) > (this.page + 1)) {
+        this.page += 1;
+        this.person_tumors = this.personBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.person_tumors = this.personBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
     },
     openModal(person) {
       if (!this.showModal) {
@@ -198,5 +221,9 @@ thead tr {
   margin-top: 12px;
   margin-left: -45px;
   margin-right: 40px;
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>
