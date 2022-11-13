@@ -40,6 +40,15 @@
             </tr>
           </tbody>
         </table>
+        <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
       </div>
     </div>
   </div>
@@ -62,6 +71,7 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       receiversBackup: [],
+      page : 0,
     };
   },
   created() {
@@ -85,11 +95,24 @@ export default {
                 element.startDateDialyse = "Aucune date informée";
             }
           });
-          this.receiversBackup = this.receivers_dialyse;
+          this.receiversBackup = this.receivers;
+          this.receivers = this.receivers.slice(this.page * 7, this.page * 7 + 7);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.receiversBackup.length / 7) > (this.page + 1)) {
+        this.page += 1;
+        this.receivers = this.receiversBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.receivers = this.receiversBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
     },
     openModal(receiver) {
       if (!this.showModal) {
@@ -204,5 +227,9 @@ thead tr {
   max-width: 96%;
   margin-left: 60px;
 
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>
