@@ -77,7 +77,16 @@
             </tr>
           </tbody>
         </table>
-        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active' : (state === 'info') }">
+        <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
+        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active': (state === 'info') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
@@ -118,7 +127,7 @@
               <div v-if="currentDonor.person.description != null">
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.description
+                    currentDonor.person.description
                 }}
                 </button>
               </div>
@@ -130,7 +139,7 @@
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentDonor.person.updated_at != null" class="button is-info is-light contents">{{
-                  currentDonor.person.updated_at
+                      currentDonor.person.updated_at
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Aucune modification effectuée.</button>
@@ -139,35 +148,35 @@
               <div v-if="currentDonor.person.DateTransplantation != null">
                 <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.DateTransplantation
+                    currentDonor.person.DateTransplantation
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.ReRegistrationDate != null">
                 <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.ReRegistrationDate
+                    currentDonor.person.ReRegistrationDate
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.alpha_fetoprotein != null">
                 <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.alpha_fetoprotein
+                    currentDonor.person.alpha_fetoprotein
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.biggest_tumor_size != null">
                 <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.biggest_tumor_size
+                    currentDonor.person.biggest_tumor_size
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.end_date != null">
                 <p class="button is-medium is-fullwidth elements">Date de fin</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.end_date
+                    currentDonor.person.end_date
                 }}
                 </button>
               </div>
@@ -185,7 +194,7 @@
                 <div class="column is-half">
                   <p class="button is-medium elements">Sous dialyse ?</p>
                   <button v-if="currentDonor.person.isDialyse" class="button is-info is-light contents">{{
-                  Oui
+                      Oui
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
@@ -193,7 +202,7 @@
                 <div class="column is-half">
                   <p class="button is-medium elements is-size-6">Retransplantation effectuée? ?</p>
                   <button v-if="currentDonor.person.isRetransplantation" class="button is-info is-light contents ">{{
-                  Oui
+                      Oui
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
@@ -202,21 +211,21 @@
               <div v-if="currentDonor.person.startDateDialyse != null">
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.startDateDialyse
+                    currentDonor.person.startDateDialyse
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.EndDateDialyse
+                    currentDonor.person.EndDateDialyse
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.notes
+                    currentDonor.person.notes
                 }}
                 </button>
               </div>
@@ -224,8 +233,8 @@
                 Créer une conversation
               </button>
               <button class="button is-link is-light cypress-pdf" @click="createPDF()">
-                  Télécharger la version PDF
-                </button>
+                Télécharger la version PDF
+              </button>
             </section>
             <footer class="modal-card-foot">
             </footer>
@@ -495,7 +504,7 @@
                         <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
                         <button class="button is-info is-light person-box" v-for="person in personsNotAdded"
                           :key="person">
-                          <p class="username">{{`${person.last_name} ${person.first_name}`}}</p>
+                          <p class="username">{{ `${person.last_name} ${person.first_name}` }}</p>
                           <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
                         </button>
                       </div>
@@ -504,7 +513,7 @@
                       <div class="box">
                         <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
                         <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
-                          <p class="username">{{`${person.last_name} ${person.first_name}`}}</p>
+                          <p class="username">{{ `${person.last_name} ${person.first_name}` }}</p>
                           <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
                         </button>
                       </div>
@@ -548,6 +557,7 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       donorsBackup: [],
+      page: 0,
       to_edit: {
         donor: {},
         person: {},
@@ -609,10 +619,23 @@ export default {
           });
           this.donors = response.data;
           this.donorsBackup = this.donors;
+          this.donors = this.donors.slice(this.page * 7, this.page * 7 + 7);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.donorsBackup.length / 7) > (this.page + 1)) {
+        this.page += 1;
+        this.donors = this.donorsBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.donors = this.donorsBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
     },
     resetChat(donor) {
       this.openInfoModal(donor)
@@ -963,5 +986,9 @@ td {
   color: white;
   margin-right: 5px;
   margin-top: -1px;
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>
