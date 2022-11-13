@@ -33,28 +33,22 @@
           </thead>
           <tbody>
             <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id }">
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.id }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.person ? user.person.first_name : "-" }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.person ? user.person.last_name : "-" }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.email }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.created_at }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.updated_at }}
               </td>
               <td :class="{ 'selected-element': user.id === $data.user.id }">
@@ -65,6 +59,15 @@
             </tr>
           </tbody>
         </table>
+        <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
         <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
@@ -75,7 +78,7 @@
             <section class="modal-card-body organia-modal-body">
               <div class="row mt-4">
                 <a :href="'mailto:' + this.user.email" class="button is-info is-light mx-auto role-btn">{{
-                this.user.email
+                    this.user.email
                 }}</a>
                 <div class="button is-info is-light mx-auto role-btn">{{ this.role.name }}</div>
               </div>
@@ -111,8 +114,7 @@
             </footer>
           </div>
         </div>
-        <div class="modal"
-          :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -174,6 +176,8 @@ export default {
       sortingKey: "created_at",
       selectFilter: "email",
       filterText: "",
+      page: 0,
+      usersBackup: [],
     };
   },
   created() {
@@ -190,10 +194,24 @@ export default {
             element.created_at = new Date(element.created_at).toDateString();
           });
           this.users = response.data;
+          this.usersBackup = response.data
+          this.users = this.users.slice(this.page * 7, this.page * 7 + 7);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.usersBackup.length / 7) > (this.page + 1)) {
+        this.page += 1;
+        this.users = this.usersBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.users = this.usersBackup.slice(this.page * 7, this.page * 7 + 7);
+      }
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -376,7 +394,6 @@ export default {
   margin-right: 40px;
 }
 
-
 .page-container {
   margin-left: 50px;
   padding: 12px 0 0 0;
@@ -385,7 +402,6 @@ export default {
 .role-btn {
   width: 15vw;
 }
-
 
 .modal-form {
   background-color: #caddef;
@@ -402,5 +418,9 @@ export default {
   flex-flow: wrap row;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>
