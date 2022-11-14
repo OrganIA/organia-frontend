@@ -53,7 +53,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="cypress-donor-list" v-for="donor in donors" :key="donor">
+            <tr class="cypress-donor-row" v-for="donor in donors" :key="donor">
               <td>{{ donor.person.first_name }}</td>
               <td>{{ donor.person.last_name }}</td>
               <td>{{ donor.person.birthday }}</td>
@@ -72,7 +72,7 @@
                 </div>
               </td>
               <td>
-                <i class="fas fa-info cypress-donor-modal" @click="openInfoModal(donor)"></i>
+                <i class="fas fa-info cypress-info-donor-modal" @click="openInfoModal(donor)"></i>
               </td>
             </tr>
           </tbody>
@@ -84,7 +84,7 @@
               <p class="modal-card-title">Informations du receveur</p>
               <button class="delete" aria-label="close" @click="closeModal"></button>
             </header>
-            <section class="modal-card-body">
+            <section class="modal-card-body cypress-info-body">
               <div class="columns">
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Nom de famille</p>
@@ -220,7 +220,7 @@
                 }}
                 </button>
               </div>
-              <button class="button is-link is-light" @click="openChatModal()">
+              <button class="button is-link is-light cypress-donor-chat-modal" @click="openChatModal()">
                 Créer une conversation
               </button>
               <button class="button is-link is-light cypress-pdf" @click="createPDF()">

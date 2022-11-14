@@ -9,7 +9,7 @@
             <section class="modal-card-body">
                 <form @submit.prevent="createRoom">
                     <label class="label">Nom de la conversation</label>
-                    <input class="input" type="text" placeholder="Nom de la conversation" v-model="newChatName"
+                    <input class="input cypress-edit-chat-name" type="text" placeholder="Nom de la conversation" v-model="newChatName"
                         required>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs non ajoutés
@@ -32,11 +32,11 @@
                 </form>
             </section>
             <footer class="modal-card-foot">
-                <button @click="editRoom" class="button is-success">Sauvegarder</button>
+                <button @click="editRoom" class="button is-success cypress-edit-chat-save">Sauvegarder</button>
                 <button class="button is-danger" @click="closeModal(false)">
                     Annuler
                 </button>
-                <button class="button is-danger" @click="deleteChat(false)">
+                <button class="button is-danger cypress-delete-chat" @click="deleteChat(false)">
                     Supprimer
                 </button>
             </footer>

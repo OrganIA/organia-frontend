@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-describe('Send Message Test Success', () => {
-  it('Tries to send a message', () => {
+describe('New Chat room Test Success', () => {
+  it('Tries to edit chat room', () => {
     cy.visit(Cypress.config().baseUrl)
 
     cy.get('.cypress-to-login').click()
@@ -14,7 +14,8 @@ describe('Send Message Test Success', () => {
     cy.get('.cypress-submit-login').click()
     cy.get('.cypress-to-chats').click()
     cy.get('.cypress-conversation').first().click()
-    cy.get(".cypress-message-input").type("test")
-    cy.get('.fa-paper-plane').click()
+    cy.get('.fa-edit').click()
+    cy.get(".cypress-edit-chat-name").clear().type("test")
+    cy.get('.cypress-edit-chat-save').click()
   })
 })

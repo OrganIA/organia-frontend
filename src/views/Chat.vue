@@ -25,7 +25,7 @@
             <div class="chat-container">
               <div class="row">
                 <section class="discussions">
-                  <div class="discussion message-active cypress-this-msg" v-for="chat in chats" :key="chat.chatId"
+                  <div class="discussion message-active cypress-conversation" v-for="chat in chats" :key="chat.chatId"
                     @click="selectChat(chat)">
                     <div class="photo">
                       {{chat.chatName.charAt(0).toUpperCase()}}
@@ -64,7 +64,7 @@
                   </div>
                   <div class="footer-chat">
                     <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
-                    <input type="text" class="write-message" placeholder="Type your message here" v-model="input" />
+                    <input type="text" class="write-message cypress-message-input" placeholder="Type your message here" v-model="input" />
                     <i class="fas fa-paper-plane clickable" @click="sendMessage"></i>
                   </div>
                 </section>

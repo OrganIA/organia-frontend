@@ -13,8 +13,8 @@ describe('New Chat room Test Success', () => {
       .type('irama')
       .should('have.value', 'irama')
 
-    cy.get('.cypress-submit-login').click()
     cy.intercept('POST', '**/auth').as('login')
+    cy.get('.cypress-submit-login').click()
     cy.wait('@login', { timeout: 10000 })
 
     cy.url().should('eq', 'http://localhost:8080/landing')
