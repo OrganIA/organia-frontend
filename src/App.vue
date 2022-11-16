@@ -36,7 +36,7 @@ export default {
         .catch((error) => {
           console.log(error.response);
           this.$cookies.remove("token");
-          this.$router.push("/home");
+          this.$router.push("/");
           this.$toast.error(
             "Erreur lors de la connexion : " + translate[error.response.data.detail]
           );
@@ -49,7 +49,7 @@ export default {
     logout() {
       this.logged_in = false;
       this.$store.commit("logout");
-      this.$router.push("/home");
+      this.$router.push("/");
     },
   },
   data() {
@@ -72,8 +72,8 @@ export default {
       this.login();
     } else {
       this.$router.isReady().then(() => {
-        if (this.$route.path != "/register" && this.$route.path != "/home" && this.$route.path != "/team")
-          this.$router.push("/home");
+        if (this.$route.path != "/register" && this.$route.path != "/" && this.$route.path != "/team")
+          this.$router.push("/");
       });
     }
   },

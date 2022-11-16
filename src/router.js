@@ -2,8 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 const routes = [
   { path: "/landing", component: () => import("./views/LandingPage.vue")},
-  { path: "/home", component: () => import("./Home.vue")},
-  { path: "/", component: () => import("./Home.vue")},
+  { path: "/", component: () => import("./views/Auth/Login.vue")},
   { path: "/vitrine", component: () => import("./views/Vitrine.vue") },
   { path: "/receivers", component: () => import("./views/Receivers/ReceiversPanel.vue") },
   { path: "/receivers/add", component: () => import("./views/Receivers/NewReceiver.vue") },

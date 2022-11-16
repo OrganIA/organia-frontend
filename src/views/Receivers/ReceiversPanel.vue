@@ -50,6 +50,7 @@
               <th @click="updateFilter('created_at')">Arrivée</th>
               <th>Score</th>
               <th>Éditer</th>
+              <th>Match</th>
               <th>Infos</th>
             </tr>
           </thead>
@@ -74,6 +75,11 @@
                 </div>
               </td>
               <td>
+                <div @click="openMatchModal(receiver.person.id)">
+                  <i class="fa-brands fa-searchengin button is-primary"></i>
+                </div>
+              </td>
+              <td>
                 <i class="fas fa-info cypress-receiver-modal" @click="openInfoModal(receiver)"></i>
               </td>
             </tr>
@@ -84,7 +90,7 @@
           <div class="modal-card">
             <header class="modal-card-head">
               <p class="modal-card-title">Informations du receveur</p>
-              <button class="delete" aria-label="close" @click="closeModal"></button>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body">
               <div class="columns">
@@ -238,7 +244,7 @@
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Ajouter un receveur</p>
-              <button class="delete" aria-label="close" @click="openNewModal()"></button>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <form @submit.prevent="createPerson()" class="show-requireds">
@@ -354,7 +360,7 @@
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Éditer un receveur</p>
-              <button class="delete" aria-label="close" @click="openEditModal()"></button>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <form @submit.prevent="submitForm()" class="show-requireds">
@@ -362,12 +368,12 @@
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
                     <input class="input is-info" v-model="to_edit.person.first_name" placeholder="first_name"
-                      type="text" required />
+                           type="text" required />
                   </div>
                   <div class="form-input small required">
                     <label class="label">Nom de Famille</label>
                     <input class="input is-info" v-model="to_edit.person.last_name" placeholder="last_name" type="text"
-                      required />
+                           required />
                   </div>
                   <div class="form-input small required">
                     <label class="label">Date de naissance</label>
@@ -388,7 +394,7 @@
                   <div class="form-input small">
                     <label class="label">Date de fin</label>
                     <input v-model="to_edit.receiver.end_date" placeholder="end date" type="date"
-                      class="input is-info" />
+                           class="input is-info" />
                   </div>
                   <div class="form-input small">
                     <label class="label">Nombre de tumeurs</label>
@@ -397,7 +403,7 @@
                   <div class="form-input small required">
                     <label class="label">Le patient est sous dialyse ?</label>
                     <select v-model="to_edit.receiver.isDialyse" name="dialyse" id="dialyse-select"
-                      class="button is-info is-light" required>
+                            class="button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
                     </select>
@@ -405,17 +411,17 @@
                   <div class="form-input small">
                     <label class="label">Date de début de dialyse</label>
                     <input v-model="to_edit.receiver.startDateDialyse" placeholder="start date" type="date"
-                      class="input is-info" />
+                           class="input is-info" />
                   </div>
                   <div class="form-input small">
                     <label class="label">Date de fin de dialyse</label>
                     <input v-model="to_edit.receiver.endDateDialyse" placeholder="start date" type="date"
-                      class="input is-info" />
+                           class="input is-info" />
                   </div>
                   <div class="form-input small required">
                     <label class="label">A-t-il effectué une retransplantation ?</label>
                     <select v-model="to_edit.receiver.isRetransplantation" name="retransplantation"
-                      id="transplantation-select" class="button is-info is-light" required>
+                            id="transplantation-select" class="button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
                     </select>
@@ -423,12 +429,12 @@
                   <div class="form-input small">
                     <label class="label">Description</label>
                     <input class="input is-info" v-model="to_edit.person.description" placeholder="description"
-                      type="text" />
+                           type="text" />
                   </div>
                   <div class="form-input small required">
                     <label class="label">Groupe sanguin</label>
                     <select v-model="to_edit.person.abo" name="abo" id="abo-select" class="button is-info is-light"
-                      required>
+                            required>
                       <option value="A">A</option>
                       <option value="B">B</option>
                       <option value="O">O</option>
@@ -438,7 +444,7 @@
                   <div class="form-input small required">
                     <label class="label">Rhésus</label>
                     <select class="button is-info is-light" v-model="to_edit.person.rhesus" name="rhesus"
-                      id="rhesus-select" required>
+                            id="rhesus-select" required>
                       <option value="+">+</option>
                       <option value="-">-</option>
                     </select>
@@ -446,7 +452,7 @@
                   <div class="form-input small required">
                     <label class="label">Sexe</label>
                     <select v-model="to_edit.person.gender" name="gender" id="gender-select"
-                      class="button is-info is-light" required>
+                            class="button is-info is-light" required>
                       <option value="MALE">MALE</option>
                       <option value="FEMALE">FEMALE</option>
                     </select>
@@ -462,11 +468,59 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                @click="updatePerson()">Enregistrer
+                      @click="updatePerson()">Enregistrer
               </button>
               <button type="button" class="button is-danger ml-6" @click="delete_receiver">
                 Supprimer
               </button>
+              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
+            </footer>
+          </div>
+        </div>
+        <div class="modal" :class="{ 'is-invisible': (state !== 'match'), 'is-active': (state === 'match') }">
+          <div class="modal-background"></div>
+          <div class="modal-card match-modal">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Match</p>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <div class="match-container">
+                <table class="table-match">
+                  <thead>
+                  <tr>
+                    <th @click="updateFilter('first_name')">Prénom</th>
+                    <th @click="updateFilter('last_name')">Nom de famille</th>
+                    <th @click="updateFilter('birthday')">Date de naissance</th>
+                    <th @click="updateFilter('gender')">Sexe</th>
+                    <th>Score</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="receiver in receivers" :key="receiver">
+                    <td>{{ receiver.person.first_name }}</td>
+                    <td>{{ receiver.person.last_name }}</td>
+                    <td>{{ receiver.person.birthday }}</td>
+                    <td>{{ receiver.person.gender }}</td>
+                    <td>{{ receiver.score }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="card receiver-card">
+                  <div class=" user-card">
+                    <div class="content">
+                      <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" height="150" width="150" alt="">
+                      <div>Id du patient : {{this.to_match.receiver?.id || ""}}</div>
+                      <div>Nom : {{this.to_match.receiver?.person?.last_name || ""}}</div>
+                      <div>Prénom : {{this.to_match.receiver?.person?.first_name || ""}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </section>
+            <footer class="modal-card-foot organia-modal-footer">
               <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
             </footer>
           </div>
@@ -547,6 +601,13 @@ export default {
       chatName: "",
       me: {},
       to_edit: {
+        id: 0,
+        receiver: {},
+        person: {},
+        all_organs: [],
+        tumors_number: 0,
+      },
+      to_match: {
         id: 0,
         receiver: {},
         person: {},
@@ -695,6 +756,13 @@ export default {
       this.getReceiverByID(id)
       this.state = "edit"
     },
+    openMatchModal(id) {
+      //Match by id
+      console.log(id)
+      this.getReceiverMatchByID(id)
+      console.log(this.to_match)
+      this.state = "match"
+    },
     openNewModal() {
       this.state = "new"
     },
@@ -771,7 +839,7 @@ export default {
         });
       }
     },
-      getReceiverByID(id) {
+    getReceiverByID(id) {
       console.log(id)
         this.to_edit.person.id = id
       this.$http
@@ -780,6 +848,20 @@ export default {
           this.to_edit.receiver = response.data;
           this.to_edit.person = response.data.person;
           console.log(this.to_edit.receiver)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getReceiverMatchByID(id) {
+      console.log(id)
+        this.to_match.person.id = id
+      this.$http
+        .get(`/listings/${id}`)
+        .then((response) => {
+          this.to_match.receiver = response.data;
+          this.to_match.person = response.data.person;
+          console.log(this.to_match.receiver)
         })
         .catch((error) => {
           console.log(error);
@@ -966,7 +1048,6 @@ td {
 
 }
 
-
 .add-btn {
   float: right;
   width: 150px;
@@ -974,7 +1055,6 @@ td {
   margin-right: 15px;
   background-color: #6799c4;
 }
-
 
 .icon-dropdown-correction {
   position: relative;
@@ -1013,5 +1093,29 @@ td {
 
 .delete-button {
   color: red;
+}
+
+.match-modal {
+  width: 90%;
+  height: 90%;
+}
+
+.receiver-card {
+  width: 33%;
+  height: 400px;
+  padding: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+}
+.modal-card-body {border: none}
+
+.match-container {
+  display: flex;
+  flex-direction: row;
+  mso-padding-between: 10px;
+}
+.table-match {
+  width: 800px;
 }
 </style>
