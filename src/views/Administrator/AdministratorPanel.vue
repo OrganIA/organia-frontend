@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id }">
+            <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id, 'cypress-user-row': true }">
               <td v-on:click="loadSelectedUser(user.id)"
                 :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.id }}
@@ -59,7 +59,7 @@
               </td>
               <td :class="{ 'selected-element': user.id === $data.user.id }">
                 <div v-on:click="loadUserToModify(user.id)" class="button is-primary">
-                  <i class="fas fa-edit"></i>
+                  <i class="fas fa-edit cypress-user-edit"></i>
                 </div>
               </td>
             </tr>
@@ -126,7 +126,7 @@
                     <label class="label">Mail</label>
                     <input v-model="toModifyUser.email" type="email" class="input mb-6" required />
                     <label class="label">Rôle</label>
-                    <select v-model="selected_role" class="button mb-4 ml-6 is-info is-light role-selector">
+                    <select v-model="selected_role" class="button mb-4 ml-6 is-info is-light role-selector cypress-role-selector">
                       <option v-for="role in roles" :value="role.id" :key="role.id">
                         {{ role.name }}
                       </option>
@@ -136,7 +136,7 @@
               </div>
             </section>
             <footer class="modal-card-foot organia-modal-footer">
-              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
+              <button type="submit" class="cypress-submit button modal-admin-btn modal-add-role-btn"
                 v-on:click="submitForm()">Enregistrer</button>
               <button class="button modal-admin-btn" v-on:click="openModifyUserModal(false)">Fermer</button>
             </footer>

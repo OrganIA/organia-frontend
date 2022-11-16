@@ -27,30 +27,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="role in roles" :key="role">
+            <tr class="cypress-roles-row" v-for="role in roles" :key="role">
               <td>{{ role.name }}</td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-users" v-model="role.can_manage_users" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-persons" v-model="role.can_manage_persons" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-roles" v-model="role.can_manage_roles" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_hospitals" true=true false=false
+                <input class="center-checkbox cypress-manage-hospitals" v-model="role.can_manage_hospitals" true=true false=false
                   type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-invite" v-model="role.can_invite" true=true false=false type="checkbox">
               </td>
             </tr>
           </tbody>
         </table>
         <div class="role-panel-btn-container">
-          <button class="cypress-add button is-info save-roles" @click="updateRoles()" type="submit"> Confirmer</button>
-
+          <button class="cypress-update button is-info save-roles" @click="updateRoles()" type="submit"> Confirmer</button>
         </div>
         <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
@@ -221,9 +220,6 @@ export default {
         this.state = "clicked"
         return;
       }
-      this.state = ""
-
-
     },
     reloadRoles() {
       this.state = ""

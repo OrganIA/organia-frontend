@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 import { emailGenerator } from "../../utils"
 var email = emailGenerator();
 describe('Register Test Success', () => {

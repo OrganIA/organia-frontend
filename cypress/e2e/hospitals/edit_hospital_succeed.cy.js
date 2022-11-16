@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 /* execute if there is only one hospital */
 
 describe('Edit hospital sucesss', () => {

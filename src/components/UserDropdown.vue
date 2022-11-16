@@ -9,7 +9,7 @@
     </div>
     <div class="dropdown-menu" id="dropdown-menu3" role="menu">
       <div class="dropdown-content dropdown-correction">
-        <router-link to="/account" class="dropdown-item">
+        <router-link to="/account" class="dropdown-item cypress-to-account">
           Mon compte
         </router-link>
         <hr class="dropdown-divider">

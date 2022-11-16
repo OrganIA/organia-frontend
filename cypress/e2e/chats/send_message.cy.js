@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 import { emailGenerator } from "../../utils"
 var message = emailGenerator();
 

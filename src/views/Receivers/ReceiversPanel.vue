@@ -54,7 +54,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="receiver in receivers" :key="receiver">
+            <tr class="cypress-receiver-row" v-for="receiver in receivers" :key="receiver">
               <td>{{ receiver.person.first_name }}</td>
               <td>{{ receiver.person.last_name }}</td>
               <td>{{ receiver.person.birthday }}</td>
@@ -70,11 +70,11 @@
               <td>{{ receiver.score }}</td>
               <td>
                 <div @click="openEditModal(receiver.person.id)">
-                  <i class="fas fa-edit button is-primary"></i>
+                  <i class="fas fa-edit button is-primary cypress-edit-receiver-modal"></i>
                 </div>
               </td>
               <td>
-                <i class="fas fa-info cypress-receiver-modal" @click="openInfoModal(receiver)"></i>
+                <i class="fas fa-info cypress-info-receiver-modal" @click="openInfoModal(receiver)"></i>
               </td>
             </tr>
           </tbody>
@@ -86,7 +86,7 @@
               <p class="modal-card-title">Informations du receveur</p>
               <button class="delete" aria-label="close" @click="closeModal"></button>
             </header>
-            <section class="modal-card-body">
+            <section class="modal-card-body cypress-info-body">
               <div class="columns">
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Nom de famille</p>
@@ -225,7 +225,7 @@
               <button class="button is-link is-light" @click="openChatModal()">
                 Créer une conversation
               </button>
-              <button class="button is-link is-light contents" @click="createPDF()">
+              <button class="button is-link is-light contents cypress-pdf" @click="createPDF()">
                 Télécharger la version PDF
               </button>
             </section>
@@ -361,7 +361,7 @@
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
-                    <input class="input is-info" v-model="to_edit.person.first_name" placeholder="first_name"
+                    <input class="input is-info cypress-receiver-edit-firstname" v-model="to_edit.person.first_name" placeholder="first_name"
                       type="text" required />
                   </div>
                   <div class="form-input small required">
@@ -461,10 +461,10 @@
 
             </section>
             <footer class="modal-card-foot organia-modal-footer">
-              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
+              <button type="submit" class="cypress-receiver-edit-submit button modal-admin-btn modal-add-role-btn"
                 @click="updatePerson()">Enregistrer
               </button>
-              <button type="button" class="button is-danger ml-6" @click="delete_receiver">
+              <button type="button" class="button is-danger ml-6 cypress-delete-button" @click="delete_receiver()">
                 Supprimer
               </button>
               <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
@@ -787,10 +787,10 @@ export default {
     },
     delete_receiver() {
       this.$http
-        .delete(`/listings/${this.id}`)
+        .delete(`/listings/${this.currentReceiver.id}`)
         .then(() => {
           this.$http
-            .delete(`/persons/${this.person.id}`)
+            .delete(`/persons/${this.currentReceiver.person.id}`)
             .then(() => {
               this.$toast.success("Suppression effectué");
               this.$router.push("/receivers");

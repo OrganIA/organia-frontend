@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user" @click="loadSelectedUser(user.id)"
-          :class="{ 'selected-line': user.id === $data.user.id }">
+          :class="{ 'selected-line': user.id === $data.user.id, 'cypress-user-row': true }" >
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.id }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.first_name :
           "-"
@@ -26,7 +26,7 @@
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.email }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.created_at }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.updated_at }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">
+          <td :class="{ 'selected-element': user.id === $data.user.id } + ' cypress-user-edit'">
             <router-link :to="`/administrator/edit/user/${user.id}`">
               <i class="fas fa-edit"></i>
             </router-link>

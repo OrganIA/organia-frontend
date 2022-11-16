@@ -1,37 +1,37 @@
 <template>
   <nav id="navbar" class="reset-bg">
     <div class="sidebar-container">
-      <div id="Admin" tabindex="1" class="block button sidebar-btn">
+      <div id="Admin" tabindex="1" class="block button sidebar-btn cypress-admin-menu">
         <i class="fa fa-user-shield" aria-hidden="true"></i>
         <span class="nav-text">Administrateur</span>
         <i class="gg-chevron-down" aria-hidden="true"></i>
       </div>
 
       <nav class="admin-menu">
-        <router-link class="block button  sidebar-btn-dropdown" to="/administrator">
+        <router-link class="block button sidebar-btn-dropdown cypress-to-users" to="/administrator">
           <i class="fa fa-user-shield" aria-hidden="true"></i>
           <span class="nav-text">Administrateur</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/actions">
-          <i class="fas fa-terminal cypress-to-logs"></i>
+        <router-link class="block button sidebar-btn-dropdown cypress-to-logs" to="/actions">
+          <i class="fas fa-terminal"></i>
           <span class="nav-text">Historique d'actions</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/administrator/role">
-          <i class="fa fa-tasks cypress-to-roles" aria-hidden="true"></i>
+        <router-link class="block button sidebar-btn-dropdown cypress-to-roles" to="/administrator/role">
+          <i class="fa fa-tasks" aria-hidden="true"></i>
           <span class="nav-text">Rôles</span>
         </router-link>
       </nav>
 
-      <div id="patients" tabindex="1" class="block button sidebar-btn">
+      <div id="patients" tabindex="1" class="block button sidebar-btn cypress-patients-menu">
         <i class="fa fa-address-card" aria-hidden="true"></i>
         <span class="nav-text">Gestion des patients</span>
         <i class="gg-chevron-down" aria-hidden="true"></i>
       </div>
 
       <nav class="patients-menu">
-        <router-link class="block button sidebar-btn-dropdown" to="/receivers">
+        <router-link class="block button sidebar-btn-dropdown cypress-to-receivers" to="/receivers">
           <i class="fa fa-address-card"></i>
-          <span class="nav-text cypress-to-receivers">Receveurs</span>
+          <span class="nav-text">Receveurs</span>
         </router-link>
         <router-link class="block button sidebar-btn-dropdown" to="/donors">
           <i class="fa fa-address-card" aria-hidden="true"></i>
@@ -96,12 +96,6 @@
       </router-link>
 
     </div>
-    <!--
-
-
-
-
-!-->
   </nav>
 </template>
 
@@ -118,7 +112,6 @@ export default {
 </script>
 
 <style scoped>
-
 .nav-text {
   margin-left: 10px;
   text-decoration: none;
@@ -183,6 +176,7 @@ export default {
   color: #00406e;
 
 }
+
 .sidebar-btn-dropdown:hover {
 
   background-color: #bdd7ec;
@@ -204,7 +198,7 @@ export default {
 
 }
 
-#Admin:focus ~ .admin-menu {
+#Admin:focus~.admin-menu {
   height: calc(var(--btnsize) * 3px);
 }
 
@@ -234,7 +228,7 @@ export default {
 }
 
 
-#patients:focus ~ .patients-menu {
+#patients:focus~.patients-menu {
   height: calc(var(--btnsize) * 4px);
 }
 
@@ -263,7 +257,7 @@ export default {
 }
 
 
-#hopitaux:focus ~ .hopitaux-menu {
+#hopitaux:focus~.hopitaux-menu {
   height: calc(var(--btnsize) * 2px);
 }
 
@@ -293,7 +287,7 @@ export default {
 
 
 
-#events:focus ~ .events-menu {
+#events:focus~.events-menu {
   height: calc(var(--btnsize) * 2px);
 }
 
@@ -320,6 +314,7 @@ export default {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
+
 .gg-chevron-down {
   box-sizing: border-box;
   position: absolute;
@@ -349,11 +344,10 @@ export default {
   top: 2px;
 
 }
+
 .sidebar-btn:focus {
   box-shadow: none;
   outline: none;
   border: none;
 }
-
-
 </style>

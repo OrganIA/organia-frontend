@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 describe('Add chat room', () => {
     it('Tries to add a chat room should fail', () => {
       cy.visit(Cypress.config().baseUrl)
