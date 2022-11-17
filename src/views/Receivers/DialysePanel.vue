@@ -18,7 +18,13 @@
           </select>
           <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
           <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-          <br />
+          <select v-model="nb_by_page" @change="updateNbElements"
+            class="number-selector button mb-4 ml-6 is-info is-light">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
         </div>
         <table>
           <thead>
@@ -71,7 +77,8 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       receiversBackup: [],
-      page : 0,
+      page: 0,
+      nb_by_page: 5
     };
   },
   created() {
@@ -102,16 +109,23 @@ export default {
           console.log(error);
         });
     },
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.receivers = this.receiversBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     nextPage() {
-      if (Math.ceil(this.receiversBackup.length / 7) > (this.page + 1)) {
+      if (Math.ceil(this.receiversBackup.length / this.nb_by_page) > (this.page + 1)) {
         this.page += 1;
-        this.receivers = this.receiversBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     previousPage() {
       if (this.page >= 1) {
         this.page -= 1;
-        this.receivers = this.receiversBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     openModal(receiver) {
@@ -214,16 +228,19 @@ export default {
 thead tr {
   width: 100% !important;
 }
+
 .icon-dropdown-correction {
   position: relative;
   margin-top: 12px;
   margin-left: -45px;
   margin-right: 40px;
 }
+
 .page-content {
   max-width: 96%;
   margin-left: 60px;
 }
+
 .pages {
   margin-top: 20px;
 }

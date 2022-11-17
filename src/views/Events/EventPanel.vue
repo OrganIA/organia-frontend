@@ -10,19 +10,25 @@
       <div class="page-content">
         <div id="main">
           <div class="event-panel-btn-container">
-            <div @click="openModal(true)"  class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
+            <div @click="openModal(true)" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
             </div>
-          </div>
-          <div class="search-block">
-            <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
-              <option value="date">Date</option>
-              <option value="description">Description</option>
-              <option value="created_at">Date de creation</option>
-            </select>
-            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-            <br />
+            <div class="search-block">
+              <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
+                <option value="date">Date</option>
+                <option value="description">Description</option>
+                <option value="created_at">Date de creation</option>
+              </select>
+              <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+              <select v-model="nb_by_page" @change="updateNbElements"
+                class="number-selector button mb-4 ml-6 is-info is-light">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+              </select>
+            </div>
           </div>
           <table>
             <thead>
@@ -47,14 +53,14 @@
             </tbody>
           </table>
           <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
-          <a class="pagination-previous" @click="previousPage()">Précédent</a>
-          <ul class="pagination-list">
-            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
-                $data.page + 1
-            }}</a></li>
-          </ul>
-          <a class="pagination-next" @click="nextPage()">Suivant</a>
-        </nav>
+            <a class="pagination-previous" @click="previousPage()">Précédent</a>
+            <ul class="pagination-list">
+              <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                  $data.page + 1
+              }}</a></li>
+            </ul>
+            <a class="pagination-next" @click="nextPage()">Suivant</a>
+          </nav>
         </div>
         <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
@@ -69,8 +75,8 @@
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Date</label>
-                    <input v-model="date" placeholder="date" type="datetime-local" class="cypress-datetime input is-info"
-                           required />
+                    <input v-model="date" placeholder="date" type="datetime-local"
+                      class="cypress-datetime input is-info" required />
                   </div>
                   <div class="form-input small">
                     <label class="label">Description</label>
@@ -82,12 +88,13 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="createEvent()">Ajouter</button>
+                v-on:click="createEvent()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
-        <div class="modal" :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
+        <div class="modal"
+          :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -100,7 +107,8 @@
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Date</label>
-                    <input v-model="calendar.date" placeholder="date" type="datetime-local" class="input is-info" required />
+                    <input v-model="calendar.date" placeholder="date" type="datetime-local" class="input is-info"
+                      required />
                   </div>
                   <div class="form-input small required">
                     <label class="label">Description</label>
@@ -111,7 +119,8 @@
               </form>
             </section>
             <footer class="form-submit modal-card-foot organia-modal-footer">
-              <button @click="submitEditForm" type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn">Enregistrer</button>
+              <button @click="submitEditForm" type="submit"
+                class="cypress-add button modal-admin-btn modal-add-role-btn">Enregistrer</button>
               <button type="button" class="button is-danger ml-6" @click="delete_event">
                 Supprimer
               </button>
@@ -144,7 +153,8 @@ export default {
       selectFilter: "date",
       filterText: "",
       eventsBackup: [],
-      page : 0,
+      page: 0,
+      nb_by_page: 5,
       date: "",
       description: "",
       calendar: {},
@@ -161,8 +171,6 @@ export default {
         return;
       }
       this.state = ""
-
-
     },
     openEditModal(val, id) {
       if (val === true) {
@@ -172,8 +180,13 @@ export default {
         return;
       }
       this.editstate = ""
-
-
+    },
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.events = this.eventsBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
     },
     getAllevents() {
       this.$http
@@ -190,23 +203,23 @@ export default {
             );
           });
           this.events = response.data;
-          this.eventsBackup = this.events;
-          this.events = this.events.slice(this.page * 7, this.page * 7 + 7);
+          this.eventsBackup = response.data;
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
         });
     },
     nextPage() {
-      if (Math.ceil(this.eventsBackup.length / 7) > (this.page + 1)) {
+      if (Math.ceil(this.eventsBackup.length / this.nb_by_page) > (this.page + 1)) {
         this.page += 1;
-        this.events = this.eventsBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     previousPage() {
       if (this.page >= 1) {
         this.page -= 1;
-        this.events = this.eventsBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     updateFilter(dataName) {
@@ -222,52 +235,52 @@ export default {
     },
     geteventByID() {
       this.$http
-          .get(`/calendar/${this.to_edit_id}`)
-          .then((response) => {
-            this.calendar = response.data;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .get(`/calendar/${this.to_edit_id}`)
+        .then((response) => {
+          this.calendar = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     submitEditForm() {
       this.$http
-          .post(`/calendar/${this.to_edit_id}`, {
-            date: this.calendar.date,
-            description: this.calendar.description,
-          })
-          .then(() => {
-            this.$router.push("/eventlist");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .post(`/calendar/${this.to_edit_id}`, {
+          date: this.calendar.date,
+          description: this.calendar.description,
+        })
+        .then(() => {
+          this.$router.push("/eventlist");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     delete_event() {
       this.$http
-          .delete(`/calendar/${this.to_edit_id}`)
-          .then(() => {
-            this.$toast.success("Suppression effectuée");
-            this.$router.push("/eventlist");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .delete(`/calendar/${this.to_edit_id}`)
+        .then(() => {
+          this.$toast.success("Suppression effectuée");
+          this.$router.push("/eventlist");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     createEvent() {
       this.$http
-          .post("/calendar", {
-            date: this.date,
-            ...(this.description ? { description: this.description } : {}),
-          })
-          .then((response) => {
-            this.event_id = response.data.id;
-            this.$router.push("/eventlist")
-            this.openModal(false)
-          })
-          .catch((error) => {
-            console.log(error)
-          });
+        .post("/calendar", {
+          date: this.date,
+          ...(this.description ? { description: this.description } : {}),
+        })
+        .then((response) => {
+          this.event_id = response.data.id;
+          this.$router.push("/eventlist")
+          this.openModal(false)
+        })
+        .catch((error) => {
+          console.log(error)
+        });
     },
     sortData() {
       if (["description"].includes(this.sortingKey)) {
@@ -340,20 +353,24 @@ export default {
   background-color: #6799c4;
   margin-right: 40px;
 }
+
 .add-btn:hover {
   background-color: #2d6594;
   outline: none;
   text-decoration: none;
 }
+
 .btn-add-text {
   color: white;
   margin-left: 5px;
 }
+
 .icon-add-btn-correction {
   color: white;
   margin-right: 5px;
   margin-top: -1px;
 }
+
 .event-panel-btn-container {
   margin-top: 30px;
 
@@ -363,9 +380,11 @@ export default {
   display: block;
   flex-direction: row;
 }
+
 .main {
   margin-top: 30px;
 }
+
 .pages {
   margin-top: 20px;
 }

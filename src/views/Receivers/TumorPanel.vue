@@ -17,7 +17,13 @@
           </select>
           <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
           <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-          <br />
+          <select v-model="nb_by_page" @change="updateNbElements"
+            class="number-selector button mb-4 ml-6 is-info is-light">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
         </div>
         <table>
           <thead>
@@ -69,6 +75,7 @@ export default {
       filterText: "",
       personBackup: [],
       page : 0,
+      nb_by_page: 5
     };
   },
   created() {
@@ -90,23 +97,30 @@ export default {
               this.person_tumors.push(element);
             }
           });
-          this.personBackup = this.person_tumors;
+          this.personBackup = JSON.parse(JSON.stringify(this.person_tumors));
           this.person_tumors = this.person_tumors.slice(this.page * 7, this.page * 7 + 7);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.person_tumors = this.personBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     nextPage() {
-      if (Math.ceil(this.donorsBackup.length / 7) > (this.page + 1)) {
+      if (Math.ceil(this.donorsBackup.length / this.nb_by_page) > (this.page + 1)) {
         this.page += 1;
-        this.person_tumors = this.personBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     previousPage() {
       if (this.page >= 1) {
         this.page -= 1;
-        this.person_tumors = this.personBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     openModal(person) {

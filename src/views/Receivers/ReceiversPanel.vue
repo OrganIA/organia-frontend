@@ -30,7 +30,13 @@
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
             <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-            <br />
+            <select v-model="nb_by_page" @change="updateNbElements"
+              class="number-selector button mb-4 ml-6 is-info is-light">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
           </div>
         </div>
         <table class="table-scroll">
@@ -88,7 +94,7 @@
           </ul>
           <a class="pagination-next" @click="nextPage()">Suivant</a>
         </nav>
-        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active' : (state === 'info') }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active': (state === 'info') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
@@ -129,7 +135,7 @@
               <div v-if="currentReceiver.person.description != null">
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.description
+                    currentReceiver.person.description
                 }}
                 </button>
               </div>
@@ -141,7 +147,7 @@
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentReceiver.person.updated_at != null" class="button is-info is-light contents">{{
-                  currentReceiver.person.updated_at
+                      currentReceiver.person.updated_at
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Aucune modification effectuée.</button>
@@ -150,35 +156,35 @@
               <div v-if="currentReceiver.person.DateTransplantation != null">
                 <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.DateTransplantation
+                    currentReceiver.person.DateTransplantation
                 }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.ReRegistrationDate != null">
                 <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.ReRegistrationDate
+                    currentReceiver.person.ReRegistrationDate
                 }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.alpha_fetoprotein != null">
                 <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.alpha_fetoprotein
+                    currentReceiver.person.alpha_fetoprotein
                 }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.biggest_tumor_size != null">
                 <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.biggest_tumor_size
+                    currentReceiver.person.biggest_tumor_size
                 }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.end_date != null">
                 <p class="button is-medium is-fullwidth elements">Date de fin</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.end_date
+                    currentReceiver.person.end_date
                 }}
                 </button>
               </div>
@@ -196,7 +202,7 @@
                 <div class="column is-half">
                   <p class="button is-medium elements">Sous dialyse ?</p>
                   <button v-if="currentReceiver.person.isDialyse" class="button is-info is-light contents">{{
-                  Oui
+                      Oui
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
@@ -204,7 +210,7 @@
                 <div class="column is-half">
                   <p class="button is-medium elements is-size-6">Retransplantation effectuée? ?</p>
                   <button v-if="currentReceiver.person.isRetransplantation" class="button is-info is-light contents ">{{
-                  Oui
+                      Oui
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
@@ -213,21 +219,21 @@
               <div v-if="currentReceiver.person.startDateDialyse != null">
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.startDateDialyse
+                    currentReceiver.person.startDateDialyse
                 }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.EndDateDialyse
+                    currentReceiver.person.EndDateDialyse
                 }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.notes
+                    currentReceiver.person.notes
                 }}
                 </button>
               </div>
@@ -500,7 +506,7 @@
                   <div class="box">
                     <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
                     <button class="button is-info is-light person-box" v-for="person in personsNotAdded" :key="person">
-                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                      <p class="username">{{ `${person.lastname} ${person.firstname}` }}</p>
                       <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
                     </button>
                   </div>
@@ -509,7 +515,7 @@
                   <div class="box">
                     <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
                     <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
-                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                      <p class="username">{{ `${person.lastname} ${person.firstname}` }}</p>
                       <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
                     </button>
                   </div>
@@ -542,7 +548,8 @@ export default {
       currentReceiver: {
         person: {}
       },
-      receiver:{},
+      nb_by_page: 5,
+      receiver: {},
       receivers: {},
       modal: false,
       state: '',
@@ -608,7 +615,14 @@ export default {
       doc.text("Date de début de retransplantation: " + this.currentReceiver.start_date, 20, y + 70);
       doc.text("Date de fin de retransplantation: " + this.currentReceiver.end_date, 20, y + 80);
       doc.save(pdfName + ".pdf");
-    },  
+    },
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.receivers = this.receiversBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     getReceiverScore(receiver) {
       const organ = receiver.organ.toLowerCase()
       this.$http.get(`/${organ}/${receiver.person.id}`).then((response) => {
@@ -682,22 +696,22 @@ export default {
             this.getReceiverScore(receiver)
           })
           this.receiversBackup = this.receivers;
-          this.receivers = this.receivers.slice(this.page * 7, this.page * 7 + 7);
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
         });
     },
     nextPage() {
-      if (Math.ceil(this.receiversBackup.length / 7) > (this.page + 1)) {
+      if (Math.ceil(this.receiversBackup.length / this.nb_by_page) > (this.page + 1)) {
         this.page += 1;
-        this.receivers = this.receiversBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     previousPage() {
       if (this.page >= 1) {
         this.page -= 1;
-        this.receivers = this.receiversBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     resetChat(receiver) {
@@ -794,9 +808,9 @@ export default {
         });
       }
     },
-      getReceiverByID(id) {
+    getReceiverByID(id) {
       console.log(id)
-        this.to_edit.person.id = id
+      this.to_edit.person.id = id
       this.$http
         .get(`/listings/${id}`)
         .then((response) => {
@@ -1037,6 +1051,7 @@ td {
 .delete-button {
   color: red;
 }
+
 .pages {
   margin-top: 20px;
 }

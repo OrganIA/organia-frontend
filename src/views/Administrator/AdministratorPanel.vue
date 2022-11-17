@@ -18,7 +18,13 @@
           </select>
           <div class="fa  fa-solid fa-angle-down  icon-dropdown-correction"></div>
           <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-          <br />
+          <select v-model="nb_by_page" @change="updateNbElements"
+              class="number-selector button mb-4 ml-6 is-info is-light">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
         </div>
         <table class="is-organia-table">
           <thead>
@@ -178,12 +184,20 @@ export default {
       filterText: "",
       page: 0,
       usersBackup: [],
+      nb_by_page: 5,
     };
   },
   created() {
     this.getUsers();
   },
   methods: {
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.users = this.usersBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     getUsers() {
       this.$http
         .get("/users", {
@@ -195,23 +209,22 @@ export default {
           });
           this.users = response.data;
           this.usersBackup = response.data
-          this.users = this.users.slice(this.page * 7, this.page * 7 + 7);
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
         });
     },
     nextPage() {
-      if (Math.ceil(this.usersBackup.length / 7) > (this.page + 1)) {
+      if (Math.ceil(this.usersBackup.length / this.nb_by_page) > (this.page + 1)) {
         this.page += 1;
-        this.users = this.usersBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     previousPage() {
       if (this.page >= 1) {
         this.page -= 1;
-        this.users = this.usersBackup.slice(this.page * 7, this.page * 7 + 7);
-      }
+        this.updatePage()      }
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;

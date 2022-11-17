@@ -10,10 +10,17 @@
       <div class="page-content">
         <div class="main">
           <div class="role-panel-btn-container">
-              <div @click="openAddModal(true)" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
-                <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
-                <span class="btn-add-text">Ajouter</span>
-              </div>
+            <div @click="openAddModal(true)" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
+              <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
+              <span class="btn-add-text">Ajouter</span>
+            </div>
+            <select v-model="nb_by_page" @change="updateNbElements"
+              class="number-selector button mb-4 ml-6 is-info is-light">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
           </div>
           <table class="is-organia-table">
             <thead>
@@ -40,14 +47,14 @@
             </tbody>
           </table>
           <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
-          <a class="pagination-previous" @click="previousPage()">Précédent</a>
-          <ul class="pagination-list">
-            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
-                $data.page + 1
-            }}</a></li>
-          </ul>
-          <a class="pagination-next" @click="nextPage()">Suivant</a>
-        </nav>
+            <a class="pagination-previous" @click="previousPage()">Précédent</a>
+            <ul class="pagination-list">
+              <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                  $data.page + 1
+              }}</a></li>
+            </ul>
+            <a class="pagination-next" @click="nextPage()">Suivant</a>
+          </nav>
         </div>
         <div class="modal" :class="{ 'is-invisible': (addstate !== 'clicked'), 'is-active': (addstate === 'clicked') }">
           <div class="modal-background"></div>
@@ -79,12 +86,13 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="getAllHospitals()">Ajouter</button>
+                v-on:click="getAllHospitals()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openAddModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
-        <div class="modal" :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
+        <div class="modal"
+          :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -96,20 +104,21 @@
                 <div class="form-fields">
                   <label class="label">Nom</label>
                   <input v-model="hospital.name" type="text" class="input mb-6 cypress-name" placeholder="Nom du centre"
-                         required />
+                    required />
                   <div class="form-input small">
                     <label class="label">Ville</label>
-                    <input v-model="city.name" type="text" class="input mb-6 cypress-city" placeholder="Nom du centre" required />
+                    <input v-model="city.name" type="text" class="input mb-6 cypress-city" placeholder="Nom du centre"
+                      required />
                   </div>
                   <div class="form-input small">
                     <label class="label">Code de département</label>
                     <input v-model="city.department_code" type="text" class="input mb-6 cypress-department"
-                           placeholder="Nom du centre" required />
+                      placeholder="Nom du centre" required />
                   </div>
                   <div class="form-input small">
                     <label class="label">Numéro de téléphone</label>
                     <input v-model="hospital.phone_number" type="text" class="input mb-6 cypress-phone-number"
-                           placeholder="Nom du centre" required />
+                      placeholder="Nom du centre" required />
                   </div>
                 </div>
               </form>
@@ -117,7 +126,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="getAllHospitals()">Ajouter</button>
+                v-on:click="getAllHospitals()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openEditModal(false, undefined)">Fermer</button>
             </footer>
           </div>
@@ -146,7 +155,8 @@ export default {
       phone_number: "",
       hospital: {},
       city: {},
-      page : 0,
+      page: 0,
+      nb_by_page: 5,
       hospitalsBackup: [],
     };
   },
@@ -160,23 +170,30 @@ export default {
         .then((response) => {
           this.hospitals = response.data;
           this.openAddModal(false)
-      this.hospitalsBackup = response.data
-      this.hospitals = this.hospitals.slice(this.page * 7, this.page * 7 + 7);
+          this.hospitalsBackup = response.data
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.hospitals = this.hospitalsBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     nextPage() {
-      if (Math.ceil(this.hospitalsBackup.length / 7) > (this.page + 1)) {
+      if (Math.ceil(this.hospitalsBackup.length / this.nb_by_page) > (this.page + 1)) {
         this.page += 1;
-        this.hospitals = this.hospitalsBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     previousPage() {
       if (this.page >= 1) {
         this.page -= 1;
-        this.hospitals = this.hospitalsBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     openAddModal(val) {
@@ -196,54 +213,54 @@ export default {
     },
     submitForm() {
       this.$http
-          .post("/hospitals", {
-            city: {
-              name: this.city_name,
-              department_code: this.department_code
-            },
-            name: this.name,
-            phone_number: this.phone_number,
-          })
-          .then(() => {
-            this.$toast.success("Creation de l'hopital réussi !");
-            setTimeout(this.$toast.clear, 3000);
-            this.$router.push("/hospitals");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .post("/hospitals", {
+          city: {
+            name: this.city_name,
+            department_code: this.department_code
+          },
+          name: this.name,
+          phone_number: this.phone_number,
+        })
+        .then(() => {
+          this.$toast.success("Creation de l'hopital réussi !");
+          setTimeout(this.$toast.clear, 3000);
+          this.$router.push("/hospitals");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getHospital(id) {
       this.$http
-          .get(`/hospitals/${id}`)
-          .then((response) => {
-            this.hospital = response.data;
-            this.city = response.data.city;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .get(`/hospitals/${id}`)
+        .then((response) => {
+          this.hospital = response.data;
+          this.city = response.data.city;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     submitEditForm() {
       console.log(this.hospital)
       console.log(this.city)
       this.$http
-          .post(`/hospitals/${this.id}`, {
-            city: {
-              name: this.city.name,
-              department_code: this.city.department_code,
-            },
-            name: this.hospital.name,
-            phone_number: this.hospital.phone_number,
-          })
-          .then(() => {
-            this.$toast.success("Modification de l'hopital réussi !");
-            setTimeout(this.$toast.clear, 3000);
-            this.$router.push("/hospitals");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .post(`/hospitals/${this.id}`, {
+          city: {
+            name: this.city.name,
+            department_code: this.city.department_code,
+          },
+          name: this.hospital.name,
+          phone_number: this.hospital.phone_number,
+        })
+        .then(() => {
+          this.$toast.success("Modification de l'hopital réussi !");
+          setTimeout(this.$toast.clear, 3000);
+          this.$router.push("/hospitals");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   }
 }
@@ -257,26 +274,32 @@ export default {
   background-color: #6799c4;
   margin-right: 40px;
 }
+
 .add-btn:hover {
   background-color: #2d6594;
   outline: none;
   text-decoration: none;
 }
+
 .btn-add-text {
   color: white;
   margin-left: 5px;
 }
+
 .icon-add-btn-correction {
   color: white;
   margin-right: 5px;
   margin-top: -1px;
 }
+
 .main {
   margin-top: 30px;
 }
+
 .form-control {
   width: 100%;
 }
+
 .pages {
   margin-top: 20px;
 }

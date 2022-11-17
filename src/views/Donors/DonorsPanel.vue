@@ -30,7 +30,13 @@
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
             <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-            <br />
+            <select v-model="nb_by_page" @change="updateNbElements"
+              class="number-selector button mb-4 ml-6 is-info is-light">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
           </div>
         </div>
         <table class="table-scroll">
@@ -557,6 +563,7 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       donorsBackup: [],
+      nb_by_page: 5,
       page: 0,
       to_edit: {
         donor: {},
@@ -595,6 +602,13 @@ export default {
     this.new_donor.tumors_number = 0;
   },
   methods: {
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.donors = this.donorsBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     getMe() {
       this.$http.get("/users/me")
         .then((response) => {
@@ -619,22 +633,22 @@ export default {
           });
           this.donors = response.data;
           this.donorsBackup = this.donors;
-          this.donors = this.donors.slice(this.page * 7, this.page * 7 + 7);
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
         });
     },
     nextPage() {
-      if (Math.ceil(this.donorsBackup.length / 7) > (this.page + 1)) {
+      if (Math.ceil(this.donorsBackup.length / this.nb_by_page) > (this.page + 1)) {
         this.page += 1;
-        this.donors = this.donorsBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     previousPage() {
       if (this.page >= 1) {
         this.page -= 1;
-        this.donors = this.donorsBackup.slice(this.page * 7, this.page * 7 + 7);
+        this.updatePage()
       }
     },
     resetChat(donor) {
