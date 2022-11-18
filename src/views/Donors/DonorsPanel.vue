@@ -49,6 +49,7 @@
               <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
               <th @click="updateFilter('created_at')">Arrivée</th>
               <th>Éditer</th>
+              <th>Match</th>
               <th>Infos</th>
             </tr>
           </thead>
@@ -67,8 +68,13 @@
               <td>{{ donor.endDateDialyse }}</td>
               <td>{{ donor.person.created_at }}</td>
               <td>
-                <div @click="openEditModal(donor.person.id)">
+                <div @click="openEditModal(donor.id)">
                   <i class="fas fa-edit button is-primary"></i>
+                </div>
+              </td>
+              <td>
+                <div @click="openMatchModal(donor.id)">
+                  <i class="fa-brands fa-searchengin button is-primary"></i>
                 </div>
               </td>
               <td>
@@ -517,6 +523,55 @@
             </div>
           </div>
         </div>
+        <div class="modal" :class="{ 'is-invisible': (state !== 'match'), 'is-active': (state === 'match') }">
+          <div class="modal-background"></div>
+          <div class="modal-card match-modal">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Match</p>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <div class="match-container">
+                <table class="table-match">
+                  <thead>
+                  <tr>
+                    <th @click="updateFilter('first_name')">Prénom</th>
+                    <th @click="updateFilter('last_name')">Nom de famille</th>
+                    <th @click="updateFilter('birthday')">Date de naissance</th>
+                    <th @click="updateFilter('gender')">Sexe</th>
+                    <th>Score</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="donor in this.TreatData(donors)" :key="donor">
+                    <td>{{ donor.person.first_name }}</td>
+                    <td>{{ donor.person.last_name }}</td>
+                    <td>{{ donor.person.birthday }}</td>
+                    <td>{{ donor.person.gender }}</td>
+                    <td>{{ donor.score }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="card donor-card">
+                  <div class=" user-card">
+                    <div class="content">
+                      <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" height="150" width="150" alt="">
+                      <div>Id du patient : {{this.to_match.donor?.id || ""}}</div>
+                      <div>Nom : {{this.to_match.donor?.person?.last_name || ""}}</div>
+                      <div>Prénom : {{this.to_match.donor?.person?.first_name || ""}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </section>
+            <footer class="modal-card-foot organia-modal-footer">
+              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
+            </footer>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -545,6 +600,13 @@ export default {
       filterText: "",
       donorsBackup: [],
       to_edit: {
+        donor: {},
+        person: {},
+        all_organs: [],
+        tumors_number: 0,
+      },
+      to_match: {
+        id: 0,
         donor: {},
         person: {},
         all_organs: [],
@@ -617,6 +679,7 @@ export default {
       this.getAllUsers()
     },
     openInfoModal(donor) {
+      console.log(donor)
       this.currentDonor = donor
       this.currentPerson = donor.person
       this.state = "info"
@@ -636,6 +699,19 @@ export default {
       doc.text("Date de fin de retransplantation: " + this.currentDonor.end_date, 20, y + 80);
       doc.save(pdfName + ".pdf");
     },
+    getDonorMatchByID(id) {
+      this.$http
+          .get(`/listings/${id}`)
+          .then((response) => {
+            this.to_match.donor = response.data;
+            this.to_match.person = response.data.person;
+            console.log("LE DONNEUR", this.to_match.person)
+          })
+          .catch((error) => {
+            console.log("ERROR SA MERE")
+            console.log(error)
+          });
+    },
     openChatModal() {
       this.state = "chat"
     },
@@ -646,6 +722,12 @@ export default {
     },
     closeModal() {
       this.state = "";
+    },
+    openMatchModal(id) {
+      //Match by id
+      console.log(id)
+      this.getDonorMatchByID(id)
+      this.state = "match"
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -731,6 +813,7 @@ export default {
           console.log(error)
         });
     },
+
     delete_donor() {
       this.$http
         .delete(`/listings/${this.id}`)
@@ -850,6 +933,17 @@ export default {
           console.log(error);
         });
     },
+    TreatData(d_donors) {
+      d_donors.map(elem => {
+        elem.score = Math.floor(Math.random() * (25) + 75)
+      })
+
+      d_donors.sort(
+          (p1, p2) => (p1.score < p2.score) ? 1 : (p1.score > p2.score) ? -1 : 0);
+      d_donors = d_donors.slice(0, 5)
+
+      return d_donors
+    },
     getAllOrgans() {
       this.$http
         .get("/listings/organs")
@@ -959,5 +1053,29 @@ td {
   color: white;
   margin-right: 5px;
   margin-top: -1px;
+}
+
+.match-modal {
+  width: 90%;
+  height: 90%;
+}
+
+.donor-card {
+  width: 33%;
+  height: 400px;
+  padding: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+}
+.modal-card-body {border: none}
+
+.match-container {
+  display: flex;
+  flex-direction: row;
+  mso-padding-between: 10px;
+}
+.table-match {
+  width: 800px;
 }
 </style>

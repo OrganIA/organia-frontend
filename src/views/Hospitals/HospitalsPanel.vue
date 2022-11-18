@@ -48,7 +48,7 @@
               <button class="delete" aria-label="close" v-on:click="openAddModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
-              <form class="form-control" @submit.prevent="submitForm">
+              <form class="form-control ">
                 <div class="form-fields">
                   <label class="label">Nom</label>
                   <input v-model="name" type="text" class="input mb-6 cypress-name" required />
@@ -70,7 +70,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="getAllHospitals()">Ajouter</button>
+                      v-on:click="submitForm()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openAddModal(false)">Fermer</button>
             </footer>
           </div>
@@ -83,7 +83,7 @@
               <button class="delete" aria-label="close" v-on:click="openEditModal(false, undefined)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
-              <form class="form-control" @submit.prevent="submitEditForm()">
+              <form class="form-control">
                 <div class="form-fields">
                   <label class="label">Nom</label>
                   <input v-model="hospital.name" type="text" class="input mb-6 cypress-name" placeholder="Nom du centre"
@@ -108,7 +108,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="getAllHospitals()">Ajouter</button>
+                      v-on:click="submitEditForm()">Ajouter</button>
               <button class="button modal-admin-btn" v-on:click="openEditModal(false, undefined)">Fermer</button>
             </footer>
           </div>
@@ -182,7 +182,7 @@ export default {
           .then(() => {
             this.$toast.success("Creation de l'hopital réussi !");
             setTimeout(this.$toast.clear, 3000);
-            this.$router.push("/hospitals");
+            this.getAllHospitals()
           })
           .catch((error) => {
             console.log(error);
@@ -214,7 +214,7 @@ export default {
           .then(() => {
             this.$toast.success("Modification de l'hopital réussi !");
             setTimeout(this.$toast.clear, 3000);
-            this.$router.push("/hospitals");
+            this.getAllHospitals()
           })
           .catch((error) => {
             console.log(error);

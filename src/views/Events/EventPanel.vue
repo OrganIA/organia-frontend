@@ -214,7 +214,7 @@ export default {
             description: this.calendar.description,
           })
           .then(() => {
-            this.$router.push("/eventlist");
+            this.getAllevents()
           })
           .catch((error) => {
             console.log(error);
@@ -225,7 +225,8 @@ export default {
           .delete(`/calendar/${this.to_edit_id}`)
           .then(() => {
             this.$toast.success("Suppression effectuée");
-            this.$router.push("/eventlist");
+            this.getAllevents()
+
           })
           .catch((error) => {
             console.log(error);
@@ -239,7 +240,7 @@ export default {
           })
           .then((response) => {
             this.event_id = response.data.id;
-            this.$router.push("/eventlist")
+            this.getAllevents()
             this.openModal(false)
           })
           .catch((error) => {

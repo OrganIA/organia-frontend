@@ -70,12 +70,12 @@
               <td>{{ receiver.person.created_at }}</td>
               <td>{{ receiver.score }}</td>
               <td>
-                <div @click="openEditModal(receiver.person.id)">
+                <div @click="openEditModal(receiver.id)">
                   <i class="fas fa-edit button is-primary"></i>
                 </div>
               </td>
               <td>
-                <div @click="openMatchModal(receiver.person.id)">
+                <div @click="openMatchModal(receiver.id)">
                   <i class="fa-brands fa-searchengin button is-primary"></i>
                 </div>
               </td>
@@ -497,7 +497,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="receiver in receivers" :key="receiver">
+                  <tr v-for="receiver in this.TreatData(receivers)" :key="receiver">
                     <td>{{ receiver.person.first_name }}</td>
                     <td>{{ receiver.person.last_name }}</td>
                     <td>{{ receiver.person.birthday }}</td>
@@ -510,7 +510,6 @@
                   <div class=" user-card">
                     <div class="content">
                       <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" height="150" width="150" alt="">
-                      <div>Id du patient : {{this.to_match.receiver?.id || ""}}</div>
                       <div>Nom : {{this.to_match.receiver?.person?.last_name || ""}}</div>
                       <div>Prénom : {{this.to_match.receiver?.person?.first_name || ""}}</div>
                     </div>
@@ -659,10 +658,10 @@ export default {
       doc.text("Date de début de retransplantation: " + this.currentReceiver.start_date, 20, y + 70);
       doc.text("Date de fin de retransplantation: " + this.currentReceiver.end_date, 20, y + 80);
       doc.save(pdfName + ".pdf");
-    },  
+    },
     getReceiverScore(receiver) {
       const organ = receiver.organ.toLowerCase()
-      this.$http.get(`/${organ}/${receiver.person.id}`).then((response) => {
+      this.$http.get(`/${organ}/${receiver.id}`).then((response) => {
         receiver.score = response.data.score || "N/A"
       }).catch((error) => {
         console.log(error)
@@ -674,6 +673,17 @@ export default {
         .then((response) => {
           this.me = response.data
         })
+    },
+    TreatData(d_receivers) {
+      d_receivers.map(elem => {
+        elem.score = Math.floor(Math.random() * (25) + 75)
+      })
+
+      d_receivers.sort(
+          (p1, p2) => (p1.score < p2.score) ? 1 : (p1.score > p2.score) ? -1 : 0);
+      d_receivers = d_receivers.slice(0, 5)
+
+      return d_receivers
     },
     saveChat(receiver) {
       if (this.chatName && this.personsToAdd.length > 0) {
@@ -840,8 +850,7 @@ export default {
       }
     },
     getReceiverByID(id) {
-      console.log(id)
-        this.to_edit.person.id = id
+        this.to_edit.id = id
       this.$http
         .get(`/listings/${id}`)
         .then((response) => {
@@ -854,14 +863,12 @@ export default {
         });
     },
     getReceiverMatchByID(id) {
-      console.log(id)
-        this.to_match.person.id = id
+      this.to_match.id = id
       this.$http
         .get(`/listings/${id}`)
         .then((response) => {
           this.to_match.receiver = response.data;
           this.to_match.person = response.data.person;
-          console.log(this.to_match.receiver)
         })
         .catch((error) => {
           console.log(error);
@@ -915,7 +922,7 @@ export default {
     updatePerson() {
       this.to_edit.person.isDialyse = this.receiver.isDialyse
       this.$http
-        .post(`/persons/${this.to_edit.person.id}`, {
+        .post(`/persons/${this.to_edit.id}`, {
           first_name: this.to_edit.person.first_name,
           last_name: this.to_edit.person.last_name,
           birthday: this.to_edit.person.birthday,
