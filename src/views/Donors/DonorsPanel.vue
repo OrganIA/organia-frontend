@@ -38,16 +38,10 @@
             <tr>
               <th @click="updateFilter('first_name')">Prénom</th>
               <th @click="updateFilter('last_name')">Nom de famille</th>
-              <th @click="updateFilter('birthday')">Date de naissance</th>
               <th @click="updateFilter('gender')">Sexe</th>
               <th @click="updateFilter('blood_type')">ABO</th>
               <th @click="updateFilter('organ')">Organe</th>
-              <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
-              <th @click="updateFilter('isDialyse')">Dialysé</th>
-              <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
-              <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
-              <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
-              <th @click="updateFilter('created_at')">Arrivée</th>
+              <th>Score</th>
               <th>Éditer</th>
               <th>Match</th>
               <th>Infos</th>
@@ -57,16 +51,10 @@
             <tr v-for="donor in donors" :key="donor">
               <td>{{ donor.person.first_name }}</td>
               <td>{{ donor.person.last_name }}</td>
-              <td>{{ donor.person.birthday }}</td>
               <td>{{ donor.person.gender }}</td>
               <td>{{ donor.person.blood_type }}</td>
               <td>{{ donor.organ }}</td>
-              <td>{{ donor.tumors_number }}</td>
-              <td>{{ donor.isDialyse ? "Oui" : "Non" }}</td>
-              <td>{{ donor.isRetransplantation ? "Oui" : "Non" }}</td>
-              <td>{{ donor.startDateDialyse }}</td>
-              <td>{{ donor.endDateDialyse }}</td>
-              <td>{{ donor.person.created_at }}</td>
+              <td>{{ donor.score }}</td>
               <td>
                 <div @click="openEditModal(donor.id)">
                   <i class="fas fa-edit button is-primary"></i>
