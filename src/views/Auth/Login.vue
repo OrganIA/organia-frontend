@@ -1,4 +1,5 @@
 <template>
+  <Loader :class="{'is-hidden': !this.loading}"></Loader>
   <div class="centered-container">
     <form @submit.prevent="login()" class="login-form">
       <div class="navbar-brand logo-placeholder"
@@ -13,15 +14,16 @@
       </div>
       <div class="field first-field">
         <div class="control">
-          <input v-model="email" placeholder="email" type="email" class="cypress-email input" required />
+          <input v-model="email" placeholder="email" type="email" class="cypress-email input" required/>
         </div>
       </div>
       <div class="field">
         <div class="control">
           <input v-model="password" placeholder="mot de passe" type="password" class="cypress-password input"
-            required />
+                 required/>
         </div>
-        <router-link to="/passwd-reset" class="cypress-to-passwd-reset is-link passwd-reset-link">Mot de passe oublié</router-link>
+        <router-link to="/passwd-reset" class="cypress-to-passwd-reset is-link passwd-reset-link">Mot de passe oublié
+        </router-link>
 
       </div>
 
@@ -53,55 +55,61 @@
 
 <script>
 import translate from "@/translate"
+import Loader from "@/components/Loader";
 
 export default {
   name: "login",
   emits: ["login"],
+  components: {Loader},
   data() {
     return {
       email: "",
       password: "",
+      loading: false,
     };
   },
   methods: {
     getRole(data) {
       this.$http
-        .get(`/roles/${data.role_id}`)
-        .then((response) => {
-          this.$toast.success("Connexion réussie !");
-          setTimeout(this.$toast.clear, 3000);
-          this.$store.commit("login", {
-            id: data.id,
-            email: data.email,
-            role: response.data,
+          .get(`/roles/${data.role_id}`)
+          .then((response) => {
+            this.$toast.success("Connexion réussie !");
+            setTimeout(this.$toast.clear, 3000);
+            this.$store.commit("login", {
+              id: data.id,
+              email: data.email,
+              role: response.data,
+            });
+            this.$emit("login", true);
+            this.$router.push("/landing");
+          })
+          .catch((error) => {
+            console.log(error.response.data.detail);
           });
-          this.$emit("login", true);
-          this.$router.push("/landing");
-        })
-        .catch((error) => {
-          console.log(error.response.data.detail);
-        });
     },
     login() {
+      this.loading = true
       this.$http
-        .post("/auth", {
-          email: this.email,
-          password: this.password,
-        })
-        .then((response) => {
-          this.$http.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${response.data.token}`;
-          this.$cookies.set("token", response.data.token, -1);
-          this.getRole(response.data.user);
-        })
-        .catch((error) => {
-          console.log(error.response.data.detail);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + translate[error.response.data.detail]
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
+          .post("/auth", {
+            email: this.email,
+            password: this.password,
+          })
+          .then((response) => {
+            this.$http.defaults.headers.common[
+                "Authorization"
+                ] = `Bearer ${response.data.token}`;
+            this.$cookies.set("token", response.data.token, -1);
+            this.getRole(response.data.user);
+            this.loading = false
+          })
+          .catch((error) => {
+            console.log(error.response.data.detail);
+            this.$toast.error(
+                "Erreur lors de la connexion : " + translate[error.response.data.detail]
+            );
+            setTimeout(this.$toast.clear, 3000);
+            this.loading = false
+          });
     },
   },
 };
@@ -120,10 +128,12 @@ export default {
 .confirm-btn {
   margin-left: 76%;
 }
+
 .passwd-reset-link {
   margin-top: 20px;
   float: left;
 }
+
 .login-footer {
   position: absolute;
   bottom: 0;
@@ -131,6 +141,7 @@ export default {
   padding: 0;
   background-color: #EFF5FB;
 }
+
 .navbar-home-controller {
   width: 300px;
   font-size: 0.8rem;
@@ -154,6 +165,7 @@ export default {
   margin-bottom: 20px;
   vertical-align: center;
 }
+
 .first-field {
   margin-top: 20px;
 }

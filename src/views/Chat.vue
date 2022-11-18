@@ -11,52 +11,52 @@
         <div class="window-container">
           <section class="modals">
             <chat-create-modal :users="users" :currentUserId="currentUser.id"
-              :class="{ 'is-invisible': (state !== 'newChat'), 'is-active': (state === 'newChat') }"
-              @closeModal="closeModal" />
+                               :class="{ 'is-invisible': (state !== 'newChat'), 'is-active': (state === 'newChat') }"
+                               @closeModal="closeModal"/>
             <chat-infos-modal :users="currentChat.users" :chat="currentChat"
-              :class="{ 'is-invisible': (state !== 'chatInfos'), 'is-active': (state === 'chatInfos') }"
-              @closeModal="closeModal" />
+                              :class="{ 'is-invisible': (state !== 'chatInfos'), 'is-active': (state === 'chatInfos') }"
+                              @closeModal="closeModal"/>
             <chat-edit-modal :users="users" :currentUserId="currentUser.id" :usersAdded="currentChat.users"
-              :chatName="currentChat.chatName" :chatId="currentChat.chatId"
-              :class="{ 'is-invisible': (state !== 'editChat'), 'is-active': (state === 'editChat') }"
-              @closeModal="closeModal" />
+                             :chatName="currentChat.chatName" :chatId="currentChat.chatId"
+                             :class="{ 'is-invisible': (state !== 'editChat'), 'is-active': (state === 'editChat') }"
+                             @closeModal="closeModal"/>
           </section>
           <div class="chat-section">
             <div class="chat-container">
               <div class="row">
                 <section class="discussions">
                   <div class="discussion message-active" v-for="chat in chats" :key="chat.chatId"
-                    @click="selectChat(chat)">
+                       @click="selectChat(chat)">
                     <div class="photo">
-                      {{chat.chatName.charAt(0).toUpperCase()}}
+                      {{ chat.chatName.charAt(0).toUpperCase() }}
                     </div>
                     <div class="desc-contact">
-                      <p class="name">{{chat.chatName}}</p>
+                      <p class="name">{{ chat.chatName }}</p>
                     </div>
                   </div>
                 </section>
                 <section v-if="Object.keys(currentChat).length !== 0" class="chat">
                   <div class="header-chat">
-                    <p class="name">{{currentChat.chatName}}</p>
+                    <p class="name">{{ currentChat.chatName }}</p>
                     <div class="actions right">
                       <i class="icon clickable fas fa-plus-circle" aria-hidden="true" @click="openModal('newChat')"></i>
                       <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')"></i>
                       <i v-if="currentChat.creator.id == currentUser.id" class="icon clickable fas fa-edit"
-                        aria-hidden="true" @click="openModal('editChat')"></i>
+                         aria-hidden="true" @click="openModal('editChat')"></i>
                     </div>
                   </div>
                   <div class="messages-chat">
                     <div class="message-list">
                       <div class="message-container" v-for="message in messages" :key="message">
                         <div v-if="message.senderId == currentUser.id" class="sent">
-                          {{message.content}}
+                          {{ message.content }}
                         </div>
                         <div v-else class="received">
                           <div>
-                            de: {{message.username}}
+                            de: {{ message.username }}
                           </div>
                           <div>
-                            {{message.content}}
+                            {{ message.content }}
                           </div>
                         </div>
                       </div>
@@ -64,7 +64,7 @@
                   </div>
                   <div class="footer-chat">
                     <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
-                    <input type="text" class="write-message" placeholder="Type your message here" v-model="input" />
+                    <input type="text" class="write-message" placeholder="Type your message here" v-model="input"/>
                     <i class="fas fa-paper-plane clickable" @click="sendMessage"></i>
                   </div>
                 </section>
@@ -72,7 +72,7 @@
                   <div class="header-chat">
                     <p class="name">Aucune conversation selectionnée</p>
                     <i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
-                      @click="openModal('newChat')"></i>
+                       @click="openModal('newChat')"></i>
                   </div>
                 </section>
               </div>
@@ -121,48 +121,48 @@ export default {
   methods: {
     async getMe() {
       await this.$http
-        .get("/users/me")
-        .then((response) => {
-          this.currentUser = response.data;
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
+          .get("/users/me")
+          .then((response) => {
+            this.currentUser = response.data;
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
     },
     async getChats() {
       await this.$http
-        .get("/chats")
-        .then((response) => {
-          const chats = [];
-          response.data.forEach(chat => {
-            const creator = this.users.find(user => user.id == chat.creator_id)
-            const users = this.getUsersOfChat(chat.users_ids)
-            chats.push({
-              chatId: chat.chat_id,
-              chatName: chat.chat_name,
-              users: users,
-              creator: creator
-            })
+          .get("/chats")
+          .then((response) => {
+            const chats = [];
+            response.data.forEach(chat => {
+              const creator = this.users.find(user => user.id == chat.creator_id)
+              const users = this.getUsersOfChat(chat.users_ids)
+              chats.push({
+                chatId: chat.chat_id,
+                chatName: chat.chat_name,
+                users: users,
+                creator: creator
+              })
+            });
+            this.chats = JSON.parse(JSON.stringify(chats));
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$toast.error(
+                "Erreur lors du chargement des conversations"
+            );
+            setTimeout(this.$toast.clear, 3000);
           });
-          this.chats = JSON.parse(JSON.stringify(chats));
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error(
-            "Erreur lors du chargement des conversations"
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
     },
     async getUsers() {
       await this.$http
-        .get("/users")
-        .then((response) => {
-          this.users = response.data
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .get("/users")
+          .then((response) => {
+            this.users = response.data
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     getUsersOfChat(users_ids) {
       const users = []
@@ -196,50 +196,50 @@ export default {
       }
       this.messages = []
       await this.$http
-        .get(`/chats/${this.currentChat.chatId}/messages`)
-        .then((response) => {
-          const messages = []
-          response.data.forEach(message => {
-            const tmp_date = Date.parse(message.created_at)
-            const date = new Date()
-            date.setUTCSeconds(tmp_date)
-            messages.push({
-              id: message.id,
-              content: message.content,
-              senderId: message.sender_id,
-              timestamp: date.toLocaleTimeString(),
-              username: this.users.find(user => user.id == message.sender_id).email,
+          .get(`/chats/${this.currentChat.chatId}/messages`)
+          .then((response) => {
+            const messages = []
+            response.data.forEach(message => {
+              const tmp_date = Date.parse(message.created_at)
+              const date = new Date()
+              date.setUTCSeconds(tmp_date)
+              messages.push({
+                id: message.id,
+                content: message.content,
+                senderId: message.sender_id,
+                timestamp: date.toLocaleTimeString(),
+                username: this.users.find(user => user.id == message.sender_id).email,
+              })
             })
+            this.messages = messages
           })
-          this.messages = messages
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .catch((error) => {
+            console.log(error);
+          });
       this.websocketSetup(this.currentChat.chatId)
     },
     async getLatestMessages() {
       const chats = JSON.parse(JSON.stringify(this.chats))
       await this.$http
-        .get("/chats/messages/latest")
-        .then((response) => {
-          response.data.forEach(message => {
-            const tmp_date = Date.parse(message.created_at)
-            const date = new Date()
-            date.setUTCSeconds(tmp_date)
-            chats.find(chat => chat.chatId == message.chat_id).lastMessage = {
-              id: message.id,
-              content: message.content,
-              senderId: message.sender_id,
-              timestamp: date.toLocaleTimeString(),
-              username: this.users.find(user => user.id == message.sender_id).email,
-            }
+          .get("/chats/messages/latest")
+          .then((response) => {
+            response.data.forEach(message => {
+              const tmp_date = Date.parse(message.created_at)
+              const date = new Date()
+              date.setUTCSeconds(tmp_date)
+              chats.find(chat => chat.chatId == message.chat_id).lastMessage = {
+                id: message.id,
+                content: message.content,
+                senderId: message.sender_id,
+                timestamp: date.toLocaleTimeString(),
+                username: this.users.find(user => user.id == message.sender_id).email,
+              }
+            })
+            this.chats = chats
           })
-          this.chats = chats
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+          .catch((error) => {
+            console.log(error)
+          })
 
     },
     async refreshChatList() {
@@ -264,14 +264,14 @@ export default {
       if (this.websocket != null)
         this.websocket.close();
       this.websocket = new WebSocket(
-        `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${chatId}`
+          `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${chatId}`
       );
       this.websocket.onopen = async () => {
         this.websocket.send(
-          JSON.stringify({
-            event: "login",
-            token: `Bearer ${this.$cookies.get("token")}`,
-          })
+            JSON.stringify({
+              event: "login",
+              token: `Bearer ${this.$cookies.get("token")}`,
+            })
         );
         this.websocket.onmessage = async (data) => {
           let resp = JSON.parse(data.data);
@@ -300,12 +300,12 @@ export default {
     async sendMessage() {
       if (this.websocket != null && this.websocket.readyState == WebSocket.OPEN) {
         this.websocket.send(
-          JSON.stringify({
-            event: "send_message",
-            chat_id: this.currentChat.chatId,
-            content: this.input,
-            sender_id: this.currentUser.id,
-          })
+            JSON.stringify({
+              event: "send_message",
+              chat_id: this.currentChat.chatId,
+              content: this.input,
+              sender_id: this.currentUser.id,
+            })
         );
         this.input = "";
       }

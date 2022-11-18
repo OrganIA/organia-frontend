@@ -4,34 +4,38 @@
   <div class="main-container">
     <table class="table-list half-table">
       <thead>
-        <tr>
-          <th>Id</th>
-          <th>Prénom</th>
-          <th>Nom</th>
-          <th>Mail</th>
-          <th>Date de création</th>
-          <th>Dernière modification</th>
-        </tr>
+      <tr>
+        <th>Id</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Mail</th>
+        <th>Date de création</th>
+        <th>Dernière modification</th>
+      </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user" @click="loadSelectedUser(user.id)"
+      <tr v-for="user in users" :key="user" @click="loadSelectedUser(user.id)"
           :class="{ 'selected-line': user.id === $data.user.id }">
-          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.id }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.first_name :
-          "-"
-          }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.last_name :
-          "-"
-          }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.email }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.created_at }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.updated_at }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">
-            <router-link :to="`/administrator/edit/user/${user.id}`">
-              <i class="fas fa-edit"></i>
-            </router-link>
-          </td>
-        </tr>
+        <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.id }}</td>
+        <td :class="{ 'selected-element': user.id === $data.user.id }">{{
+            user.person ? user.person.first_name :
+                "-"
+          }}
+        </td>
+        <td :class="{ 'selected-element': user.id === $data.user.id }">{{
+            user.person ? user.person.last_name :
+                "-"
+          }}
+        </td>
+        <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.email }}</td>
+        <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.created_at }}</td>
+        <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.updated_at }}</td>
+        <td :class="{ 'selected-element': user.id === $data.user.id }">
+          <router-link :to="`/administrator/edit/user/${user.id}`">
+            <i class="fas fa-edit"></i>
+          </router-link>
+        </td>
+      </tr>
       </tbody>
     </table>
     <div class="separator"></div>
@@ -64,28 +68,28 @@ export default {
   methods: {
     getUsers() {
       this.$http
-        .get("/users", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
-        .then((response) => {
-          response.data.forEach((element) => {
-            element.created_at = new Date(element.created_at).toDateString();
+          .get("/users", {
+            headers: {Authorization: `Bearer ${this.$cookies.get("token")}`},
+          })
+          .then((response) => {
+            response.data.forEach((element) => {
+              element.created_at = new Date(element.created_at).toDateString();
+            });
+            this.users = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          this.users = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     getUserByID() {
       this.$http
-        .get(`/users/${this.user.id}`)
-        .then((response) => {
-          this.user = response.data;
-        })
-        .catch((error) => {
-          console.log(error)
-        });
+          .get(`/users/${this.user.id}`)
+          .then((response) => {
+            this.user = response.data;
+          })
+          .catch((error) => {
+            console.log(error)
+          });
     },
     loadSelectedUser(userId) {
       this.user.id = userId;

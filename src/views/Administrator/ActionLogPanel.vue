@@ -22,10 +22,11 @@
 <script>
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 import SideBar from "@/components/SideBar";
+
 export default {
   name: "action-log-panel",
   emits: ["login"],
-  components: { ApplicationNavbar, SideBar },
+  components: {ApplicationNavbar, SideBar},
   created() {
     this.getActions();
     setInterval(this.getActions, 2000);
@@ -38,13 +39,13 @@ export default {
   methods: {
     getActions() {
       this.$http
-        .get("/logs")
-        .then((resp) => {
-          this.actions = resp.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .get("/logs")
+          .then((resp) => {
+            this.actions = resp.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
   },
 };

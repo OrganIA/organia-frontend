@@ -10,7 +10,7 @@
       <div class="page-content">
         <div id="main">
           <div class="event-panel-btn-container">
-            <div @click="openModal(true)"  class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
+            <div @click="openModal(true)" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
             </div>
@@ -21,29 +21,29 @@
               <option value="description">Description</option>
               <option value="created_at">Date de creation</option>
             </select>
-            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-            <br />
+            <input @input="filter" v-model="filterText" class="search-bar input mr-6"/>
+            <br/>
           </div>
           <table>
             <thead>
-              <tr>
-                <th @click="updateFilter('date')">Date</th>
-                <th @click="updateFilter('description')">Description</th>
-                <th @click="updateFilter('created_at')">Date de creation</th>
-                <th>Éditer</th>
-              </tr>
+            <tr>
+              <th @click="updateFilter('date')">Date</th>
+              <th @click="updateFilter('description')">Description</th>
+              <th @click="updateFilter('created_at')">Date de creation</th>
+              <th>Éditer</th>
+            </tr>
             </thead>
             <tbody>
-              <tr v-for="calendar in events" :key="calendar">
-                <td>{{ calendar.date }}</td>
-                <td>{{ calendar.description }}</td>
-                <td>{{ calendar.created_at }}</td>
-                <td>
-                  <div @click="openEditModal(true, calendar.id)">
-                    <i class="fas fa-edit button is-primary"></i>
-                  </div>
-                </td>
-              </tr>
+            <tr v-for="calendar in events" :key="calendar">
+              <td>{{ calendar.date }}</td>
+              <td>{{ calendar.description }}</td>
+              <td>{{ calendar.created_at }}</td>
+              <td>
+                <div @click="openEditModal(true, calendar.id)">
+                  <i class="fas fa-edit button is-primary"></i>
+                </div>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -60,12 +60,13 @@
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Date</label>
-                    <input v-model="date" placeholder="date" type="datetime-local" class="cypress-datetime input is-info"
-                           required />
+                    <input v-model="date" placeholder="date" type="datetime-local"
+                           class="cypress-datetime input is-info"
+                           required/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Description</label>
-                    <textarea v-model="description" placeholder="description" class="cypress-textarea" required />
+                    <textarea v-model="description" placeholder="description" class="cypress-textarea" required/>
                     <p class="required-notice">* Obligatoire</p>
                   </div>
                 </div>
@@ -73,12 +74,14 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="createEvent()">Ajouter</button>
+                      v-on:click="createEvent()">Ajouter
+              </button>
               <button class="button modal-admin-btn" v-on:click="openModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
-        <div class="modal" :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
+        <div class="modal"
+             :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -91,18 +94,21 @@
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Date</label>
-                    <input v-model="calendar.date" placeholder="date" type="datetime-local" class="input is-info" required />
+                    <input v-model="calendar.date" placeholder="date" type="datetime-local" class="input is-info"
+                           required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Description</label>
-                    <textarea class="textarea" v-model="calendar.description" placeholder="description" required />
+                    <textarea class="textarea" v-model="calendar.description" placeholder="description" required/>
                   </div>
                   <p class="required-notice">* Obligatoire</p>
                 </div>
               </form>
             </section>
             <footer class="form-submit modal-card-foot organia-modal-footer">
-              <button @click="submitEditForm" type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn">Enregistrer</button>
+              <button @click="submitEditForm" type="submit"
+                      class="cypress-add button modal-admin-btn modal-add-role-btn">Enregistrer
+              </button>
               <button type="button" class="button is-danger ml-6" @click="delete_event">
                 Supprimer
               </button>
@@ -123,7 +129,7 @@ import SideBar from "@/components/SideBar";
 
 export default {
   name: "event-panel",
-  components: { SideBar, ApplicationNavbar },
+  components: {SideBar, ApplicationNavbar},
   data() {
     return {
       state: '',
@@ -167,24 +173,24 @@ export default {
     },
     getAllevents() {
       this.$http
-        .get("/calendar", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
-        .then((response) => {
-          response.data.forEach((element) => {
-            element.date = moment(String(element.date)).format(
-              "DD/MM/YYYY hh:mm"
-            );
-            element.created_at = moment(String(element.created_at)).format(
-              "DD/MM/YYYY hh:mm"
-            );
+          .get("/calendar", {
+            headers: {Authorization: `Bearer ${this.$cookies.get("token")}`},
+          })
+          .then((response) => {
+            response.data.forEach((element) => {
+              element.date = moment(String(element.date)).format(
+                  "DD/MM/YYYY hh:mm"
+              );
+              element.created_at = moment(String(element.created_at)).format(
+                  "DD/MM/YYYY hh:mm"
+              );
+            });
+            this.events = response.data;
+            this.eventsBackup = this.events;
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          this.events = response.data;
-          this.eventsBackup = this.events;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -236,7 +242,7 @@ export default {
       this.$http
           .post("/calendar", {
             date: this.date,
-            ...(this.description ? { description: this.description } : {}),
+            ...(this.description ? {description: this.description} : {}),
           })
           .then((response) => {
             this.event_id = response.data.id;
@@ -251,32 +257,32 @@ export default {
       if (["description"].includes(this.sortingKey)) {
         this.events.sort((a, b) => {
           if (
-            a.date[this.sortingKey] == null ||
-            b.date[this.sortingKey] == null
+              a.date[this.sortingKey] == null ||
+              b.date[this.sortingKey] == null
           )
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.date[this.sortingKey].localeCompare(
-              b.date[this.sortingKey]
+                b.date[this.sortingKey]
             );
           return b.date[this.sortingKey].localeCompare(a.date[this.sortingKey]);
         });
       } else if (["date"].includes(this.sortingKey)) {
         this.events.sort((a, b) => {
           if (
-            a.date[this.sortingKey] == null ||
-            b.date[this.sortingKey] == null
+              a.date[this.sortingKey] == null ||
+              b.date[this.sortingKey] == null
           )
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.date[this.sortingKey]) >
-              Date.parse(b.date[this.sortingKey])
+            Date.parse(b.date[this.sortingKey])
+                ? -1
+                : 1;
+          return Date.parse(b.date[this.sortingKey]) >
+          Date.parse(a.date[this.sortingKey])
               ? -1
               : 1;
-          return Date.parse(b.date[this.sortingKey]) >
-            Date.parse(a.date[this.sortingKey])
-            ? -1
-            : 1;
         });
       }
     },
@@ -285,10 +291,10 @@ export default {
         this.events = this.eventsBackup;
         return;
       }
-        this.events = this.eventsBackup.filter((el) => {
-          if (el[this.selectFilter] != null)
-            return el[this.selectFilter].includes(this.filterText);
-        });
+      this.events = this.eventsBackup.filter((el) => {
+        if (el[this.selectFilter] != null)
+          return el[this.selectFilter].includes(this.filterText);
+      });
     },
   },
   watch: {
@@ -298,7 +304,8 @@ export default {
     sortingOrder() {
       this.sortData();
     },
-    selectFilter() { },
+    selectFilter() {
+    },
   },
 };
 </script>

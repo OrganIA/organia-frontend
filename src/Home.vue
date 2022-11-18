@@ -16,12 +16,12 @@
   </div>
   <div id="container">
     <img class="img-comp-1"
-      src="https://media.discordapp.net/attachments/959068123187773570/976471787053387866/unknown.png" alt="">
+         src="https://media.discordapp.net/attachments/959068123187773570/976471787053387866/unknown.png" alt="">
     <img class="img-comp-2"
-      src="https://media.discordapp.net/attachments/959068123187773570/976471787053387866/unknown.png" alt="">
+         src="https://media.discordapp.net/attachments/959068123187773570/976471787053387866/unknown.png" alt="">
     <div class="main-img-container">
       <img class="img-main"
-        src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png">
+           src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png">
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@ import PresentationNavbar from "@/components/PresentationNavbar";
 
 export default {
   name: "Home",
-  components: { PresentationNavbar }
+  components: {PresentationNavbar}
 }
 </script>
 
