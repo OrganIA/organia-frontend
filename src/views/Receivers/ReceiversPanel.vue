@@ -19,14 +19,9 @@
             <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
               <option value="first_name">Prénom</option>
               <option value="last_name">Nom</option>
-              <option value="birthday">Date de naissance</option>
               <option value="gender">Sexe</option>
               <option value="blood_type">ABO</option>
               <option value="organ">Organe</option>
-              <option value="tumors_number">Nombre de tumeurs</option>
-              <option value="isDialyse">Dialysé ?</option>
-              <option value="isRetransplantation">Retransplantation</option>
-              <option value="created_at">Arrivée</option>
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
             <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
@@ -36,11 +31,11 @@
         <table class="table-scroll">
           <thead>
             <tr>
-              <th @click="updateFilter('first_name')">Prénom</th>
-              <th @click="updateFilter('last_name')">Nom de famille</th>
-              <th @click="updateFilter('gender')">Sexe</th>
-              <th @click="updateFilter('blood_type')">ABO</th>
-              <th @click="updateFilter('organ')">Organe</th>
+              <th>Prénom</th>
+              <th>Nom de famille</th>
+              <th>Sexe</th>
+              <th>ABO</th>
+              <th>Organe</th>
               <th>Score</th>
               <th>Éditer</th>
               <th>Match</th>
@@ -475,10 +470,10 @@
                 <table class="table-match">
                   <thead>
                   <tr>
-                    <th @click="updateFilter('first_name')">Prénom</th>
-                    <th @click="updateFilter('last_name')">Nom de famille</th>
-                    <th @click="updateFilter('birthday')">Date de naissance</th>
-                    <th @click="updateFilter('gender')">Sexe</th>
+                    <th>Prénom</th>
+                    <th>Nom de famille</th>
+                    <th>Date de naissance</th>
+                    <th>Sexe</th>
                     <th>Score</th>
                   </tr>
                   </thead>
@@ -764,10 +759,6 @@ export default {
     },
     closeModal() {
       this.state = "";
-    },
-    updateFilter(dataName) {
-      if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
-      this.sortingKey = dataName;
     },
     checkNull(a, b) {
       if (

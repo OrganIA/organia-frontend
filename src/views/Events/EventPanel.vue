@@ -180,7 +180,7 @@ export default {
             );
           });
           this.events = response.data;
-          this.eventsBackup = this.calendar;
+          this.eventsBackup = this.events;
         })
         .catch((error) => {
           console.log(error);
@@ -281,21 +281,14 @@ export default {
       }
     },
     filter() {
-      if (this.filterText == "") {
+      if (this.filterText === "") {
         this.events = this.eventsBackup;
         return;
       }
-      if (this.selectFilter in this.eventsBackup[0].event) {
-        this.events = this.eventsBackup.filter((el) => {
-          if (el.date[this.selectFilter] != null)
-            return el.date[this.selectFilter].includes(this.filterText);
-        });
-      } else {
         this.events = this.eventsBackup.filter((el) => {
           if (el[this.selectFilter] != null)
             return el[this.selectFilter].includes(this.filterText);
         });
-      }
     },
   },
   watch: {

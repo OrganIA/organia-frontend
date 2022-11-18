@@ -13,8 +13,6 @@
             <option value="first_name">Prénom</option>
             <option value="last_name">Nom</option>
             <option value="email">Email</option>
-            <option value="created_at">Arrivée</option>
-            <option value="updated_at">Dernière modif.</option>
           </select>
           <div class="fa  fa-solid fa-angle-down  icon-dropdown-correction"></div>
           <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
@@ -164,6 +162,7 @@ export default {
       state: "",
       state2: "",
       users: {},
+      usersBackup: [],
       user: {},
       role: {},
       toModifyUser: {},
@@ -190,6 +189,7 @@ export default {
             element.created_at = new Date(element.created_at).toDateString();
           });
           this.users = response.data;
+          this.usersBackup = this.users
         })
         .catch((error) => {
           console.log(error);
@@ -245,17 +245,10 @@ export default {
         this.getUsers();
         return;
       }
-      if (this.selectFilter in this.receiversBackup[0].person) {
-        this.users = this.receiversBackup.filter((el) => {
-          if (el.person[this.selectFilter] != null)
-            return el.person[this.selectFilter].includes(this.filterText);
-        });
-      } else {
-        this.users = this.receiversBackup.filter((el) => {
+        this.users = this.usersBackup.filter((el) => {
           if (el[this.selectFilter] != null)
             return el[this.selectFilter].includes(this.filterText);
         });
-      }
     },
     getUserByID() {
       this.$http

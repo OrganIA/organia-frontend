@@ -1,5 +1,4 @@
 <template>
-  <PresentationNavbar />
   <div class="centered-container">
     <form @submit.prevent="register()">
       <div class="content">
@@ -43,13 +42,11 @@
 </template>
 
 <script>
-import PresentationNavbar from "@/components/PresentationNavbar";
 import translate from "@/translate"
 
 export default {
   name: "register",
   emits: ["login"],
-  components: { PresentationNavbar },
   data() {
     return {
       lastname: "",
