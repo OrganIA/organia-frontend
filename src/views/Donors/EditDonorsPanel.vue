@@ -9,7 +9,7 @@
         </div>
         <div class="form-input small required">
           <label class="label">Nom de Famille</label>
-          <input class="input is-info" v-model="person.last_name" placeholder="last_name" type="text" required />
+          <input class="input is-info cypress-edit-donor-lastname" v-model="person.last_name" placeholder="last_name" type="text" required />
         </div>
         <div class="form-input small required">
           <label class="label">Date de naissance</label>
@@ -87,12 +87,12 @@
         </div>
         <div class="form-input small">
           <label class="label">Notes</label>
-          <textarea class="textarea" v-model="donor.notes" placeholder="notes" />
+          <textarea class="textarea cypress-edit-donor-note" v-model="donor.notes" placeholder="notes" />
         </div>
         <p class="required-notice">* Obligatoire</p>
       </div>
       <div class="form-submit is-center">
-        <button type="submit" class="cypress-add button is-info mx-auto mr-6">
+        <button type="submit" class="cypress-edit-donor-save button is-info mx-auto mr-6">
           Enregistrer
         </button>
         <router-link to="/donors" class="button is-danger ml-6">Retour</router-link>

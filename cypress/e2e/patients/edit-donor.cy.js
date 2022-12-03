@@ -26,5 +26,10 @@ describe('Add donor success', () => {
 
       cy.get('.cypress-edit-donor').first()
         .click()
+      
+      cy.get(".cypress-edit-donor-lastname").clear().type("Duprêt")
+      cy.get(".cypress-edit-donor-note").clear().type("Mise à jour de notes.")
+      cy.get('.cypress-edit-donor-save').click()
+      
     })
 })
