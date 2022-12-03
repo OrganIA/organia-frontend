@@ -24,7 +24,7 @@ describe('Add donor success', () => {
       cy.get('.cypress-to-donors').click()
       cy.url().should('eq', Cypress.config().baseUrl + 'donors')
 
-        cy.get('.cypress-edit-donor').first()
+      cy.get('.cypress-edit-donor').first()
         .click()
     })
 })

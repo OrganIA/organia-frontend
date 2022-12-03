@@ -96,7 +96,7 @@
           Enregistrer
         </button>
         <router-link to="/donors" class="button is-danger ml-6">Retour</router-link>
-        <button type="button" class="button is-danger ml-6" @click="delete_donor">
+        <button type="button" class="button is-danger ml-6 cypress-delete-donor" @click="delete_donor">
           Supprimer
         </button>
       </div>
