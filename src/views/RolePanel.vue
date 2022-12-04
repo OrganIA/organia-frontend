@@ -42,7 +42,7 @@
                 <input class="center-checkbox cypress-manage-hospitals" v-model="role.can_edit_hospitals" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox cypress-manage-invite" v-model="role.can_edit_listings" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-listings" v-model="role.can_edit_listings" true=true false=false type="checkbox">
               </td>
             </tr>
           </tbody>
@@ -113,7 +113,7 @@
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
                 v-on:click="createRoles()">Ajouter</button>
-              <button class="button modal-admin-btn" v-on:click="openNewRoleModal(false)">Fermer</button>
+              <button class="button modal-admin-btn cypress-close" v-on:click="openNewRoleModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
@@ -179,8 +179,7 @@ export default {
           can_edit_listings: r.can_edit_listings,
         })
         .then(() => {
-          this.$toast.success("Reception du rôle: " + r.name + " reussite !");
-          setTimeout(this.$toast.clear, 3000);
+          this.getRoles()
         })
         .catch((error) => {
           console.log(error);
@@ -242,9 +241,16 @@ export default {
         this.state = "clicked"
         return;
       }
+      this.state = ""
+      this.edit_hospitals = false
+      this.edit_persons = false
+      this.edit_roles = false
+      this.edit_users = false
+      this.edit_listings = false
+      this.name = ""
     },
     reloadRoles() {
-      this.state = ""
+      this.openNewRoleModal(false)
       this.getRoles()
     }
   },

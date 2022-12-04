@@ -31,27 +31,27 @@
           </thead>
           <tbody>
             <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id, 'cypress-user-row': true }">
-              <td v-on:click="loadSelectedUser(user.id)"
+              <td @click="loadSelectedUser(user.id)"
                 :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.id }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
-                {{ user.person ? user.person.first_name : "-" }}
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.firstname }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
-                {{ user.person ? user.person.last_name : "-" }}
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.lastname }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.email }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.created_at }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.updated_at }}
               </td>
               <td :class="{ 'selected-element': user.id === $data.user.id }">
-                <div v-on:click="loadUserToModify(user.id)" class="button is-primary">
+                <div @click="loadUserToModify(user.id)" class="button is-primary">
                   <i class="fas fa-edit cypress-user-edit"></i>
                 </div>
               </td>
@@ -63,44 +63,44 @@
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Informations de l'utilisateur</p>
-              <button class="delete" aria-label="close" v-on:click="loadSelectedUser(this.user.id)"></button>
+              <button class="delete" aria-label="close" @click="loadSelectedUser(this.user.id)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <div class="row mt-4">
                 <a :href="'mailto:' + this.user.email" class="button is-info is-light mx-auto role-btn">{{
                     this.user.email
                 }}</a>
-                <div class="button is-info is-light mx-auto role-btn">{{ this.role.name }}</div>
+                <div class="button is-info is-light mx-auto role-btn">{{ this.user.role.name }}</div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_manage_users, 'is-danger': !this.role.can_manage_users }">
+                  :class="{ 'is-primary': this.user.role.can_edit_users, 'is-danger': !this.user.role.can_edit_users }">
                   Peut gérer les utilisateurs
                 </div>
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_manage_persons, 'is-danger': !this.role.can_manage_persons }">
+                  :class="{ 'is-primary': this.user.role.can_edit_persons, 'is-danger': !this.user.role.can_edit_persons }">
                   Peut gérer les patients
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_manage_roles, 'is-danger': !this.role.can_manage_roles }">
+                  :class="{ 'is-primary': this.user.role.can_edit_roles, 'is-danger': !this.user.role.can_edit_roles }">
                   Peut gérer les rôles
                 </div>
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_manage_hospitals, 'is-danger': !this.role.can_manage_hospitals }">
+                  :class="{ 'is-primary': this.user.role.can_edit_hospitals, 'is-danger': !this.user.role.can_edit_hospitals }">
                   Peut gérer les hôpitaux
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_invite, 'is-danger': !this.role.can_invite }">
-                  Peut créer des invitations
+                  :class="{ 'is-primary': this.user.role.can_edit_listings, 'is-danger': !this.user.role.can_edit_listings }">
+                  Peut gérer les listings
                 </div>
               </div>
             </section>
             <footer class="modal-card-foot organia-modal-footer">
-              <button class="button modal-admin-btn" v-on:click="loadSelectedUser(this.user.id)">Fermer</button>
+              <button class="button modal-admin-btn" @click="loadSelectedUser(this.user.id)">Fermer</button>
             </footer>
           </div>
         </div>
@@ -109,7 +109,7 @@
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Modifier l'utilisateur</p>
-              <button class="delete" aria-label="close" v-on:click="openModifyUserModal(false)"></button>
+              <button class="delete" aria-label="close" @click="openModifyUserModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <div>
@@ -129,8 +129,8 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-submit button modal-admin-btn modal-add-role-btn"
-                v-on:click="submitForm()">Enregistrer</button>
-              <button class="button modal-admin-btn" v-on:click="openModifyUserModal(false)">Fermer</button>
+                @click="submitForm()">Enregistrer</button>
+              <button class="button modal-admin-btn" @click="openModifyUserModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
@@ -157,8 +157,9 @@ export default {
       state2: "",
       users: {},
       usersBackup: [],
-      user: {},
-      role: {},
+      user: {
+        role: {},
+      },
       toModifyUser: {},
       modId: -1,
       roles: [],
@@ -251,7 +252,6 @@ export default {
         .get(`/users/${this.user.id}`)
         .then((response) => {
           this.user = response.data;
-          this.getRoleById(this.user.role_id)
         })
         .catch((error) => {
           console.log(error)
@@ -261,20 +261,6 @@ export default {
           setTimeout(this.$toast.clear, 3000);
         });
 
-    },
-    getRoleById(id) {
-      this.$http
-        .get(`/roles/${id}`)
-        .then((response) => {
-          this.role = response.data;
-        })
-        .catch((error) => {
-          console.log(error)
-          this.$toast.error(
-            "Erreur lors de la connexion : " + translate[error.response.data.msg]
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
     },
     loadSelectedUser(userId) {
       if (this.user.id === userId) {
@@ -293,11 +279,10 @@ export default {
     openModifyUserModal(val) {
       if (val === true) {
         this.state2 = "clicked"
+        this.selected_role = this.toModifyUser.role
         return;
       }
       this.state2 = ""
-
-
     },
     getSpecificUserByID() {
       this.$http
@@ -316,7 +301,7 @@ export default {
     },
     getRoles() {
       this.$http
-        .get("/roles")
+        .get("/roles/")
         .then((response) => {
           this.roles = response.data;
         })
@@ -332,7 +317,7 @@ export default {
       this.$http
         .post(`/users/${this.modId}`, {
           email: this.toModifyUser.email,
-          role_id: this.selected_role,
+          role_id: this.selected_role.id,
         })
         .then(() => {
           this.$router.push("/administrator");
