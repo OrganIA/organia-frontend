@@ -17,12 +17,16 @@
         <tr v-for="user in users" :key="user" @click="loadSelectedUser(user.id)"
           :class="{ 'selected-line': user.id === $data.user.id, 'cypress-user-row': true }" >
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.id }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.first_name :
-          "-"
-          }}</td>
-          <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.person ? user.person.last_name :
-          "-"
-          }}</td>
+          <td :class="{ 'selected-element': user.id === $data.user.id }">{{
+              user.person ? user.person.first_name :
+                "-"
+          }}
+          </td>
+          <td :class="{ 'selected-element': user.id === $data.user.id }">{{
+              user.person ? user.person.last_name :
+                "-"
+          }}
+          </td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.email }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.created_at }}</td>
           <td :class="{ 'selected-element': user.id === $data.user.id }">{{ user.updated_at }}</td>
@@ -50,6 +54,7 @@
 </template>
 
 <script>
+import translate from "@/translate"
 export default {
   name: "user-panel",
   data() {
@@ -75,6 +80,10 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     getUserByID() {
@@ -85,6 +94,10 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     loadSelectedUser(userId) {

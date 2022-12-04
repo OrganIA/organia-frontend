@@ -10,10 +10,10 @@
       <div class="page-content">
         <div class="main">
           <div class="role-panel-btn-container">
-              <div @click="openAddModal(true)" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
-                <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
-                <span class="btn-add-text">Ajouter</span>
-              </div>
+            <div @click="openAddModal(true)" class="button is-info is-info mb-6 cypress-to-hospitals-add add-btn">
+              <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
+              <span class="btn-add-text">Ajouter</span>
+            </div>
           </div>
           <table class="is-organia-table">
             <thead>
@@ -48,7 +48,7 @@
               <button class="delete" aria-label="close" v-on:click="openAddModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
-              <form class="form-control" @submit.prevent="submitForm">
+              <form class="form-control ">
                 <div class="form-fields">
                   <label class="label">Nom</label>
                   <input v-model="name" type="text" class="input mb-6 cypress-name" required />
@@ -70,12 +70,14 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="getAllHospitals()">Ajouter</button>
+                v-on:click="submitForm()">Ajouter
+              </button>
               <button class="button modal-admin-btn" v-on:click="openAddModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
-        <div class="modal" :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
+        <div class="modal"
+          :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -83,24 +85,25 @@
               <button class="delete" aria-label="close" v-on:click="openEditModal(false, undefined)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
-              <form class="form-control" @submit.prevent="submitEditForm()">
+              <form class="form-control">
                 <div class="form-fields">
                   <label class="label">Nom</label>
                   <input v-model="hospital.name" type="text" class="input mb-6 cypress-name" placeholder="Nom du centre"
-                         required />
+                    required />
                   <div class="form-input small">
                     <label class="label">Ville</label>
-                    <input v-model="city.name" type="text" class="input mb-6 cypress-city" placeholder="Nom du centre" required />
+                    <input v-model="city.name" type="text" class="input mb-6 cypress-city" placeholder="Nom du centre"
+                      required />
                   </div>
                   <div class="form-input small">
                     <label class="label">Code de département</label>
                     <input v-model="city.department_code" type="text" class="input mb-6 cypress-department"
-                           placeholder="Nom du centre" required />
+                      placeholder="Nom du centre" required />
                   </div>
                   <div class="form-input small">
                     <label class="label">Numéro de téléphone</label>
                     <input v-model="hospital.phone_number" type="text" class="input mb-6 cypress-phone-number"
-                           placeholder="Nom du centre" required />
+                      placeholder="Nom du centre" required />
                   </div>
                 </div>
               </form>
@@ -108,7 +111,8 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="getAllHospitals()">Ajouter</button>
+                v-on:click="submitEditForm()">Ajouter
+              </button>
               <button class="button modal-admin-btn" v-on:click="openEditModal(false, undefined)">Fermer</button>
             </footer>
           </div>
@@ -122,6 +126,7 @@
 <script>
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import translate from "@/translate"
 
 export default {
   components: { SideBar, ApplicationNavbar },
@@ -152,6 +157,10 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     openAddModal(val) {
@@ -171,54 +180,71 @@ export default {
     },
     submitForm() {
       this.$http
-          .post("/hospitals", {
-            city: {
-              name: this.city_name,
-              department_code: this.department_code
-            },
-            name: this.name,
-            phone_number: this.phone_number,
-          })
-          .then(() => {
-            this.$toast.success("Creation de l'hopital réussi !");
-            setTimeout(this.$toast.clear, 3000);
-            this.$router.push("/hospitals");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .post("/hospitals", {
+          city: {
+            name: this.city_name,
+            department_code: this.department_code
+          },
+          name: this.name,
+          phone_number: this.phone_number,
+        })
+        .then(() => {
+          this.$toast.success("Creation de l'hopital réussi !");
+          setTimeout(this.$toast.clear, 3000);
+          this.getAllHospitals()
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     getHospital(id) {
       this.$http
-          .get(`/hospitals/${id}`)
-          .then((response) => {
-            this.hospital = response.data;
-            this.city = response.data.city;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .get(`/hospitals/${id}`)
+        .then((response) => {
+          this.hospital = response.data;
+          this.city = response.data.city;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     submitEditForm() {
-      console.log(this.hospital)
-      console.log(this.city)
       this.$http
-          .post(`/hospitals/${this.id}`, {
-            city: {
-              name: this.city.name,
-              department_code: this.city.department_code,
-            },
-            name: this.hospital.name,
-            phone_number: this.hospital.phone_number,
-          })
-          .then(() => {
-            this.$toast.success("Modification de l'hopital réussi !");
-            setTimeout(this.$toast.clear, 3000);
-            this.$router.push("/hospitals");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .post(`/hospitals/${this.id}`, {
+          city: {
+            name: this.city.name,
+            department_code: this.city.department_code,
+          },
+          name: this.hospital.name,
+          phone_number: this.hospital.phone_number,
+        })
+        .then(() => {
+          this.$toast.success("Modification de l'hopital réussi !");
+          setTimeout(this.$toast.clear, 3000);
+          this.getAllHospitals()
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
   }
 }

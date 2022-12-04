@@ -14,28 +14,27 @@
         </div>
         <input class="form-control my-0 py-1" type="text" placeholder="Rerchercher" aria-label="Search"
           v-model="search" />
-          <div class="map">
-            <l-map v-model="zoom" v-model:zoom="zoom" zoomAnimation="true" :center="[this.latpos, this.lngpos]">
-              <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
-              <l-geo-json :geojson="geojson"></l-geo-json>
-              <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng"
-                @l-add="$event.target.openPopup()">
-                <l-popup :content="item.content"></l-popup>
-              </l-marker>
-            </l-map>
-            <div class="ui cards">
-              <div class="card ui fluid" v-for="item in filteredHospitals" :key="item.id" @click="clickHospital">
-                <div class="content">
-                  <div class="meta">
-                    <p>
-                      {{ item.name }}
-                      <br />
-                      Numéro de téléphone: {{ item.phone_number }}
-                      <br />
-                      Nombre de patient: {{ item.patients_count }}
-                    </p>
-                  </div>
+        <div class="map">
+          <l-map v-model="zoom" v-model:zoom="zoom" zoomAnimation="true" :center="[this.latpos, this.lngpos]">
+            <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
+            <l-geo-json :geojson="geojson"></l-geo-json>
+            <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng" @l-add="$event.target.openPopup()">
+              <l-popup :content="item.content"></l-popup>
+            </l-marker>
+          </l-map>
+          <div class="ui cards">
+            <div class="card ui fluid" v-for="item in filteredHospitals" :key="item.id" @click="clickHospital">
+              <div class="content">
+                <div class="meta">
+                  <p>
+                    {{ item.name }}
+                    <br />
+                    Numéro de téléphone: {{ item.phone_number }}
+                    <br />
+                    Nombre de patient: {{ item.patients_count }}
+                  </p>
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -54,6 +53,7 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 import SideBar from "@/components/SideBar";
+import translate from "@/translate"
 
 export default {
   name: "search-map",
@@ -80,7 +80,8 @@ export default {
       search: "",
     };
   },
-  mounted() { },
+  mounted() {
+  },
 
   computed: {
     filteredHospitals() {
@@ -132,6 +133,10 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
   },

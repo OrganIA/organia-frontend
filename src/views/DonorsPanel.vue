@@ -19,14 +19,9 @@
             <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
               <option value="first_name">Prénom</option>
               <option value="last_name">Nom</option>
-              <option value="birthday">Date de naissance</option>
               <option value="gender">Sexe</option>
               <option value="blood_type">ABO</option>
               <option value="organ">Organe</option>
-              <option value="tumors_number">Nombre de tumeurs</option>
-              <option value="isDialyse">Dialysé ?</option>
-              <option value="isRetransplantation">Retransplantation</option>
-              <option value="created_at">Arrivée</option>
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
             <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
@@ -36,19 +31,14 @@
         <table class="table-scroll">
           <thead>
             <tr>
-              <th @click="updateFilter('first_name')">Prénom</th>
-              <th @click="updateFilter('last_name')">Nom de famille</th>
-              <th @click="updateFilter('birthday')">Date de naissance</th>
-              <th @click="updateFilter('gender')">Sexe</th>
-              <th @click="updateFilter('blood_type')">ABO</th>
-              <th @click="updateFilter('organ')">Organe</th>
-              <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
-              <th @click="updateFilter('isDialyse')">Dialysé</th>
-              <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
-              <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
-              <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
-              <th @click="updateFilter('created_at')">Arrivée</th>
+              <th>Prénom</th>
+              <th>Nom de famille</th>
+              <th>Sexe</th>
+              <th>ABO</th>
+              <th>Organe</th>
+              <th>Score</th>
               <th>Éditer</th>
+              <th>Match</th>
               <th>Infos</th>
             </tr>
           </thead>
@@ -56,19 +46,18 @@
             <tr v-for="donor in donors" :key="donor">
               <td>{{ donor.person.first_name }}</td>
               <td>{{ donor.person.last_name }}</td>
-              <td>{{ donor.person.birthday }}</td>
               <td>{{ donor.person.gender }}</td>
               <td>{{ donor.person.blood_type }}</td>
               <td>{{ donor.organ }}</td>
-              <td>{{ donor.tumors_number }}</td>
-              <td>{{ donor.isDialyse ? "Oui" : "Non" }}</td>
-              <td>{{ donor.isRetransplantation ? "Oui" : "Non" }}</td>
-              <td>{{ donor.startDateDialyse }}</td>
-              <td>{{ donor.endDateDialyse }}</td>
-              <td>{{ donor.person.created_at }}</td>
+              <td>{{ donor.score }}</td>
               <td>
-                <div @click="openEditModal(donor.person.id)">
+                <div @click="openEditModal(donor.id)">
                   <i class="fas fa-edit button is-primary"></i>
+                </div>
+              </td>
+              <td>
+                <div @click="openMatchModal(donor.id)">
+                  <i class="fa-brands fa-searchengin button is-primary"></i>
                 </div>
               </td>
               <td>
@@ -77,7 +66,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active' : (state === 'info') }">
+        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active': (state === 'info') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
@@ -118,7 +107,7 @@
               <div v-if="currentDonor.person.description != null">
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.description
+                    currentDonor.person.description
                 }}
                 </button>
               </div>
@@ -130,7 +119,7 @@
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentDonor.person.updated_at != null" class="button is-info is-light contents">{{
-                  currentDonor.person.updated_at
+                      currentDonor.person.updated_at
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Aucune modification effectuée.</button>
@@ -139,35 +128,35 @@
               <div v-if="currentDonor.person.DateTransplantation != null">
                 <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.DateTransplantation
+                    currentDonor.person.DateTransplantation
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.ReRegistrationDate != null">
                 <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.ReRegistrationDate
+                    currentDonor.person.ReRegistrationDate
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.alpha_fetoprotein != null">
                 <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.alpha_fetoprotein
+                    currentDonor.person.alpha_fetoprotein
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.biggest_tumor_size != null">
                 <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.biggest_tumor_size
+                    currentDonor.person.biggest_tumor_size
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.end_date != null">
                 <p class="button is-medium is-fullwidth elements">Date de fin</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.end_date
+                    currentDonor.person.end_date
                 }}
                 </button>
               </div>
@@ -185,7 +174,7 @@
                 <div class="column is-half">
                   <p class="button is-medium elements">Sous dialyse ?</p>
                   <button v-if="currentDonor.person.isDialyse" class="button is-info is-light contents">{{
-                  Oui
+                      Oui
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
@@ -193,7 +182,7 @@
                 <div class="column is-half">
                   <p class="button is-medium elements is-size-6">Retransplantation effectuée? ?</p>
                   <button v-if="currentDonor.person.isRetransplantation" class="button is-info is-light contents ">{{
-                  Oui
+                      Oui
                   }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
@@ -202,21 +191,21 @@
               <div v-if="currentDonor.person.startDateDialyse != null">
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.startDateDialyse
+                    currentDonor.person.startDateDialyse
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.EndDateDialyse
+                    currentDonor.person.EndDateDialyse
                 }}
                 </button>
               </div>
               <div v-if="currentDonor.person.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
-                currentDonor.person.notes
+                    currentDonor.person.notes
                 }}
                 </button>
               </div>
@@ -224,8 +213,8 @@
                 Créer une conversation
               </button>
               <button class="button is-link is-light cypress-pdf" @click="createPDF()">
-                  Télécharger la version PDF
-                </button>
+                Télécharger la version PDF
+              </button>
             </section>
             <footer class="modal-card-foot">
             </footer>
@@ -336,10 +325,6 @@
                     <textarea v-model="new_donor.notes" placeholder="notes" class="textarea" />
                     <p class="required-notice">* Obligatoire</p>
 
-                  </div>
-                  <div class="form-submit is-center">
-                    <button type="submit" class="cypress-add button is-info mx-auto mr-6">Ajouter</button>
-                    <router-link to="/donors" class="button is-danger ml-6">Retour</router-link>
                   </div>
                 </div>
               </form>
@@ -495,7 +480,7 @@
                         <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
                         <button class="button is-info is-light person-box" v-for="person in personsNotAdded"
                           :key="person">
-                          <p class="username">{{`${person.last_name} ${person.first_name}`}}</p>
+                          <p class="username">{{ `${person.last_name} ${person.first_name}` }}</p>
                           <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
                         </button>
                       </div>
@@ -504,7 +489,7 @@
                       <div class="box">
                         <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
                         <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
-                          <p class="username">{{`${person.last_name} ${person.first_name}`}}</p>
+                          <p class="username">{{ `${person.last_name} ${person.first_name}` }}</p>
                           <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
                         </button>
                       </div>
@@ -513,14 +498,63 @@
                 </div>
                 <br>
                 <footer>
-                  <button class="button is-success is-light btn-margin"
-                    @click="saveChat(currentDonor)">Enregistrer</button>
+                  <button class="button is-success is-light btn-margin" @click="saveChat(currentDonor)">Enregistrer
+                  </button>
                   <button class="button is-danger is-light btn-margin " @click="resetChat(currentDonor)">Retour</button>
                 </footer>
               </section>
             </div>
           </div>
         </div>
+        <div class="modal" :class="{ 'is-invisible': (state !== 'match'), 'is-active': (state === 'match') }">
+          <div class="modal-background"></div>
+          <div class="modal-card match-modal">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Match</p>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <div class="match-container">
+                <table class="table-match">
+                  <thead>
+                    <tr>
+                      <th>Prénom</th>
+                      <th>Nom de famille</th>
+                      <th>Date de naissance</th>
+                      <th>Sexe</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="donor in this.TreatData(donors)" :key="donor">
+                      <td>{{ donor.person.first_name }}</td>
+                      <td>{{ donor.person.last_name }}</td>
+                      <td>{{ donor.person.birthday }}</td>
+                      <td>{{ donor.person.gender }}</td>
+                      <td>{{ donor.score }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card donor-card">
+                  <div class=" user-card">
+                    <div class="content">
+                      <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" height="150" width="150" alt="">
+                      <div>Id du patient : {{ this.to_match.donor?.id || "" }}</div>
+                      <div>Nom : {{ this.to_match.donor?.person?.last_name || "" }}</div>
+                      <div>Prénom : {{ this.to_match.donor?.person?.first_name || "" }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </section>
+            <footer class="modal-card-foot organia-modal-footer">
+              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
+            </footer>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -530,6 +564,7 @@
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 import jsPDF from 'jspdf';
+import translate from "@/translate"
 
 export default {
   components: { SideBar, ApplicationNavbar },
@@ -549,6 +584,13 @@ export default {
       filterText: "",
       donorsBackup: [],
       to_edit: {
+        donor: {},
+        person: {},
+        all_organs: [],
+        tumors_number: 0,
+      },
+      to_match: {
+        id: 0,
         donor: {},
         person: {},
         all_organs: [],
@@ -612,6 +654,10 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     resetChat(donor) {
@@ -621,6 +667,7 @@ export default {
       this.getAllUsers()
     },
     openInfoModal(donor) {
+      console.log(donor)
       this.currentDonor = donor
       this.currentPerson = donor.person
       this.state = "info"
@@ -640,20 +687,35 @@ export default {
       doc.text("Date de fin de retransplantation: " + this.currentDonor.end_date, 20, y + 80);
       doc.save(pdfName + ".pdf");
     },
+    getDonorMatchByID(id) {
+      this.$http
+        .get(`/listings/${id}`)
+        .then((response) => {
+          this.to_match.donor = response.data;
+          this.to_match.person = response.data.person;
+        })
+        .catch((error) => {
+          console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
+    },
     openChatModal() {
       this.state = "chat"
     },
     openEditModal(id) {
-      console.log(id)
       this.state = "edit"
       this.getDonorByID(id)
     },
     closeModal() {
       this.state = "";
     },
-    updateFilter(dataName) {
-      if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
-      this.sortingKey = dataName;
+    openMatchModal(id) {
+      //Match by id
+      this.getDonorMatchByID(id)
+      this.state = "match"
     },
     checkNull(a, b) {
       if (
@@ -733,8 +795,13 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
+
     delete_donor() {
       this.$http
         .delete(`/listings/${this.id}`)
@@ -747,11 +814,18 @@ export default {
             })
             .catch((error) => {
               console.log(error);
-
+              this.$toast.error(
+                "Erreur lors de la connexion : " + translate[error.response.data.msg]
+              );
+              setTimeout(this.$toast.clear, 3000);
             });
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     submitForm() {
@@ -778,6 +852,17 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     updatePerson() {
@@ -805,6 +890,17 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     createPerson() {
@@ -831,6 +927,17 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     createDonor() {
@@ -852,7 +959,29 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
+    },
+    TreatData(d_donors) {
+      d_donors.map(elem => {
+        elem.score = Math.floor(Math.random() * (25) + 75)
+      })
+
+      d_donors.sort(
+        (p1, p2) => (p1.score < p2.score) ? 1 : (p1.score > p2.score) ? -1 : 0);
+      d_donors = d_donors.slice(0, 5)
+
+      return d_donors
     },
     getAllOrgans() {
       this.$http
@@ -862,6 +991,10 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
   },
@@ -963,5 +1096,33 @@ td {
   color: white;
   margin-right: 5px;
   margin-top: -1px;
+}
+
+.match-modal {
+  width: 90%;
+  height: 90%;
+}
+
+.donor-card {
+  width: 33%;
+  height: 400px;
+  padding: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+}
+
+.modal-card-body {
+  border: none
+}
+
+.match-container {
+  display: flex;
+  flex-direction: row;
+  mso-padding-between: 10px;
+}
+
+.table-match {
+  width: 800px;
 }
 </style>

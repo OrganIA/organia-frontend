@@ -9,23 +9,23 @@
             <section class="modal-card-body">
                 <form @submit.prevent="createRoom">
                     <label class="label">Nom de la conversation</label>
-                    <input class="input" type="text" placeholder="Nom de la conversation" v-model="newChatName"
+                    <input class="input" type="text" placeholder="Nom de la conversation" v-model="updatedChat.name"
                         required>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs non ajoutés
-                            <select multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
-                                <option v-for="user, index in usersNotAdded" :key="user.id" :value="user.id"
+                            <select multiple v-if="users_list.length > 0" :size="users_list.length">
+                                <option v-for="user, index in users_list" :key="user.id" :value="user.id"
                                     @click="addUser(user, index)">{{ user.email }}</option>
                             </select>
                         </label>
                     </div>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs ajoutés
-                            <select multiple v-if="usersToAdd.length > 0" :size="usersToAdd.length">
-                                <option v-for="user in usersToAdd" :key="user.id" :value="user.id"
-                                    @click="removeUser(user, index)">{{
-                                            user.email
-                                    }}</option>
+                            <select multiple v-if="updatedChat.users.length > 0" :size="updatedChat.users.length">
+                                <option v-for="user, index in updatedChat.users" :key="user.id" :value="user.id"
+                                    @click="removeUser(user, index)">
+                                    {{ user.email }}
+                                </option>
                             </select>
                         </label>
                     </div>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import translate from "@/translate"
 export default {
     name: "ChatEditModal",
     props: {
@@ -54,60 +55,37 @@ export default {
                 return []
             },
         },
-        usersAdded: {
-            type: Array,
+        chat: {
+            type: Object,
             default() {
-                return []
+                return {}
             },
-        },
-        chatId: {
-            type: Number,
-            default: 0,
-        },
-        chatName: {
-            type: String,
-            default: "",
-        },
-        currentUserId: {
-            type: Number,
-            default: 0,
         },
     },
     emits: ["closeModal"],
-    data() {
-        return {
-            usersNotAdded: [],
-            usersToAdd: [],
-            newChatName: "",
-        }
-    },
-    watch: {
-        usersAdded() {
-            this.newChatName = this.chatName
-            this.usersToAdd = []
-            this.usersAdded.forEach(user => {
-                this.usersToAdd.push({
-                    id: user.id,
-                    email: user.username
+    computed: {
+        updatedChat() {
+            return this.chat
+        },
+        users_list() {
+            return this.users.filter((user) => {
+                return !this.chat.users.some((u) => {
+                    return u.id === user.id
                 })
             })
-            this.usersNotAdded = this.users.filter(user => !this.usersToAdd.find(elem => elem.id == user.id))
-        }
+        },
     },
     methods: {
         closeModal(refresh) {
-            this.newChatName = ""
-            this.usersNotAdded = this.users.filter(user => user.id != this.currentUserId)
-            this.usersToAdd = []
             this.$emit("closeModal", refresh)
         },
         async addUser(user, index) {
-            this.usersNotAdded.splice(index, 1)
-            this.usersToAdd.push(user)
+            this.users_list.splice(index, 1)
+            this.updatedChat.users.push(user)
         },
         async removeUser(user, index) {
-            this.usersToAdd.splice(index, 1)
-            this.usersNotAdded.push(user)
+            this.updatedChat.users.splice(index, 1)
+            this.users_list.push(user)
         },
         editRoom() {
             if (this.newChatName == "") {
@@ -116,42 +94,43 @@ export default {
                 );
                 setTimeout(this.$toast.clear, 3000);
                 return
-            } else if (this.usersToAdd.length == 0) {
+            } else if (this.updatedChat.users.length == 0) {
                 this.$toast.error(
                     "Erreur: vous n'avez ajouté aucun utilisateur a la conversation"
                 );
                 setTimeout(this.$toast.clear, 3000);
                 return
             }
-            const users = {
-                users_ids: [],
-            };
-            users.users_ids.push({
-                user_id: this.currentUserId,
-            });
-            this.usersToAdd.forEach((user) => {
-                users.users_ids.push({
-                    user_id: user.id,
-                });
+            const users_ids = [];
+            this.updatedChat.users.forEach((user) => {
+                users_ids.push(user.id);
             });
             this.$http
-                .post(`/chats/${this.roomId}`, {
-                    users_ids: users.users_ids,
-                    chat_name: this.newChatName,
-                    creator_id: this.currentUserId,
+                .post(`/chats/${this.updatedChat.id}`, {
+                    users_ids: users_ids,
+                    name: this.updatedChat.name,
                 })
                 .then(() => {
-                    this.$toast.success("Création réussie!");
-                    setTimeout(this.$toast.clear, 3000);
                     this.closeModal(true)
                 })
                 .catch((error) => {
                     console.log(error);
+                    if (error.response.data.msg.includes("is already taken")) {
+                        error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+                        this.$toast.error(
+                            "Erreur lors de la connexion : " + error.response.data.msg
+                        );
+                    } else {
+                        this.$toast.error(
+                            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+                        );
+                    }
+                    setTimeout(this.$toast.clear, 3000);
                 });
         },
         deleteChat() {
             this.$http
-                .delete(`/chats/${this.roomId}`)
+                .delete(`/chats/${this.updatedChat.id}`)
                 .then(() => {
                     this.$toast.success("Suppression réussie");
                     setTimeout(this.$toast.clear, 3000);
@@ -159,6 +138,10 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
+                    this.$toast.error(
+                        "Erreur lors de la connexion : " + translate[error.response.data.msg]
+                    );
+                    setTimeout(this.$toast.clear, 3000);
                 });
             this.$toast.success("Suppression en cour");
         },
@@ -167,6 +150,7 @@ export default {
 </script>
 
 <style>
+
 </style>
 <style scoped>
 .user-list {

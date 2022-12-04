@@ -13,8 +13,6 @@
             <option value="first_name">Prénom</option>
             <option value="last_name">Nom</option>
             <option value="email">Email</option>
-            <option value="created_at">Arrivée</option>
-            <option value="updated_at">Dernière modif.</option>
           </select>
           <div class="fa  fa-solid fa-angle-down  icon-dropdown-correction"></div>
           <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
@@ -37,24 +35,19 @@
                 :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.id }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.person ? user.person.first_name : "-" }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.person ? user.person.last_name : "-" }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.email }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.created_at }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.updated_at }}
               </td>
               <td :class="{ 'selected-element': user.id === $data.user.id }">
@@ -75,7 +68,7 @@
             <section class="modal-card-body organia-modal-body">
               <div class="row mt-4">
                 <a :href="'mailto:' + this.user.email" class="button is-info is-light mx-auto role-btn">{{
-                this.user.email
+                    this.user.email
                 }}</a>
                 <div class="button is-info is-light mx-auto role-btn">{{ this.role.name }}</div>
               </div>
@@ -111,8 +104,7 @@
             </footer>
           </div>
         </div>
-        <div class="modal"
-          :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -151,12 +143,12 @@
 <script>
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "administrator-panel",
   components: { SideBar, ApplicationNavbar },
 
-  emits: ["login"],
   data() {
 
     return {
@@ -164,6 +156,7 @@ export default {
       state: "",
       state2: "",
       users: {},
+      usersBackup: [],
       user: {},
       role: {},
       toModifyUser: {},
@@ -182,17 +175,20 @@ export default {
   methods: {
     getUsers() {
       this.$http
-        .get("/users", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
+        .get("/users/")
         .then((response) => {
           response.data.forEach((element) => {
             element.created_at = new Date(element.created_at).toDateString();
           });
           this.users = response.data;
+          this.usersBackup = this.users
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     updateFilter(dataName) {
@@ -245,17 +241,10 @@ export default {
         this.getUsers();
         return;
       }
-      if (this.selectFilter in this.receiversBackup[0].person) {
-        this.users = this.receiversBackup.filter((el) => {
-          if (el.person[this.selectFilter] != null)
-            return el.person[this.selectFilter].includes(this.filterText);
-        });
-      } else {
-        this.users = this.receiversBackup.filter((el) => {
-          if (el[this.selectFilter] != null)
-            return el[this.selectFilter].includes(this.filterText);
-        });
-      }
+      this.users = this.usersBackup.filter((el) => {
+        if (el[this.selectFilter] != null)
+          return el[this.selectFilter].includes(this.filterText);
+      });
     },
     getUserByID() {
       this.$http
@@ -266,6 +255,10 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
 
     },
@@ -277,6 +270,10 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     loadSelectedUser(userId) {
@@ -311,6 +308,10 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     getRoles() {
@@ -321,10 +322,13 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     submitForm() {
-      console.log(this.toModifyUser.email)
       this.$http
         .post(`/users/${this.modId}`, {
           email: this.toModifyUser.email,
@@ -338,11 +342,21 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     loadUserToModify(userId) {
       this.modId = userId;
-      console.log(userId)
       this.getRoles()
       this.getSpecificUserByID();
       this.state2 = "clicked"

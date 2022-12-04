@@ -9,7 +9,9 @@
     <div class="column page-container">
       <div class="page-content">
         <button class="button is-link is-light is-large is-responsive is-rounded is-focused">BIENVENUE SUR
-          ORGANIA</button><br><br>
+          ORGANIA
+        </button>
+        <br><br>
         <p class="title is-5 is-spaced">Raccourci</p>
         <div class="columns">
           <div class="column">
@@ -31,11 +33,13 @@
             <div class="card">
               <header class="card-header">
                 <p class="card-header-title">
-                  {{ event.description }} </p>
+                  {{ event.title }} </p>
               </header>
               <div class="card-content">
                 <div class="content">
-                  <p>{{ event.date }}</p>
+                  <p>{{ event.description }}</p>
+                  <p>{{ event.start_date }}</p>
+                  <p>{{ event.end_date }}</p>
                 </div>
               </div>
             </div>
@@ -46,9 +50,9 @@
   </div>
 </template>
 <script>
-import moment from "moment";
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+
 export default {
   name: "landing-page",
   components: {
@@ -57,12 +61,6 @@ export default {
   },
   data() {
     return {
-      contents: [
-        { id: 1, text: "Souhaitez-vous rechercher les centres de France ?", url: '/searchmap' },
-        { id: 2, text: "Essayez notre nouveau service de communication.", url: "/chat" },
-        { id: 3, text: "Ne ratez aucun évènement grâce au calendrier.", url: "/eventcalendar" },
-        { id: 4, text: "La liste des évènements est disponible.", url: "/eventlist" },
-      ],
       events: {}
     }
   },
@@ -72,19 +70,19 @@ export default {
   methods: {
     getAllevents() {
       this.$http
-        .get("/calendar", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
+        .get("/calendar/",)
         .then((response) => {
-          response.data.splice(5, response.data.length - 5)
-          response.data.forEach((element) => {
-            element.date = moment(String(element.date)).format(
-              "DD/MM/YYYY hh:mm"
-            );
-            element.created_at = moment(String(element.created_at)).format(
-              "DD/MM/YYYY hh:mm"
-            );
-          });
+          const date_options = {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          };
+          response.data.forEach((event) => {
+            event.start_date = (new Date(event.start_date)).toLocaleString("fr-FR", date_options);
+            event.end_date = (new Date(event.end_date)).toLocaleString("fr-FR", date_options);
+          })
           this.events = response.data;
         })
     },

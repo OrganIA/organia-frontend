@@ -19,64 +19,51 @@
             <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
               <option value="first_name">Prénom</option>
               <option value="last_name">Nom</option>
-              <option value="birthday">Date de naissance</option>
               <option value="gender">Sexe</option>
               <option value="blood_type">ABO</option>
               <option value="organ">Organe</option>
-              <option value="tumors_number">Nombre de tumeurs</option>
-              <option value="isDialyse">Dialysé ?</option>
-              <option value="isRetransplantation">Retransplantation</option>
-              <option value="created_at">Arrivée</option>
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
-            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-            <br />
+            <input @input="filter" v-model="filterText" class="search-bar input mr-6"/>
+            <br/>
           </div>
         </div>
         <table class="table-scroll">
           <thead>
-            <tr>
-              <th @click="updateFilter('first_name')">Prénom</th>
-              <th @click="updateFilter('last_name')">Nom de famille</th>
-              <th @click="updateFilter('birthday')">Date de naissance</th>
-              <th @click="updateFilter('gender')">Sexe</th>
-              <th @click="updateFilter('blood_type')">ABO</th>
-              <th @click="updateFilter('organ')">Organe</th>
-              <th @click="updateFilter('tumors_number')">Nombre de tumeurs</th>
-              <th @click="updateFilter('isDialyse')">Dialysé</th>
-              <th @click="updateFilter('isRetransplantation')">Retransplantation</th>
-              <th @click="updateFilter('startDateDialyse')">Date de début de dialyse</th>
-              <th @click="updateFilter('startDateDialyse')">Date de fin de dialyse</th>
-              <th @click="updateFilter('created_at')">Arrivée</th>
-              <th>Score</th>
-              <th>Éditer</th>
-              <th>Infos</th>
-            </tr>
+          <tr>
+            <th>Prénom</th>
+            <th>Nom de famille</th>
+            <th>Sexe</th>
+            <th>ABO</th>
+            <th>Organe</th>
+            <th>Score</th>
+            <th>Éditer</th>
+            <th>Match</th>
+            <th>Infos</th>
+          </tr>
           </thead>
           <tbody>
-            <tr class="cypress-receiver-row" v-for="receiver in receivers" :key="receiver">
-              <td>{{ receiver.person.first_name }}</td>
-              <td>{{ receiver.person.last_name }}</td>
-              <td>{{ receiver.person.birthday }}</td>
-              <td>{{ receiver.person.gender }}</td>
-              <td>{{ receiver.person.blood_type }}</td>
-              <td>{{ receiver.organ }}</td>
-              <td>{{ receiver.tumors_number }}</td>
-              <td>{{ receiver.isDialyse ? "Oui" : "Non" }}</td>
-              <td>{{ receiver.isRetransplantation ? "Oui" : "Non" }}</td>
-              <td>{{ receiver.startDateDialyse }}</td>
-              <td>{{ receiver.endDateDialyse }}</td>
-              <td>{{ receiver.person.created_at }}</td>
-              <td>{{ receiver.score }}</td>
-              <td>
-                <div @click="openEditModal(receiver.person.id)">
-                  <i class="fas fa-edit button is-primary cypress-edit-receiver-modal"></i>
-                </div>
-              </td>
-              <td>
-                <i class="fas fa-info cypress-info-receiver-modal" @click="openInfoModal(receiver)"></i>
-              </td>
-            </tr>
+          <tr class="cypress-receiver-row" v-for="receiver in receivers" :key="receiver">
+            <td>{{ receiver.person.first_name }}</td>
+            <td>{{ receiver.person.last_name }}</td>
+            <td>{{ receiver.person.gender }}</td>
+            <td>{{ receiver.person.blood_type }}</td>
+            <td>{{ receiver.organ }}</td>
+            <td>{{ receiver.score }}</td>
+            <td>
+              <div @click="openEditModal(receiver.id)">
+                <i class="fas fa-edit button is-primary"></i>
+              </div>
+            </td>
+            <td>
+              <div @click="openMatchModal(receiver.id)">
+                <i class="fa-brands fa-searchengin button is-primary"></i>
+              </div>
+            </td>
+            <td>
+              <i class="fas fa-info cypress-receiver-modal" @click="openInfoModal(receiver)"></i>
+            </td>
+          </tr>
           </tbody>
         </table>
         <div class="modal cypress-info-modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active' : (state === 'info') }">
@@ -84,7 +71,7 @@
           <div class="modal-card">
             <header class="modal-card-head">
               <p class="modal-card-title">Informations du receveur</p>
-              <button class="delete" aria-label="close" @click="closeModal"></button>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body cypress-info-body">
               <div class="columns">
@@ -120,8 +107,8 @@
               <div v-if="currentReceiver.person.description != null">
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.description
-                }}
+                    currentReceiver.person.description
+                  }}
                 </button>
               </div>
               <div class="columns">
@@ -132,8 +119,8 @@
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentReceiver.person.updated_at != null" class="button is-info is-light contents">{{
-                  currentReceiver.person.updated_at
-                  }}
+                      currentReceiver.person.updated_at
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Aucune modification effectuée.</button>
                 </div>
@@ -141,36 +128,36 @@
               <div v-if="currentReceiver.person.DateTransplantation != null">
                 <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.DateTransplantation
-                }}
+                    currentReceiver.person.DateTransplantation
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.ReRegistrationDate != null">
                 <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.ReRegistrationDate
-                }}
+                    currentReceiver.person.ReRegistrationDate
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.alpha_fetoprotein != null">
                 <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.alpha_fetoprotein
-                }}
+                    currentReceiver.person.alpha_fetoprotein
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.biggest_tumor_size != null">
                 <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.biggest_tumor_size
-                }}
+                    currentReceiver.person.biggest_tumor_size
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.end_date != null">
                 <p class="button is-medium is-fullwidth elements">Date de fin</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.end_date
-                }}
+                    currentReceiver.person.end_date
+                  }}
                 </button>
               </div>
               <div class="columns">
@@ -187,16 +174,16 @@
                 <div class="column is-half">
                   <p class="button is-medium elements">Sous dialyse ?</p>
                   <button v-if="currentReceiver.person.isDialyse" class="button is-info is-light contents">{{
-                  Oui
-                  }}
+                      Oui
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium elements is-size-6">Retransplantation effectuée? ?</p>
                   <button v-if="currentReceiver.person.isRetransplantation" class="button is-info is-light contents ">{{
-                  Oui
-                  }}
+                      Oui
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
                 </div>
@@ -204,22 +191,22 @@
               <div v-if="currentReceiver.person.startDateDialyse != null">
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.startDateDialyse
-                }}
+                    currentReceiver.person.startDateDialyse
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.EndDateDialyse
-                }}
+                    currentReceiver.person.EndDateDialyse
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
-                currentReceiver.person.notes
-                }}
+                    currentReceiver.person.notes
+                  }}
                 </button>
               </div>
               <button class="button is-link is-light" @click="openChatModal()">
@@ -238,7 +225,7 @@
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Ajouter un receveur</p>
-              <button class="delete" aria-label="close" @click="openNewModal()"></button>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <form @submit.prevent="createPerson()" class="show-requireds">
@@ -354,7 +341,7 @@
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Éditer un receveur</p>
-              <button class="delete" aria-label="close" @click="openEditModal()"></button>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <form @submit.prevent="submitForm()" class="show-requireds">
@@ -367,11 +354,11 @@
                   <div class="form-input small required">
                     <label class="label">Nom de Famille</label>
                     <input class="input is-info" v-model="to_edit.person.last_name" placeholder="last_name" type="text"
-                      required />
+                           required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Date de naissance</label>
-                    <input v-model="to_edit.person.birthday" placeholder="birthday" type="date" class="input is-info" />
+                    <input v-model="to_edit.person.birthday" placeholder="birthday" type="date" class="input is-info"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Organe</label>
@@ -383,21 +370,21 @@
                   </div>
                   <div class="form-input small">
                     <label class="label">Date d'admission</label>
-                    <input v-model="to_edit.receiver.start_date" placeholder="start date" type="date" />
+                    <input v-model="to_edit.receiver.start_date" placeholder="start date" type="date"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Date de fin</label>
                     <input v-model="to_edit.receiver.end_date" placeholder="end date" type="date"
-                      class="input is-info" />
+                           class="input is-info"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Nombre de tumeurs</label>
-                    <input v-model="to_edit.receiver.tumors_number" placeholder="0" type="text" class="input is-info" />
+                    <input v-model="to_edit.receiver.tumors_number" placeholder="0" type="text" class="input is-info"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Le patient est sous dialyse ?</label>
                     <select v-model="to_edit.receiver.isDialyse" name="dialyse" id="dialyse-select"
-                      class="button is-info is-light" required>
+                            class="button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
                     </select>
@@ -405,17 +392,17 @@
                   <div class="form-input small">
                     <label class="label">Date de début de dialyse</label>
                     <input v-model="to_edit.receiver.startDateDialyse" placeholder="start date" type="date"
-                      class="input is-info" />
+                           class="input is-info"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Date de fin de dialyse</label>
                     <input v-model="to_edit.receiver.endDateDialyse" placeholder="start date" type="date"
-                      class="input is-info" />
+                           class="input is-info"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">A-t-il effectué une retransplantation ?</label>
                     <select v-model="to_edit.receiver.isRetransplantation" name="retransplantation"
-                      id="transplantation-select" class="button is-info is-light" required>
+                            id="transplantation-select" class="button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
                     </select>
@@ -423,12 +410,12 @@
                   <div class="form-input small">
                     <label class="label">Description</label>
                     <input class="input is-info" v-model="to_edit.person.description" placeholder="description"
-                      type="text" />
+                           type="text"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Groupe sanguin</label>
                     <select v-model="to_edit.person.abo" name="abo" id="abo-select" class="button is-info is-light"
-                      required>
+                            required>
                       <option value="A">A</option>
                       <option value="B">B</option>
                       <option value="O">O</option>
@@ -438,7 +425,7 @@
                   <div class="form-input small required">
                     <label class="label">Rhésus</label>
                     <select class="button is-info is-light" v-model="to_edit.person.rhesus" name="rhesus"
-                      id="rhesus-select" required>
+                            id="rhesus-select" required>
                       <option value="+">+</option>
                       <option value="-">-</option>
                     </select>
@@ -446,14 +433,14 @@
                   <div class="form-input small required">
                     <label class="label">Sexe</label>
                     <select v-model="to_edit.person.gender" name="gender" id="gender-select"
-                      class="button is-info is-light" required>
+                            class="button is-info is-light" required>
                       <option value="MALE">MALE</option>
                       <option value="FEMALE">FEMALE</option>
                     </select>
                   </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
-                    <textarea class="textarea" v-model="to_edit.receiver.notes" placeholder="notes" />
+                    <textarea class="textarea" v-model="to_edit.receiver.notes" placeholder="notes"/>
                   </div>
                   <p class="required-notice">* Obligatoire</p>
                 </div>
@@ -471,6 +458,53 @@
             </footer>
           </div>
         </div>
+        <div class="modal" :class="{ 'is-invisible': (state !== 'match'), 'is-active': (state === 'match') }">
+          <div class="modal-background"></div>
+          <div class="modal-card match-modal">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Match</p>
+              <button class="delete" aria-label="close" @click="closeModal()"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <div class="match-container">
+                <table class="table-match">
+                  <thead>
+                  <tr>
+                    <th>Prénom</th>
+                    <th>Nom de famille</th>
+                    <th>Date de naissance</th>
+                    <th>Sexe</th>
+                    <th>Score</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="receiver in this.TreatData(receivers)" :key="receiver">
+                    <td>{{ receiver.person.first_name }}</td>
+                    <td>{{ receiver.person.last_name }}</td>
+                    <td>{{ receiver.person.birthday }}</td>
+                    <td>{{ receiver.person.gender }}</td>
+                    <td>{{ receiver.score }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="card receiver-card">
+                  <div class=" user-card">
+                    <div class="content">
+                      <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" height="150" width="150" alt="">
+                      <div>Nom : {{ this.to_match.receiver?.person?.last_name || "" }}</div>
+                      <div>Prénom : {{ this.to_match.receiver?.person?.first_name || "" }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </section>
+            <footer class="modal-card-foot organia-modal-footer">
+              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
+            </footer>
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal cypress-chat-modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
@@ -483,7 +517,7 @@
             <div class="container">
               <div class="columns">
                 <div class="column">
-                  <input class="input is-info" placeholder="Titre de la conversation" type="text" v-model="chatName" />
+                  <input class="input is-info" placeholder="Titre de la conversation" type="text" v-model="chatName"/>
                 </div>
               </div>
               <div class="columns">
@@ -491,7 +525,7 @@
                   <div class="box">
                     <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
                     <button class="button is-info is-light person-box" v-for="person in personsNotAdded" :key="person">
-                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                      <p class="username">{{ `${person.lastname} ${person.firstname}` }}</p>
                       <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
                     </button>
                   </div>
@@ -500,7 +534,7 @@
                   <div class="box">
                     <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
                     <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
-                      <p class="username">{{`${person.lastname} ${person.firstname}`}}</p>
+                      <p class="username">{{ `${person.lastname} ${person.firstname}` }}</p>
                       <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
                     </button>
                   </div>
@@ -510,7 +544,8 @@
             <br>
             <footer>
               <button class="button is-success is-light btn-margin"
-                @click="saveChat(currentReceiver)">Enregistrer</button>
+                      @click="saveChat(currentReceiver)">Enregistrer
+              </button>
               <button class="button is-danger is-light btn-margin " @click="resetChat(currentReceiver)">Retour</button>
             </footer>
           </section>
@@ -526,14 +561,14 @@ import ApplicationNavbar from "@/components/ApplicationNavbar";
 import jsPDF from 'jspdf';
 
 export default {
-  components: { SideBar, ApplicationNavbar },
+  components: {SideBar, ApplicationNavbar},
   name: "receivers-panel",
   data() {
     return {
       currentReceiver: {
         person: {}
       },
-      receiver:{},
+      receiver: {},
       receivers: {},
       modal: false,
       state: '',
@@ -547,6 +582,13 @@ export default {
       chatName: "",
       me: {},
       to_edit: {
+        id: 0,
+        receiver: {},
+        person: {},
+        all_organs: [],
+        tumors_number: 0,
+      },
+      to_match: {
         id: 0,
         receiver: {},
         person: {},
@@ -598,10 +640,10 @@ export default {
       doc.text("Date de début de retransplantation: " + this.currentReceiver.start_date, 20, y + 70);
       doc.text("Date de fin de retransplantation: " + this.currentReceiver.end_date, 20, y + 80);
       doc.save(pdfName + ".pdf");
-    },  
+    },
     getReceiverScore(receiver) {
       const organ = receiver.organ.toLowerCase()
-      this.$http.get(`/${organ}/${receiver.person.id}`).then((response) => {
+      this.$http.get(`/${organ}/${receiver.id}`).then((response) => {
         receiver.score = response.data.score || "N/A"
       }).catch((error) => {
         console.log(error)
@@ -610,9 +652,20 @@ export default {
     },
     getMe() {
       this.$http.get("/users/me")
-        .then((response) => {
-          this.me = response.data
-        })
+          .then((response) => {
+            this.me = response.data
+          })
+    },
+    TreatData(d_receivers) {
+      d_receivers.map(elem => {
+        elem.score = Math.floor(Math.random() * (25) + 75)
+      })
+
+      d_receivers.sort(
+          (p1, p2) => (p1.score < p2.score) ? 1 : (p1.score > p2.score) ? -1 : 0);
+      d_receivers = d_receivers.slice(0, 5)
+
+      return d_receivers
     },
     saveChat(receiver) {
       if (this.chatName && this.personsToAdd.length > 0) {
@@ -628,19 +681,19 @@ export default {
           });
         });
         this.$http
-          .post("/chats", {
-            users_ids: users.users_ids,
-            chat_name: this.chatName,
-            creator_id: this.me.id,
-          })
-          .then(() => {
-            this.$toast.success("Création réussie!");
-            setTimeout(this.$toast.clear, 3000);
-            this.resetChat(receiver)
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+            .post("/chats", {
+              users_ids: users.users_ids,
+              chat_name: this.chatName,
+              creator_id: this.me.id,
+            })
+            .then(() => {
+              this.$toast.success("Création réussie!");
+              setTimeout(this.$toast.clear, 3000);
+              this.resetChat(receiver)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
       }
     },
     addPerson(person) {
@@ -653,29 +706,29 @@ export default {
     },
     getAllUsers() {
       this.$http
-        .get("/users")
-        .then((response) => {
-          this.personsNotAdded = response.data
-        })
+          .get("/users")
+          .then((response) => {
+            this.personsNotAdded = response.data
+          })
     },
     getAllReceivers() {
       this.$http
-        .get("/listings/receivers")
-        .then((response) => {
-          response.data.forEach((element) => {
-            element.person.created_at = new Date(
-              element.person.created_at
-            ).toDateString();
-          });
-          this.receivers = response.data;
-          this.receivers.forEach((receiver) => {
-            this.getReceiverScore(receiver)
+          .get("/listings/receivers")
+          .then((response) => {
+            response.data.forEach((element) => {
+              element.person.created_at = new Date(
+                  element.person.created_at
+              ).toDateString();
+            });
+            this.receivers = response.data;
+            this.receivers.forEach((receiver) => {
+              this.getReceiverScore(receiver)
+            })
+            this.receiversBackup = this.receivers;
           })
-          this.receiversBackup = this.receivers;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .catch((error) => {
+            console.log(error);
+          });
     },
     resetChat(receiver) {
       this.openInfoModal(receiver)
@@ -695,20 +748,23 @@ export default {
       this.getReceiverByID(id)
       this.state = "edit"
     },
+    openMatchModal(id) {
+      //Match by id
+      console.log(id)
+      this.getReceiverMatchByID(id)
+      console.log(this.to_match)
+      this.state = "match"
+    },
     openNewModal() {
       this.state = "new"
     },
     closeModal() {
       this.state = "";
     },
-    updateFilter(dataName) {
-      if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
-      this.sortingKey = dataName;
-    },
     checkNull(a, b) {
       if (
-        a.person[this.sortingKey] == null &&
-        b.person[this.sortingKey] == null
+          a.person[this.sortingKey] == null &&
+          b.person[this.sortingKey] == null
       )
         return 0;
       if (a.person[this.sortingKey] == null) return 1;
@@ -719,35 +775,35 @@ export default {
       if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-            b.person[this.sortingKey] == null)
+              b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
-              b.person[this.sortingKey]
+                b.person[this.sortingKey]
             );
           return b.person[this.sortingKey].localeCompare(
-            a.person[this.sortingKey]
+              a.person[this.sortingKey]
           );
         });
       } else if (["birthday", "created_at"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-            b.person[this.sortingKey] == null)
+              b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
-              Date.parse(b.person[this.sortingKey])
+            Date.parse(b.person[this.sortingKey])
+                ? -1
+                : 1;
+          return Date.parse(b.person[this.sortingKey]) >
+          Date.parse(a.person[this.sortingKey])
               ? -1
               : 1;
-          return Date.parse(b.person[this.sortingKey]) >
-            Date.parse(a.person[this.sortingKey])
-            ? -1
-            : 1;
         });
       } else if (this.sortingKey === "organ") {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-            b.person[this.sortingKey] == null)
+              b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder) return a.organ.localeCompare(b.organ);
           return b.organ.localeCompare(a.organ);
@@ -771,19 +827,30 @@ export default {
         });
       }
     },
-      getReceiverByID(id) {
-      console.log(id)
-        this.to_edit.person.id = id
+    getReceiverByID(id) {
+      this.to_edit.id = id
       this.$http
-        .get(`/listings/${id}`)
-        .then((response) => {
-          this.to_edit.receiver = response.data;
-          this.to_edit.person = response.data.person;
-          console.log(this.to_edit.receiver)
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .get(`/listings/${id}`)
+          .then((response) => {
+            this.to_edit.receiver = response.data;
+            this.to_edit.person = response.data.person;
+            console.log(this.to_edit.receiver)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    getReceiverMatchByID(id) {
+      this.to_match.id = id
+      this.$http
+          .get(`/listings/${id}`)
+          .then((response) => {
+            this.to_match.receiver = response.data;
+            this.to_match.person = response.data.person;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     delete_receiver() {
       this.$http
@@ -798,122 +865,122 @@ export default {
             .catch((error) => {
               console.log(error);
 
-            });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+                });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     submitForm() {
       this.$http
-        .post(`/listings/${this.id}`, {
-          notes: this.receiver.notes,
-          organ: this.receiver.organ,
-          person_id: this.id,
-          ...(this.receiver.start_date
-            ? { start_date: this.receiver.start_date }
-            : {}),
-          ...(this.receiver.end_date
-            ? { end_date: this.receiver.end_date }
-            : {}),
-          ...(this.receiver.notes ? { notes: this.receiver.notes } : {}),
-          ...(this.receiver.tumors_number ? { rhesus: this.receiver.tumors_number } : {}),
-          isDialyse: this.receiver.isDialyse,
-          isRetransplantation: this.receiver.isRetransplantation,
-          ...(this.receiver.startDateDialyse ? { startDateDialyse: this.receiver.startDateDialyse } : {}),
-          ...(this.receiver.endDateDialyse ? { endDateDialyse: this.receiver.endDateDialyse } : {}),
-        })
-        .then(() => {
-          this.updatePerson();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .post(`/listings/${this.id}`, {
+            notes: this.receiver.notes,
+            organ: this.receiver.organ,
+            person_id: this.id,
+            ...(this.receiver.start_date
+                ? {start_date: this.receiver.start_date}
+                : {}),
+            ...(this.receiver.end_date
+                ? {end_date: this.receiver.end_date}
+                : {}),
+            ...(this.receiver.notes ? {notes: this.receiver.notes} : {}),
+            ...(this.receiver.tumors_number ? {rhesus: this.receiver.tumors_number} : {}),
+            isDialyse: this.receiver.isDialyse,
+            isRetransplantation: this.receiver.isRetransplantation,
+            ...(this.receiver.startDateDialyse ? {startDateDialyse: this.receiver.startDateDialyse} : {}),
+            ...(this.receiver.endDateDialyse ? {endDateDialyse: this.receiver.endDateDialyse} : {}),
+          })
+          .then(() => {
+            this.updatePerson();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     updatePerson() {
       this.to_edit.person.isDialyse = this.receiver.isDialyse
       this.$http
-        .post(`/persons/${this.to_edit.person.id}`, {
-          first_name: this.to_edit.person.first_name,
-          last_name: this.to_edit.person.last_name,
-          birthday: this.to_edit.person.birthday,
-          ...(this.to_edit.person.description
-            ? { description: this.to_edit.person.description }
-            : {}),
-          supervisor_id: this.to_edit.person.supervisor_id,
-          ...(this.to_edit.person.abo ? { abo: this.to_edit.person.abo } : {}),
-          ...(this.to_edit.person.rhesus ? { rhesus: this.to_edit.person.rhesus } : {}),
-          ...(this.to_edit.person.gender ? { gender: this.to_edit.person.gender } : {}),
-          ...(this.to_edit.person.isDialyse ? { isDialyse: this.to_edit.person.isDialyse } : {}),
-          ...(this.to_edit.person.isRetransplantation ? { isRetransplantation: this.to_edit.person.isRetransplantation } : {}),
-          ...(this.to_edit.person.startDateDialyse ? { startDateDialyse: this.to_edit.person.startDateDialyse } : {}),
-          ...(this.to_edit.person.endDateDialyse ? { endDateDialyse: this.to_edit.person.endDateDialyse } : {}),
-        })
-        .then(() => {
-          this.$router.push("/receivers");
-          this.getAllReceivers()
-          this.closeModal()
+          .post(`/persons/${this.to_edit.id}`, {
+            first_name: this.to_edit.person.first_name,
+            last_name: this.to_edit.person.last_name,
+            birthday: this.to_edit.person.birthday,
+            ...(this.to_edit.person.description
+                ? {description: this.to_edit.person.description}
+                : {}),
+            supervisor_id: this.to_edit.person.supervisor_id,
+            ...(this.to_edit.person.abo ? {abo: this.to_edit.person.abo} : {}),
+            ...(this.to_edit.person.rhesus ? {rhesus: this.to_edit.person.rhesus} : {}),
+            ...(this.to_edit.person.gender ? {gender: this.to_edit.person.gender} : {}),
+            ...(this.to_edit.person.isDialyse ? {isDialyse: this.to_edit.person.isDialyse} : {}),
+            ...(this.to_edit.person.isRetransplantation ? {isRetransplantation: this.to_edit.person.isRetransplantation} : {}),
+            ...(this.to_edit.person.startDateDialyse ? {startDateDialyse: this.to_edit.person.startDateDialyse} : {}),
+            ...(this.to_edit.person.endDateDialyse ? {endDateDialyse: this.to_edit.person.endDateDialyse} : {}),
+          })
+          .then(() => {
+            this.$router.push("/receivers");
+            this.getAllReceivers()
+            this.closeModal()
 
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     createPerson() {
       this.new_receiver.tumors_number = 0;
       this.$http
-        .post("/persons", {
-          first_name: this.new_receiver.first_name,
-          last_name: this.new_receiver.last_name,
-          birthday: this.new_receiver.birthday,
-          ...(this.new_receiver.description ? { description: this.new_receiver.description } : {}),
-          supervisor_id: this.new_receiver.supervisor_id,
-          ...(this.new_receiver.blood_type ? { abo: this.new_receiver.blood_type } : {}),
-          ...(this.new_receiver.rhesus ? { rhesus: this.new_receiver.rhesus } : {}),
-          ...(this.new_receiver.tumors_number ? { tumors_number: this.new_receiver.tumors_number } : {}),
-          ...(this.new_receiver.isDialyse ? { isDialyse: this.new_receiver.isDialyse } : {}),
-          ...(this.new_receiver.isRetransplantation ? { isRetransplantation: this.new_receiver.isRetransplantation } : {}),
-          ...(this.new_receiver.startDateDialyse ? { startDateDialyse: this.new_receiver.startDateDialyse } : {}),
-          ...(this.new_receiver.endDateDialyse ? { endDateDialyse: this.new_receiver.endDateDialyse } : {}),
-          ...(this.new_receiver.gender ? { gender: this.new_receiver.gender } : {}),
-        })
-        .then((response) => {
-          this.new_receiver.person_id = response.data.id;
-          this.createReceiver();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .post("/persons", {
+            first_name: this.new_receiver.first_name,
+            last_name: this.new_receiver.last_name,
+            birthday: this.new_receiver.birthday,
+            ...(this.new_receiver.description ? {description: this.new_receiver.description} : {}),
+            supervisor_id: this.new_receiver.supervisor_id,
+            ...(this.new_receiver.blood_type ? {abo: this.new_receiver.blood_type} : {}),
+            ...(this.new_receiver.rhesus ? {rhesus: this.new_receiver.rhesus} : {}),
+            ...(this.new_receiver.tumors_number ? {tumors_number: this.new_receiver.tumors_number} : {}),
+            ...(this.new_receiver.isDialyse ? {isDialyse: this.new_receiver.isDialyse} : {}),
+            ...(this.new_receiver.isRetransplantation ? {isRetransplantation: this.new_receiver.isRetransplantation} : {}),
+            ...(this.new_receiver.startDateDialyse ? {startDateDialyse: this.new_receiver.startDateDialyse} : {}),
+            ...(this.new_receiver.endDateDialyse ? {endDateDialyse: this.new_receiver.endDateDialyse} : {}),
+            ...(this.new_receiver.gender ? {gender: this.new_receiver.gender} : {}),
+          })
+          .then((response) => {
+            this.new_receiver.person_id = response.data.id;
+            this.createReceiver();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     createReceiver() {
       this.$http
-        .post("/listings", {
-          ...(this.new_receiver.start_date ? { start_date: this.new_receiver.start_date } : {}),
-          ...(this.new_receiver.notes ? { notes: this.new_receiver.notes } : {}),
-          organ: this.new_receiver.organ,
-          donor: false,
-          person_id: this.new_receiver.person_id,
-          tumors_number: this.new_receiver.tumors_number,
-          isDialyse: this.new_receiver.isDialyse,
-          isRetransplantation: this.new_receiver.isRetransplantation,
-        })
-        .then(() => {
-          this.getAllReceivers()
-          this.closeModal()
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .post("/listings", {
+            ...(this.new_receiver.start_date ? {start_date: this.new_receiver.start_date} : {}),
+            ...(this.new_receiver.notes ? {notes: this.new_receiver.notes} : {}),
+            organ: this.new_receiver.organ,
+            donor: false,
+            person_id: this.new_receiver.person_id,
+            tumors_number: this.new_receiver.tumors_number,
+            isDialyse: this.new_receiver.isDialyse,
+            isRetransplantation: this.new_receiver.isRetransplantation,
+          })
+          .then(() => {
+            this.getAllReceivers()
+            this.closeModal()
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     getAllOrgans() {
       this.$http
-        .get("/listings/organs")
-        .then((response) => {
-          this.all_organs = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .get("/listings/organs")
+          .then((response) => {
+            this.all_organs = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
   },
   watch: {
@@ -966,7 +1033,6 @@ td {
 
 }
 
-
 .add-btn {
   float: right;
   width: 150px;
@@ -974,7 +1040,6 @@ td {
   margin-right: 15px;
   background-color: #6799c4;
 }
-
 
 .icon-dropdown-correction {
   position: relative;
@@ -1013,5 +1078,33 @@ td {
 
 .delete-button {
   color: red;
+}
+
+.match-modal {
+  width: 90%;
+  height: 90%;
+}
+
+.receiver-card {
+  width: 33%;
+  height: 400px;
+  padding: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+}
+
+.modal-card-body {
+  border: none
+}
+
+.match-container {
+  display: flex;
+  flex-direction: row;
+  mso-padding-between: 10px;
+}
+
+.table-match {
+  width: 800px;
 }
 </style>

@@ -12,12 +12,8 @@
           <i class="fa fa-user-shield" aria-hidden="true"></i>
           <span class="nav-text">Administrateur</span>
         </router-link>
-        <router-link class="block button sidebar-btn-dropdown cypress-to-logs" to="/actions">
-          <i class="fas fa-terminal"></i>
-          <span class="nav-text">Historique d'actions</span>
-        </router-link>
-        <router-link class="block button sidebar-btn-dropdown cypress-to-roles" to="/administrator/role">
-          <i class="fa fa-tasks" aria-hidden="true"></i>
+        <router-link class="block button sidebar-btn-dropdown" to="/administrator/role">
+          <i class="fa fa-tasks cypress-to-roles" aria-hidden="true"></i>
           <span class="nav-text">Rôles</span>
         </router-link>
       </nav>
@@ -36,14 +32,6 @@
         <router-link class="block button sidebar-btn-dropdown" to="/donors">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span class="nav-text cypress-to-donors">Donneurs</span>
-        </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/dialyse">
-          <i class="fas fa-address-card"></i>
-          <span class="nav-text">Liste des Dialysés</span>
-        </router-link>
-        <router-link class="block button sidebar-btn-dropdown" to="/tumor">
-          <i class="fas fa-address-card"></i>
-          <span class="nav-text">Liste des Tumeurs</span>
         </router-link>
       </nav>
 
@@ -102,12 +90,6 @@
 <script>
 export default {
   name: "SideBar",
-  emits: ["logout"],
-  methods: {
-    handle_logout() {
-      this.$emit("logout");
-    },
-  },
 };
 </script>
 
@@ -198,12 +180,12 @@ export default {
 
 }
 
-#Admin:focus~.admin-menu {
-  height: calc(var(--btnsize) * 3px);
+#Admin:focus ~ .admin-menu {
+  height: calc(var(--btnsize) * 2px);
 }
 
 .admin-menu:hover {
-  height: calc(var(--btnsize) * 3px);
+  height: calc(var(--btnsize) * 2px);
 }
 
 
@@ -228,12 +210,12 @@ export default {
 }
 
 
-#patients:focus~.patients-menu {
-  height: calc(var(--btnsize) * 4px);
+#patients:focus ~ .patients-menu {
+  height: calc(var(--btnsize) * 2px);
 }
 
 .patients-menu:hover {
-  height: calc(var(--btnsize) * 4px);
+  height: calc(var(--btnsize) * 2px);
 }
 
 .patients-menu {

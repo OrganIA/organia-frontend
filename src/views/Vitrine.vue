@@ -3,7 +3,7 @@
     <div class="navbar-brand logo-placeholder">
       <router-link class="navbar-item logo" to="/">
         <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
-          class="logo-img-align">
+             class="logo-img-align">
       </router-link>
     </div>
 
@@ -124,7 +124,7 @@
           Au cours du développement de notre application censée être une amélioration de la base de données existante
           <strong> CRISTAL, </strong>
           nous avons pu rentrer en contact avec les administrateurs de ladite plateforme : <strong> l'Agence de
-            Biomédecine</strong>.
+          Biomédecine</strong>.
           <br>
           Nous leur avons parlé de notre projet et de notre vision du futur et notre solution les a fortement interessé.
           En effet suite à plusieurs discussions et réunions nous avons réussi à trouver une dynamique d'entente pour
@@ -352,7 +352,7 @@
           <div class="card-content">
             <a class=" navbar-item logo mail-box-logo">
               <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png"
-                alt="logo" class="logo-img-align">
+                   alt="logo" class="logo-img-align">
             </a>
             <br>
             <br>
@@ -365,7 +365,7 @@
             <br>
             <br>
             <a class="mail-link mail-link-color"
-              href="mailto:organia_2023@labeip.epitech.eu">organia_2023@labeip.epitech.eu</a>
+               href="mailto:organia_2023@labeip.epitech.eu">organia_2023@labeip.epitech.eu</a>
           </div>
         </div>
       </div>
@@ -413,9 +413,8 @@ div[role="progressbar"] {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background:
-    radial-gradient(closest-side, white 80%, transparent 0 99.9%, white 0),
-    conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0);
+  background: radial-gradient(closest-side, white 80%, transparent 0 99.9%, white 0),
+  conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0);
   font-family: Helvetica, Arial, sans-serif;
   font-size: calc(var(--size) / 5);
   color: var(--fg);
