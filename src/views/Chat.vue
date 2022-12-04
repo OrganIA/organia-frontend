@@ -24,6 +24,11 @@
             <div class="chat-container">
               <div class="row">
                 <section class="discussions">
+                  <div>
+                    <p class="conversation-title title is-1">conversations</p>
+                    <button>Créer<i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
+                        @click="openModal('newChat')"></i></button>
+                  </div>
                   <div class="discussion message-active cypress-conversation" v-for="chat in chats" :key="chat.id"
                     @click="selectChat(chat)">
                     <div class="photo">
@@ -71,8 +76,6 @@
                 <section v-else class="chat">
                   <div class="header-chat">
                     <p class="name title is-1">Aucune conversation selectionnée</p>
-                    <i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
-                      @click="openModal('newChat')"></i>
                   </div>
                 </section>
               </div>
@@ -348,12 +351,13 @@ export default {
 }
 
 .discussions {
-  width: 20%;
-  height: 700px;
+  width: 19em;
+  height: 36em;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.20);
   overflow: hidden;
-  background-color: #87a3ec;
+  background-color: #D8E0E9;
   display: inline-block;
+  border-radius: 25px;
 }
 
 .discussions .discussion {
@@ -431,7 +435,7 @@ export default {
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   font-size: 13pt;
-  color: #112b6d;
+  color: #071F49;
 }
 
 .chat .header-chat .right {
@@ -515,5 +519,11 @@ export default {
 
 .icon {
   color: #4f6ebd
+}
+.conversation-title{
+  color: #071F49;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15pt;
+  margin-top: 1em;
 }
 </style>
