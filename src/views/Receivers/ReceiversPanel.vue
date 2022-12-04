@@ -54,7 +54,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="receiver in receivers" :key="receiver">
+            <tr class="cypress-receivers-row" v-for="receiver in receivers" :key="receiver">
               <td>{{ receiver.person.first_name }}</td>
               <td>{{ receiver.person.last_name }}</td>
               <td>{{ receiver.person.birthday }}</td>
@@ -86,7 +86,7 @@
               <p class="modal-card-title">Informations du receveur</p>
               <button class="delete" aria-label="close" @click="closeModal"></button>
             </header>
-            <section class="modal-card-body">
+            <section class="modal-card-body cypress-info-body-receiver">
               <div class="columns">
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Nom de famille</p>
@@ -222,7 +222,7 @@
                 }}
                 </button>
               </div>
-              <button class="button is-link is-light" @click="openChatModal()">
+              <button class="button is-link is-light cypress-reciever-chat-modal" @click="openChatModal()">
                 Créer une conversation
               </button>
               <button class="button is-link is-light contents" @click="createPDF()">
