@@ -70,7 +70,7 @@
                 </section>
                 <section v-else class="chat">
                   <div class="header-chat">
-                    <p class="name">Aucune conversation selectionnée</p>
+                    <p class="name title is-1">Aucune conversation selectionnée</p>
                     <i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
                       @click="openModal('newChat')"></i>
                   </div>
@@ -431,7 +431,7 @@ export default {
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   font-size: 13pt;
-  color: #515151;
+  color: #112b6d;
 }
 
 .chat .header-chat .right {
