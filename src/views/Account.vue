@@ -17,7 +17,7 @@
               <p>Nom</p>
             </div>
             <div class="message-body">
-              <strong>{{ lastname }}</strong>
+              <strong>{{ user.lastname }}</strong>
             </div>
           </article>
           <article class="message is-info column">
@@ -25,7 +25,7 @@
               <p>Prénom</p>
             </div>
             <div class="message-body">
-              <strong>{{ firstname }}</strong>
+              <strong>{{ user.firstname }}</strong>
             </div>
           </article>
         </div>
@@ -35,7 +35,7 @@
               <p>Numéro de téléphone</p>
             </div>
             <div class="message-body">
-              <strong>{{ phone_number }}</strong>
+              <strong>{{ '+33' + user.phone_number }}</strong>
             </div>
           </article>
           <article class="message is-info column">
@@ -43,7 +43,7 @@
               <p>Email</p>
             </div>
             <div class="message-body">
-              <strong>{{ email }}</strong>
+              <strong>{{ user.email }}</strong>
             </div>
           </article>
         </div>
@@ -64,6 +64,7 @@ export default {
   },
   data() {
     return {
+      user: {}
     }
   },
   created() {
@@ -74,10 +75,7 @@ export default {
       this.$http
         .get("/users/me")
         .then((response) => {
-          this.email = response.data.email;
-          this.firstname = response.data.firstname;
-          this.lastname = response.data.lastname;
-          this.phone_number = response.data.phone_number;
+          this.user = response.data;
         })
     },
   },
