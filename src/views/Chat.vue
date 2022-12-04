@@ -104,7 +104,7 @@ export default {
     return {
       chats: [],
       messages: [],
-      currentUser: this.$store.getters.getRole,
+      currentUser: {},
       latest_messages: [],
       users: [],
       state: "",
@@ -114,11 +114,26 @@ export default {
     }
   },
   created() {
+    this.getMe()
     this.getUsers()
     this.getChats()
     this.getLatestMessages()
   },
   methods: {
+    getMe() {
+      this.$http.get("/users/me")
+        .then((response) => {
+          this.currentUser = response.data
+        }).catch((error) => {
+          console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+          this.$cookies.remove("token")
+          this.$router.push("/");
+        })
+    },
     getChats() {
       this.$http
         .get("/chats/")
@@ -269,7 +284,7 @@ export default {
       if (this.websocket != null)
         this.websocket.close();
       this.websocket = new WebSocket(
-        `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.currentChat.id}`
+        `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.currentChat.id}`
       );
       this.websocket.onopen = () => {
         this.websocket.send(
