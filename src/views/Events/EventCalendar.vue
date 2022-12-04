@@ -8,8 +8,9 @@
     </div>
     <div class="column page-container">
       <div class="page-content">
-        <vue-cal class="vuecal--rounded-theme organia-calendar" locale="fr" active-view="month" :time="false"
-          :events="events">
+        <vue-cal class="class=vuecal--full-height-delete vuecal--blue-theme" locale="fr" active-view="week" today-button
+          :time="true" resize-x events-on-month-view="short"
+          style="height: 600px" :events="events">
         </vue-cal>
       </div>
     </div>
@@ -19,7 +20,7 @@
 <script>
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
-import 'vue-cal/dist/i18n/fr.cjs.js'
+import "vue-cal/dist/i18n/fr.cjs.js";
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 import translate from "@/translate"
@@ -36,33 +37,21 @@ export default {
     this.calendarFiller();
   },
   methods: {
-    formatDate(date) {
-      let d = new Date(date);
-      let month = (d.getMonth() + 1).toString();
-      let day = d.getDate().toString();
-      let year = d.getFullYear();
-      if (month.length < 2) {
-        month = "0" + month;
-      }
-      if (day.length < 2) {
-        day = "0" + day;
-      }
-      return [year, month, day].join("-");
-    },
     calendarFiller() {
       this.$http
-        .get("/calendar")
+        .get("/calendar/",)
         .then((response) => {
-          new Date();
           response.data.forEach((item) => {
-            const date = new Date(item.date);
+            const start_date = new Date(item.start_date);
+            const end_date = new Date(item.end_date);
             this.events.push({
-              title: item.description,
-              start: this.formatDate(item.date),
-              end: this.formatDate(item.date),
-              content: `<p>${date.getHours()}:${date.getMinutes()}</p>`,
+              title: item.title,
+              description: item.description,
+              start: start_date,
+              end: end_date,
+              class: item.event_type,
             });
-          });
+          })
         })
         .catch((error) => {
           console.log(error);
@@ -143,5 +132,17 @@ export default {
 .vuecal__arrow.vuecal__arrow--highlighted,
 .vuecal__view-btn.vuecal__view-btn--highlighted {
   background-color: rgba(136, 236, 191, 0.25);
+}
+
+.vuecal__event.rdvDonneur {
+  background-color: rgba(253, 156, 66, 0.9);
+  border: 1px solid rgb(233, 136, 46);
+  color: #fff;
+}
+
+.vuecal__event.rdvReceveur {
+  background-color: rgba(96, 96, 233, 0.9);
+  border: 1px solid rgb(65, 68, 236);
+  color: #fff;
 }
 </style>
