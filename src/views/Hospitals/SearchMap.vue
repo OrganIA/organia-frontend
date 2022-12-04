@@ -126,7 +126,7 @@ export default {
     },
     getHospitals() {
       this.$http
-        .get("/hospitals")
+        .get("/hospitals/")
         .then((response) => {
           this.hospitals = response.data;
           this.markers_length = this.hospitals.length;

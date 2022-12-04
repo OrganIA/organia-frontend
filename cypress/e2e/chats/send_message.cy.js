@@ -6,15 +6,16 @@ describe('Send Message', () => {
   it('Tries to send a message', () => {
     cy.visit(Cypress.config().baseUrl)
 
-    cy.get('.cypress-to-login').click()
-
     cy.get('.cypress-email')
-      .type('test@irama.com')
+      .type('saber@saber.com')
 
     cy.get('.cypress-password')
-      .type('irama')
+      .type('saber')
 
+    cy.intercept({ method: 'POST', url: '**/auth/login' }).as('login')
     cy.get('.cypress-submit-login').click()
+    cy.wait('@login', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
+
     cy.get('.cypress-to-chats').click()
     cy.get('.cypress-conversation').first().click()
     cy.get(".cypress-message-input").type("test")

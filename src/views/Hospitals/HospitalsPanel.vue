@@ -150,7 +150,7 @@ export default {
   methods: {
     getAllHospitals() {
       this.$http
-        .get("/hospitals")
+        .get("/hospitals/")
         .then((response) => {
           this.hospitals = response.data;
           this.openAddModal(false)
@@ -180,7 +180,7 @@ export default {
     },
     submitForm() {
       this.$http
-        .post("/hospitals", {
+        .post("/hospitals/", {
           city: {
             name: this.city_name,
             department_code: this.department_code
@@ -225,7 +225,7 @@ export default {
     },
     submitEditForm() {
       this.$http
-        .post(`/hospitals/${this.id}`, {
+        .post(`/hospitals/${this.hospital.id}`, {
           city: {
             name: this.city.name,
             department_code: this.city.department_code,
@@ -237,6 +237,7 @@ export default {
           this.$toast.success("Modification de l'hopital réussi !");
           setTimeout(this.$toast.clear, 3000);
           this.getAllHospitals()
+          this.openEditModal(false, undefined)
         })
         .catch((error) => {
           console.log(error);

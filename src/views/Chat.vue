@@ -24,7 +24,8 @@
             <div class="chat-container">
               <div class="row">
                 <section class="discussions">
-                  <div class="discussion message-active cypress-conversation" v-for="chat in chats" :key="chat.id" @click="selectChat(chat)">
+                  <div class="discussion message-active cypress-conversation" v-for="chat in chats" :key="chat.id"
+                    @click="selectChat(chat)">
                     <div class="photo">
                       {{ chat.name.charAt(0).toUpperCase() }}
                     </div>
@@ -62,7 +63,8 @@
                   </div>
                   <div class="footer-chat">
                     <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
-                    <input type="text" class="write-message cypress-message-input" placeholder="Type your message here" v-model="input" />
+                    <input type="text" class="write-message cypress-message-input" placeholder="Type your message here"
+                      v-model="input" />
                     <i class="fas fa-paper-plane clickable" @click="sendMessage" @keypress.enter="sendMessage"></i>
                   </div>
                 </section>
@@ -227,15 +229,18 @@ export default {
           })
         })
         .catch((error) => {
-          if (error.response.data.msg.includes("is already taken")) {
-            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
-            this.$toast.error(
-              "Erreur lors de la connexion : " + error.response.data.msg
-            );
-          } else {
-            this.$toast.error(
-              "Erreur lors de la connexion : " + translate[error.response.data.msg]
-            );
+          console.log(error);
+          if (error.response) {
+            if (error.response.data.msg.includes("is already taken")) {
+              error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+              this.$toast.error(
+                "Erreur lors de la connexion : " + error.response.data.msg
+              );
+            } else {
+              this.$toast.error(
+                "Erreur lors de la connexion : " + translate[error.response.data.msg]
+              );
+            }
           }
           setTimeout(this.$toast.clear, 3000);
         })
@@ -255,14 +260,16 @@ export default {
     },
     closeModal(refresh) {
       this.state = ""
-      if (refresh)
+      if (refresh) {
         this.refreshChatList()
+        this.currentChat = {}
+      }
     },
     websocketSetup() {
       if (this.websocket != null)
         this.websocket.close();
       this.websocket = new WebSocket(
-        `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.currentChat.id}`
+        `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.currentChat.id}`
       );
       this.websocket.onopen = () => {
         this.websocket.send(

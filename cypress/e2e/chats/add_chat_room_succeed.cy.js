@@ -3,28 +3,20 @@ describe('Add chat room', () => {
   it('Tries to add a chat room should succeed', () => {
     cy.visit(Cypress.config().baseUrl)
 
-    cy.get('.cypress-to-login').click()
-
     cy.get('.cypress-email')
-      .type('test@irama.com')
-      .should('have.value', 'test@irama.com')
+      .type('saber@saber.com')
 
     cy.get('.cypress-password')
-      .type('irama')
-      .should('have.value', 'irama')
+      .type('saber')
 
+    cy.intercept({ method: 'POST', url: '**/auth/login' }).as('login')
     cy.get('.cypress-submit-login').click()
-    cy.intercept('POST', '**/auth').as('login')
-    //cy.wait('@login', { timeout: 10000 })
-
-    cy.url().should('eq', 'http://localhost:8080/landing')
-    cy.getCookie("token").should('not.be.null')
+    cy.wait('@login', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
 
     cy.get('.cypress-to-chats').click()
     cy.url().should('eq', Cypress.config().baseUrl + 'chat')
 
     cy.get('.header-chat')
-    cy.get('.icon')
     cy.get('.icon').click()
 
     cy.get('.cypress-chat-title')

@@ -43,7 +43,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr class="cypress-receiver-row" class="cypress-receivers-row" v-for="receiver in receivers" :key="receiver">
+          <tr class="cypress-receiver-row cypress-receivers-row" v-for="receiver in receivers" :key="receiver">
             <td>{{ receiver.person.first_name }}</td>
             <td>{{ receiver.person.last_name }}</td>
             <td>{{ receiver.person.gender }}</td>
