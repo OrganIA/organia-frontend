@@ -72,12 +72,6 @@
         </router-link>
       </nav>
 
-      <router-link class="block button sidebar-btn cypress-invitation" to="/invitations">
-        <i class="fa fa-user-shield cypress-invitation-icon" aria-hidden="true"></i>
-        <span class="nav-text cypress-invitation-text">Invitations</span>
-      </router-link>
-
-
       <router-link class="block button sidebar-btn cypress-chat" to="/chat">
         <i class="fas fa-envelope cypress-to-chats cypress-chat-icon"></i>
         <span class="nav-text cypress-chat-text">Chats</span>

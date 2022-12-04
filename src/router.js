@@ -8,7 +8,6 @@ const routes = [
     {path: "/donors", component: () => import("./views/DonorsPanel.vue")},
     {path: "/login", component: () => import("./views/Auth/Login.vue")},
     {path: "/register", component: () => import("./views/Auth/Register.vue")},
-    {path: "/invitations", component: () => import("./views/Auth/Invitations.vue")},
     {path: "/administrator", component: () => import("./views/AdministratorPanel.vue")},
     {path: "/administrator/role", component: () => import("./views/RolePanel.vue")},
     {path: "/eventcalendar", component: () => import("./views/Events/EventCalendar.vue")},
