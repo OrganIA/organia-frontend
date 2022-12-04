@@ -33,7 +33,7 @@
                 <td>{{ hospital.patients_count }}</td>
                 <td>
                   <div @click="openEditModal(true, hospital.id)">
-                    <i class="fas fa-edit button is-primary cypress-to-hospitals-edit-1"></i>
+                    <i class="fas fa-edit button is-primary cypress-to-hospitals-edit"></i>
                   </div>
                 </td>
               </tr>

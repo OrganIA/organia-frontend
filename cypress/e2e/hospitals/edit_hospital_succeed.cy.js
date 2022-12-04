@@ -1,58 +1,26 @@
 
 /* execute if there is only one hospital */
 
-describe('Edit hospital sucesss', () => {
-    it('Tries to open modal in the receiver panel should succeed', () => {
-      cy.visit(Cypress.config().baseUrl)  
-      cy.get('.cypress-to-register').click()
+describe('Edit hospital failed', () => {
+  it('Tries to open modal in the receiver panel should succeed', () => {
+    cy.visit(Cypress.config().baseUrl)  
+    cy.get('.cypress-email')
+    .type('saber@saber.com')
 
-      cy.get('.cypress-to-login').click()
-      
-      cy.get('.cypress-email')
-        .type('saber@saber.com')
-        .should('have.value', 'saber@saber.com')
-  
-      cy.get('.cypress-password')
-        .type('saber')
-        .should('have.value', 'saber')
-    
-      cy.get('.cypress-login').click()  
-      cy.url().should('eq', Cypress.config().baseUrl + '/')
-  
-      cy.getCookie("token").should('not.be.null')
-  
-      cy.get('.cypress-to-hospitals').click();
-  
-      cy.url().should('eq', Cypress.config().baseUrl + '/hospitals')
-      cy.wait(5000);
+  cy.get('.cypress-password')
+    .type('saber')
 
-      cy.get('.cypress-to-hospitals-edit-1').click();
-  
-      cy.url().should('eq', Cypress.config().baseUrl + '/hospitals/edit/1')
-        
-      cy.get('.cypress-name').clear() 
-      cy.get('.cypress-city').clear()
-      cy.get('.cypress-department').clear()
-      cy.get('.cypress-phone-number').clear()
+  cy.intercept({ method: 'POST', url: '**/auth/login' }).as('login')
+  cy.get('.cypress-submit-login').click()
+  cy.wait('@login', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
 
-      cy.get('.cypress-name') 
-        .type('Hopital Robert Ballanger')
-        .should('have.value', 'Hopital Robert Ballanger')
-    
-      cy.get('.cypress-city')
-        .type('Aulnay-sous-bois')
-        .should('have.value', 'Aulnay-sous-bois')
+  cy.get('.cypress-hospital').click();
+  cy.get('.cypress-hospital-dropdown').click()
+  cy.url().should('eq', Cypress.config().baseUrl + 'hospitals')
 
-      cy.get('.cypress-department')
-        .type('93')
-        .should('have.value', '93')
+    cy.get('.cypress-to-hospitals-edit').first().click();
+    cy.get('.cypress-name').clear().type('Hopital Des Fleurs');
 
-      cy.get('.cypress-phone-number')
-        .type('0623049589')
-        .should('have.value', '0623049589')
-    
-      cy.get('.cypress-add').click();
-  
-      cy.url().should('eq', Cypress.config().baseUrl + '/hospitals')
-    })
+    cy.get('.cypress-add').click();
   })
+})
