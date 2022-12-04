@@ -44,7 +44,6 @@
 
 export default {
   name: "my-account",
-  emits: ["login"],
   data() {
     return {
       email: "",

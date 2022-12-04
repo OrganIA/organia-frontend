@@ -15,52 +15,46 @@
             <option value="email">Email</option>
           </select>
           <div class="fa  fa-solid fa-angle-down  icon-dropdown-correction"></div>
-          <input @input="filter" v-model="filterText" class="search-bar input mr-6"/>
-          <br/>
+          <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+          <br />
         </div>
         <table class="is-organia-table">
           <thead>
-          <tr>
-            <th>Id</th>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Mail</th>
-            <th>Date de création</th>
-            <th>Dernière modification</th>
-          </tr>
+            <tr>
+              <th>Id</th>
+              <th>Prénom</th>
+              <th>Nom</th>
+              <th>Mail</th>
+              <th>Date de création</th>
+              <th>Dernière modification</th>
+            </tr>
           </thead>
           <tbody>
-          <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id }">
-            <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
-              {{ user.id }}
-            </td>
-            <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
-              {{ user.person ? user.person.first_name : "-" }}
-            </td>
-            <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
-              {{ user.person ? user.person.last_name : "-" }}
-            </td>
-            <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
-              {{ user.email }}
-            </td>
-            <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
-              {{ user.created_at }}
-            </td>
-            <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
-              {{ user.updated_at }}
-            </td>
-            <td :class="{ 'selected-element': user.id === $data.user.id }">
-              <div v-on:click="loadUserToModify(user.id)" class="button is-primary">
-                <i class="fas fa-edit"></i>
-              </div>
-            </td>
-          </tr>
+            <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id }">
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.id }}
+              </td>
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.person ? user.person.first_name : "-" }}
+              </td>
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.person ? user.person.last_name : "-" }}
+              </td>
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.email }}
+              </td>
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.created_at }}
+              </td>
+              <td v-on:click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.updated_at }}
+              </td>
+              <td :class="{ 'selected-element': user.id === $data.user.id }">
+                <div v-on:click="loadUserToModify(user.id)" class="button is-primary">
+                  <i class="fas fa-edit"></i>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
         <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
@@ -74,32 +68,32 @@
               <div class="row mt-4">
                 <a :href="'mailto:' + this.user.email" class="button is-info is-light mx-auto role-btn">{{
                     this.user.email
-                  }}</a>
+                }}</a>
                 <div class="button is-info is-light mx-auto role-btn">{{ this.role.name }}</div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                     :class="{ 'is-primary': this.role.can_manage_users, 'is-danger': !this.role.can_manage_users }">
+                  :class="{ 'is-primary': this.role.can_manage_users, 'is-danger': !this.role.can_manage_users }">
                   Peut gérer les utilisateurs
                 </div>
                 <div class="button is-light mx-auto role-btn"
-                     :class="{ 'is-primary': this.role.can_manage_persons, 'is-danger': !this.role.can_manage_persons }">
+                  :class="{ 'is-primary': this.role.can_manage_persons, 'is-danger': !this.role.can_manage_persons }">
                   Peut gérer les patients
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                     :class="{ 'is-primary': this.role.can_manage_roles, 'is-danger': !this.role.can_manage_roles }">
+                  :class="{ 'is-primary': this.role.can_manage_roles, 'is-danger': !this.role.can_manage_roles }">
                   Peut gérer les rôles
                 </div>
                 <div class="button is-light mx-auto role-btn"
-                     :class="{ 'is-primary': this.role.can_manage_hospitals, 'is-danger': !this.role.can_manage_hospitals }">
+                  :class="{ 'is-primary': this.role.can_manage_hospitals, 'is-danger': !this.role.can_manage_hospitals }">
                   Peut gérer les hôpitaux
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                     :class="{ 'is-primary': this.role.can_invite, 'is-danger': !this.role.can_invite }">
+                  :class="{ 'is-primary': this.role.can_invite, 'is-danger': !this.role.can_invite }">
                   Peut créer des invitations
                 </div>
               </div>
@@ -109,8 +103,7 @@
             </footer>
           </div>
         </div>
-        <div class="modal"
-             :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -122,7 +115,7 @@
                 <form class="form-control modal-form">
                   <div class="form-fields-modal">
                     <label class="label">Mail</label>
-                    <input v-model="toModifyUser.email" type="email" class="input mb-6" required/>
+                    <input v-model="toModifyUser.email" type="email" class="input mb-6" required />
                     <label class="label">Rôle</label>
                     <select v-model="selected_role" class="button mb-4 ml-6 is-info is-light role-selector">
                       <option v-for="role in roles" :value="role.id" :key="role.id">
@@ -135,7 +128,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="submitForm()">Enregistrer
+                v-on:click="submitForm()">Enregistrer
               </button>
               <button class="button modal-admin-btn" v-on:click="openModifyUserModal(false)">Fermer</button>
             </footer>
@@ -150,12 +143,12 @@
 <script>
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "administrator-panel",
-  components: {SideBar, ApplicationNavbar},
+  components: { SideBar, ApplicationNavbar },
 
-  emits: ["login"],
   data() {
 
     return {
@@ -182,19 +175,21 @@ export default {
   methods: {
     getUsers() {
       this.$http
-          .get("/users", {
-            headers: {Authorization: `Bearer ${this.$cookies.get("token")}`},
-          })
-          .then((response) => {
-            response.data.forEach((element) => {
-              element.created_at = new Date(element.created_at).toDateString();
-            });
-            this.users = response.data;
-            this.usersBackup = this.users
-          })
-          .catch((error) => {
-            console.log(error);
+        .get("/users/")
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.created_at = new Date(element.created_at).toDateString();
           });
+          this.users = response.data;
+          this.usersBackup = this.users
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -202,8 +197,8 @@ export default {
     },
     checkNull(a, b) {
       if (
-          a.person[this.sortingKey] == null &&
-          b.person[this.sortingKey] == null
+        a.person[this.sortingKey] == null &&
+        b.person[this.sortingKey] == null
       )
         return 0;
       if (a.person[this.sortingKey] == null) return 1;
@@ -214,30 +209,30 @@ export default {
       if (["first_name", "last_name"].includes(this.sortingKey)) {
         this.users.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
+            b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
-                b.person[this.sortingKey]
+              b.person[this.sortingKey]
             );
           return b.person[this.sortingKey].localeCompare(
-              a.person[this.sortingKey]
+            a.person[this.sortingKey]
           );
         });
       } else if (["updated_at", "created_at"].includes(this.sortingKey)) {
         this.users.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-              b.person[this.sortingKey] == null)
+            b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
-            Date.parse(b.person[this.sortingKey])
-                ? -1
-                : 1;
-          return Date.parse(b.person[this.sortingKey]) >
-          Date.parse(a.person[this.sortingKey])
+              Date.parse(b.person[this.sortingKey])
               ? -1
               : 1;
+          return Date.parse(b.person[this.sortingKey]) >
+            Date.parse(a.person[this.sortingKey])
+            ? -1
+            : 1;
         });
       }
     },
@@ -253,25 +248,33 @@ export default {
     },
     getUserByID() {
       this.$http
-          .get(`/users/${this.user.id}`)
-          .then((response) => {
-            this.user = response.data;
-            this.getRoleById(this.user.role_id)
-          })
-          .catch((error) => {
-            console.log(error)
-          });
+        .get(`/users/${this.user.id}`)
+        .then((response) => {
+          this.user = response.data;
+          this.getRoleById(this.user.role_id)
+        })
+        .catch((error) => {
+          console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
 
     },
     getRoleById(id) {
       this.$http
-          .get(`/roles/${id}`)
-          .then((response) => {
-            this.role = response.data;
-          })
-          .catch((error) => {
-            console.log(error)
-          });
+        .get(`/roles/${id}`)
+        .then((response) => {
+          this.role = response.data;
+        })
+        .catch((error) => {
+          console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     loadSelectedUser(userId) {
       if (this.user.id === userId) {
@@ -298,45 +301,62 @@ export default {
     },
     getSpecificUserByID() {
       this.$http
-          .get(`/users/${this.modId}`)
-          .then((response) => {
-            this.toModifyUser = response.data;
-            this.selected_role = response.data.role_id;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .get(`/users/${this.modId}`)
+        .then((response) => {
+          this.toModifyUser = response.data;
+          this.selected_role = response.data.role_id;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     getRoles() {
       this.$http
-          .get("/roles")
-          .then((response) => {
-            this.roles = response.data;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .get("/roles")
+        .then((response) => {
+          this.roles = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     submitForm() {
-      console.log(this.toModifyUser.email)
       this.$http
-          .post(`/users/${this.modId}`, {
-            email: this.toModifyUser.email,
-            role_id: this.selected_role,
-          })
-          .then(() => {
-            this.$router.push("/administrator");
-            this.state2 = ""
-            this.getUsers();
+        .post(`/users/${this.modId}`, {
+          email: this.toModifyUser.email,
+          role_id: this.selected_role,
+        })
+        .then(() => {
+          this.$router.push("/administrator");
+          this.state2 = ""
+          this.getUsers();
 
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     loadUserToModify(userId) {
       this.modId = userId;
-      console.log(userId)
       this.getRoles()
       this.getSpecificUserByID();
       this.state2 = "clicked"

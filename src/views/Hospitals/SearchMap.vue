@@ -8,18 +8,17 @@
     </div>
     <div class="column page-container">
       <div class="page-content">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
         <div id="main">
           <h1>Carte de recherche pour les hopitaux</h1>
         </div>
         <input class="form-control my-0 py-1" type="text" placeholder="Rerchercher" aria-label="Search"
-               v-model="search"/>
+          v-model="search" />
         <div class="map">
           <l-map v-model="zoom" v-model:zoom="zoom" zoomAnimation="true" :center="[this.latpos, this.lngpos]">
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
             <l-geo-json :geojson="geojson"></l-geo-json>
-            <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng"
-                      @l-add="$event.target.openPopup()">
+            <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng" @l-add="$event.target.openPopup()">
               <l-popup :content="item.content"></l-popup>
             </l-marker>
           </l-map>
@@ -29,9 +28,9 @@
                 <div class="meta">
                   <p>
                     {{ item.name }}
-                    <br/>
+                    <br />
                     Numéro de téléphone: {{ item.phone_number }}
-                    <br/>
+                    <br />
                     Nombre de patient: {{ item.patients_count }}
                   </p>
                 </div>
@@ -54,6 +53,7 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 import SideBar from "@/components/SideBar";
+import translate from "@/translate"
 
 export default {
   name: "search-map",
@@ -93,15 +93,15 @@ export default {
 
   async created() {
     const response = await fetch(
-        "https://france-geojson.gregoiredavid.fr/repo/regions.geojson"
+      "https://france-geojson.gregoiredavid.fr/repo/regions.geojson"
     );
     this.geojson = await response.json();
     this.getHospitals();
     window.setTimeout(() => {
       for (var i = 0; i < this.markers_length; i += 1) {
         if (
-            this.hospitals[i].latitude == null ||
-            this.hospitals[i].longitude == null
+          this.hospitals[i].latitude == null ||
+          this.hospitals[i].longitude == null
         )
           continue;
         else {
@@ -126,14 +126,18 @@ export default {
     },
     getHospitals() {
       this.$http
-          .get("/hospitals")
-          .then((response) => {
-            this.hospitals = response.data;
-            this.markers_length = this.hospitals.length;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .get("/hospitals")
+        .then((response) => {
+          this.hospitals = response.data;
+          this.markers_length = this.hospitals.length;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
   },
 };

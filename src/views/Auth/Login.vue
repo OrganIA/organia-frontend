@@ -1,12 +1,12 @@
 <template>
-  <Loader :class="{'is-hidden': !this.loading}"></Loader>
+  <Loader :class="{ 'is-hidden': !this.loading }"></Loader>
   <div class="centered-container">
     <form @submit.prevent="login()" class="login-form">
       <div class="navbar-brand logo-placeholder"
-           :class="{ 'is-invisible-correction': this.$route.path === '/' || '/' }">
+        :class="{ 'is-invisible-correction': this.$route.path === '/' || '/' }">
         <div class="navbar-item logo">
           <img src="https://cdn.discordapp.com/attachments/559512661717417986/843782837072297994/Asset_9.png" alt="logo"
-               class="logo-img-align">
+            class="logo-img-align">
         </div>
       </div>
       <div class="content">
@@ -14,13 +14,13 @@
       </div>
       <div class="field first-field">
         <div class="control">
-          <input v-model="email" placeholder="email" type="email" class="cypress-email input" required/>
+          <input v-model="email" placeholder="email" type="email" class="cypress-email input" required />
         </div>
       </div>
       <div class="field">
         <div class="control">
           <input v-model="password" placeholder="mot de passe" type="password" class="cypress-password input"
-                 required/>
+            required />
         </div>
         <router-link to="/passwd-reset" class="cypress-to-passwd-reset is-link passwd-reset-link">Mot de passe oublié
         </router-link>
@@ -36,7 +36,7 @@
   </div>
   <footer class="footer login-footer">
     <a href="https://www.agence-biomedecine.fr/"
-       class="navbar-item button is-medium is-info is-light navbar-home-controller">
+      class="navbar-item button is-medium is-info is-light navbar-home-controller">
       Site de l'agence de biomédecine
     </a>
     <router-link to="/useorgania" class="navbar-item button is-medium is-info is-light navbar-home-controller">
@@ -59,8 +59,7 @@ import Loader from "@/components/Loader";
 
 export default {
   name: "login",
-  emits: ["login"],
-  components: {Loader},
+  components: { Loader },
   data() {
     return {
       email: "",
@@ -69,47 +68,34 @@ export default {
     };
   },
   methods: {
-    getRole(data) {
-      this.$http
-          .get(`/roles/${data.role_id}`)
-          .then((response) => {
-            this.$toast.success("Connexion réussie !");
-            setTimeout(this.$toast.clear, 3000);
-            this.$store.commit("login", {
-              id: data.id,
-              email: data.email,
-              role: response.data,
-            });
-            this.$emit("login", true);
-            this.$router.push("/landing");
-          })
-          .catch((error) => {
-            console.log(error.response.data.detail);
-          });
-    },
     login() {
       this.loading = true
       this.$http
-          .post("/auth", {
-            email: this.email,
-            password: this.password,
-          })
-          .then((response) => {
-            this.$http.defaults.headers.common[
-                "Authorization"
-                ] = `Bearer ${response.data.token}`;
-            this.$cookies.set("token", response.data.token, -1);
-            this.getRole(response.data.user);
-            this.loading = false
-          })
-          .catch((error) => {
-            console.log(error.response.data.detail);
-            this.$toast.error(
-                "Erreur lors de la connexion : " + translate[error.response.data.detail]
-            );
-            setTimeout(this.$toast.clear, 3000);
-            this.loading = false
+        .post("/auth/login", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          this.$http.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${response.data.token}`;
+          this.$cookies.set("token", response.data.token, -1);
+          this.$store.commit("login", {
+            id: response.data.user.id,
+            email: response.data.user.email,
+            role: response.data.user.role,
           });
+          this.loading = false
+          this.$router.push("/landing");
+        })
+        .catch((error) => {
+          console.log(error.response.data.msg)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+          this.loading = false
+        });
     },
   },
 };

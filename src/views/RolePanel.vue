@@ -132,10 +132,10 @@
 <script>
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "role-panel",
-  emits: ["login"],
   components: { SideBar, ApplicationNavbar },
 
   data() {
@@ -158,13 +158,17 @@ export default {
   methods: {
     getRoles() {
       this.$http
-        .get(`/roles`)
+        .get(`/roles/`)
         .then((response) => {
           this.backup = response.data;
           this.roles = response.data.map(role => Object.assign({}, role));
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     changeRole(r) {
@@ -182,6 +186,17 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     updateRoles() {
@@ -210,9 +225,16 @@ export default {
           this.reloadRoles()
         })
         .catch((error) => {
-          this.$toast.error(
-            "Erreur : " + error.response.data.detail
-          );
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
           setTimeout(this.$toast.clear, 3000);
         });
     },

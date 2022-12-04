@@ -21,29 +21,29 @@
               <option value="description">Description</option>
               <option value="created_at">Date de creation</option>
             </select>
-            <input @input="filter" v-model="filterText" class="search-bar input mr-6"/>
-            <br/>
+            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+            <br />
           </div>
           <table>
             <thead>
-            <tr>
-              <th @click="updateFilter('date')">Date</th>
-              <th @click="updateFilter('description')">Description</th>
-              <th @click="updateFilter('created_at')">Date de creation</th>
-              <th>Éditer</th>
-            </tr>
+              <tr>
+                <th @click="updateFilter('date')">Date</th>
+                <th @click="updateFilter('description')">Description</th>
+                <th @click="updateFilter('created_at')">Date de creation</th>
+                <th>Éditer</th>
+              </tr>
             </thead>
             <tbody>
-            <tr v-for="calendar in events" :key="calendar">
-              <td>{{ calendar.date }}</td>
-              <td>{{ calendar.description }}</td>
-              <td>{{ calendar.created_at }}</td>
-              <td>
-                <div @click="openEditModal(true, calendar.id)">
-                  <i class="fas fa-edit button is-primary"></i>
-                </div>
-              </td>
-            </tr>
+              <tr v-for="calendar in events" :key="calendar">
+                <td>{{ calendar.date }}</td>
+                <td>{{ calendar.description }}</td>
+                <td>{{ calendar.created_at }}</td>
+                <td>
+                  <div @click="openEditModal(true, calendar.id)">
+                    <i class="fas fa-edit button is-primary"></i>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -61,12 +61,11 @@
                   <div class="form-input small required">
                     <label class="label">Date</label>
                     <input v-model="date" placeholder="date" type="datetime-local"
-                           class="cypress-datetime input is-info"
-                           required/>
+                      class="cypress-datetime input is-info" required />
                   </div>
                   <div class="form-input small">
                     <label class="label">Description</label>
-                    <textarea v-model="description" placeholder="description" class="cypress-textarea" required/>
+                    <textarea v-model="description" placeholder="description" class="cypress-textarea" required />
                     <p class="required-notice">* Obligatoire</p>
                   </div>
                 </div>
@@ -74,14 +73,14 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      v-on:click="createEvent()">Ajouter
+                v-on:click="createEvent()">Ajouter
               </button>
               <button class="button modal-admin-btn" v-on:click="openModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
         <div class="modal"
-             :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
+          :class="{ 'is-invisible': (editstate !== 'clicked'), 'is-active': (editstate === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -95,11 +94,11 @@
                   <div class="form-input small required">
                     <label class="label">Date</label>
                     <input v-model="calendar.date" placeholder="date" type="datetime-local" class="input is-info"
-                           required/>
+                      required />
                   </div>
                   <div class="form-input small required">
                     <label class="label">Description</label>
-                    <textarea class="textarea" v-model="calendar.description" placeholder="description" required/>
+                    <textarea class="textarea" v-model="calendar.description" placeholder="description" required />
                   </div>
                   <p class="required-notice">* Obligatoire</p>
                 </div>
@@ -107,7 +106,7 @@
             </section>
             <footer class="form-submit modal-card-foot organia-modal-footer">
               <button @click="submitEditForm" type="submit"
-                      class="cypress-add button modal-admin-btn modal-add-role-btn">Enregistrer
+                class="cypress-add button modal-admin-btn modal-add-role-btn">Enregistrer
               </button>
               <button type="button" class="button is-danger ml-6" @click="delete_event">
                 Supprimer
@@ -126,10 +125,11 @@
 import moment from "moment";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 import SideBar from "@/components/SideBar";
+import translate from "@/translate"
 
 export default {
   name: "event-panel",
-  components: {SideBar, ApplicationNavbar},
+  components: { SideBar, ApplicationNavbar },
   data() {
     return {
       state: '',
@@ -173,24 +173,28 @@ export default {
     },
     getAllevents() {
       this.$http
-          .get("/calendar", {
-            headers: {Authorization: `Bearer ${this.$cookies.get("token")}`},
-          })
-          .then((response) => {
-            response.data.forEach((element) => {
-              element.date = moment(String(element.date)).format(
-                  "DD/MM/YYYY hh:mm"
-              );
-              element.created_at = moment(String(element.created_at)).format(
-                  "DD/MM/YYYY hh:mm"
-              );
-            });
-            this.events = response.data;
-            this.eventsBackup = this.events;
-          })
-          .catch((error) => {
-            console.log(error);
+        .get("/calendar", {
+          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
+        })
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.date = moment(String(element.date)).format(
+              "DD/MM/YYYY hh:mm"
+            );
+            element.created_at = moment(String(element.created_at)).format(
+              "DD/MM/YYYY hh:mm"
+            );
           });
+          this.events = response.data;
+          this.eventsBackup = this.events;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -205,84 +209,106 @@ export default {
     },
     geteventByID() {
       this.$http
-          .get(`/calendar/${this.to_edit_id}`)
-          .then((response) => {
-            this.calendar = response.data;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .get(`/calendar/${this.to_edit_id}`)
+        .then((response) => {
+          this.calendar = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     submitEditForm() {
       this.$http
-          .post(`/calendar/${this.to_edit_id}`, {
-            date: this.calendar.date,
-            description: this.calendar.description,
-          })
-          .then(() => {
-            this.getAllevents()
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .post(`/calendar/${this.to_edit_id}`, {
+          date: this.calendar.date,
+          description: this.calendar.description,
+        })
+        .then(() => {
+          this.getAllevents()
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     delete_event() {
       this.$http
-          .delete(`/calendar/${this.to_edit_id}`)
-          .then(() => {
-            this.$toast.success("Suppression effectuée");
-            this.getAllevents()
-
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .delete(`/calendar/${this.to_edit_id}`)
+        .then(() => {
+          this.$toast.success("Suppression effectuée");
+          this.getAllevents()
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     createEvent() {
       this.$http
-          .post("/calendar", {
-            date: this.date,
-            ...(this.description ? {description: this.description} : {}),
-          })
-          .then((response) => {
-            this.event_id = response.data.id;
-            this.getAllevents()
-            this.openModal(false)
-          })
-          .catch((error) => {
-            console.log(error)
-          });
+        .post("/calendar", {
+          date: this.date,
+          ...(this.description ? { description: this.description } : {}),
+        })
+        .then((response) => {
+          this.event_id = response.data.id;
+          this.getAllevents()
+          this.openModal(false)
+        })
+        .catch((error) => {
+          console.log(error)
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
     sortData() {
       if (["description"].includes(this.sortingKey)) {
         this.events.sort((a, b) => {
           if (
-              a.date[this.sortingKey] == null ||
-              b.date[this.sortingKey] == null
+            a.date[this.sortingKey] == null ||
+            b.date[this.sortingKey] == null
           )
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.date[this.sortingKey].localeCompare(
-                b.date[this.sortingKey]
+              b.date[this.sortingKey]
             );
           return b.date[this.sortingKey].localeCompare(a.date[this.sortingKey]);
         });
       } else if (["date"].includes(this.sortingKey)) {
         this.events.sort((a, b) => {
           if (
-              a.date[this.sortingKey] == null ||
-              b.date[this.sortingKey] == null
+            a.date[this.sortingKey] == null ||
+            b.date[this.sortingKey] == null
           )
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.date[this.sortingKey]) >
-            Date.parse(b.date[this.sortingKey])
-                ? -1
-                : 1;
-          return Date.parse(b.date[this.sortingKey]) >
-          Date.parse(a.date[this.sortingKey])
+              Date.parse(b.date[this.sortingKey])
               ? -1
               : 1;
+          return Date.parse(b.date[this.sortingKey]) >
+            Date.parse(a.date[this.sortingKey])
+            ? -1
+            : 1;
         });
       }
     },

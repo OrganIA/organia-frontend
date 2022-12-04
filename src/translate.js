@@ -2,6 +2,14 @@ export default {
     "User not found": "Utilisateur introuvable",
     "Mismatching token": "Dernière connexion invalide",
     "No valid ID found in token": "Dernière connexion invalide",
-    "Password mismatch.": "Mot de passe incorrect",
-    "Unprocessable entity": "Des données sont manquantes"
+    "Password mismatch": "Mot de passe incorrect",
+    "Unprocessable entity": "Des données sont manquantes",
+    "Malformed token, ID field is corrupted": "Dernière connexion invalide",
+    'An uncategorized error occurred': 'Une erreur inconnue est survenue',
+    'Invalid request': 'Requête invalide',
+    'Unauthorized': 'Non autorisé',
+    'Not acceptable': 'Non acceptable',
+    'You do not have the required permissions to perform this action': 'Vous n\'avez pas les permissions nécessaires pour effectuer cette action',
+    'Invalid auth token': 'Dernière connexion invalide',
+    'The requested resource was not found': 'Ressource introuvable',
 }

@@ -24,12 +24,10 @@
 <script>
 export default {
   name: "user-dropdown",
-  emits: ["logout"],
   methods: {
     logout() {
       this.$store.commit("logout");
       this.$cookies.remove("token");
-      this.$emit("logout");
       this.$router.push("/");
     },
     cutMail(mail) {

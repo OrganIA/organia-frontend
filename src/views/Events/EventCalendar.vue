@@ -9,7 +9,7 @@
     <div class="column page-container">
       <div class="page-content">
         <vue-cal class="vuecal--rounded-theme organia-calendar" locale="fr" active-view="month" :time="false"
-                 :events="events">
+          :events="events">
         </vue-cal>
       </div>
     </div>
@@ -22,10 +22,11 @@ import "vue-cal/dist/vuecal.css";
 import 'vue-cal/dist/i18n/fr.cjs.js'
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "event-calendar",
-  components: {VueCal, SideBar, ApplicationNavbar},
+  components: { VueCal, SideBar, ApplicationNavbar },
   data() {
     return {
       events: [],
@@ -50,22 +51,26 @@ export default {
     },
     calendarFiller() {
       this.$http
-          .get("/calendar")
-          .then((response) => {
-            new Date();
-            response.data.forEach((item) => {
-              const date = new Date(item.date);
-              this.events.push({
-                title: item.description,
-                start: this.formatDate(item.date),
-                end: this.formatDate(item.date),
-                content: `<p>${date.getHours()}:${date.getMinutes()}</p>`,
-              });
+        .get("/calendar")
+        .then((response) => {
+          new Date();
+          response.data.forEach((item) => {
+            const date = new Date(item.date);
+            this.events.push({
+              title: item.description,
+              start: this.formatDate(item.date),
+              end: this.formatDate(item.date),
+              content: `<p>${date.getHours()}:${date.getMinutes()}</p>`,
             });
-          })
-          .catch((error) => {
-            console.log(error);
           });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+        });
     },
   },
 };
