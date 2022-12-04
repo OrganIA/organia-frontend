@@ -8,13 +8,13 @@
             </header>
             <section class="modal-card-body content">
                 <label class="label">Nom de la conversation</label>
-                <p>{{ chat.chatName }}</p>
+                <p>{{ chat.name }}</p>
                 <label class="label">Créateur:</label>
-                <p>{{ creator.email }}</p>
+                <p>{{  `${chat.creator.firstname} ${chat.creator.lastname}` }}</p>
                 <div class="select is-multiple user-list">
                     <label class="label">Utilisateurs ajoutés</label>
-                    <select multiple v-if="users.length > 0" :size="users.length">
-                        <option v-for="user in users" :key="user._id" :value="user._id">{{ user.username }}</option>
+                    <select multiple v-if="chat.users.length > 0" :size="chat.users.length">
+                        <option v-for="user in chat.users" :key="user._id" :value="user._id">{{ `${user.firstname} ${user.lastname}` }}</option>
                     </select>
                 </div>
             </section>
@@ -26,27 +26,11 @@
 export default {
     name: "ChatInfosModal",
     props: {
-        users: {
-            type: Array,
-            default() {
-                return []
-            },
-        },
         chat: {
             type: Object,
             default() {
                 return {}
             }
-        }
-    },
-    data() {
-        return {
-            creator: {}
-        }
-    },
-    watch: {
-        chat(newChat) {
-            this.creator = newChat.creator
         }
     },
     emits: ["closeModal"],

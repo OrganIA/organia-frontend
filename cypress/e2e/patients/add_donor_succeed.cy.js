@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 describe('Add donor success', () => {
   it('Tries to open modal in the receiver panel should succeed', () => {
     cy.visit(Cypress.config().baseUrl)

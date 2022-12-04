@@ -23,34 +23,32 @@
               <th>Gestion des Personnes</th>
               <th>Gestion des Rôles</th>
               <th>Gestion des Hopitaux</th>
-              <th>Gestion des Invitations</th>
+              <th>Gestion des Listings</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="role in roles" :key="role">
+            <tr class="cypress-roles-row" v-for="role in roles" :key="role">
               <td>{{ role.name }}</td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-users" v-model="role.can_edit_users" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-persons" v-model="role.can_edit_persons" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-roles" v-model="role.can_edit_roles" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_hospitals" true=true false=false
-                  type="checkbox">
+                <input class="center-checkbox cypress-manage-hospitals" v-model="role.can_edit_hospitals" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
+                <input class="center-checkbox cypress-manage-listings" v-model="role.can_edit_listings" true=true false=false type="checkbox">
               </td>
             </tr>
           </tbody>
         </table>
         <div class="role-panel-btn-container">
-          <button class="cypress-add button is-info save-roles" @click="updateRoles()" type="submit"> Confirmer</button>
-
+          <button class="cypress-update button is-info save-roles" @click="updateRoles()" type="submit"> Confirmer</button>
         </div>
         <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
@@ -70,7 +68,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les informations des utilisateurs</label>
-                    <select v-model="manage_users" name="manage_users" id="manage_users-select" class="cypress-users
+                    <select v-model="edit_users" name="edit_users" id="edit-users-select" class="cypress-users
             button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -78,7 +76,15 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les informations des patients</label>
-                    <select v-model="manage_persons" name="manage_persons" id="manage_persons-select" class="cypress-persons
+                    <select v-model="edit_persons" name="edit_persons" id="edit-persons-select" class="cypress-persons
+            button is-info is-light" required>
+                      <option value="true">Oui</option>
+                      <option value="false">Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Droit de modifier les informations des listings</label>
+                    <select v-model="edit_listings" name="edit_listings" id="edit-listings-select" class="cypress-listings
             button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -86,7 +92,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les rôles</label>
-                    <select v-model="manage_roles" name="manage_roles" id="manage_roles-select" class="cypress-roles
+                    <select v-model="edit_roles" name="edit_roles" id="edit-roles-select" class="cypress-roles
             button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -94,15 +100,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les informations des hôpitaux</label>
-                    <select v-model="manage_hospitals" name="manage_hospitals" id="manage_hospitals-select" class="cypress-hospitals
-            button is-info is-light" required>
-                      <option value="true">Oui</option>
-                      <option value="false">Non</option>
-                    </select>
-                  </div>
-                  <div class="form-input small required">
-                    <label class="label">Droit d'inviter d'autres utilisateurs</label>
-                    <select v-model="manage_invitation" name="manage_invitation" id="manage_invitation-select" class="cypress-invitation
+                    <select v-model="edit_hospitals" name="edit-hospitals" id="edit_hospitals-select" class="cypress-hospitals
             button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -115,7 +113,7 @@
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
                 v-on:click="createRoles()">Ajouter</button>
-              <button class="button modal-admin-btn" v-on:click="openNewRoleModal(false)">Fermer</button>
+              <button class="button modal-admin-btn cypress-close" v-on:click="openNewRoleModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
@@ -132,10 +130,10 @@
 <script>
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "role-panel",
-  emits: ["login"],
   components: { SideBar, ApplicationNavbar },
 
   data() {
@@ -145,11 +143,11 @@ export default {
       role: {},
       state: "",
       name: "",
-      manage_users: "",
-      manage_persons: "",
-      manage_roles: "",
-      manage_hospitals: "",
-      manage_invitation: "",
+      edit_users: "",
+      edit_persons: "",
+      edit_roles: "",
+      edit_hospitals: "",
+      edit_invitation: "",
     };
   },
   created() {
@@ -158,30 +156,44 @@ export default {
   methods: {
     getRoles() {
       this.$http
-        .get(`/roles`)
+        .get(`/roles/`)
         .then((response) => {
           this.backup = response.data;
           this.roles = response.data.map(role => Object.assign({}, role));
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     changeRole(r) {
       this.$http
         .post(`/roles/${r.id}`, {
-          can_manage_users: r.can_manage_users,
-          can_manage_persons: r.can_manage_persons,
-          can_manage_roles: r.can_manage_roles,
-          can_manage_hospitals: r.can_manage_hospitals,
-          can_invite: r.can_invite,
+          can_edit_users: r.can_edit_users,
+          can_edit_persons: r.can_edit_persons,
+          can_edit_roles: r.can_edit_roles,
+          can_edit_hospitals: r.can_edit_hospitals,
+          can_edit_listings: r.can_edit_listings,
         })
         .then(() => {
-          this.$toast.success("Reception du rôle: " + r.name + " reussite !");
-          setTimeout(this.$toast.clear, 3000);
+          this.getRoles()
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     updateRoles() {
@@ -196,13 +208,14 @@ export default {
     },
     createRoles() {
       this.$http
-        .post("/roles", {
+        .post("/roles/", {
           name: this.name,
-          can_manage_users: this.manage_users,
-          can_manage_persons: this.manage_persons,
-          can_manage_roles: this.manage_roles,
-          can_manage_hospitals: this.manage_hospitals,
-          can_invite: this.manage_invitation,
+          can_edit_users: this.edit_users,
+          can_edit_persons: this.edit_persons,
+          can_edit_roles: this.edit_roles,
+          can_edit_hospitals: this.edit_hospitals,
+          can_edit_listings: this.edit_listings,
+          can_edit_staff: true
         })
         .then(() => {
           this.$toast.success("Création du rôle réussie !");
@@ -210,9 +223,16 @@ export default {
           this.reloadRoles()
         })
         .catch((error) => {
-          this.$toast.error(
-            "Erreur : " + error.response.data.detail
-          );
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
           setTimeout(this.$toast.clear, 3000);
         });
     },
@@ -222,11 +242,15 @@ export default {
         return;
       }
       this.state = ""
-
-
+      this.edit_hospitals = false
+      this.edit_persons = false
+      this.edit_roles = false
+      this.edit_users = false
+      this.edit_listings = false
+      this.name = ""
     },
     reloadRoles() {
-      this.state = ""
+      this.openNewRoleModal(false)
       this.getRoles()
     }
   },

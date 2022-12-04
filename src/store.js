@@ -1,4 +1,4 @@
-import { createStore } from "vuex"
+import {createStore} from "vuex"
 
 const store = createStore({
     state() {
@@ -16,9 +16,6 @@ const store = createStore({
         updateEmail(state, newEmail) {
             state.email = newEmail;
         },
-        updateRoleID(state, newRoleID) {
-            state.role_id = newRoleID;
-        },
         updateRole(state, newRole) {
             state.role = newRole;
         },
@@ -26,7 +23,6 @@ const store = createStore({
             state.id = payload.id;
             state.email = payload.email;
             state.role = payload.role;
-            state.role_id = payload.role.id;
         },
         logout(state) {
             state.id = 0;
@@ -41,9 +37,6 @@ const store = createStore({
         },
         getEmail(state) {
             return state.email;
-        },
-        getRoleID(state) {
-            return state.role_id;
         },
         getRole(state) {
             return state.role;

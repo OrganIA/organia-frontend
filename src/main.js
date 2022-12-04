@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import store from './store'
 import router from './router'
@@ -11,7 +11,7 @@ import VueTelInput from 'vue3-tel-input'
 import 'vue3-tel-input/dist/vue3-tel-input.css'
 import 'vue-cal/dist/vuecal.css'
 
-createApp(App)
+const app = createApp(App)
     .use(store)
     .use(router)
     .use(cookies)
@@ -19,4 +19,9 @@ createApp(App)
     .use(VueAxios, axios)
     .use(moment)
     .use(VueTelInput)
-    .mount('#app')
+
+
+app.config.errorHandler = () => null;
+app.config.warnHandler = () => null;
+
+app.mount('#app')

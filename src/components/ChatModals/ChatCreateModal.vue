@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import translate from "@/translate"
 export default {
     name: "ChatCreateModal",
     props: {
@@ -99,19 +100,13 @@ export default {
             const users = {
                 users_ids: [],
             };
-            users.users_ids.push({
-                user_id: this.currentUserId,
-            });
             this.usersToAdd.forEach((user) => {
-                users.users_ids.push({
-                    user_id: user.id,
-                });
+                users.users_ids.push(user.id);
             });
             this.$http
-                .post("/chats", {
+                .post("/chats/", {
                     users_ids: users.users_ids,
-                    chat_name: this.newRoomName,
-                    creator_id: this.currentUserId,
+                    name: this.newRoomName,
                 })
                 .then(() => {
                     this.$toast.success("Création réussie!");
@@ -120,6 +115,17 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
+                    if (error.response.data.msg.includes("is already taken")) {
+                        error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+                        this.$toast.error(
+                            "Erreur lors de la connexion : " + error.response.data.msg
+                        );
+                    } else {
+                        this.$toast.error(
+                            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+                        );
+                    }
+                    setTimeout(this.$toast.clear, 3000);
                 });
         },
     },
@@ -127,6 +133,7 @@ export default {
 </script>
 
 <style>
+
 </style>
 <style scoped>
 .user-list {

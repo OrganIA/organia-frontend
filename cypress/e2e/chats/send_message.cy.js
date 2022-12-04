@@ -1,5 +1,8 @@
-/* eslint-disable no-undef */
-describe('Send Message Test Success', () => {
+
+import { emailGenerator } from "../../utils"
+var message = emailGenerator();
+
+describe('Send Message', () => {
   it('Tries to send a message', () => {
     cy.visit(Cypress.config().baseUrl)
 

@@ -1,6 +1,6 @@
-/* eslint-disable no-undef */
-describe('New Chat room Test Success', () => {
-  it('Tries to create a new chat room and should succeed', () => {
+
+describe('Add chat room', () => {
+  it('Tries to add a chat room should succeed', () => {
     cy.visit(Cypress.config().baseUrl)
 
     cy.get('.cypress-to-login').click()

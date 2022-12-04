@@ -13,8 +13,6 @@
             <option value="first_name">Prénom</option>
             <option value="last_name">Nom</option>
             <option value="email">Email</option>
-            <option value="created_at">Arrivée</option>
-            <option value="updated_at">Dernière modif.</option>
           </select>
           <div class="fa  fa-solid fa-angle-down  icon-dropdown-correction"></div>
           <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
@@ -32,34 +30,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id }">
-              <td v-on:click="loadSelectedUser(user.id)"
+            <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id, 'cypress-user-row': true }">
+              <td @click="loadSelectedUser(user.id)"
                 :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.id }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
-                {{ user.person ? user.person.first_name : "-" }}
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.firstname }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
-                {{ user.person ? user.person.last_name : "-" }}
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+                {{ user.lastname }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.email }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.created_at }}
               </td>
-              <td v-on:click="loadSelectedUser(user.id)"
-                :class="{ 'selected-element': user.id === $data.user.id }">
+              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.updated_at }}
               </td>
               <td :class="{ 'selected-element': user.id === $data.user.id }">
-                <div v-on:click="loadUserToModify(user.id)" class="button is-primary">
-                  <i class="fas fa-edit"></i>
+                <div @click="loadUserToModify(user.id)" class="button is-primary">
+                  <i class="fas fa-edit cypress-user-edit"></i>
                 </div>
               </td>
             </tr>
@@ -70,54 +63,53 @@
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Informations de l'utilisateur</p>
-              <button class="delete" aria-label="close" v-on:click="loadSelectedUser(this.user.id)"></button>
+              <button class="delete" aria-label="close" @click="loadSelectedUser(this.user.id)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <div class="row mt-4">
                 <a :href="'mailto:' + this.user.email" class="button is-info is-light mx-auto role-btn">{{
-                this.user.email
+                    this.user.email
                 }}</a>
-                <div class="button is-info is-light mx-auto role-btn">{{ this.role.name }}</div>
+                <div class="button is-info is-light mx-auto role-btn">{{ this.user.role.name }}</div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_manage_users, 'is-danger': !this.role.can_manage_users }">
+                  :class="{ 'is-primary': this.user.role.can_edit_users, 'is-danger': !this.user.role.can_edit_users }">
                   Peut gérer les utilisateurs
                 </div>
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_manage_persons, 'is-danger': !this.role.can_manage_persons }">
+                  :class="{ 'is-primary': this.user.role.can_edit_persons, 'is-danger': !this.user.role.can_edit_persons }">
                   Peut gérer les patients
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_manage_roles, 'is-danger': !this.role.can_manage_roles }">
+                  :class="{ 'is-primary': this.user.role.can_edit_roles, 'is-danger': !this.user.role.can_edit_roles }">
                   Peut gérer les rôles
                 </div>
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_manage_hospitals, 'is-danger': !this.role.can_manage_hospitals }">
+                  :class="{ 'is-primary': this.user.role.can_edit_hospitals, 'is-danger': !this.user.role.can_edit_hospitals }">
                   Peut gérer les hôpitaux
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="button is-light mx-auto role-btn"
-                  :class="{ 'is-primary': this.role.can_invite, 'is-danger': !this.role.can_invite }">
-                  Peut créer des invitations
+                  :class="{ 'is-primary': this.user.role.can_edit_listings, 'is-danger': !this.user.role.can_edit_listings }">
+                  Peut gérer les listings
                 </div>
               </div>
             </section>
             <footer class="modal-card-foot organia-modal-footer">
-              <button class="button modal-admin-btn" v-on:click="loadSelectedUser(this.user.id)">Fermer</button>
+              <button class="button modal-admin-btn" @click="loadSelectedUser(this.user.id)">Fermer</button>
             </footer>
           </div>
         </div>
-        <div class="modal"
-          :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
+        <div class="modal" :class="{ 'is-invisible': (state2 !== 'clicked'), 'is-active': (state2 === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
               <p class="modal-card-title  has-text-white">Modifier l'utilisateur</p>
-              <button class="delete" aria-label="close" v-on:click="openModifyUserModal(false)"></button>
+              <button class="delete" aria-label="close" @click="openModifyUserModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
               <div>
@@ -126,7 +118,7 @@
                     <label class="label">Mail</label>
                     <input v-model="toModifyUser.email" type="email" class="input mb-6" required />
                     <label class="label">Rôle</label>
-                    <select v-model="selected_role" class="button mb-4 ml-6 is-info is-light role-selector">
+                    <select v-model="selected_role" class="button mb-4 ml-6 is-info is-light role-selector cypress-role-selector">
                       <option v-for="role in roles" :value="role.id" :key="role.id">
                         {{ role.name }}
                       </option>
@@ -136,9 +128,9 @@
               </div>
             </section>
             <footer class="modal-card-foot organia-modal-footer">
-              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                v-on:click="submitForm()">Enregistrer</button>
-              <button class="button modal-admin-btn" v-on:click="openModifyUserModal(false)">Fermer</button>
+              <button type="submit" class="cypress-submit button modal-admin-btn modal-add-role-btn"
+                @click="submitForm()">Enregistrer</button>
+              <button class="button modal-admin-btn" @click="openModifyUserModal(false)">Fermer</button>
             </footer>
           </div>
         </div>
@@ -151,12 +143,12 @@
 <script>
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
+import translate from "@/translate"
 
 export default {
   name: "administrator-panel",
   components: { SideBar, ApplicationNavbar },
 
-  emits: ["login"],
   data() {
 
     return {
@@ -164,8 +156,10 @@ export default {
       state: "",
       state2: "",
       users: {},
-      user: {},
-      role: {},
+      usersBackup: [],
+      user: {
+        role: {},
+      },
       toModifyUser: {},
       modId: -1,
       roles: [],
@@ -182,17 +176,20 @@ export default {
   methods: {
     getUsers() {
       this.$http
-        .get("/users", {
-          headers: { Authorization: `Bearer ${this.$cookies.get("token")}` },
-        })
+        .get("/users/")
         .then((response) => {
           response.data.forEach((element) => {
             element.created_at = new Date(element.created_at).toDateString();
           });
           this.users = response.data;
+          this.usersBackup = this.users
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     updateFilter(dataName) {
@@ -245,39 +242,25 @@ export default {
         this.getUsers();
         return;
       }
-      if (this.selectFilter in this.receiversBackup[0].person) {
-        this.users = this.receiversBackup.filter((el) => {
-          if (el.person[this.selectFilter] != null)
-            return el.person[this.selectFilter].includes(this.filterText);
-        });
-      } else {
-        this.users = this.receiversBackup.filter((el) => {
-          if (el[this.selectFilter] != null)
-            return el[this.selectFilter].includes(this.filterText);
-        });
-      }
+      this.users = this.usersBackup.filter((el) => {
+        if (el[this.selectFilter] != null)
+          return el[this.selectFilter].includes(this.filterText);
+      });
     },
     getUserByID() {
       this.$http
         .get(`/users/${this.user.id}`)
         .then((response) => {
           this.user = response.data;
-          this.getRoleById(this.user.role_id)
         })
         .catch((error) => {
           console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
 
-    },
-    getRoleById(id) {
-      this.$http
-        .get(`/roles/${id}`)
-        .then((response) => {
-          this.role = response.data;
-        })
-        .catch((error) => {
-          console.log(error)
-        });
     },
     loadSelectedUser(userId) {
       if (this.user.id === userId) {
@@ -296,11 +279,10 @@ export default {
     openModifyUserModal(val) {
       if (val === true) {
         this.state2 = "clicked"
+        this.selected_role = this.toModifyUser.role
         return;
       }
       this.state2 = ""
-
-
     },
     getSpecificUserByID() {
       this.$http
@@ -311,24 +293,31 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     getRoles() {
       this.$http
-        .get("/roles")
+        .get("/roles/")
         .then((response) => {
           this.roles = response.data;
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     submitForm() {
-      console.log(this.toModifyUser.email)
       this.$http
         .post(`/users/${this.modId}`, {
           email: this.toModifyUser.email,
-          role_id: this.selected_role,
+          role_id: this.selected_role.id,
         })
         .then(() => {
           this.$router.push("/administrator");
@@ -338,11 +327,21 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
     },
     loadUserToModify(userId) {
       this.modId = userId;
-      console.log(userId)
       this.getRoles()
       this.getSpecificUserByID();
       this.state2 = "clicked"

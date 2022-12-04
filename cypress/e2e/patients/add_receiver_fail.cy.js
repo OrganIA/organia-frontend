@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 describe('Add receiver fail', () => {
   it('Tries to add a receiver should fail', () => {
     cy.visit(Cypress.config().baseUrl)

@@ -1,5 +1,5 @@
 <template>
-  <router-view @login="handleLogin" />
+  <router-view />
 </template>
 
 <script>
@@ -8,72 +8,48 @@ import translate from "@/translate"
 export default {
   name: "App",
   methods: {
-    getRole(data) {
-      this.$http
-        .get(`/roles/${data.role_id}`)
+    getMe() {
+      this.$http.get("/users/me")
         .then((response) => {
-          this.$toast.success("Connexion réussie !");
-          setTimeout(this.$toast.clear, 3000);
-          this.logged_in = true;
           this.$store.commit("login", {
-            id: data.id,
-            email: data.email,
-            role: response.data,
+            id: response.data.id,
+            email: response.data.email,
+            role: response.data.role,
           });
-          this.$emit("login", true);
-        })
-        this.$router.push('/landing')
-        .catch((error) => {
-          console.log(error.response.data.detail);
-        });
-    },
-    login() {
-      this.$http
-        .get("/users/me")
-        .then((response) => {
-          this.getRole(response.data);
-        })
-        .catch((error) => {
-          console.log(error.response);
-          this.$cookies.remove("token");
-          this.$router.push("/home");
+          this.$router.isReady().then(() => {
+            if (this.$route.path === "/" || this.$route.path === "/register") {
+              this.$router.push("/landing");
+            }
+          });
+        }).catch((error) => {
+          console.log(error)
           this.$toast.error(
-            "Erreur lors de la connexion : " + translate[error.response.data.detail]
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
           );
           setTimeout(this.$toast.clear, 3000);
-        });
-    },
-    handleLogin() {
-      this.logged_in = true;
+          this.$cookies.remove("token")
+          this.$router.push("/");
+        })
     },
     logout() {
-      this.logged_in = false;
+      this.$cookies.remove("token");
       this.$store.commit("logout");
-      this.$router.push("/home");
+      this.$router.push("/");
     },
   },
   data() {
-    return {
-      logged_in: false,
-      role: [
-        { can_manage_users: false },
-        { can_manage_persons: false },
-        { can_manage_roles: false },
-        { can_manage_hospitals: false },
-        { can_invite: false },
-      ],
-    };
+    return {};
   },
   created() {
     if (this.$cookies.get("token")) {
       this.$http.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${this.$cookies.get("token")}`;
-      this.login();
+      this.getMe();
     } else {
       this.$router.isReady().then(() => {
-        if (this.$route.path != "/register" && this.$route.path != "/home" && this.$route.path != "/team")
-          this.$router.push("/home");
+        if (this.$route.path != "/register" && this.$route.path != "/" && this.$route.path != "/team")
+          this.$router.push("/");
       });
     }
   },

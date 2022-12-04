@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 describe('Go to caledar', () => {
   it('Tries to go to the calendar page should succeed', () => {
     cy.visit(Cypress.config().baseUrl)

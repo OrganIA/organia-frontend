@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 describe('Add Event', () => {
   it('Tries to open modal in the event panel should succeed', () => {
     cy.visit(Cypress.config().baseUrl)
