@@ -23,27 +23,26 @@
               <th>Gestion des Personnes</th>
               <th>Gestion des Rôles</th>
               <th>Gestion des Hopitaux</th>
-              <th>Gestion des Invitations</th>
+              <th>Gestion des Listings</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="role in roles" :key="role">
               <td>{{ role.name }}</td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_users" true=true false=false type="checkbox">
+                <input class="center-checkbox" v-model="role.can_edit_users" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_persons" true=true false=false type="checkbox">
+                <input class="center-checkbox" v-model="role.can_edit_persons" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_roles" true=true false=false type="checkbox">
+                <input class="center-checkbox" v-model="role.can_edit_roles" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_manage_hospitals" true=true false=false
-                  type="checkbox">
+                <input class="center-checkbox" v-model="role.can_edit_hospitals" true=true false=false type="checkbox">
               </td>
               <td>
-                <input class="center-checkbox" v-model="role.can_invite" true=true false=false type="checkbox">
+                <input class="center-checkbox" v-model="role.can_edit_listings" true=true false=false type="checkbox">
               </td>
             </tr>
           </tbody>
@@ -70,7 +69,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les informations des utilisateurs</label>
-                    <select v-model="manage_users" name="manage_users" id="manage_users-select" class="cypress-users
+                    <select v-model="edit_users" name="edit_users" id="edit-users-select" class="cypress-users
             button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -78,7 +77,15 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les informations des patients</label>
-                    <select v-model="manage_persons" name="manage_persons" id="manage_persons-select" class="cypress-persons
+                    <select v-model="edit_persons" name="edit_persons" id="edit-persons-select" class="cypress-persons
+            button is-info is-light" required>
+                      <option value="true">Oui</option>
+                      <option value="false">Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Droit de modifier les informations des listings</label>
+                    <select v-model="edit_listings" name="edit_listings" id="edit-listings-select" class="cypress-listings
             button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -86,7 +93,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les rôles</label>
-                    <select v-model="manage_roles" name="manage_roles" id="manage_roles-select" class="cypress-roles
+                    <select v-model="edit_roles" name="edit_roles" id="edit-roles-select" class="cypress-roles
             button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -94,15 +101,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Droit de modifier les informations des hôpitaux</label>
-                    <select v-model="manage_hospitals" name="manage_hospitals" id="manage_hospitals-select" class="cypress-hospitals
-            button is-info is-light" required>
-                      <option value="true">Oui</option>
-                      <option value="false">Non</option>
-                    </select>
-                  </div>
-                  <div class="form-input small required">
-                    <label class="label">Droit d'inviter d'autres utilisateurs</label>
-                    <select v-model="manage_invitation" name="manage_invitation" id="manage_invitation-select" class="cypress-invitation
+                    <select v-model="edit_hospitals" name="edit-hospitals" id="edit_hospitals-select" class="cypress-hospitals
             button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -145,11 +144,11 @@ export default {
       role: {},
       state: "",
       name: "",
-      manage_users: "",
-      manage_persons: "",
-      manage_roles: "",
-      manage_hospitals: "",
-      manage_invitation: "",
+      edit_users: "",
+      edit_persons: "",
+      edit_roles: "",
+      edit_hospitals: "",
+      edit_invitation: "",
     };
   },
   created() {
@@ -174,11 +173,11 @@ export default {
     changeRole(r) {
       this.$http
         .post(`/roles/${r.id}`, {
-          can_manage_users: r.can_manage_users,
-          can_manage_persons: r.can_manage_persons,
-          can_manage_roles: r.can_manage_roles,
-          can_manage_hospitals: r.can_manage_hospitals,
-          can_invite: r.can_invite,
+          can_edit_users: r.can_edit_users,
+          can_edit_persons: r.can_edit_persons,
+          can_edit_roles: r.can_edit_roles,
+          can_edit_hospitals: r.can_edit_hospitals,
+          can_edit_listings: r.can_edit_listings,
         })
         .then(() => {
           this.$toast.success("Reception du rôle: " + r.name + " reussite !");
@@ -211,13 +210,14 @@ export default {
     },
     createRoles() {
       this.$http
-        .post("/roles", {
+        .post("/roles/", {
           name: this.name,
-          can_manage_users: this.manage_users,
-          can_manage_persons: this.manage_persons,
-          can_manage_roles: this.manage_roles,
-          can_manage_hospitals: this.manage_hospitals,
-          can_invite: this.manage_invitation,
+          can_edit_users: this.edit_users,
+          can_edit_persons: this.edit_persons,
+          can_edit_roles: this.edit_roles,
+          can_edit_hospitals: this.edit_hospitals,
+          can_edit_listings: this.edit_listings,
+          can_edit_staff: true
         })
         .then(() => {
           this.$toast.success("Création du rôle réussie !");
