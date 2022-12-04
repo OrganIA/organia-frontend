@@ -10,7 +10,7 @@
       <div class="page-content">
         <div id="main">
           <div class="event-panel-btn-container">
-            <div @click="openModal(true)" class="button is-info is-info mb-6 cypress-to-hospitals-add cypress-add-event add-btn">
+            <div @click="openModal(true)" class="button is-info is-info mb-6 cypress-add-event add-btn">
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
             </div>

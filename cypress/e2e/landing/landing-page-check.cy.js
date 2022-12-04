@@ -14,8 +14,6 @@ describe('Check Landing page element', () => {
     cy.wait('@login', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
     cy.url().should('eq', Cypress.config().baseUrl + 'landing')
 
-    cy.getCookie("token").should('not.be.null')
-
     cy.get('.cypress-avatar')
     cy.get('.cypress-avatar-display')
     cy.get('.cypress-avatar-name')
