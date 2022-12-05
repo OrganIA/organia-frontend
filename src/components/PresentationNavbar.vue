@@ -1,19 +1,13 @@
 <template>
   <nav class="navbar base-navbar" role="navigation" aria-label="main navigation">
     <div>
-      <router-link to="/home" class="button is-danger return-btn is-large"
-        :class="{ 'is-invisible': this.$route.path === '/home' || '/'}">Retour</router-link>
+      <router-link to="/" class="button is-danger return-btn is-large"
+        :class="{ 'is-invisible': this.$route.path === '/' || '/'}">Retour</router-link>
     </div>
-    <div class="navbar-brand logo-placeholder"
-      :class="{ 'is-invisible-correction': this.$route.path === '/home' || '/' }">
-      <div class="navbar-item logo">
-        <img src="https://cdn.discordapp.com/attachments/559512661717417986/843782837072297994/Asset_9.png" alt="logo"
-          class="logo-img-align">
-      </div>
-    </div>
+
     <div id="navbarBasicExample" class="navbar-menu main-menu-navbar is-active">
       <div class="navbar-start start-from-end-hor navbar-home-controllers">
-        <a href="https://www.agence-biomedecine.fr/"
+        <!--<a href="https://www.agence-biomedecine.fr/"
           class="navbar-item button is-medium is-info is-light navbar-home-controller">
           Site de l'agence de biomédecine
         </a>
@@ -25,9 +19,9 @@
           Le projet
         </router-link>
 
-        <router-link to="/login" class="navbar-item button is-medium is-info is-light navbar-home-controller">
+        <router-link to="/login" class="navbar-item button is-medium is-info is-light navbar-home-controller cypress-to-login">
           Connexion
-        </router-link>
+        </router-link>-->
       </div>
     </div>
 

@@ -1,15 +1,15 @@
 <template>
-  <div class="dropdown  is-hoverable cypress-dropdown avatar-dropdown">
+  <div class="dropdown  is-hoverable cypress-dropdown avatar-dropdown cypress-avatar">
     <div class="dropdown-trigger">
       <button class="button dropdown-trigger" aria-haspopup="true" aria-controls="dropdown-menu3">
-        <span class="name-display-dropdown">{{ cutMail($store.getters.getEmail) }}</span>
-          <img class="avatar-display"
+        <span class="name-display-dropdown cypress-avatar-name">{{ cutMail($store.getters.getEmail) }}</span>
+          <img class="avatar-display cypress-avatar-display"
             src="https://synergy-it.gitlab.io/speekio/speekio-portal/assets/img/img_avatar.png" />
       </button>
     </div>
     <div class="dropdown-menu" id="dropdown-menu3" role="menu">
       <div class="dropdown-content dropdown-correction">
-        <router-link to="/account" class="dropdown-item">
+        <router-link to="/account" class="dropdown-item cypress-to-account">
           Mon compte
         </router-link>
         <hr class="dropdown-divider">
@@ -24,13 +24,11 @@
 <script>
 export default {
   name: "user-dropdown",
-  emits: ["logout"],
   methods: {
     logout() {
       this.$store.commit("logout");
       this.$cookies.remove("token");
-      this.$emit("logout");
-      this.$router.push("/home");
+      this.$router.push("/");
     },
     cutMail(mail) {
       return mail.substr(0, mail.indexOf('@'))

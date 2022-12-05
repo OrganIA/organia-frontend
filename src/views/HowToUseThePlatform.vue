@@ -3,7 +3,7 @@
     <div class="navbar-brand logo-placeholder">
       <div class="navbar-item logo">
         <img src="https://cdn.discordapp.com/attachments/559512661717417986/784449164955746314/Asset_8.png" alt="logo"
-          class="logo-img-align">
+             class="logo-img-align">
       </div>
     </div>
     <div id="navbarBasicExample" class="navbar-menu main-menu-navbar">
@@ -20,7 +20,7 @@
       <ul>
         <li class="tutorial-tab" :class="{ 'is-active': isActive === 'plateforme' }"><a
             @click="isActive = 'plateforme'">La
-            plateforme</a></li>
+          plateforme</a></li>
         <li class="tutorial-tab" :class="{ 'is-active': isActive === 'connexion' }"><a
             @click="isActive = 'connexion'">Se connecter</a></li>
         <li class="tutorial-tab" :class="{ 'is-active': isActive === 'receveurs' }"><a
@@ -36,7 +36,7 @@
         <li class="tutorial-tab" :class="{ 'is-active': isActive === 'panneau_admin' }"><a
             @click="isActive = 'panneau_admin'">Panel Administrateur</a></li>
         <li class="tutorial-tab" :class="{ 'is-active': isActive === 'logs' }"><a @click="isActive = 'logs'">Gérer les
-            journaux</a></li>
+          journaux</a></li>
         <li class="tutorial-tab" :class="{ 'is-active': isActive === 'support' }"><a
             @click="isActive = 'support'">Contacter le support</a></li>
 

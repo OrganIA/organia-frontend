@@ -9,11 +9,11 @@
             <section class="modal-card-body">
                 <form @submit.prevent="createRoom">
                     <label class="label">Nom de la conversation</label>
-                    <input class="input" type="text" placeholder="Nom de la conversation" v-model="newRoomName"
+                    <input class="input cypress-chat-title" type="text" placeholder="Nom de la conversation" v-model="newRoomName"
                         required>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs non ajoutés
-                            <select multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
+                            <select class="cypress-nonadd-user" multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
                                 <option v-for="user, index in usersNotAdded" :key="user.id" :value="user.id"
                                     @click="addUser(user, index)">{{ user.email }}</option>
                             </select>
@@ -32,7 +32,7 @@
                 </form>
             </section>
             <footer class="modal-card-foot">
-                <button @click="createRoom" class="button is-success">Sauvegarder</button>
+                <button @click="createRoom" class="button is-success cypress-save">Sauvegarder</button>
                 <button class="button is-danger" @click="closeModal(false)">
                     Annuler
                 </button>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import translate from "@/translate"
 export default {
     name: "ChatCreateModal",
     props: {
@@ -99,19 +100,13 @@ export default {
             const users = {
                 users_ids: [],
             };
-            users.users_ids.push({
-                user_id: this.currentUserId,
-            });
             this.usersToAdd.forEach((user) => {
-                users.users_ids.push({
-                    user_id: user.id,
-                });
+                users.users_ids.push(user.id);
             });
             this.$http
-                .post("/chats", {
+                .post("/chats/", {
                     users_ids: users.users_ids,
-                    chat_name: this.newRoomName,
-                    creator_id: this.currentUserId,
+                    name: this.newRoomName,
                 })
                 .then(() => {
                     this.$toast.success("Création réussie!");
@@ -120,6 +115,17 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
+                    if (error.response.data.msg.includes("is already taken")) {
+                        error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+                        this.$toast.error(
+                            "Erreur lors de la connexion : " + error.response.data.msg
+                        );
+                    } else {
+                        this.$toast.error(
+                            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+                        );
+                    }
+                    setTimeout(this.$toast.clear, 3000);
                 });
         },
     },
@@ -127,6 +133,7 @@ export default {
 </script>
 
 <style>
+
 </style>
 <style scoped>
 .user-list {

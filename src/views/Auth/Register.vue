@@ -1,5 +1,5 @@
 <template>
-  <PresentationNavbar />
+  <Loader :class="{ 'is-hidden': !this.loading }"></Loader>
   <div class="centered-container">
     <form @submit.prevent="register()">
       <div class="content">
@@ -43,13 +43,12 @@
 </template>
 
 <script>
-import PresentationNavbar from "@/components/PresentationNavbar";
 import translate from "@/translate"
+import Loader from "@/components/Loader";
 
 export default {
   name: "register",
-  emits: ["login"],
-  components: { PresentationNavbar },
+  components: { Loader },
   data() {
     return {
       lastname: "",
@@ -57,6 +56,7 @@ export default {
       phone: "",
       password: "",
       email: "",
+      loading: false,
       country: ""
     };
   },
@@ -68,8 +68,9 @@ export default {
       }
     },
     register() {
+      this.loading = true
       this.$http
-        .post("/users/", {
+        .post("/auth/register", {
           email: this.email,
           password: this.password,
           firstname: this.firstname,
@@ -78,55 +79,34 @@ export default {
           country: this.country,
           role_id: 1
         })
-        .then(() => {
-          this.login();
-        })
-        .catch((error) => {
-          console.log(error);
-          console.log(error.response);
-          if (error.response.data.detail.includes("email"))
-            this.$toast.error(
-              "Erreur lors de l'inscription : Email déjà utilisé"
-            );
-          else
-            this.$toast.error(
-              "Erreur lors de l'inscription : " + translate[error.response.data.detail]
-            );
-          setTimeout(this.$toast.clear, 3000);
-        });
-    },
-    getRole(role_id) {
-      this.$http
-        .get(`/roles/${role_id}`)
-        .then((response) => {
-          this.$toast.success("Connexion réussie !");
-          setTimeout(this.$toast.clear, 3000);
-          this.$store.commit("login", {
-            email: this.email,
-            role: response.data,
-          });
-          this.$emit("login", true);
-          this.$router.push("/landing");
-        })
-        .catch((error) => {
-          console.log(error.response.data.detail);
-        });
-    },
-    login() {
-      this.$http
-        .post("/auth", {
-          email: this.email,
-          password: this.password,
-        })
         .then((response) => {
           this.$http.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.token}`;
+          console.log(response.data);
           this.$cookies.set("token", response.data.token, -1);
-          this.getRole(response.data.user.role_id);
+          this.$store.commit("login", {
+            id: response.data.user.id,
+            email: response.data.user.email,
+            role: response.data.user.role,
+          });
+          this.loading = false
+          this.$router.push("/landing");
         })
         .catch((error) => {
-          console.log(error.response.data.detail);
+          console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
+          this.loading = false
         });
     },
   },

@@ -13,11 +13,10 @@
             <chat-create-modal :users="users" :currentUserId="currentUser.id"
               :class="{ 'is-invisible': (state !== 'newChat'), 'is-active': (state === 'newChat') }"
               @closeModal="closeModal" />
-            <chat-infos-modal :users="currentChat.users" :chat="currentChat"
+            <chat-infos-modal :chat="currentChat"
               :class="{ 'is-invisible': (state !== 'chatInfos'), 'is-active': (state === 'chatInfos') }"
               @closeModal="closeModal" />
-            <chat-edit-modal :users="users" :currentUserId="currentUser.id" :usersAdded="currentChat.users"
-              :chatName="currentChat.chatName" :chatId="currentChat.chatId"
+            <chat-edit-modal :users="users" :chat="currentChat"
               :class="{ 'is-invisible': (state !== 'editChat'), 'is-active': (state === 'editChat') }"
               @closeModal="closeModal" />
           </section>
@@ -25,21 +24,21 @@
             <div class="chat-container">
               <div class="row">
                 <section class="discussions">
-                  <div class="discussion message-active" v-for="chat in chats" :key="chat.chatId"
+                  <div class="discussion message-active cypress-conversation" v-for="chat in chats" :key="chat.id"
                     @click="selectChat(chat)">
                     <div class="photo">
-                      {{chat.chatName.charAt(0).toUpperCase()}}
+                      {{ chat.name.charAt(0).toUpperCase() }}
                     </div>
                     <div class="desc-contact">
-                      <p class="name">{{chat.chatName}}</p>
+                      <p class="name cypress-chat-name">{{ chat.name }}</p>
                     </div>
                   </div>
                 </section>
                 <section v-if="Object.keys(currentChat).length !== 0" class="chat">
                   <div class="header-chat">
-                    <p class="name">{{currentChat.chatName}}</p>
+                    <p class="name">{{ currentChat.name }}</p>
                     <div class="actions right">
-                      <i class="icon clickable fas fa-plus-circle" aria-hidden="true" @click="openModal('newChat')"></i>
+                      <i class="icon clickable fas fa-plus-circle " @click="openModal('newChat')"></i>
                       <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')"></i>
                       <i v-if="currentChat.creator.id == currentUser.id" class="icon clickable fas fa-edit"
                         aria-hidden="true" @click="openModal('editChat')"></i>
@@ -47,16 +46,16 @@
                   </div>
                   <div class="messages-chat">
                     <div class="message-list">
-                      <div class="message-container" v-for="message in messages" :key="message">
-                        <div v-if="message.senderId == currentUser.id" class="sent">
-                          {{message.content}}
+                      <div class="message-container" v-for="message in messages" :key="message.id">
+                        <div v-if="message.sender.id == currentUser.id" class="sent">
+                          {{ message.content }}
                         </div>
                         <div v-else class="received">
                           <div>
-                            de: {{message.username}}
+                            {{ message.content }}
                           </div>
                           <div>
-                            {{message.content}}
+                            {{ message.sender.email }}
                           </div>
                         </div>
                       </div>
@@ -64,8 +63,9 @@
                   </div>
                   <div class="footer-chat">
                     <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
-                    <input type="text" class="write-message" placeholder="Type your message here" v-model="input" />
-                    <i class="fas fa-paper-plane clickable" @click="sendMessage"></i>
+                    <input type="text" class="write-message cypress-message-input" placeholder="Type your message here"
+                      v-model="input" />
+                    <i class="fas fa-paper-plane clickable" @click="sendMessage" @keypress.enter="sendMessage"></i>
                   </div>
                 </section>
                 <section v-else class="chat">
@@ -90,6 +90,7 @@ import ChatInfosModal from '@/components/ChatModals/ChatInfosModal.vue'
 import ChatEditModal from '@/components/ChatModals/ChatEditModal.vue'
 import SideBar from '@/components/SideBar.vue'
 import ApplicationNavbar from '@/components/ApplicationNavbar.vue'
+import translate from "@/translate"
 
 export default {
   components: {
@@ -112,70 +113,57 @@ export default {
       websocket: null,
     }
   },
-  async created() {
-    await this.getMe()
-    await this.getUsers()
-    await this.getChats()
-    await this.getLatestMessages()
+  created() {
+    this.getMe()
+    this.getUsers()
+    this.getChats()
+    this.getLatestMessages()
   },
   methods: {
-    async getMe() {
-      await this.$http
-        .get("/users/me")
+    getMe() {
+      this.$http.get("/users/me")
         .then((response) => {
-          this.currentUser = response.data;
+          this.currentUser = response.data
+        }).catch((error) => {
+          console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+          this.$cookies.remove("token")
+          this.$router.push("/");
         })
-        .catch((error) => {
-          console.log(error.response);
-        });
     },
-    async getChats() {
-      await this.$http
-        .get("/chats")
+    getChats() {
+      this.$http
+        .get("/chats/")
         .then((response) => {
-          const chats = [];
-          response.data.forEach(chat => {
-            const creator = this.users.find(user => user.id == chat.creator_id)
-            const users = this.getUsersOfChat(chat.users_ids)
-            chats.push({
-              chatId: chat.chat_id,
-              chatName: chat.chat_name,
-              users: users,
-              creator: creator
-            })
-          });
-          this.chats = JSON.parse(JSON.stringify(chats));
+          this.chats = response.data;
         })
         .catch((error) => {
           console.log(error);
           this.$toast.error(
-            "Erreur lors du chargement des conversations"
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
           );
           setTimeout(this.$toast.clear, 3000);
         });
     },
-    async getUsers() {
-      await this.$http
-        .get("/users")
+    getUsers() {
+      this.$http
+        .get("/users/")
         .then((response) => {
           this.users = response.data
         })
         .catch((error) => {
           console.log(error);
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
         });
     },
-    getUsersOfChat(users_ids) {
-      const users = []
-      users_ids.forEach((user) => {
-        users.push({
-          id: user,
-          username: this.users.find(elem => elem.id == user).email
-        })
-      })
-      return users
-    },
-    async getMessages() {
-      if (this.currentChat.creator.id == this.currentUserId) {
+    getMessages() {
+      if (this.currentChat.creator.id == this.currentUser.id) {
         this.menu_actions = [
           {
             name: 'infos',
@@ -195,116 +183,145 @@ export default {
         ]
       }
       this.messages = []
-      await this.$http
-        .get(`/chats/${this.currentChat.chatId}/messages`)
+      this.$http
+        .get(`/chats/${this.currentChat.id}/messages`)
         .then((response) => {
           const messages = []
-          response.data.forEach(message => {
-            const tmp_date = Date.parse(message.created_at)
-            const date = new Date()
-            date.setUTCSeconds(tmp_date)
-            messages.push({
-              id: message.id,
-              content: message.content,
-              senderId: message.sender_id,
-              timestamp: date.toLocaleTimeString(),
-              username: this.users.find(user => user.id == message.sender_id).email,
+          if (response.data) {
+            response.data.forEach(message => {
+              const tmp_date = Date.parse(message.created_at)
+              const date = new Date()
+              date.setUTCSeconds(tmp_date)
+              messages.push({
+                id: message.id,
+                content: message.content,
+                sender: message.sender,
+                timestamp: date.toLocaleTimeString(),
+                username: `${message.sender.firstname} ${message.sender.lastname}`,
+              })
             })
-          })
+          }
           this.messages = messages
+          this.$nextTick(() => {
+            document.querySelector(".message-list").scrollTop = document.querySelector(".message-list").scrollHeight;
+          })
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.data.msg.includes("is already taken")) {
+            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+            this.$toast.error(
+              "Erreur lors de la connexion : " + error.response.data.msg
+            );
+          } else {
+            this.$toast.error(
+              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+          }
+          setTimeout(this.$toast.clear, 3000);
         });
-      this.websocketSetup(this.currentChat.chatId)
+      this.websocketSetup()
     },
-    async getLatestMessages() {
-      const chats = JSON.parse(JSON.stringify(this.chats))
-      await this.$http
+    getLatestMessages() {
+      this.$http
         .get("/chats/messages/latest")
         .then((response) => {
           response.data.forEach(message => {
-            const tmp_date = Date.parse(message.created_at)
+            const tmp_date = Date.parse(message.last_message.created_at)
             const date = new Date()
             date.setUTCSeconds(tmp_date)
-            chats.find(chat => chat.chatId == message.chat_id).lastMessage = {
-              id: message.id,
-              content: message.content,
-              senderId: message.sender_id,
-              timestamp: date.toLocaleTimeString(),
-              username: this.users.find(user => user.id == message.sender_id).email,
-            }
+            this.chats.forEach((chat) => {
+              if (chat.id == message.chat.id) {
+                chat.latest_message = {
+                  id: message.last_message.id,
+                  content: message.last_message.content,
+                  sender: message.last_message.sender,
+                  timestamp: date.toLocaleTimeString(),
+                  username: message.last_message.sender.firstname,
+                }
+              }
+            })
           })
-          this.chats = chats
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
+          if (error.response) {
+            if (error.response.data.msg.includes("is already taken")) {
+              error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+              this.$toast.error(
+                "Erreur lors de la connexion : " + error.response.data.msg
+              );
+            } else {
+              this.$toast.error(
+                "Erreur lors de la connexion : " + translate[error.response.data.msg]
+              );
+            }
+          }
+          setTimeout(this.$toast.clear, 3000);
         })
 
     },
-    async refreshChatList() {
+    refreshChatList() {
       this.chats = []
-      await this.getChats()
-      await this.getLatestMessages()
+      this.getChats()
+      this.getLatestMessages()
     },
     selectChat(chat) {
       this.currentChat = chat
-      this.getMessages(chat)
+      this.getMessages()
     },
     openModal(state) {
-      console.log(this.currentChat)
       this.state = state
     },
     closeModal(refresh) {
       this.state = ""
-      if (refresh)
+      if (refresh) {
         this.refreshChatList()
+        this.currentChat = {}
+      }
     },
-    websocketSetup(chatId) {
+    websocketSetup() {
       if (this.websocket != null)
         this.websocket.close();
       this.websocket = new WebSocket(
-        `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${chatId}`
+        `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.currentChat.id}`
       );
-      this.websocket.onopen = async () => {
+      this.websocket.onopen = () => {
         this.websocket.send(
           JSON.stringify({
             event: "login",
-            token: `Bearer ${this.$cookies.get("token")}`,
+            token: this.$cookies.get("token"),
           })
         );
-        this.websocket.onmessage = async (data) => {
+        this.websocket.onmessage = (data) => {
           let resp = JSON.parse(data.data);
-          if (resp.status != 200) {
+          if (resp.status !== 200) {
             this.$toast.error(resp.error);
             this.websocket.close();
-          }
-          if (resp.event == "message_received" || resp.event == "message_sent") {
+          } else if (resp.event === "message_received" || resp.event === "message_sent") {
             const tmp_date = Date.parse(resp.data.created_at)
             const date = new Date()
             date.setUTCSeconds(tmp_date)
             this.messages.push({
-              disableActions: true,
-              disableReactions: true,
-              _id: resp.data.id,
               content: resp.data.content,
-              senderId: resp.data.sender_id,
+              sender: resp.data.sender,
               timestamp: date.toLocaleTimeString(),
-              username: this.users.find(user => user.id == resp.data.sender_id).email,
             })
-            document.querySelector(".message-list").scrollTo(0, document.querySelector(".message-list").scrollHeight);
+            this.$nextTick(() => {
+              document.querySelector(".message-list").scrollTop = document.querySelector(".message-list").scrollHeight;
+            })
           }
         };
-      };
+      }
     },
-    async sendMessage() {
-      if (this.websocket != null && this.websocket.readyState == WebSocket.OPEN) {
+    sendMessage() {
+      if (this.websocket != null && this.websocket.readyState === WebSocket.OPEN) {
         this.websocket.send(
           JSON.stringify({
             event: "send_message",
-            chat_id: this.currentChat.chatId,
-            content: this.input,
-            sender_id: this.currentUser.id,
+            data: {
+              content: this.input,
+            },
           })
         );
         this.input = "";
@@ -317,12 +334,12 @@ export default {
 <style scoped>
 .message-list {
   height: 100%;
-  overflow-y: scroll;
   max-height: 60vh;
   max-width: 150vh;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 }
 
 .sent {
