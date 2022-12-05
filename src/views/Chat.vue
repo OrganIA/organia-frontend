@@ -26,7 +26,7 @@
                 <section class="discussions">
                   <div>
                     <p class="conversation-title title is-1">conversations</p>
-                    <button>Créer<i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
+                    <button class="create-button title is-1">Créer<i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
                         @click="openModal('newChat')"></i></button>
                   </div>
                   <div class="discussion message-active cypress-conversation" v-for="chat in chats" :key="chat.id"
@@ -525,5 +525,14 @@ export default {
   font-family: 'Montserrat', sans-serif;
   font-size: 15pt;
   margin-top: 1em;
+}
+
+.create-button {
+  border-radius: 10px;
+  font-size: 13pt;
+  color: #071F49;
+  background-color: #eff5fb;
+  text-align: center;
+  border-color: transparent;
 }
 </style>
