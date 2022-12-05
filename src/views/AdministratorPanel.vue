@@ -37,7 +37,8 @@
           </thead>
           <tbody>
             <tr v-for="user in users" :key="user" :class="{ 'is-selected': user.id === $data.user.id, 'cypress-user-row': true }">
-              <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
+              <td @click="loadSelectedUser(user.id)"
+                :class="{ 'selected-element': user.id === $data.user.id }">
                 {{ user.id }}
               </td>
               <td @click="loadSelectedUser(user.id)" :class="{ 'selected-element': user.id === $data.user.id }">
