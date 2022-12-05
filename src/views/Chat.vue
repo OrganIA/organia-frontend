@@ -29,15 +29,17 @@
                     <button class="create-button title is-1">Créer<i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
                         @click="openModal('newChat')"></i></button>
                   </div>
-                  <div class="discussion message-active cypress-conversation" v-for="chat in chats" :key="chat.id"
+                  <div class="scroll">
+                  <div class="discussion message-active title is-1 cypress-conversation" v-for="chat in chats" :key="chat.id"
                     @click="selectChat(chat)">
-                    <div class="photo">
+                    <div class="photo title is-1">
                       {{ chat.name.charAt(0).toUpperCase() }}
                     </div>
                     <div class="desc-contact">
                       <p class="name cypress-chat-name">{{ chat.name }}</p>
                     </div>
                   </div>
+                </div>
                 </section>
                 <section v-if="Object.keys(currentChat).length !== 0" class="chat">
                   <div class="header-chat">
@@ -361,10 +363,9 @@ export default {
 }
 
 .discussions .discussion {
-  width: 100%;
-  height: 90px;
-  margin: 10px;
-  background-color: #FAFAFA;
+  height: 75px;
+  margin: 15px;
+  background-color: #eff5fb;
   border-bottom: solid 1px #E0E0E0;
   border-radius: 10px;
   display: flex;
@@ -374,10 +375,13 @@ export default {
 
 .discussions .discussion .photo {
   margin-left: 20px;
+  margin-top: 20px;
   display: block;
   width: 45px;
   height: 45px;
-  background: #E6E7ED;
+  background: #0F2C59;
+  color: #FBFCFF;
+  font-size: 13pt;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
   border-radius: 50px;
@@ -398,10 +402,9 @@ export default {
 }
 
 .discussions .discussion .name {
-  margin: 0 0 0 20px;
   font-family: 'Montserrat', sans-serif;
   font-size: 11pt;
-  color: #515151;
+  color: #071F49;
 }
 
 .discussions .discussion .message {
@@ -534,5 +537,14 @@ export default {
   background-color: #eff5fb;
   text-align: center;
   border-color: transparent;
+}
+
+.msg-title{
+  color: #071F49;
+}
+
+.scroll {
+  overflow-y: scroll; 
+  height:460px;
 }
 </style>
