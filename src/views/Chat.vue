@@ -437,6 +437,7 @@ export default {
   display: flex;
   align-items: center;
   border-radius: 25px;
+  width: 120%;
 }
 
 .chat .header-chat .icon {
