@@ -9,13 +9,12 @@
     <div class="column page-container">
       <div class="page-content">
         <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
-        <div id="main">
-          <h1>Carte de recherche pour les hopitaux</h1>
-        </div>
-        <input class="form-control my-0 py-1" type="text" placeholder="Rerchercher" aria-label="Search"
+        <input class="form-control my-0 py-1" type="text" placeholder="Rerchercher un hôpital" aria-label="Search"
           v-model="search" />
         <div class="map">
-          <l-map v-model="zoom" v-model:zoom="zoom" zoomAnimation="true" :center="[this.latpos, this.lngpos]">
+          <l-map v-model="zoom" v-model:zoom="zoom" zoomAnimation="true" :center="[this.latpos, this.lngpos]"
+                 :minZoom="3"
+                 :maxZoom="18">
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
             <l-geo-json :geojson="geojson"></l-geo-json>
             <l-marker v-for="item in markers" :key="item.id" :lat-lng="item.latlng" @l-add="$event.target.openPopup()">
@@ -143,11 +142,23 @@ export default {
 };
 </script>
 <style scoped>
+.page-content {
+  margin: 0 0 0 0;
+  width: 100%;
+  height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .map {
   height: 100%;
-  width: 80%;
-  margin: auto;
-  margin-top: 2%;
-  margin-bottom: 10%;
+  width: 90%;
+  margin: 2% auto 10%;
+  border: 3px solid #406996;
+  border-radius: 5px;
 }
+
 </style>
