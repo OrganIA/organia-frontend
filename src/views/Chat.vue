@@ -42,17 +42,13 @@
                 </div>
                 </section>
                 <section v-if="Object.keys(currentChat).length !== 0" class="chat">
-                  <div class="header-chat">
+                  <div class="header-chat title is-1">
                     <p class="name">{{ currentChat.name }}</p>
-                    <div class="actions right">
-                      <i class="icon clickable fas fa-plus-circle " @click="openModal('newChat')"></i>
-                      <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')"></i>
-                      <i v-if="currentChat.creator.id == currentUser.id" class="icon clickable fas fa-edit"
+                    <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')"></i>
+                    <i v-if="currentChat.creator.id == currentUser.id" class="icon clickable fas fa-edit"
                         aria-hidden="true" @click="openModal('editChat')"></i>
-                    </div>
                   </div>
                   <div class="messages-chat">
-                    <div class="message-list">
                       <div class="message-container" v-for="message in messages" :key="message.id">
                         <div v-if="message.sender.id == currentUser.id" class="sent">
                           {{ message.content }}
@@ -66,13 +62,11 @@
                           </div>
                         </div>
                       </div>
-                    </div>
                   </div>
                   <div class="footer-chat">
-                    <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
-                    <input type="text" class="write-message cypress-message-input" placeholder="Type your message here"
+                    <input type="text" class="write-message cypress-message-input" placeholder="Écrivez votre message ici..."
                       v-model="input" />
-                    <i class="fas fa-paper-plane clickable" @click="sendMessage" @keypress.enter="sendMessage"></i>
+                    <i class="fas fa-paper-plane clickable msg-send-icon" @click="sendMessage" @keypress.enter="sendMessage"></i>
                   </div>
                 </section>
                 <section v-else class="chat">
@@ -344,12 +338,14 @@ export default {
 
 .received {
   float: left;
-  background-color: #e6e6e6;
+  background-color: #FBFCFF;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
   max-width: 50%;
   overflow-wrap: break-word;
+  font-weight: bold;
+  color: #071F49;
 }
 
 .discussions {
@@ -425,11 +421,12 @@ export default {
   box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.100);
   display: flex;
   align-items: center;
+  border-radius: 25px;
 }
 
 .chat .header-chat .icon {
-  margin-left: 30px;
-  color: #515151;
+  margin-left: 520px;
+  color: #071F49;
   font-size: 14pt;
 }
 
@@ -489,10 +486,18 @@ export default {
 
 .write-message {
   border: none !important;
-  width: 60%;
-  height: 50px;
-  margin-left: 20px;
+  width: 70%;
+  height: 60px;
   padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5em;
+  margin-left: 2em;
+  font-weight: bold;
+}
+
+.msg-send-icon{
+  margin-bottom: 5em;
+  margin-left: 1em;
 }
 
 .footer-chat *::-webkit-input-placeholder {
@@ -546,5 +551,9 @@ export default {
 .scroll {
   overflow-y: scroll; 
   height:460px;
+}
+
+.row {
+  background-color: #eff5fb;
 }
 </style>
