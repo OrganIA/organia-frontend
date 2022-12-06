@@ -737,7 +737,7 @@ export default {
     },
     getAllReceivers() {
       this.$http
-        .get("/listings/receivers")
+        .get("/listings?type=receiver")
         .then((response) => {
           response.data.forEach((element) => {
             element.person.created_at = new Date(
