@@ -16,7 +16,13 @@
           </select>
           <div class="fa  fa-solid fa-angle-down  icon-dropdown-correction"></div>
           <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-          <br />
+          <select v-model="nb_by_page" @change="updateNbElements"
+              class="number-selector button mb-4 ml-6 is-info is-light">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
         </div>
         <table class="is-organia-table">
           <thead>
@@ -58,6 +64,15 @@
             </tr>
           </tbody>
         </table>
+        <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
         <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
           <div class="modal-card">
@@ -168,12 +183,21 @@ export default {
       sortingKey: "created_at",
       selectFilter: "email",
       filterText: "",
+      page: 0,
+      nb_by_page: 5,
     };
   },
   created() {
     this.getUsers();
   },
   methods: {
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.users = this.usersBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     getUsers() {
       this.$http
         .get("/users/")
@@ -182,7 +206,8 @@ export default {
             element.created_at = new Date(element.created_at).toDateString();
           });
           this.users = response.data;
-          this.usersBackup = this.users
+          this.usersBackup = response.data
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
@@ -191,6 +216,17 @@ export default {
           );
           setTimeout(this.$toast.clear, 3000);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.usersBackup.length / this.nb_by_page) > (this.page + 1)) {
+        this.page += 1;
+        this.updatePage()
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.updatePage()      }
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -375,7 +411,6 @@ export default {
   margin-right: 40px;
 }
 
-
 .page-container {
   margin-left: 50px;
   padding: 12px 0 0 0;
@@ -384,7 +419,6 @@ export default {
 .role-btn {
   width: 15vw;
 }
-
 
 .modal-form {
   background-color: #caddef;
@@ -401,5 +435,9 @@ export default {
   flex-flow: wrap row;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>

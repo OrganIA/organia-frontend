@@ -24,8 +24,14 @@
               <option value="organ">Organe</option>
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
-            <input @input="filter" v-model="filterText" class="search-bar input mr-6"/>
-            <br/>
+            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+            <select v-model="nb_by_page" @change="updateNbElements"
+              class="number-selector button mb-4 ml-6 is-info is-light">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
           </div>
         </div>
         <table class="table-scroll">
@@ -66,7 +72,16 @@
           </tr>
           </tbody>
         </table>
-        <div class="modal cypress-info-modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active' : (state === 'info') }">
+        <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
+        <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active': (state === 'info') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
@@ -108,7 +123,7 @@
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.description
-                  }}
+                }}
                 </button>
               </div>
               <div class="columns">
@@ -120,7 +135,7 @@
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentReceiver.person.updated_at != null" class="button is-info is-light contents">{{
                       currentReceiver.person.updated_at
-                    }}
+                  }}
                   </button>
                   <button v-else class="button is-info is-light contents">Aucune modification effectuée.</button>
                 </div>
@@ -129,35 +144,35 @@
                 <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.DateTransplantation
-                  }}
+                }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.ReRegistrationDate != null">
                 <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.ReRegistrationDate
-                  }}
+                }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.alpha_fetoprotein != null">
                 <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.alpha_fetoprotein
-                  }}
+                }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.biggest_tumor_size != null">
                 <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.biggest_tumor_size
-                  }}
+                }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.end_date != null">
                 <p class="button is-medium is-fullwidth elements">Date de fin</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.end_date
-                  }}
+                }}
                 </button>
               </div>
               <div class="columns">
@@ -175,7 +190,7 @@
                   <p class="button is-medium elements">Sous dialyse ?</p>
                   <button v-if="currentReceiver.person.isDialyse" class="button is-info is-light contents">{{
                       Oui
-                    }}
+                  }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
                 </div>
@@ -183,7 +198,7 @@
                   <p class="button is-medium elements is-size-6">Retransplantation effectuée? ?</p>
                   <button v-if="currentReceiver.person.isRetransplantation" class="button is-info is-light contents ">{{
                       Oui
-                    }}
+                  }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
                 </div>
@@ -192,21 +207,21 @@
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.startDateDialyse
-                  }}
+                }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.EndDateDialyse
-                  }}
+                }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.notes
-                  }}
+                }}
                 </button>
               </div>
               <button class="button is-link is-light cypress-reciever-chat-modal" @click="openChatModal()">
@@ -568,6 +583,7 @@ export default {
       currentReceiver: {
         person: {}
       },
+      nb_by_page: 5,
       receiver: {},
       receivers: {},
       modal: false,
@@ -577,6 +593,7 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       receiversBackup: [],
+      page: 0,
       personsNotAdded: [],
       personsToAdd: [],
       chatName: "",
@@ -640,6 +657,13 @@ export default {
       doc.text("Date de début de retransplantation: " + this.currentReceiver.start_date, 20, y + 70);
       doc.text("Date de fin de retransplantation: " + this.currentReceiver.end_date, 20, y + 80);
       doc.save(pdfName + ".pdf");
+    },
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.receivers = this.receiversBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
     },
     getReceiverScore(receiver) {
       const organ = receiver.organ.toLowerCase()
@@ -713,22 +737,35 @@ export default {
     },
     getAllReceivers() {
       this.$http
-          .get("/listings/receivers")
-          .then((response) => {
-            response.data.forEach((element) => {
-              element.person.created_at = new Date(
-                  element.person.created_at
-              ).toDateString();
-            });
-            this.receivers = response.data;
-            this.receivers.forEach((receiver) => {
-              this.getReceiverScore(receiver)
-            })
-            this.receiversBackup = this.receivers;
-          })
-          .catch((error) => {
-            console.log(error);
+        .get("/listings/receivers")
+        .then((response) => {
+          response.data.forEach((element) => {
+            element.person.created_at = new Date(
+              element.person.created_at
+            ).toDateString();
           });
+          this.receivers = response.data;
+          this.receivers.forEach((receiver) => {
+            this.getReceiverScore(receiver)
+          })
+          this.receiversBackup = this.receivers;
+          this.updatePage()
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    nextPage() {
+      if (Math.ceil(this.receiversBackup.length / this.nb_by_page) > (this.page + 1)) {
+        this.page += 1;
+        this.updatePage()
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.updatePage()
+      }
     },
     resetChat(receiver) {
       this.openInfoModal(receiver)
@@ -1106,5 +1143,9 @@ td {
 
 .table-match {
   width: 800px;
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>

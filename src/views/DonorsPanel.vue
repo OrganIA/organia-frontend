@@ -25,7 +25,13 @@
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
             <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-            <br />
+            <select v-model="nb_by_page" @change="updateNbElements"
+              class="number-selector button mb-4 ml-6 is-info is-light">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
           </div>
         </div>
         <table class="table-scroll">
@@ -66,6 +72,15 @@
             </tr>
           </tbody>
         </table>
+        <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+          <a class="pagination-previous" @click="previousPage()">Précédent</a>
+          <ul class="pagination-list">
+            <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                $data.page + 1
+            }}</a></li>
+          </ul>
+          <a class="pagination-next" @click="nextPage()">Suivant</a>
+        </nav>
         <div class="modal" :class="{ 'is-invisible': (state !== 'info'), 'is-active': (state === 'info') }">
           <div class="modal-background"></div>
           <div class="modal-card">
@@ -587,6 +602,8 @@ export default {
       selectFilter: "first_name",
       filterText: "",
       donorsBackup: [],
+      nb_by_page: 5,
+      page: 0,
       to_edit: {
         donor: {},
         person: {},
@@ -631,6 +648,13 @@ export default {
     this.new_donor.tumors_number = 0;
   },
   methods: {
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.donors = this.donorsBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     getMe() {
       this.$http.get("/users/me")
         .then((response) => {
@@ -655,6 +679,7 @@ export default {
           });
           this.donors = response.data;
           this.donorsBackup = this.donors;
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
@@ -663,6 +688,18 @@ export default {
           );
           setTimeout(this.$toast.clear, 3000);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.donorsBackup.length / this.nb_by_page) > (this.page + 1)) {
+        this.page += 1;
+        this.updatePage()
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.updatePage()
+      }
     },
     resetChat(donor) {
       this.openInfoModal(donor)
@@ -1128,5 +1165,9 @@ td {
 
 .table-match {
   width: 800px;
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>
