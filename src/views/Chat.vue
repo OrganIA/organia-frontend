@@ -227,17 +227,17 @@ export default {
         .get("/chats/messages/latest")
         .then((response) => {
           response.data.forEach(message => {
-            const tmp_date = Date.parse(message.last_message.created_at)
+            const tmp_date = Date.parse(message.created_at)
             const date = new Date()
             date.setUTCSeconds(tmp_date)
             this.chats.forEach((chat) => {
               if (chat.id == message.chat.id) {
                 chat.latest_message = {
-                  id: message.last_message.id,
-                  content: message.last_message.content,
-                  sender: message.last_message.sender,
+                  id: message.id,
+                  content: message.content,
+                  sender: message.sender,
                   timestamp: date.toLocaleTimeString(),
-                  username: message.last_message.sender.firstname,
+                  username: message.sender.firstname,
                 }
               }
             })
