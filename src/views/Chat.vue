@@ -56,11 +56,11 @@
                         {{ message.content }}
                       </div>
                       <div v-else class="received">
-                        <div>
+                        <div class="message">
                           {{ message.content }}
                         </div>
                         <div>
-                          {{ message.sender.email }}
+                          {{ 'de: ' + message.sender.email }}
                         </div>
                       </div>
                     </div>
@@ -205,7 +205,7 @@ export default {
           }
           this.messages = messages
           this.$nextTick(() => {
-            document.querySelector(".message-list").scrollTop = document.querySelector(".message-list").scrollHeight;
+            document.querySelector(".messages-chat").scrollTop = document.querySelector(".messages-chat").scrollHeight;
           })
         })
         .catch((error) => {
@@ -310,7 +310,7 @@ export default {
               timestamp: date.toLocaleTimeString(),
             })
             this.$nextTick(() => {
-              document.querySelector(".message-list").scrollTop = document.querySelector(".message-list").scrollHeight;
+              document.querySelector(".messages-chat").scrollTop = document.querySelector(".messages-chat").scrollHeight;
             })
           }
         };
@@ -356,7 +356,6 @@ export default {
 
 .received {
   float: left;
-  background-color: #FBFCFF;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
@@ -364,6 +363,12 @@ export default {
   overflow-wrap: break-word;
   font-weight: bold;
   color: #071F49;
+}
+
+.received .message {
+  background-color: #FBFCFF;
+  padding: 0px;
+  margin-bottom: 0px;
 }
 
 .discussions {
@@ -578,5 +583,13 @@ export default {
 
 .row {
   background-color: #eff5fb;
+}
+
+.messages-chat {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
 }
 </style>
