@@ -244,7 +244,7 @@
               <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
-              <form @submit.prevent="createPerson()" class="show-requireds">
+              <form @submit.prevent="createReceiver()" class="show-requireds">
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
@@ -348,7 +348,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-new-add button modal-admin-btn modal-add-role-btn"
-                      @click="createPerson()">Ajouter
+                      @click="createReceiver()">Ajouter
               </button>
               <button class="button cypress-new-close modal-admin-btn" @click="closeModal()">Fermer</button>
             </footer>
@@ -645,8 +645,6 @@ export default {
     this.getAllReceivers();
     this.getAllUsers();
     this.getMe();
-    console.log("OUAIS OUAIS OUAIS")
-    this.$forceUpdate();
     this.new_receiver.tumors_number = 0;
   },
   methods: {
@@ -743,7 +741,7 @@ export default {
     },
     getAllUsers() {
       this.$http
-          .get("/users")
+          .get("/users/")
           .then((response) => {
             this.personsNotAdded = response.data
           }).catch((error) => {
@@ -752,7 +750,7 @@ export default {
     },
     getAllReceivers() {
       this.$http
-          .get("/listings?type=receiver")
+          .get("/listings/?type=receiver")
           .then((response) => {
             response.data.forEach((element) => {
               element.person.created_at = new Date(
@@ -952,7 +950,7 @@ export default {
     updatePerson() {
       this.to_edit.person.isDialyse = this.receiver.isDialyse
       this.$http
-          .post(`/persons/${this.to_edit.id}`, {
+          .post(`/listings/${this.to_edit.id}`, {
             first_name: this.to_edit.person.first_name,
             last_name: this.to_edit.person.last_name,
             birthday: this.to_edit.person.birthday,
@@ -978,10 +976,10 @@ export default {
             console.log(error);
           });
     },
-    createPerson() {
+    createReceiver() {
       this.new_receiver.tumors_number = 0;
       this.$http
-          .post("/persons", {
+          .post("/listings/", {
             first_name: this.new_receiver.first_name,
             last_name: this.new_receiver.last_name,
             birthday: this.new_receiver.birthday,
@@ -990,35 +988,20 @@ export default {
             ...(this.new_receiver.blood_type ? {abo: this.new_receiver.blood_type} : {}),
             ...(this.new_receiver.rhesus ? {rhesus: this.new_receiver.rhesus} : {}),
             ...(this.new_receiver.tumors_number ? {tumors_number: this.new_receiver.tumors_number} : {}),
-            ...(this.new_receiver.isDialyse ? {isDialyse: this.new_receiver.isDialyse} : {}),
-            ...(this.new_receiver.isRetransplantation ? {isRetransplantation: this.new_receiver.isRetransplantation} : {}),
             ...(this.new_receiver.startDateDialyse ? {startDateDialyse: this.new_receiver.startDateDialyse} : {}),
             ...(this.new_receiver.endDateDialyse ? {endDateDialyse: this.new_receiver.endDateDialyse} : {}),
             ...(this.new_receiver.gender ? {gender: this.new_receiver.gender} : {}),
-          })
-          .then((response) => {
-            this.new_receiver.person_id = response.data.id;
-            this.createReceiver();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    },
-    createReceiver() {
-      this.$http
-          .post("/listings", {
             ...(this.new_receiver.start_date ? {start_date: this.new_receiver.start_date} : {}),
             ...(this.new_receiver.notes ? {notes: this.new_receiver.notes} : {}),
             organ: this.new_receiver.organ,
-            donor: false,
+            type: "receiver",
             person_id: this.new_receiver.person_id,
             tumors_number: this.new_receiver.tumors_number,
-            isDialyse: this.new_receiver.isDialyse,
+            is_under_dialysis: this.new_receiver.isDialyse,
             isRetransplantation: this.new_receiver.isRetransplantation,
           })
-          .then(() => {
-            this.getAllReceivers()
-            this.closeModal()
+          .then((response) => {
+            this.new_receiver.person_id = response.data.id;
           })
           .catch((error) => {
             console.log(error);

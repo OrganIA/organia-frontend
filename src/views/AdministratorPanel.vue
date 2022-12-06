@@ -27,10 +27,10 @@
         <table class="is-organia-table">
           <thead>
             <tr>
-              <th>Id</th>
-              <th>Prénom</th>
+              <th class="id-cell-header">Id</th>
+              <th class="name-cell-header">Prénom</th>
               <th>Nom</th>
-              <th>Mail</th>
+              <th class="mail-cell-header">Mail</th>
               <th>Date de création</th>
               <th>Dernière modification</th>
             </tr>
@@ -439,5 +439,21 @@ export default {
 
 .pages {
   margin-top: 20px;
+}
+
+.id-cell-header {
+  width: 5%;
+}
+
+.name-cell-header {
+  width: 10%;
+}
+
+.mail-cell-header {
+  width: 25%;
+}
+
+.page-content {
+  margin: 40px;
 }
 </style>
