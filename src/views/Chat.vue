@@ -26,47 +26,50 @@
                 <section class="discussions">
                   <div>
                     <p class="conversation-title title is-1">conversations</p>
-                    <button class="create-button title is-1">Créer<i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
-                        @click="openModal('newChat')"></i></button>
+                    <button class="create-button title is-1">Créer<i class="icon clickable fas fa-plus-circle right"
+                        aria-hidden="true" @click="openModal('newChat')"></i></button>
                   </div>
                   <div class="scroll">
-                  <div class="discussion message-active title is-1 cypress-conversation" v-for="chat in chats" :key="chat.id"
-                    @click="selectChat(chat)">
-                    <div class="photo title is-1">
-                      {{ chat.name.charAt(0).toUpperCase() }}
-                    </div>
-                    <div class="desc-contact">
-                      <p class="name cypress-chat-name">{{ chat.name }}</p>
+                    <div class="discussion message-active title is-1 cypress-conversation" v-for="chat in chats"
+                      :key="chat.id" @click="selectChat(chat)">
+                      <div class="photo title is-1">
+                        {{ chat.name.charAt(0).toUpperCase() }}
+                      </div>
+                      <div class="desc-contact">
+                        <p class="name cypress-chat-name">{{ chat.name }}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </section>
                 <section v-if="Object.keys(currentChat).length !== 0" class="chat">
                   <div class="header-chat title is-1">
                     <p class="name">{{ currentChat.name }}</p>
-                    <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')"></i>
-                    <i v-if="currentChat.creator.id == currentUser.id" class="icon clickable fas fa-edit"
-                        aria-hidden="true" @click="openModal('editChat')"></i>
+                    <div>
+                      <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')" />
+                      <i v-if="currentChat.creator.id == currentUser.id" class="icon clickable fas fa-edit"
+                        aria-hidden="true" @click="openModal('editChat')" />
+                    </div>
                   </div>
                   <div class="messages-chat">
-                      <div class="message-container" v-for="message in messages" :key="message.id">
-                        <div v-if="message.sender.id == currentUser.id" class="sent">
+                    <div class="message-container" v-for="message in messages" :key="message.id">
+                      <div v-if="message.sender.id == currentUser.id" class="sent">
+                        {{ message.content }}
+                      </div>
+                      <div v-else class="received">
+                        <div>
                           {{ message.content }}
                         </div>
-                        <div v-else class="received">
-                          <div>
-                            {{ message.content }}
-                          </div>
-                          <div>
-                            {{ message.sender.email }}
-                          </div>
+                        <div>
+                          {{ message.sender.email }}
                         </div>
                       </div>
+                    </div>
                   </div>
                   <div class="footer-chat">
-                    <input type="text" class="write-message cypress-message-input" placeholder="Écrivez votre message ici..."
-                      v-model="input" />
-                    <i class="fas fa-paper-plane clickable msg-send-icon" @click="sendMessage" @keypress.enter="sendMessage"></i>
+                    <input type="text" class="write-message cypress-message-input"
+                      placeholder="Écrivez votre message ici..." v-model="input" />
+                    <i class="fas fa-paper-plane clickable msg-send-icon" @click="sendMessage"
+                      @keypress.enter="sendMessage"></i>
                   </div>
                 </section>
                 <section v-else class="chat">
@@ -441,12 +444,16 @@ export default {
 }
 
 .chat .header-chat .icon {
+  flex-shrink: 0;
+  display: flex;
   margin-left: 520px;
   color: #071F49;
   font-size: 14pt;
 }
 
+
 .chat .header-chat .name {
+  flex-grow: 1;
   margin: 0 0 0 20px;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
@@ -511,7 +518,7 @@ export default {
   font-weight: bold;
 }
 
-.msg-send-icon{
+.msg-send-icon {
   margin-bottom: 5em;
   margin-left: 1em;
 }
@@ -544,7 +551,8 @@ export default {
 .icon {
   color: #4f6ebd
 }
-.conversation-title{
+
+.conversation-title {
   color: #071F49;
   font-family: 'Montserrat', sans-serif;
   font-size: 15pt;
@@ -560,13 +568,13 @@ export default {
   border-color: transparent;
 }
 
-.msg-title{
+.msg-title {
   color: #071F49;
 }
 
 .scroll {
-  overflow-y: scroll; 
-  height:460px;
+  overflow-y: scroll;
+  height: 460px;
 }
 
 .row {
