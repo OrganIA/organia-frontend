@@ -14,15 +14,21 @@
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
             </div>
-          </div>
-          <div class="search-block">
-            <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
-              <option value="start_date">Date de début</option>
-              <option value="end_date">Date de fin</option>
-              <option value="title">Titre</option>
-            </select>
-            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
-            <br />
+            <div class="search-block">
+              <select v-model="selectFilter" class="search-filter button mb-4 ml-6 is-info is-light">
+                <option value="start_date">Date de début</option>
+                <option value="end_date">Date de fin</option>
+                <option value="title">Titre</option>
+              </select>
+              <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+              <select v-model="nb_by_page" @change="updateNbElements"
+                class="number-selector button mb-4 ml-6 is-info is-light">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+              </select>
+            </div>
           </div>
           <table>
             <thead>
@@ -46,6 +52,15 @@
               </tr>
             </tbody>
           </table>
+          <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+            <a class="pagination-previous" @click="previousPage()">Précédent</a>
+            <ul class="pagination-list">
+              <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                  $data.page + 1
+              }}</a></li>
+            </ul>
+            <a class="pagination-next" @click="nextPage()">Suivant</a>
+          </nav>
         </div>
         <div class="modal" :class="{ 'is-invisible': (state !== 'clicked'), 'is-active': (state === 'clicked') }">
           <div class="modal-background"></div>
@@ -167,8 +182,9 @@ export default {
       selectFilter: "start_date",
       filterText: "",
       eventsBackup: [],
-      start_date: "",
-      end_date: "",
+      page: 0,
+      nb_by_page: 5,
+      date: "",
       description: "",
       title: "",
       calendar: {},
@@ -195,6 +211,13 @@ export default {
       }
       this.editstate = ""
     },
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.events = this.eventsBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
     getAllevents() {
       this.$http
         .get("/calendar/",)
@@ -207,6 +230,7 @@ export default {
           })
           this.events = response.data;
           this.eventsBackup = response.data;
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
@@ -215,6 +239,18 @@ export default {
           );
           setTimeout(this.$toast.clear, 3000);
         });
+    },
+    nextPage() {
+      if (Math.ceil(this.eventsBackup.length / this.nb_by_page) > (this.page + 1)) {
+        this.page += 1;
+        this.updatePage()
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.updatePage()
+      }
     },
     updateFilter(dataName) {
       if (dataName === this.sortingKey) this.sortingOrder = !this.sortingOrder;
@@ -378,12 +414,10 @@ export default {
   margin-right: 40px;
 }
 
-
 .add-btn:hover {
   background-color: #2d6594;
   outline: none;
   text-decoration: none;
-
 }
 
 .btn-add-text {
@@ -407,8 +441,11 @@ export default {
   flex-direction: row;
 }
 
-
 .main {
   margin-top: 30px;
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>

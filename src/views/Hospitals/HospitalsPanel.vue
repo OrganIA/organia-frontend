@@ -14,6 +14,13 @@
               <i class="fa fa-solid fa-plus icon-add-btn-correction"></i>
               <span class="btn-add-text">Ajouter</span>
             </div>
+            <select v-model="nb_by_page" @change="updateNbElements"
+              class="number-selector button mb-4 ml-6 is-info is-light">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
           </div>
           <table class="is-organia-table">
             <thead>
@@ -39,6 +46,15 @@
               </tr>
             </tbody>
           </table>
+          <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
+            <a class="pagination-previous" @click="previousPage()">Précédent</a>
+            <ul class="pagination-list">
+              <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
+                  $data.page + 1
+              }}</a></li>
+            </ul>
+            <a class="pagination-next" @click="nextPage()">Suivant</a>
+          </nav>
         </div>
         <div class="modal" :class="{ 'is-invisible': (addstate !== 'clicked'), 'is-active': (addstate === 'clicked') }">
           <div class="modal-background"></div>
@@ -142,6 +158,9 @@ export default {
       phone_number: "",
       hospital: {},
       city: {},
+      page: 0,
+      nb_by_page: 5,
+      hospitalsBackup: [],
     };
   },
   created() {
@@ -154,6 +173,8 @@ export default {
         .then((response) => {
           this.hospitals = response.data;
           this.openAddModal(false)
+          this.hospitalsBackup = response.data
+          this.updatePage()
         })
         .catch((error) => {
           console.log(error);
@@ -162,6 +183,25 @@ export default {
           );
           setTimeout(this.$toast.clear, 3000);
         });
+    },
+    updateNbElements() {
+      this.page = 0;
+      this.updatePage()
+    },
+    updatePage() {
+      this.hospitals = this.hospitalsBackup.slice(this.page * this.nb_by_page, this.page * this.nb_by_page + this.nb_by_page);
+    },
+    nextPage() {
+      if (Math.ceil(this.hospitalsBackup.length / this.nb_by_page) > (this.page + 1)) {
+        this.page += 1;
+        this.updatePage()
+      }
+    },
+    previousPage() {
+      if (this.page >= 1) {
+        this.page -= 1;
+        this.updatePage()
+      }
     },
     openAddModal(val) {
       if (val === true) {
@@ -260,12 +300,10 @@ export default {
   margin-right: 40px;
 }
 
-
 .add-btn:hover {
   background-color: #2d6594;
   outline: none;
   text-decoration: none;
-
 }
 
 .btn-add-text {
@@ -285,5 +323,9 @@ export default {
 
 .form-control {
   width: 100%;
+}
+
+.pages {
+  margin-top: 20px;
 }
 </style>

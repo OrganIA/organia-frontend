@@ -103,7 +103,7 @@ export default {
     return {
       chats: [],
       messages: [],
-      currentUser: this.$store.getters.getRole,
+      currentUser: {},
       latest_messages: [],
       users: [],
       state: "",
@@ -113,11 +113,26 @@ export default {
     }
   },
   created() {
+    this.getMe()
     this.getUsers()
     this.getChats()
     this.getLatestMessages()
   },
   methods: {
+    getMe() {
+      this.$http.get("/users/me")
+        .then((response) => {
+          this.currentUser = response.data
+        }).catch((error) => {
+          console.log(error)
+          this.$toast.error(
+            "Erreur lors de la connexion : " + translate[error.response.data.msg]
+          );
+          setTimeout(this.$toast.clear, 3000);
+          this.$cookies.remove("token")
+          this.$router.push("/");
+        })
+    },
     getChats() {
       this.$http
         .get("/chats/")
@@ -211,17 +226,17 @@ export default {
         .get("/chats/messages/latest")
         .then((response) => {
           response.data.forEach(message => {
-            const tmp_date = Date.parse(message.last_message.created_at)
+            const tmp_date = Date.parse(message.created_at)
             const date = new Date()
             date.setUTCSeconds(tmp_date)
             this.chats.forEach((chat) => {
               if (chat.id == message.chat.id) {
                 chat.latest_message = {
-                  id: message.last_message.id,
-                  content: message.last_message.content,
-                  sender: message.last_message.sender,
+                  id: message.id,
+                  content: message.content,
+                  sender: message.sender,
                   timestamp: date.toLocaleTimeString(),
-                  username: message.last_message.sender.firstname,
+                  username: message.sender.firstname,
                 }
               }
             })
@@ -268,7 +283,7 @@ export default {
       if (this.websocket != null)
         this.websocket.close();
       this.websocket = new WebSocket(
-        `${process.env.VUE_APP_WEBSOCKET_LOCAL_URL}/${this.currentChat.id}`
+        `${process.env.VUE_APP_WEBSOCKET_REMOTE_URL}/${this.currentChat.id}`
       );
       this.websocket.onopen = () => {
         this.websocket.send(
