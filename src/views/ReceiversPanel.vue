@@ -24,9 +24,9 @@
               <option value="organ">Organe</option>
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
-            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+            <input @input="filter" v-model="filterText" class="search-bar input mr-6"/>
             <select v-model="nb_by_page" @change="updateNbElements"
-              class="number-selector button mb-4 ml-6 is-info is-light">
+                    class="number-selector button mb-4 ml-6 is-info is-light">
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
@@ -77,7 +77,7 @@
           <ul class="pagination-list">
             <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
                 $data.page + 1
-            }}</a></li>
+              }}</a></li>
           </ul>
           <a class="pagination-next" @click="nextPage()">Suivant</a>
         </nav>
@@ -123,7 +123,7 @@
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.description
-                }}
+                  }}
                 </button>
               </div>
               <div class="columns">
@@ -135,7 +135,7 @@
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentReceiver.person.updated_at != null" class="button is-info is-light contents">{{
                       currentReceiver.person.updated_at
-                  }}
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Aucune modification effectuée.</button>
                 </div>
@@ -144,35 +144,35 @@
                 <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.DateTransplantation
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.ReRegistrationDate != null">
                 <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.ReRegistrationDate
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.alpha_fetoprotein != null">
                 <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.alpha_fetoprotein
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.biggest_tumor_size != null">
                 <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.biggest_tumor_size
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.end_date != null">
                 <p class="button is-medium is-fullwidth elements">Date de fin</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.end_date
-                }}
+                  }}
                 </button>
               </div>
               <div class="columns">
@@ -190,7 +190,7 @@
                   <p class="button is-medium elements">Sous dialyse ?</p>
                   <button v-if="currentReceiver.person.isDialyse" class="button is-info is-light contents">{{
                       Oui
-                  }}
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
                 </div>
@@ -198,7 +198,7 @@
                   <p class="button is-medium elements is-size-6">Retransplantation effectuée? ?</p>
                   <button v-if="currentReceiver.person.isRetransplantation" class="button is-info is-light contents ">{{
                       Oui
-                  }}
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
                 </div>
@@ -207,21 +207,21 @@
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.startDateDialyse
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.EndDateDialyse
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentReceiver.person.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
                     currentReceiver.person.notes
-                }}
+                  }}
                 </button>
               </div>
               <button class="button is-link is-light cypress-reciever-chat-modal" @click="openChatModal()">
@@ -235,7 +235,8 @@
             </footer>
           </div>
         </div>
-        <div class="modal cypress-new-modal" :class="{ 'is-invisible': (state !== 'new'), 'is-active': (state === 'new') }">
+        <div class="modal cypress-new-modal"
+             :class="{ 'is-invisible': (state !== 'new'), 'is-active': (state === 'new') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -248,21 +249,22 @@
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
                     <input v-model="new_receiver.first_name" placeholder="first_name" type="text"
-                      class="cypress-new-first-name input is-info" required />
+                           class="cypress-new-first-name input is-info" required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Nom de Famille</label>
                     <input v-model="new_receiver.last_name" placeholder="last_name" type="text"
-                      class="cypress-new-last-name input is-info" required />
+                           class="cypress-new-last-name input is-info" required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Date de naissance</label>
                     <input v-model="new_receiver.birthday" placeholder="birthday" type="date"
-                      class="cypress-new-birth-date input is-info" required />
+                           class="cypress-new-birth-date input is-info" required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Organe</label>
-                    <select v-model="new_receiver.organ" id="organ-select" class="cypress-new-organ input is-info" required>
+                    <select v-model="new_receiver.organ" id="organ-select" class="cypress-new-organ input is-info"
+                            required>
                       <option v-for="element in all_organs" :key="element">
                         {{ element }}
                       </option>
@@ -271,17 +273,17 @@
                   <div class="form-input small required">
                     <label class="label">Date d'admission</label>
                     <input v-model="new_receiver.start_date" placeholder="start date" type="date"
-                      class="cypress-new-admission-date input is-info" required />
+                           class="cypress-new-admission-date input is-info" required/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Nombre de tumeurs</label>
                     <input v-model="new_receiver.tumors_number" placeholder="0" type="text"
-                      class="cypress-new-tumors-number input is-info" />
+                           class="cypress-new-tumors-number input is-info"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Le patient est sous dialyse ?</label>
                     <select v-model="new_receiver.isDialyse" name="dialyse" id="dialyse-select"
-                      class="cypress-new-is-dialyse button is-info is-light" required>
+                            class="cypress-new-is-dialyse button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
                     </select>
@@ -289,7 +291,8 @@
                   <div class="form-input small required">
                     <label class="label">A-t-il effectué une retransplantation ?</label>
                     <select v-model="new_receiver.isRetransplantation" name="retransplantation"
-                      id="transplantation-select" class="cypress-new-is-retransplantation button is-info is-light" required>
+                            id="transplantation-select" class="cypress-new-is-retransplantation button is-info is-light"
+                            required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
                     </select>
@@ -297,22 +300,22 @@
                   <div class="form-input small">
                     <label class="label">Date de début de dialyse</label>
                     <input v-model="new_receiver.startDateDialyse" placeholder="start date" type="date"
-                      class="cypress-new-beginning-dialyse input is-info" />
+                           class="cypress-new-beginning-dialyse input is-info"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Date de fin de dialyse</label>
                     <input v-model="new_receiver.endDateDialyse" placeholder="start date" type="date"
-                      class="cypress-new-end-dialyse input is-info" />
+                           class="cypress-new-end-dialyse input is-info"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Description</label>
                     <input v-model="new_receiver.description" placeholder="description" type="text"
-                      class="input is-info cypress-new-description" />
+                           class="input is-info cypress-new-description"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Groupe sanguin</label>
                     <select v-model="new_receiver.blood_type" name="abo" id="abo-select"
-                      class="cypress-new-blood button is-info is-light" required>
+                            class="cypress-new-blood button is-info is-light" required>
                       <option value="A">A</option>
                       <option value="B">B</option>
                       <option value="O">O</option>
@@ -322,7 +325,7 @@
                   <div class="form-input small required">
                     <label class="label">Rhésus</label>
                     <select v-model="new_receiver.rhesus" name="rhesus" id="rhesus-select"
-                      class="cypress-new-rhesus button is-info is-light" required>
+                            class="cypress-new-rhesus button is-info is-light" required>
                       <option value="+">+</option>
                       <option value="-">-</option>
                     </select>
@@ -330,14 +333,14 @@
                   <div class="form-input small required">
                     <label class="label">Sexe</label>
                     <select v-model="new_receiver.gender" name="gender" id="gender-select"
-                      class="cypress-new-gender button is-info is-light" required>
+                            class="cypress-new-gender button is-info is-light" required>
                       <option value="MALE">MALE</option>
                       <option value="FEMALE">FEMALE</option>
                     </select>
                   </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
-                    <textarea v-model="new_receiver.notes" placeholder="notes" class="textarea cypress-new-notes" />
+                    <textarea v-model="new_receiver.notes" placeholder="notes" class="textarea cypress-new-notes"/>
                     <p class="required-notice">* Obligatoire</p>
                   </div>
                 </div>
@@ -345,13 +348,14 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-new-add button modal-admin-btn modal-add-role-btn"
-                @click="createPerson()">Ajouter
+                      @click="createPerson()">Ajouter
               </button>
               <button class="button cypress-new-close modal-admin-btn" @click="closeModal()">Fermer</button>
             </footer>
           </div>
         </div>
-        <div class="moda cypress-edit-modal" :class="{ 'is-invisible': (state !== 'edit'), 'is-active': (state === 'edit') }">
+        <div class="moda cypress-edit-modal"
+             :class="{ 'is-invisible': (state !== 'edit'), 'is-active': (state === 'edit') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -363,8 +367,9 @@
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
-                    <input class="input is-info cypress-receiver-edit-firstname" v-model="to_edit.person.first_name" placeholder="first_name"
-                      type="text" required />
+                    <input class="input is-info cypress-receiver-edit-firstname" v-model="to_edit.person.first_name"
+                           placeholder="first_name"
+                           type="text" required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Nom de Famille</label>
@@ -464,7 +469,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-receiver-edit-submit button modal-admin-btn modal-add-role-btn"
-                @click="updatePerson()">Enregistrer
+                      @click="updatePerson()">Enregistrer
               </button>
               <button type="button" class="button is-danger ml-6 cypress-delete-button" @click="delete_receiver()">
                 Supprimer
@@ -513,7 +518,6 @@
                 </div>
               </div>
 
-
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
@@ -522,7 +526,8 @@
         </div>
       </div>
     </div>
-    <div class="modal cypress-chat-modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
+    <div class="modal cypress-chat-modal"
+         :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
       <div class="modal-background">
         <div class="modal-card">
           <header class="modal-card-head">
@@ -640,6 +645,8 @@ export default {
     this.getAllReceivers();
     this.getAllUsers();
     this.getMe();
+    console.log("OUAIS OUAIS OUAIS")
+    this.$forceUpdate();
     this.new_receiver.tumors_number = 0;
   },
   methods: {
@@ -678,9 +685,15 @@ export default {
       this.$http.get("/users/me")
           .then((response) => {
             this.me = response.data
-          })
+          }).catch((error) => {
+        console.log(error);
+      });
     },
     TreatData(d_receivers) {
+      //check if d_receivers is valid (not undefined, not null, not empty)
+      if(!d_receivers || d_receivers.length === 0 || Array.isArray(d_receivers) === false) {
+        return [];
+      }
       d_receivers.map(elem => {
         elem.score = Math.floor(Math.random() * (25) + 75)
       })
@@ -733,27 +746,29 @@ export default {
           .get("/users")
           .then((response) => {
             this.personsNotAdded = response.data
-          })
+          }).catch((error) => {
+        console.log(error);
+      });
     },
     getAllReceivers() {
       this.$http
-        .get("/listings?type=receiver")
-        .then((response) => {
-          response.data.forEach((element) => {
-            element.person.created_at = new Date(
-              element.person.created_at
-            ).toDateString();
-          });
-          this.receivers = response.data;
-          this.receivers.forEach((receiver) => {
-            this.getReceiverScore(receiver)
+          .get("/listings?type=receiver")
+          .then((response) => {
+            response.data.forEach((element) => {
+              element.person.created_at = new Date(
+                  element.person.created_at
+              ).toDateString();
+            });
+            this.receivers = response.data;
+            this.receivers.forEach((receiver) => {
+              this.getReceiverScore(receiver)
+            })
+            this.receiversBackup = this.receivers;
+            this.updatePage()
           })
-          this.receiversBackup = this.receivers;
-          this.updatePage()
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .catch((error) => {
+            console.log(error);
+          });
     },
     nextPage() {
       if (Math.ceil(this.receiversBackup.length / this.nb_by_page) > (this.page + 1)) {
@@ -891,16 +906,16 @@ export default {
     },
     delete_receiver() {
       this.$http
-        .delete(`/listings/${this.currentReceiver.id}`)
-        .then(() => {
-          this.$http
-            .delete(`/persons/${this.currentReceiver.person.id}`)
-            .then(() => {
-              this.$toast.success("Suppression effectué");
-              this.$router.push("/receivers");
-            })
-            .catch((error) => {
-              console.log(error);
+          .delete(`/listings/${this.currentReceiver.id}`)
+          .then(() => {
+            this.$http
+                .delete(`/persons/${this.currentReceiver.person.id}`)
+                .then(() => {
+                  this.$toast.success("Suppression effectué");
+                  this.$router.push("/receivers");
+                })
+                .catch((error) => {
+                  console.log(error);
 
                 });
           })

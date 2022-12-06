@@ -1014,6 +1014,10 @@ export default {
         });
     },
     TreatData(d_donors) {
+      //check if d_receivers is valid (not undefined, not null, not empty)
+      if(!d_donors || d_donors.length === 0 || Array.isArray(d_donors) === false) {
+        return [];
+      }
       d_donors.map(elem => {
         elem.score = Math.floor(Math.random() * (25) + 75)
       })
