@@ -59,7 +59,7 @@
                         <div class="message">
                           {{ message.content }}
                         </div>
-                        <div>
+                        <div class="sender-email">
                           {{ 'de: ' + message.sender.email }}
                         </div>
                       </div>
@@ -70,7 +70,7 @@
                       placeholder="Écrivez votre message ici..." v-model="input" />
                     <i class="fas fa-paper-plane clickable msg-send-icon" @click="sendMessage"
                       @keypress.enter="sendMessage"></i>
-                  </div>
+                    </div>
                 </section>
                 <section v-else class="chat">
                   <div class="header-chat">
@@ -346,12 +346,13 @@ export default {
 
 .sent {
   float: right;
-  background-color: #4f6ebd;
+  background-color: #FBFCFF;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
   max-width: 50%;
-  color: white;
+  color: #071F49;
+  font-weight: bold;
 }
 
 .received {
@@ -362,13 +363,18 @@ export default {
   max-width: 50%;
   overflow-wrap: break-word;
   font-weight: bold;
-  color: #071F49;
+  color: #FBFCFF;
 }
 
 .received .message {
-  background-color: #FBFCFF;
+  background-color: #071F49;
   padding: 0px;
   margin-bottom: 0px;
+  width: auto;
+}
+
+.sender-email{
+  color: #071F49;
 }
 
 .discussions {
@@ -514,7 +520,7 @@ export default {
 
 .write-message {
   border: none !important;
-  width: 70%;
+  width: 80%;
   height: 60px;
   padding: 10px;
   border-radius: 10px;
@@ -587,10 +593,10 @@ export default {
 }
 
 .messages-chat {
-  width: 100%;
+  width: 120%;
   height: 90%;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 </style>
