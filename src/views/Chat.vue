@@ -358,7 +358,7 @@ export default {
 .received {
   float: left;
   border-radius: 10px;
-  padding: 10px;
+  /* padding: 10px; */
   margin: 10px;
   max-width: 50%;
   overflow-wrap: break-word;
@@ -368,7 +368,7 @@ export default {
 
 .received .message {
   background-color: #071F49;
-  padding: 0px;
+  padding: 5px;
   margin-bottom: 0px;
   width: auto;
 }

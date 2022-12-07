@@ -2,18 +2,18 @@
     <div class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title is-3">Créer une nouvelle conversation</p>
+            <header class="modal-card-head organia-modal-head">
+                <p class="modal-card-title is-3">Éditer la conversation</p>
                 <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
-            <section class="modal-card-body">
+            <section class="modal-card-body organia-modal-body">
                 <form @submit.prevent="createRoom">
                     <label class="label">Nom de la conversation</label>
                     <input class="input cypress-edit-chat-name" type="text" placeholder="Nom de la conversation" v-model="updatedChat.name"
                         required>
-                    <div class="select is-multiple user-list">
+                    <div class="select is-multiple  user-list">
                         <label class="label">Utilisateurs non ajoutés
-                            <select multiple v-if="users_list.length > 0" :size="users_list.length">
+                            <select class="non-add-user-edit" multiple v-if="users_list.length > 0" :size="users_list.length">
                                 <option v-for="user, index in users_list" :key="user.id" :value="user.id"
                                     @click="addUser(user, index)">{{ user.email }}</option>
                             </select>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs ajoutés
-                            <select multiple v-if="updatedChat.users.length > 0" :size="updatedChat.users.length">
+                            <select class="list-user-added-edit " multiple v-if="updatedChat.users.length > 0" :size="updatedChat.users.length">
                                 <option v-for="user, index in updatedChat.users" :key="user.id" :value="user.id"
                                     @click="removeUser(user, index)">
                                     {{ user.email }}
@@ -31,11 +31,8 @@
                     </div>
                 </form>
             </section>
-            <footer class="modal-card-foot">
+            <footer class="modal-card-foot organia-modal-footer">
                 <button @click="editRoom" class="button is-success cypress-edit-chat-save">Sauvegarder</button>
-                <button class="button is-danger" @click="closeModal(false)">
-                    Annuler
-                </button>
                 <button class="button is-danger cypress-delete-chat" @click="deleteChat(false)">
                     Supprimer
                 </button>
@@ -154,6 +151,28 @@ export default {
 </style>
 <style scoped>
 .user-list {
-    margin: 10px
+    margin: 10px;
+    width: 13.5em;
+    height: 12em;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.20);
+    overflow: hidden;
+    background-color: #D8E0E9;
+    border-radius: 25px;
+}
+.non-add-user-edit{
+border: transparent;
+border-radius: 15px;
+overflow: hidden;
+margin-top: 1em;
+margin-left: 2.5em;
+background-color: #c9d1da;
+}
+.list-user-added-edit{
+    border: transparent;
+border-radius: 15px;
+overflow: hidden;
+margin-top: 1em;
+margin-left: 2.5em;
+background-color: #c9d1da;
 }
 </style>
