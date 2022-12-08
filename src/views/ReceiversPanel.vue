@@ -173,7 +173,7 @@
           <div class="modal-card modal-complement"
                :class="{ 'is-invisible': (state_extra !== 'organ-selected'), 'is-active': (state_extra === 'organ-selected') }">
             <header class="modal-card-head organia-modal-head">
-              <p class="modal-card-title  has-text-white">Info en plus - {{ this.new_receiver.organ }}</p>
+              <p class="modal-card-title  has-text-white">Info en plus - {{ translate(this.new_receiver.organ_type) }}</p>
               <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
 
