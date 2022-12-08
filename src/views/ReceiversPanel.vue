@@ -1017,7 +1017,7 @@ export default {
       doc.text("Prénom: " + this.to_edit.person.first_name, 20, y + 10);
       doc.text("Date de naissance: " + this.to_edit.person.birth_date, 20, y + 20);
       doc.text("Sexe: " + this.to_edit.person.gender, 20, y + 30);
-      doc.text("Organe: " + this.to_edit.organ, 20, y + 40);
+      doc.text("Organe: " + this.to_edit.organ_type, 20, y + 40);
       doc.text("Type sanguin: " + this.to_edit.person.abo + this.to_edit.person.rhesus, 20, y + 50);
       doc.text("DONNÉES RELATIVES À L'ORGANE : ", 20, y + 60);
       let current_y = y + 70

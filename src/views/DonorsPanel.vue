@@ -910,10 +910,10 @@
                   </thead>
                   <tbody>
                   <tr v-for="match in this.matches" :key="match">
-                    <td>{{ match.person.first_name }}</td>
-                    <td>{{ match.person.last_name }}</td>
-                    <td>{{ match.person.birth_date }}</td>
-                    <td>{{ match.person.gender }}</td>
+                    <td>{{ match.receiver.person.first_name }}</td>
+                    <td>{{ match.receiver.person.last_name }}</td>
+                    <td>{{ match.receiver.person.birth_date }}</td>
+                    <td>{{ match.receiver.person.gender }}</td>
                     <td>{{ match.score }}</td>
                   </tr>
                   </tbody>
@@ -1081,7 +1081,7 @@ export default {
       doc.text("Prénom: " + this.to_edit.person.first_name, 20, y + 10);
       doc.text("Date de naissance: " + this.to_edit.person.birth_date, 20, y + 20);
       doc.text("Sexe: " + this.to_edit.person.gender, 20, y + 30);
-      doc.text("Organe: " + this.to_edit.organ, 20, y + 40);
+      doc.text("Organe: " + this.to_edit.organ_type, 20, y + 40);
       doc.text("Type sanguin: " + this.to_edit.person.abo + this.to_edit.person.rhesus, 20, y + 50);
       doc.text("DONNÉES RELATIVES À L'ORGANE : ", 20, y + 60);
       let current_y = y + 70
@@ -1092,21 +1092,6 @@ export default {
         current_y += 7
       }
       doc.save(pdfName + ".pdf");
-    },
-    getDonorMatchByID(id) {
-      this.$http
-          .get(`/listings/${id}`)
-          .then((response) => {
-            this.to_match.donor = response.data;
-            this.to_match.person = response.data.person;
-          })
-          .catch((error) => {
-            console.log(error)
-            this.$toast.error(
-                "Erreur lors de la connexion : " + translate[error.response.data.msg]
-            );
-            setTimeout(this.$toast.clear, 3000);
-          });
     },
     translate(organ) {
       return translate[organ]
@@ -1144,7 +1129,11 @@ export default {
     openMatchModal(id) {
       this.to_match_id = id;
       this.getMatches().then((response) => {
-        this.matches = response.data;
+        this.$toast.success("Récupération des matchs réussie");
+        this.to_match = response.data.donor
+        setTimeout(this.$toast.clear, 3000);
+        console.log("LA REPONSE", response.data)
+        this.matches = response.data.matches;
       }).catch(() => {
         this.matches = []
       });
@@ -1371,11 +1360,6 @@ export default {
     getMatches() {
       return this.$http
           .get(`/listings/${this.to_match_id}/matches`)
-          .then((response) => {
-            this.$toast.success("Récupération des matchs réussie");
-            this.to_match = response.data.donor
-            setTimeout(this.$toast.clear, 3000);
-          })
           .catch((error) => {
             console.log(error);
             this.$toast.error(
