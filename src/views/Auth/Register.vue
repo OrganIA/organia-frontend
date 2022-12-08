@@ -83,7 +83,6 @@ export default {
           this.$http.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${response.data.token}`;
-          console.log(response.data);
           this.$cookies.set("token", response.data.token, -1);
           this.$store.commit("login", {
             id: response.data.user.id,
