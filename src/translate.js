@@ -12,4 +12,10 @@ export default {
     'You do not have the required permissions to perform this action': 'Vous n\'avez pas les permissions nécessaires pour effectuer cette action',
     'Invalid auth token': 'Dernière connexion invalide',
     'The requested resource was not found': 'Ressource introuvable',
+    'LIVER': 'FOIE',
+    'KIDNEY': 'REIN',
+    'HEART': 'COEUR',
+    'LUNG': 'POUMON',
+    'MALE': 'HOMME',
+    'FEMALE': 'FEMME',
 }
