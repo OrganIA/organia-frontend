@@ -67,9 +67,8 @@
                   </div>
                   <div class="footer-chat">
                     <input type="text" class="write-message cypress-message-input"
-                      placeholder="Écrivez votre message ici..." v-model="input" />
-                    <i class="fas fa-paper-plane clickable msg-send-icon" @click="sendMessage"
-                      @keypress.enter="sendMessage"></i>
+                      placeholder="Écrivez votre message ici..." v-model="input" @keypress.enter="sendMessage"/>
+                    <i class="fas fa-paper-plane clickable msg-send-icon" @click="sendMessage"></i>
                     </div>
                 </section>
                 <section v-else class="chat">
@@ -317,7 +316,8 @@ export default {
       }
     },
     sendMessage() {
-      if (this.websocket != null && this.websocket.readyState === WebSocket.OPEN) {
+      this.input = this.input.trim();
+      if (this.websocket != null && this.websocket.readyState === WebSocket.OPEN && this.input !== "")  {
         this.websocket.send(
           JSON.stringify({
             event: "send_message",
