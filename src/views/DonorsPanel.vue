@@ -910,10 +910,10 @@
                   </thead>
                   <tbody>
                   <tr v-for="match in this.matches" :key="match">
-                    <td>{{ match.person.first_name }}</td>
-                    <td>{{ match.person.last_name }}</td>
-                    <td>{{ match.person.birth_date }}</td>
-                    <td>{{ match.person.gender }}</td>
+                    <td>{{ match.receiver.person.first_name }}</td>
+                    <td>{{ match.receiver.person.last_name }}</td>
+                    <td>{{ match.receiver.person.birth_date }}</td>
+                    <td>{{ match.receiver.person.gender }}</td>
                     <td>{{ match.score }}</td>
                   </tr>
                   </tbody>
@@ -1127,21 +1127,6 @@ export default {
       }
       doc.save(pdfName + ".pdf");
     },
-    getDonorMatchByID(id) {
-      this.$http
-          .get(`/listings/${id}`)
-          .then((response) => {
-            this.to_match.donor = response.data;
-            this.to_match.person = response.data.person;
-          })
-          .catch((error) => {
-            console.log(error)
-            this.$toast.error(
-                "Erreur lors de la connexion : " + translate[error.response.data.msg]
-            );
-            setTimeout(this.$toast.clear, 3000);
-          });
-    },
     translate(organ) {
       return translate[organ]
     },
@@ -1178,7 +1163,11 @@ export default {
     openMatchModal(id) {
       this.to_match_id = id;
       this.getMatches().then((response) => {
-        this.matches = response.data;
+        this.$toast.success("Récupération des matchs réussie");
+        this.to_match = response.data.donor
+        setTimeout(this.$toast.clear, 3000);
+        console.log("LA REPONSE", response.data)
+        this.matches = response.data.matches;
       }).catch(() => {
         this.matches = []
       });
@@ -1405,11 +1394,6 @@ export default {
     getMatches() {
       return this.$http
           .get(`/listings/${this.to_match_id}/matches`)
-          .then((response) => {
-            this.$toast.success("Récupération des matchs réussie");
-            this.to_match = response.data.donor
-            setTimeout(this.$toast.clear, 3000);
-          })
           .catch((error) => {
             console.log(error);
             this.$toast.error(
