@@ -20,7 +20,7 @@
               <option value="first_name">Prénom</option>
               <option value="last_name">Nom</option>
               <option value="gender">Sexe</option>
-              <option value="blood_type">ABO</option>
+              <option value="abo">ABO</option>
               <option value="organ">Organe</option>
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
@@ -53,8 +53,8 @@
             <td>{{ donor.person.first_name }}</td>
             <td>{{ donor.person.last_name }}</td>
             <td>{{ donor.person.gender }}</td>
-            <td>{{ donor.person.blood_type }}</td>
-            <td>{{ donor.organ }}</td>
+            <td>{{ donor.person.abo }}{{(donor.person.rhesus === "Rhesus.POSITIVE") ? "+": "-"}}</td>
+            <td>{{ donor.organ_type }}</td>
             <td>{{ donor.score }}</td>
             <td>
               <div @click="openEditModal(donor.id)">
@@ -116,7 +116,7 @@
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Groupe Sanguin</p>
-                  <button class="button is-info is-light contents">{{ currentDonor.person.blood_type }}</button>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.abo }}</button>
                 </div>
               </div>
               <div v-if="currentDonor.person.description != null">
@@ -182,7 +182,7 @@
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Nombres de tumeurs</p>
-                  <button class="button is-info is-light contents">{{ currentDonor.tumors_number }}</button>
+                  <button class="button is-info is-light contents">{{ currentDonor.tumors_count }}</button>
                 </div>
               </div>
               <div class="columns">
@@ -263,7 +263,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Organe</label>
-                    <select v-model="new_donor.organ" id="organ-select" class="cypress-organ-donor input is-info"
+                    <select v-model="new_donor.organ_type" id="organ-select" class="cypress-organ-donor input is-info"
                             required v-on:change="() => selectOrgan()">
                       <option v-for="element in all_organs" :key="element">
                         {{ element }}
@@ -282,7 +282,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Groupe sanguin</label>
-                    <select v-model="new_donor.blood_type" name="abo" id="abo-select"
+                    <select v-model="new_donor.abo" name="abo" id="abo-select"
                             class="cypress-blood-donor button is-info is-light" required>
                       <option value="A">A</option>
                       <option value="B">B</option>
@@ -328,33 +328,133 @@
               <p class="modal-card-title  has-text-white">Info en plus - {{ this.new_donor.organ }}</p>
               <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
+
             <section class="modal-card-body organia-modal-body">
-              <div class="kidney-form" :class="{ 'is-invisible': (active_form !== 'kidney')}">
-                1
-              </div>
-              <div class="lung-form" :class="{ 'is-invisible': (active_form !== 'lung')}">
-                2
-              </div>
-              <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
-                <div class="form-input required">
-                  <label class="label">Nombre de tumeurs</label>
-                  <input v-model="new_donor.complementary_data['tumors_number']" type="text"
-                         class="cypress-last-name-donor input is-info" required/>
+              <form action="">
+                <div class="kidney-form" :class="{ 'is-invisible': (active_form !== 'kidney')}">
+                  1
                 </div>
-                <div class="form-input required">
-                  <label class="label">Plus grosse tumeur</label>
-                  <input v-model="new_donor.complementary_data['biggest_tumor_size']" type="text"
-                         class="cypress-last-name-donor input is-info" required/>
+                <div class="lung-form" :class="{ 'is-invisible': (active_form !== 'lung')}">
+                  <div class="form-input required">
+                    <label class="label">Groupe de diagnostique</label>
+                    <select v-model="new_donor.organ['diagnosis_group']" class="button is-info is-light"
+                            required>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Diagnostique</label>
+                    <select v-model="new_donor.organ['detailed_diagnosis']" class="button is-info is-light"
+                            required>
+                      <option value="BRONCHIECTASIS">BRONCHIECTASIS</option>
+                      <option value="EISENMENGER">EISENMENGER</option>
+                      <option value="BRONCHIOLITIS">BRONCHIOLITIS</option>
+                      <option value="LAM">LAM</option>
+                      <option value="SARCOIDOSIS">SARCOIDOSIS</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">IMC</label>
+                    <input v-model="new_donor.organ['body_mass_index']" type="number" class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Le patient a-t-il du diabète ?</label>
+                    <select v-model="new_donor.organ['diabetes']" class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Le patient a-t-il besoin d'une aide ?</label>
+                    <select v-model="new_donor.organ['assistance_required']" class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">% de fonction pulmonaire (de 0 à 1)</label>
+                    <input v-model="new_donor.organ['pulmonary_function_percentage']" type="number"
+                           class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression artérielle pulmonaire</label>
+                    <input v-model="new_donor.organ['pulmonary_artery_systolic']" type="number" class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Besoin en oxygène</label>
+                    <input v-model="new_donor.organ['oxygen_requirement']" type="number" class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Marche de 6minutes sur +45m ?</label>
+                    <select v-model="new_donor.organ['six_minutes_walk_distance_over_150_feet']"
+                            class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Assistance respiratoire continue ?</label>
+                    <select v-model="new_donor.organ['continuous_mech_ventilation']" class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression partielle CO2 ?</label>
+                    <input v-model="new_donor.organ['carbon_dioxide_partial_pressure']" type="number"
+                           class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression partielle CO2 augmente de 15%?</label>
+                    <select v-model="new_donor.organ['carbone_dioxide_partial_pressure_15_percent_increase']"
+                            class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Activité quotidienne requise ?</label>
+                    <select v-model="new_donor.organ['activities_of_daily_life_required']" class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression pulmonaire au niveau des capillaires ?</label>
+                    <input v-model="new_donor.organ['pulmonary_capilary_wedge_pressure']" type="number"
+                           class="input is-info"/>
+                  </div>
                 </div>
-                <div class="form-input required">
-                  <label class="label">Alpha fétoprotéine</label>
-                  <input v-model="new_donor.complementary_data['alpha_fetoprotein']" type="text"
-                         class="cypress-last-name-donor input is-info" required/>
+                <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
+                  <div class="form-input required">
+                    <label class="label">Nombre de tumeurs</label>
+                    <input v-model="new_donor.organ['tumors_count']" type="text"
+                           class="cypress-last-name-donor input is-info" required/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Plus grosse tumeur</label>
+                    <input v-model="new_donor.organ['biggest_tumor_size']" type="text"
+                           class="cypress-last-name-donor input is-info" required/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Alpha fétoprotéine</label>
+                    <input v-model="new_donor.organ['alpha_fetoprotein']" type="text"
+                           class="cypress-last-name-donor input is-info" required/>
+                  </div>
                 </div>
-              </div>
-              <div class="heart-form" :class="{ 'is-invisible': (active_form !== 'heart')}">
-                4
-              </div>
+                <div class="heart-form" :class="{ 'is-invisible': (active_form !== 'heart')}">
+                  4
+                </div>
+              </form>
             </section>
             <footer class="modal-card-foot organia-modal-footer">
             </footer>
@@ -417,8 +517,8 @@
                     <label class="label">Rhésus</label>
                     <select class="button is-info is-light" v-model="to_edit.person.rhesus" name="rhesus"
                             id="rhesus-select" required>
-                      <option value="+">+</option>
-                      <option value="-">-</option>
+                      <option value="Rhesus.POSITIVE">+</option>
+                      <option value="Rhesus.NEGATIVE">-</option>
                     </select>
                   </div>
                   <div class="form-input small required">
@@ -440,7 +540,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      @click="updatePerson()">Enregistrer
+                      @click="EditDonor">Enregistrer
               </button>
               <button type="button" class="button is-danger ml-6" @click="deleteDonor">
                 Supprimer
@@ -455,34 +555,130 @@
               <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
-              <div class="kidney-form" :class="{ 'is-invisible': (active_form !== 'kidney')}">
-                1
-              </div>
-              <div class="lung-form" :class="{ 'is-invisible': (active_form !== 'lung')}">
-                2
-              </div>
-              <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
-                <div class="form-input required">
-                  <label class="label">Nombre de tumeurs</label>
-                  <input v-model="to_edit.liver['tumors_number']" type="text"
-                         class="cypress-last-name-donor input is-info" required/>
+              <form action="">
+                <div class="kidney-form" :class="{ 'is-invisible': (active_form !== 'kidney')}">
+                  1
                 </div>
-                <div class="form-input small required">
-                  <label class="label">Plus grosse tumeur</label>
-                  <input v-model="to_edit.liver['biggest_tumor_size']" type="text"
-                         class="cypress-last-name-donor input is-info" required/>
+                <div class="lung-form" :class="{ 'is-invisible': (active_form !== 'lung')}">
+                  <div class="form-input required">
+                    <label class="label">Groupe de diagnostique</label>
+                    <select v-model="to_edit.organ['diagnosis_group']" class="button is-info is-light"
+                            required>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Diagnostique</label>
+                    <select v-model="to_edit.organ['detailed_diagnosis']" class="button is-info is-light"
+                            required>
+                      <option value="BRONCHIECTASIS">BRONCHIECTASIS</option>
+                      <option value="EISENMENGER">EISENMENGER</option>
+                      <option value="BRONCHIOLITIS">BRONCHIOLITIS</option>
+                      <option value="LAM">LAM</option>
+                      <option value="SARCOIDOSIS">SARCOIDOSIS</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">IMC</label>
+                    <input v-model="to_edit.organ['body_mass_index']" type="number" class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Le patient a-t-il du diabète ?</label>
+                    <select v-model="to_edit.organ['diabetes']" class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Le patient a-t-il besoin d'une aide ?</label>
+                    <select v-model="to_edit.organ['assistance_required']" class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">% de fonction pulmonaire (de 0 à 1)</label>
+                    <input v-model="to_edit.organ['pulmonary_function_percentage']" type="number" class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression artérielle pulmonaire</label>
+                    <input v-model="to_edit.organ['pulmonary_artery_systolic']" type="number" class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Besoin en oxygène</label>
+                    <input v-model="to_edit.organ['oxygen_requirement']" type="number" class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Marche de 6minutes sur +45m ?</label>
+                    <select v-model="to_edit.organ['six_minutes_walk_distance_over_150_feet']"
+                            class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Assistance respiratoire continue ?</label>
+                    <select v-model="to_edit.organ['continuous_mech_ventilation']" class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression partielle CO2 ?</label>
+                    <input v-model="to_edit.organ['carbon_dioxide_partial_pressure']" type="number"
+                           class="input is-info"/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression partielle CO2 augmente de 15%?</label>
+                    <select v-model="to_edit.organ['carbone_dioxide_partial_pressure_15_percent_increase']"
+                            class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Activité quotidienne requise ?</label>
+                    <select v-model="to_edit.organ['activities_of_daily_life_required']" class="button is-info is-light"
+                            required>
+                      <option :value='true'>Oui</option>
+                      <option :value='false'>Non</option>
+                    </select>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression pulmonaire au niveau des capillaires ?</label>
+                    <input v-model="to_edit.organ['carbon_dioxide_partial_pressure']" type="number"
+                           class="input is-info"/>
+                  </div>
                 </div>
-                <div class="form-input small required">
-                  <label class="label">Alpha fétoprotéine</label>
-                  <input v-model="to_edit.liver['alpha_fetoprotein']" type="text"
-                         class="cypress-last-name-donor input is-info" required/>
+                <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
+                  <div class="form-input required">
+                    <label class="label">Nombre de tumeurs</label>
+                    <input v-model="to_edit.organ['tumors_count']" type="text"
+                           class="cypress-last-name-donor input is-info" required/>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Plus grosse tumeur</label>
+                    <input v-model="to_edit.organ['biggest_tumor_size']" type="text"
+                           class="cypress-last-name-donor input is-info" required/>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Alpha fétoprotéine</label>
+                    <input v-model="to_edit.organ['alpha_fetoprotein']" type="text"
+                           class="cypress-last-name-donor input is-info" required/>
+                  </div>
                 </div>
-              </div>
-              <div class="heart-form" :class="{ 'is-invisible': (active_form !== 'heart')}">
-                4
-              </div>
-
-
+                <div class="heart-form" :class="{ 'is-invisible': (active_form !== 'heart')}">
+                  4
+                </div>
+              </form>
             </section>
             <footer class="modal-card-foot organia-modal-footer">
             </footer>
@@ -619,7 +815,7 @@ export default {
         donor: {},
         person: {},
         all_organs: [],
-        tumors_number: 0,
+        tumors_count: 0,
       },
       to_edit: {
         first_name: "",
@@ -632,7 +828,7 @@ export default {
         notes: "",
         organ_type: "",
         organ: {},
-        blood_type: "",
+        abo: "",
         rhesus: "",
         gender: "",
       },
@@ -644,11 +840,11 @@ export default {
         person_id: undefined,
         start_date: "",
         notes: "",
-        organ: "",
-        blood_type: "",
+        organ_type: "",
+        abo: "",
         rhesus: "",
         gender: "",
-        complementary_data: {},
+        organ: {},
       },
       all_organs: [],
     };
@@ -658,7 +854,7 @@ export default {
     this.getAllDonors();
     this.getAllUsers();
     this.getMe();
-    this.new_donor.tumors_number = 0;
+    this.new_donor.tumors_count = 0;
   },
   methods: {
     updateNbElements() {
@@ -691,6 +887,7 @@ export default {
               ).toDateString();
             });
             this.donors = response.data;
+            console.log(this.donors)
             this.donorsBackup = this.donors;
             this.updatePage()
           })
@@ -735,8 +932,8 @@ export default {
       doc.text("Date de naissance: " + this.currentDonor.person.birth_date, 20, y + 20);
       doc.text("Sexe: " + this.currentDonor.person.gender, 20, y + 30);
       doc.text("Organe: " + this.currentDonor.organ, 20, y + 40);
-      doc.text("Type sanguin: " + this.currentDonor.person.blood_type, 20, y + 50);
-      doc.text("Nombre de tumeurs: " + this.currentDonor.tumors_number, 20, y + 60);
+      doc.text("Type sanguin: " + this.currentDonor.person.abo, 20, y + 50);
+      doc.text("Nombre de tumeurs: " + this.currentDonor.tumors_count, 20, y + 60);
       doc.text("Date de début de retransplantation: " + this.currentDonor.start_date, 20, y + 70);
       doc.text("Date de fin de retransplantation: " + this.currentDonor.end_date, 20, y + 80);
       doc.save(pdfName + ".pdf");
@@ -764,7 +961,7 @@ export default {
       this.getDonorByID(id).then(() => {
         this.state_extra = 'organ-selected'
         console.log(this.to_edit)
-        switch (this.to_edit.organ) {
+        switch (this.to_edit.organ_type) {
           case 'KIDNEY':
             this.active_form = 'kidney'
             break;
@@ -802,7 +999,7 @@ export default {
       return 0;
     },
     sortData() {
-      if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
+      if (["first_name", "last_name", "gender", "abo"].includes(this.sortingKey)) {
         this.donors.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
               b.person[this.sortingKey] == null)
@@ -910,40 +1107,37 @@ export default {
           });
     },
     EditDonor() {
+      let person = {
+        first_name: this.to_edit.person.first_name,
+        last_name: this.to_edit.person.last_name,
+        birth_date: this.to_edit.person.birth_date,
+        ...(this.to_edit.person.gender ? {gender: this.to_edit.person.gender} : {}),
+        ...(this.to_edit.person.description ? {description: this.to_edit.person.description} : {}),
+        ...(this.to_edit.person.abo ? {abo: this.to_edit.person.abo} : {}),
+        ...(this.to_edit.person.rhesus ? {rhesus: (this.to_edit.person.rhesus === "Rhesus.POSITIVE") ? "+": "-"} : {}),
+      }
+      console.log({
+        person: person,
+        ...(this.to_edit.start_date ? {start_date: this.to_edit.start_date} : {}),
+        ...(this.to_edit.notes ? {notes: this.to_edit.notes} : {}),
+        organ_type: this.to_edit.organ_type,
+        type: "DONOR",
+        organ: this.to_edit.organ,
+      })
       this.$http
-          .post(`/listings/${this.id}/`, {
+          .post(`/listings/${this.to_edit.id}`, {
+            person: person,
             ...(this.to_edit.start_date ? {start_date: this.to_edit.start_date} : {}),
             ...(this.to_edit.notes ? {notes: this.to_edit.notes} : {}),
-            organ_type: this.to_edit.organ,
+            organ_type: this.to_edit.organ_type,
             type: "DONOR",
-            person_id: this.to_edit.person_id,
-            organ: this.new_donor.complementary_data,
+            organ: this.to_edit.organ,
           })
           .then(() => {
-            this.updatePerson();
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$toast.error(
-                "Erreur lors de la modification : " + error.response.data.msg
-            );
+            this.$toast.success("Modification du donneur réussie");
             setTimeout(this.$toast.clear, 3000);
-          });
-    },
-    updatePerson() {
-      this.to_edit.person.isDialyse = this.donor.isDialyse
-      this.$http
-          .post(`/person/${this.to_edit.person.id}`, {
-            first_name: this.to_edit.first_name,
-            last_name: this.to_edit.last_name,
-            birth_date: this.to_edit.birth_date,
-            ...(this.to_edit.description ? {description: this.to_edit.description} : {}),
-            ...(this.to_edit.blood_type ? {abo: this.to_edit.blood_type} : {}),
-            ...(this.to_edit.rhesus ? {rhesus: this.to_edit.rhesus} : {}),
-            ...(this.to_edit.gender ? {gender: this.to_edit.gender} : {}),
-          })
-          .then(() => {
             this.closeModal()
+            this.getAllDonors()
           })
           .catch((error) => {
             console.log(error);
@@ -955,7 +1149,7 @@ export default {
     },
     selectOrgan() {
       this.state_extra = 'organ-selected'
-      switch (this.new_donor.organ) {
+      switch (this.new_donor.organ_type) {
         case 'KIDNEY':
           this.active_form = 'kidney'
           break;
@@ -976,23 +1170,32 @@ export default {
         last_name: this.new_donor.last_name,
         birth_date: this.new_donor.birth_date,
         ...(this.new_donor.gender ? {gender: this.new_donor.gender} : {}),
+        ...(this.new_donor.description ? {description: this.new_donor.description} : {}),
+        ...(this.new_donor.abo ? {abo: this.new_donor.abo} : {}),
+        ...(this.new_donor.rhesus ? {rhesus: this.new_donor.rhesus} : {}),
       }
+      console.log({
+        person: person,
+        ...(this.new_donor.start_date ? {start_date: this.new_donor.start_date} : {}),
+        ...(this.new_donor.notes ? {notes: this.new_donor.notes} : {}),
+        organ_type: this.new_donor.organ_type,
+        type: "DONOR",
+        organ: this.new_donor.organ,
+      })
       this.$http
           .post("/listings/", {
             person: person,
-            ...(this.new_donor.description ? {description: this.new_donor.description} : {}),
-            ...(this.new_donor.blood_type ? {abo: this.new_donor.blood_type} : {}),
-            ...(this.new_donor.rhesus ? {rhesus: this.new_donor.rhesus} : {}),
             ...(this.new_donor.start_date ? {start_date: this.new_donor.start_date} : {}),
             ...(this.new_donor.notes ? {notes: this.new_donor.notes} : {}),
-            organ_type: this.new_donor.organ,
+            organ_type: this.new_donor.organ_type,
             type: "DONOR",
-            person_id: this.new_donor.person_id,
-            organ: this.new_donor.complementary_data,
+            organ: this.new_donor.organ,
           })
           .then(() => {
             this.$toast.success("Création du donneur réussie");
             setTimeout(this.$toast.clear, 3000);
+            this.closeModal()
+            this.getAllDonors()
           })
           .catch((error) => {
             console.log(error);
@@ -1176,7 +1379,7 @@ td {
 }
 
 .modal-complement {
-  width: 20%;
+  width: 30%;
   height: 100%;
   z-index: 100;
 }
