@@ -24,55 +24,57 @@
             <div class="chat-container">
               <div class="row">
                 <section class="discussions">
-                  <div class="discussion message-active cypress-conversation" v-for="chat in chats" :key="chat.id"
-                    @click="selectChat(chat)">
-                    <div class="photo">
-                      {{ chat.name.charAt(0).toUpperCase() }}
-                    </div>
-                    <div class="desc-contact">
-                      <p class="name cypress-chat-name">{{ chat.name }}</p>
+                  <div>
+                    <p class="conversation-title title is-1">conversations</p>
+                    <button class="create-button title is-1">Créer<i class="icon clickable fas fa-plus-circle right"
+                        aria-hidden="true" @click="openModal('newChat')"></i></button>
+                  </div>
+                  <div class="scroll">
+                    <div class="discussion message-active title is-1 cypress-conversation" v-for="chat in chats"
+                      :key="chat.id" @click="selectChat(chat)">
+                      <div class="photo title is-1">
+                        {{ chat.name.charAt(0).toUpperCase() }}
+                      </div>
+                      <div class="desc-contact">
+                        <p class="name cypress-chat-name">{{ chat.name }}</p>
+                      </div>
                     </div>
                   </div>
                 </section>
                 <section v-if="Object.keys(currentChat).length !== 0" class="chat">
-                  <div class="header-chat">
+                  <div class="header-chat title is-1">
                     <p class="name">{{ currentChat.name }}</p>
-                    <div class="actions right">
-                      <i class="icon clickable fas fa-plus-circle " @click="openModal('newChat')"></i>
-                      <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')"></i>
+                    <div>
+                      <i class="icon clickable fas fa-info" aria-hidden="true" @click="openModal('chatInfos')" />
                       <i v-if="currentChat.creator.id == currentUser.id" class="icon clickable fas fa-edit"
-                        aria-hidden="true" @click="openModal('editChat')"></i>
+                        aria-hidden="true" @click="openModal('editChat')" />
                     </div>
                   </div>
                   <div class="messages-chat">
-                    <div class="message-list">
-                      <div class="message-container" v-for="message in messages" :key="message.id">
-                        <div v-if="message.sender.id == currentUser.id" class="sent">
+                    <div class="message-container" v-for="message in messages" :key="message.id">
+                      <div v-if="message.sender.id == currentUser.id" class="sent">
+                        {{ message.content }}
+                      </div>
+                      <div v-else class="received">
+                        <div class="message">
                           {{ message.content }}
                         </div>
-                        <div v-else class="received">
-                          <div>
-                            {{ message.content }}
-                          </div>
-                          <div>
-                            {{ message.sender.email }}
-                          </div>
+                        <div class="sender-email">
+                          {{ 'de: ' + message.sender.email }}
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="footer-chat">
-                    <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
-                    <input type="text" class="write-message cypress-message-input" placeholder="Type your message here"
-                      v-model="input" />
-                    <i class="fas fa-paper-plane clickable" @click="sendMessage" @keypress.enter="sendMessage"></i>
-                  </div>
+                    <input type="text" class="write-message cypress-message-input"
+                      placeholder="Écrivez votre message ici..." v-model="input" />
+                    <i class="fas fa-paper-plane clickable msg-send-icon" @click="sendMessage"
+                      @keypress.enter="sendMessage"></i>
+                    </div>
                 </section>
                 <section v-else class="chat">
                   <div class="header-chat">
-                    <p class="name">Aucune conversation selectionnée</p>
-                    <i class="icon clickable fas fa-plus-circle right" aria-hidden="true"
-                      @click="openModal('newChat')"></i>
+                    <p class="name title is-1">Aucune conversation selectionnée</p>
                   </div>
                 </section>
               </div>
@@ -203,7 +205,7 @@ export default {
           }
           this.messages = messages
           this.$nextTick(() => {
-            document.querySelector(".message-list").scrollTop = document.querySelector(".message-list").scrollHeight;
+            document.querySelector(".messages-chat").scrollTop = document.querySelector(".messages-chat").scrollHeight;
           })
         })
         .catch((error) => {
@@ -308,7 +310,7 @@ export default {
               timestamp: date.toLocaleTimeString(),
             })
             this.$nextTick(() => {
-              document.querySelector(".message-list").scrollTop = document.querySelector(".message-list").scrollHeight;
+              document.querySelector(".messages-chat").scrollTop = document.querySelector(".messages-chat").scrollHeight;
             })
           }
         };
@@ -344,38 +346,51 @@ export default {
 
 .sent {
   float: right;
-  background-color: #4f6ebd;
+  background-color: #FBFCFF;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
   max-width: 50%;
-  color: white;
+  color: #071F49;
+  font-weight: bold;
 }
 
 .received {
   float: left;
-  background-color: #e6e6e6;
   border-radius: 10px;
-  padding: 10px;
+  /* padding: 10px; */
   margin: 10px;
   max-width: 50%;
   overflow-wrap: break-word;
+  font-weight: bold;
+  color: #FBFCFF;
+}
+
+.received .message {
+  background-color: #071F49;
+  padding: 5px;
+  margin-bottom: 0px;
+  width: auto;
+}
+
+.sender-email{
+  color: #071F49;
 }
 
 .discussions {
-  width: 20%;
-  height: 700px;
+  width: 19em;
+  height: 36em;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.20);
   overflow: hidden;
-  background-color: #87a3ec;
+  background-color: #D8E0E9;
   display: inline-block;
+  border-radius: 25px;
 }
 
 .discussions .discussion {
-  width: 100%;
-  height: 90px;
-  margin: 10px;
-  background-color: #FAFAFA;
+  height: 75px;
+  margin: 15px;
+  background-color: #eff5fb;
   border-bottom: solid 1px #E0E0E0;
   border-radius: 10px;
   display: flex;
@@ -385,10 +400,13 @@ export default {
 
 .discussions .discussion .photo {
   margin-left: 20px;
+  margin-top: 20px;
   display: block;
   width: 45px;
   height: 45px;
-  background: #E6E7ED;
+  background: #0F2C59;
+  color: #FBFCFF;
+  font-size: 13pt;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
   border-radius: 50px;
@@ -409,10 +427,9 @@ export default {
 }
 
 .discussions .discussion .name {
-  margin: 0 0 0 20px;
   font-family: 'Montserrat', sans-serif;
   font-size: 11pt;
-  color: #515151;
+  color: #071F49;
 }
 
 .discussions .discussion .message {
@@ -433,20 +450,26 @@ export default {
   box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.100);
   display: flex;
   align-items: center;
+  border-radius: 25px;
+  width: 120%;
 }
 
 .chat .header-chat .icon {
-  margin-left: 30px;
-  color: #515151;
+  flex-shrink: 0;
+  display: flex;
+  margin-left: 520px;
+  color: #071F49;
   font-size: 14pt;
 }
 
+
 .chat .header-chat .name {
+  flex-grow: 1;
   margin: 0 0 0 20px;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   font-size: 13pt;
-  color: #515151;
+  color: #071F49;
 }
 
 .chat .header-chat .right {
@@ -497,10 +520,18 @@ export default {
 
 .write-message {
   border: none !important;
-  width: 60%;
-  height: 50px;
-  margin-left: 20px;
+  width: 80%;
+  height: 60px;
   padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5em;
+  margin-left: 2em;
+  font-weight: bold;
+}
+
+.msg-send-icon {
+  margin-bottom: 5em;
+  margin-left: 1em;
 }
 
 .footer-chat *::-webkit-input-placeholder {
@@ -530,5 +561,42 @@ export default {
 
 .icon {
   color: #4f6ebd
+}
+
+.conversation-title {
+  color: #071F49;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15pt;
+  margin-top: 1em;
+}
+
+.create-button {
+  border-radius: 10px;
+  font-size: 13pt;
+  color: #071F49;
+  background-color: #eff5fb;
+  text-align: center;
+  border-color: transparent;
+}
+
+.msg-title {
+  color: #071F49;
+}
+
+.scroll {
+  overflow-y: scroll;
+  height: 460px;
+}
+
+.row {
+  background-color: #eff5fb;
+}
+
+.messages-chat {
+  width: 120%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 </style>

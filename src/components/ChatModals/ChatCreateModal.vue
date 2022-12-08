@@ -2,18 +2,18 @@
     <div class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
-            <header class="modal-card-head">
+            <header class="modal-card-head organia-modal-head">
                 <p class="modal-card-title is-3">Créer une nouvelle conversation</p>
                 <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
-            <section class="modal-card-body">
+            <section class="modal-card-body organia-modal-body">
                 <form @submit.prevent="createRoom">
                     <label class="label">Nom de la conversation</label>
                     <input class="input cypress-chat-title" type="text" placeholder="Nom de la conversation" v-model="newRoomName"
                         required>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs non ajoutés
-                            <select class="cypress-nonadd-user" multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
+                            <select class="non-add-user cypress-nonadd-user" multiple v-if="usersNotAdded.length > 0" :size="usersNotAdded.length">
                                 <option v-for="user, index in usersNotAdded" :key="user.id" :value="user.id"
                                     @click="addUser(user, index)">{{ user.email }}</option>
                             </select>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs ajoutés
-                            <select multiple v-if="usersToAdd.length > 0" :size="usersToAdd.length">
+                            <select class="list-user-added" multiple v-if="usersToAdd.length > 0" :size="usersToAdd.length">
                                 <option v-for="user in usersToAdd" :key="user.id" :value="user.id"
                                     @click="removeUser(user, index)">{{
                                             user.email
@@ -31,7 +31,7 @@
                     </div>
                 </form>
             </section>
-            <footer class="modal-card-foot">
+            <footer class="modal-card-foot organia-modal-footer">
                 <button @click="createRoom" class="button is-success cypress-save">Sauvegarder</button>
                 <button class="button is-danger" @click="closeModal(false)">
                     Annuler
@@ -137,6 +137,29 @@ export default {
 </style>
 <style scoped>
 .user-list {
-    margin: 10px
+    margin: 10px;
+    width: 15em;
+    height: 12em;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.20);
+    overflow: hidden;
+    background-color: #D8E0E9;
+    border-radius: 25px;
+}
+
+.non-add-user{
+border: transparent;
+border-radius: 15px;
+overflow: hidden;
+margin-top: 1em;
+margin-left: 2.5em;
+background-color: #c9d1da;
+}
+.list-user-added{
+    border: transparent;
+border-radius: 15px;
+overflow: hidden;
+margin-top: 1em;
+margin-left: 2.5em;
+background-color: #c9d1da;
 }
 </style>
