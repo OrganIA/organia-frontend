@@ -10,10 +10,10 @@
                 <label class="label">Nom de la conversation</label>
                 <p>{{ chat.name }}</p>
                 <label class="label">Créateur:</label>
-                <p>{{  `${chat.creator.firstname} ${chat.creator.lastname}` }}</p>
+                <p>{{  `${chat.creator?.firstname} ${chat.creator?.lastname}` }}</p>
                 <div class="select is-multiple user-list">
                     <label class="label">Utilisateurs ajoutés</label>
-                    <select class="added-user-info" multiple v-if="chat.users.length > 0" :size="chat.users.length">
+                    <select class="added-user-info" multiple v-if="chat.users?.length > 0" :size="chat.users?.length">
                         <option v-for="user in chat.users" :key="user._id" :value="user._id">{{ `${user.firstname} ${user.lastname}` }}</option>
                     </select>
                 </div>

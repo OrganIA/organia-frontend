@@ -13,7 +13,7 @@
                         required>
                     <div class="select is-multiple  user-list">
                         <label class="label">Utilisateurs non ajoutés
-                            <select class="non-add-user-edit" multiple v-if="users_list.length > 0" :size="users_list.length">
+                            <select class="non-add-user-edit" multiple v-if="users_list.length > 0" :size="users_list?.length">
                                 <option v-for="user, index in users_list" :key="user.id" :value="user.id"
                                     @click="addUser(user, index)">{{ user.email }}</option>
                             </select>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="select is-multiple user-list">
                         <label class="label">Utilisateurs ajoutés
-                            <select class="list-user-added-edit " multiple v-if="updatedChat.users.length > 0" :size="updatedChat.users.length">
+                            <select class="list-user-added-edit " multiple v-if="updatedChat.users?.length > 0" :size="updatedChat.users.length">
                                 <option v-for="user, index in updatedChat.users" :key="user.id" :value="user.id"
                                     @click="removeUser(user, index)">
                                     {{ user.email }}
@@ -66,7 +66,7 @@ export default {
         },
         users_list() {
             return this.users.filter((user) => {
-                return !this.chat.users.some((u) => {
+                return !this.chat.users?.some((u) => {
                     return u.id === user.id
                 })
             })
