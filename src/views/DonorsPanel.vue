@@ -846,10 +846,10 @@
         <div class="modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
           <div class="modal-background">
             <div class="modal-card">
-              <header class="modal-card-head">
+              <header class="modal-card-head organia-modal-head">
                 <p class="modal-card-title is-3">Créer une conversation</p>
               </header>
-              <section class="modal-card-body">
+              <section class="modal-card-body organia-modal-body">
                 <div class="container">
                   <div class="columns">
                     <div class="column">
@@ -863,7 +863,7 @@
                         <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
                         <button class="button is-info is-light person-box" v-for="person in personsNotAdded"
                                 :key="person">
-                          <p class="username">{{ `${person.last_name} ${person.first_name}` }}</p>
+                          <p class="username">{{ `${person.lastname} ${person.firstname}` }}</p>
                           <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
                         </button>
                       </div>
@@ -872,7 +872,7 @@
                       <div class="box">
                         <button class="button is-medium is-fullwidth elements">Utilisateurs à ajouter</button>
                         <button class="button is-info is-light person-box" v-for="person in personsToAdd" :key="person">
-                          <p class="username">{{ `${person.last_name} ${person.first_name}` }}</p>
+                          <p class="username">{{ `${person.lastname} ${person.firstname}` }}</p>
                           <i class="fas fa-minus-circle delete-button" @click="deletePerson(person)"></i>
                         </button>
                       </div>
@@ -881,7 +881,7 @@
                 </div>
                 <br>
                 <footer>
-                  <button class="button is-success is-light btn-margin" @click="saveChat(to_edit)">Enregistrer
+                  <button class="button is-success is-light btn-margin" @click="saveChat()">Enregistrer
                   </button>
                   <button class="button is-danger is-light btn-margin " @click="resetChat(to_edit)">Retour</button>
                 </footer>
@@ -952,6 +952,9 @@ export default {
   name: "donors-panel",
   data() {
     return {
+      personsNotAdded: [],
+      personsToAdd: [],
+      chatName: "",
       donor: {},
       donors: {},
       modal: false,
@@ -1013,6 +1016,39 @@ export default {
     this.new_donor.tumors_count = 0;
   },
   methods: {
+    addPerson(person) {
+      this.personsToAdd.push(person)
+      this.personsNotAdded = this.personsNotAdded.filter((p) => p.id !== person.id)
+    },
+    deletePerson(person) {
+      this.personsToAdd = this.personsToAdd.filter((p) => p.id !== person.id)
+      this.personsNotAdded.push(person)
+    },
+    saveChat() {
+      const users = this.personsToAdd.map((p) => p.id)
+      this.$http
+        .post("/chats/", {
+            users_ids: users,
+            name: this.chatName,
+        })
+        .then(() => {
+            this.closeModal()
+        })
+        .catch((error) => {
+            console.log(error);
+            if (error.response.data.msg.includes("is already taken")) {
+                error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+                this.$toast.error(
+                    "Erreur lors de la connexion : " + error.response.data.msg
+                );
+            } else {
+                this.$toast.error(
+                    "Erreur lors de la connexion : " + translate[error.response.data.msg]
+                );
+            }
+            setTimeout(this.$toast.clear, 3000);
+        });
+    },
     updateNbElements() {
       this.page = 0;
       this.updatePage()
@@ -1068,7 +1104,7 @@ export default {
       }
     },
     resetChat(donor) {
-      this.openInfoModal(donor)
+      this.openEditModal(donor.id)
       this.personsToAdd = []
       this.chatName = ""
       this.getAllUsers()
@@ -1081,13 +1117,11 @@ export default {
       doc.text("Prénom: " + this.to_edit.person.first_name, 20, y + 10);
       doc.text("Date de naissance: " + this.to_edit.person.birth_date, 20, y + 20);
       doc.text("Sexe: " + this.to_edit.person.gender, 20, y + 30);
-      doc.text("Organe: " + this.to_edit.organ, 20, y + 40);
+      doc.text("Organe: " + this.translate(this.to_edit.organ_type), 20, y + 40);
       doc.text("Type sanguin: " + this.to_edit.person.abo + this.to_edit.person.rhesus, 20, y + 50);
       doc.text("DONNÉES RELATIVES À L'ORGANE : ", 20, y + 60);
       let current_y = y + 70
       for (const [key, value] of Object.entries(this.to_edit.organ)) {
-        console.log(key)
-        console.log(value)
         doc.text(key + " : " + value, 20, current_y);
         current_y += 7
       }
