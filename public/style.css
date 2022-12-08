@@ -38,8 +38,11 @@
     text-align: center;
     color: #2c3e50;
     z-index: 1;
+    width: 100% !important;
 }
-
+body {
+    min-width: 1280px; // change width as needed to fit your page
+}
 #bodiv {
     position: absolute;
     width: 100%;
@@ -501,4 +504,14 @@ tr:nth-child(even) {
 .modal-admin-btn:hover {
     background-color: #2d6594;
     color: white;
+}
+
+.modal-background {
+    // create a blur effect
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.is-invisible {
+    display: none;
 }

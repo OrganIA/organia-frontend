@@ -24,9 +24,9 @@
               <option value="organ">Organe</option>
             </select>
             <div class="fa fa-solid fa-angle-down icon-dropdown-correction"></div>
-            <input @input="filter" v-model="filterText" class="search-bar input mr-6" />
+            <input @input="filter" v-model="filterText" class="search-bar input mr-6"/>
             <select v-model="nb_by_page" @change="updateNbElements"
-              class="number-selector button mb-4 ml-6 is-info is-light">
+                    class="number-selector button mb-4 ml-6 is-info is-light">
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
@@ -36,40 +36,40 @@
         </div>
         <table class="table-scroll">
           <thead>
-            <tr>
-              <th>Prénom</th>
-              <th>Nom de famille</th>
-              <th>Sexe</th>
-              <th>ABO</th>
-              <th>Organe</th>
-              <th>Score</th>
-              <th>Éditer</th>
-              <th>Match</th>
-              <th>Infos</th>
-            </tr>
+          <tr>
+            <th>Prénom</th>
+            <th>Nom de famille</th>
+            <th>Sexe</th>
+            <th>ABO</th>
+            <th>Organe</th>
+            <th>Score</th>
+            <th>Éditer</th>
+            <th>Match</th>
+            <th>Infos</th>
+          </tr>
           </thead>
           <tbody>
-            <tr class="cypress-donor-row" v-for="donor in donors" :key="donor">
-              <td>{{ donor.person.first_name }}</td>
-              <td>{{ donor.person.last_name }}</td>
-              <td>{{ donor.person.gender }}</td>
-              <td>{{ donor.person.blood_type }}</td>
-              <td>{{ donor.organ }}</td>
-              <td>{{ donor.score }}</td>
-              <td>
-                <div @click="openEditModal(donor.id)">
-                  <i class="fas fa-edit button is-primary cypress-edit-donor"></i>
-                </div>
-              </td>
-              <td>
-                <div @click="openMatchModal(donor.id)">
-                  <i class="fa-brands fa-searchengin button is-primary"></i>
-                </div>
-              </td>
-              <td>
-                <i class="fas fa-info cypress-info-donor-modal" @click="openInfoModal(donor)"></i>
-              </td>
-            </tr>
+          <tr class="cypress-donor-row" v-for="donor in donors" :key="donor">
+            <td>{{ donor.person.first_name }}</td>
+            <td>{{ donor.person.last_name }}</td>
+            <td>{{ donor.person.gender }}</td>
+            <td>{{ donor.person.blood_type }}</td>
+            <td>{{ donor.organ }}</td>
+            <td>{{ donor.score }}</td>
+            <td>
+              <div @click="openEditModal(donor.id)">
+                <i class="fas fa-edit button is-primary cypress-edit-donor"></i>
+              </div>
+            </td>
+            <td>
+              <div @click="openMatchModal(donor.id)">
+                <i class="fa-brands fa-searchengin button is-primary"></i>
+              </div>
+            </td>
+            <td>
+              <i class="fas fa-info cypress-info-donor-modal" @click="openInfoModal(donor)"></i>
+            </td>
+          </tr>
           </tbody>
         </table>
         <nav class="pagination is-rounded is-centered pages" role="navigation" aria-label="pagination">
@@ -77,7 +77,7 @@
           <ul class="pagination-list">
             <li><a class="pagination-link is-current" :aria-label="'Page ' + ($data.page + 1)" aria-current="page">{{
                 $data.page + 1
-            }}</a></li>
+              }}</a></li>
           </ul>
           <a class="pagination-next" @click="nextPage()">Suivant</a>
         </nav>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Date de naissance</p>
-                  <button class="button is-info is-light contents">{{ currentDonor.person.birthday }}</button>
+                  <button class="button is-info is-light contents">{{ currentDonor.person.birth_date }}</button>
                 </div>
               </div>
               <div class="columns">
@@ -123,7 +123,7 @@
                 <p class="button is-medium is-fullwidth elements">Description</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.description
-                }}
+                  }}
                 </button>
               </div>
               <div class="columns">
@@ -135,7 +135,7 @@
                   <p class="button is-medium is-fullwidth elements">Date de dernière édition</p>
                   <button v-if="currentDonor.person.updated_at != null" class="button is-info is-light contents">{{
                       currentDonor.person.updated_at
-                  }}
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Aucune modification effectuée.</button>
                 </div>
@@ -144,35 +144,35 @@
                 <p class="button is-medium is-fullwidth elements">Date de retransplantation</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.DateTransplantation
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentDonor.person.ReRegistrationDate != null">
                 <p class="button is-medium is-fullwidth elements">Date d'enregistrement</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.ReRegistrationDate
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentDonor.person.alpha_fetoprotein != null">
                 <p class="button is-medium is-fullwidth elements">Alpha Fetoprotein</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.alpha_fetoprotein
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentDonor.person.biggest_tumor_size != null">
                 <p class="button is-medium is-fullwidth elements">La plus grande taille de tumeurs</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.biggest_tumor_size
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentDonor.person.end_date != null">
                 <p class="button is-medium is-fullwidth elements">Date de fin</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.end_date
-                }}
+                  }}
                 </button>
               </div>
               <div class="columns">
@@ -190,7 +190,7 @@
                   <p class="button is-medium elements">Sous dialyse ?</p>
                   <button v-if="currentDonor.person.isDialyse" class="button is-info is-light contents">{{
                       Oui
-                  }}
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
                 </div>
@@ -198,7 +198,7 @@
                   <p class="button is-medium elements is-size-6">Retransplantation effectuée? ?</p>
                   <button v-if="currentDonor.person.isRetransplantation" class="button is-info is-light contents ">{{
                       Oui
-                  }}
+                    }}
                   </button>
                   <button v-else class="button is-info is-light contents">Non</button>
                 </div>
@@ -207,21 +207,21 @@
                 <p class="button column is-medium elements">Date de début de dialyse</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.startDateDialyse
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentDonor.person.EndDateDialyse != null">
                 <p class="button column is-medium elements">Date de fin de dialyse</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.EndDateDialyse
-                }}
+                  }}
                 </button>
               </div>
               <div v-if="currentDonor.person.notes != null">
                 <p class="button column is-medium elements">Notes</p>
                 <button class="button is-light contents">{{
                     currentDonor.person.notes
-                }}
+                  }}
                 </button>
               </div>
               <button class="button is-link is-light cypress-donor-chat-modal" @click="openChatModal()">
@@ -235,146 +235,133 @@
             </footer>
           </div>
         </div>
-        <div class="modal-group">
-          <div class="modal" :class="{ 'is-invisible': (state !== 'new'), 'is-active': (state === 'new'), 'is-shifted': (state_extra === 'organ-selected')}">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-              <header class="modal-card-head organia-modal-head">
-                <p class="modal-card-title  has-text-white">Ajouter un donneur</p>
-                <button class="delete" aria-label="close" @click="closeModal(false)"></button>
-              </header>
-              <section class="modal-card-body organia-modal-body">
-                <form @submit.prevent="createPerson()" class="show-requireds">
-                  <div class="form-fields">
-                    <div class="form-input small required">
-                      <label class="label">Prénom</label>
-                      <input v-model="new_donor.first_name" placeholder="first_name" type="text"
-                             class="cypress-first-name-donor input is-info" required />
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">Nom de Famille</label>
-                      <input v-model="new_donor.last_name" placeholder="last_name" type="text"
-                             class="cypress-last-name-donor input is-info" required />
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">Date de naissance</label>
-                      <input v-model="new_donor.birthday" placeholder="birthday" type="date"
-                             class="cypress-birth-date-donor input is-info" required />
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">Organe</label>
-                      <select v-model="new_donor.organ" id="organ-select" class="cypress-organ-donor input is-info" required  v-on:change="() => selectOrgan()">
-                        <option v-for="element in all_organs" :key="element">
-                          {{ element }}
-                        </option>
-                      </select>
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">Date d'admission</label>
-                      <input v-model="new_donor.start_date" placeholder="start date" type="date"
-                             class="cypress-admission-date-donor input is-info" required />
-                    </div>
-                    <div class="form-input small">
-                      <label class="label">Nombre de tumeurs</label>
-                      <input v-model="new_donor.tumors_number" placeholder="0" type="text"
-                             class="cypress-tumors-number-donor input is-info" />
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">Le patient est sous dialyse ?</label>
-                      <select v-model="new_donor.isDialyse" name="dialyse" id="dialyse-select"
-                              class="cypress-is-dialyse-donor button is-info is-light" required>
-                        <option value="true">Oui</option>
-                        <option value="false">Non</option>
-                      </select>
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">A-t-il effectué une retransplantation ?</label>
-                      <select v-model="new_donor.isRetransplantation" name="retransplantation" id="transplantation-select"
-                              class="cypress-is-retransplantation-donor button is-info is-light" required>
-                        <option value="true">Oui</option>
-                        <option value="false">Non</option>
-                      </select>
-                    </div>
-                    <div class="form-input small">
-                      <label class="label">Date de début de dialyse</label>
-                      <input v-model="new_donor.startDateDialyse" placeholder="start date" type="date"
-                             class="cypress-beginning-dialyse-donor input is-info" />
-                    </div>
-                    <div class="form-input small">
-                      <label class="label">Date de fin de dialyse</label>
-                      <input v-model="new_donor.endDateDialyse" placeholder="start date" type="date"
-                             class="cypress-end-dialyse-donor input is-info" />
-                    </div>
-                    <div class="form-input small">
-                      <label class="label">Description</label>
-                      <input v-model="new_donor.description" placeholder="description" type="text"
-                             class="input is-info cypress-description-donor" />
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">Groupe sanguin</label>
-                      <select v-model="new_donor.blood_type" name="abo" id="abo-select"
-                              class="cypress-blood-donor button is-info is-light" required>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="O">O</option>
-                        <option value="AB">AB</option>
-                      </select>
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">Rhésus</label>
-                      <select v-model="new_donor.rhesus" name="rhesus" id="rhesus-select"
-                              class="cypress-rhesus-donor button is-info is-light" required>
-                        <option value="+">+</option>
-                        <option value="-">-</option>
-                      </select>
-                    </div>
-                    <div class="form-input small required">
-                      <label class="label">Sexe</label>
-                      <select v-model="new_donor.gender" name="gender" id="gender-select"
-                              class="cypress-gender-donor button is-info is-light" required>
-                        <option value="MALE">MALE</option>
-                        <option value="FEMALE">FEMALE</option>
-                      </select>
-                    </div>
-                    <div class="form-input small">
-                      <label class="label">Notes</label>
-                      <textarea v-model="new_donor.notes" placeholder="notes" class="textarea cypress-note-donor" />
-                      <p class="required-notice">* Obligatoire</p>
-
-                    </div>
-                    <div class="form-submit is-center">
-                      <button type="submit" class="cypress-add-this-donor button is-info mx-auto mr-6">Ajouter</button>
-                      <router-link to="/donors" class="button is-danger ml-6">Retour</router-link>
-                    </div>
+        <div class="modal new-donor-modal"
+             :class="{ 'is-invisible': (state !== 'new'), 'is-active': (state === 'new'), 'is-shifted': (state_extra === 'organ-selected')}">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Ajouter un donneur</p>
+              <button class="delete" aria-label="close" @click="closeModal(false)"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <form @submit.prevent="createDonor()" class="show-requireds">
+                <div class="form-fields">
+                  <div class="form-input small required">
+                    <label class="label">Prénom</label>
+                    <input v-model="new_donor.first_name" placeholder="first_name" type="text"
+                           class="cypress-first-name-donor input is-info" required/>
                   </div>
-                </form>
+                  <div class="form-input small required">
+                    <label class="label">Nom de Famille</label>
+                    <input v-model="new_donor.last_name" placeholder="last_name" type="text"
+                           class="cypress-last-name-donor input is-info" required/>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Date de naissance</label>
+                    <input v-model="new_donor.birth_date" placeholder="birth_date" type="date"
+                           class="cypress-birth-date-donor input is-info" required/>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Organe</label>
+                    <select v-model="new_donor.organ" id="organ-select" class="cypress-organ-donor input is-info"
+                            required v-on:change="() => selectOrgan()">
+                      <option v-for="element in all_organs" :key="element">
+                        {{ element }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Date d'admission</label>
+                    <input v-model="new_donor.start_date" placeholder="start date" type="date"
+                           class="cypress-admission-date-donor input is-info" required/>
+                  </div>
+                  <div class="form-input small">
+                    <label class="label">Description</label>
+                    <input v-model="new_donor.description" placeholder="description" type="text"
+                           class="input is-info cypress-description-donor"/>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Groupe sanguin</label>
+                    <select v-model="new_donor.blood_type" name="abo" id="abo-select"
+                            class="cypress-blood-donor button is-info is-light" required>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="O">O</option>
+                      <option value="AB">AB</option>
+                    </select>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Rhésus</label>
+                    <select v-model="new_donor.rhesus" name="rhesus" id="rhesus-select"
+                            class="cypress-rhesus-donor button is-info is-light" required>
+                      <option value="+">+</option>
+                      <option value="-">-</option>
+                    </select>
+                  </div>
+                  <div class="form-input small required">
+                    <label class="label">Sexe</label>
+                    <select v-model="new_donor.gender" name="gender" id="gender-select"
+                            class="cypress-gender-donor button is-info is-light" required>
+                      <option value="MALE">MALE</option>
+                      <option value="FEMALE">FEMALE</option>
+                    </select>
+                  </div>
+                  <div class="form-input small">
+                    <label class="label">Notes</label>
+                    <textarea v-model="new_donor.notes" placeholder="notes" class="textarea cypress-note-donor"/>
+                    <p class="required-notice">* Obligatoire</p>
+                  </div>
+                </div>
+              </form>
 
-              </section>
-              <footer class="modal-card-foot organia-modal-footer">
-                <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                        @click="createPerson()">Ajouter
-                </button>
-                <button class="button modal-admin-btn" @click="openNewModal()">Fermer</button>
-              </footer>
-            </div>
+            </section>
+            <footer class="modal-card-foot organia-modal-footer">
+              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
+                      @click="createDonor()">Ajouter
+              </button>
+              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
+            </footer>
           </div>
-          <div class="modal-complement" :class="{ 'is-invisible': (state_extra !== 'organ-selected'), 'is-active': (state_extra === 'organ-selected') }">
-            <div class="modal-card">
-              <header class="modal-card-head organia-modal-head">
-                <p class="modal-card-title  has-text-white">Info en plus - {{this.new_donor.organ}}</p>
-                <button class="delete" aria-label="close" @click="closeModal(false)"></button>
-              </header>
-              <section class="modal-card-body organia-modal-body">
-              </section>
-              <footer class="modal-card-foot organia-modal-footer">
-                <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn">ouais
-                </button>
-                <button class="button modal-admin-btn" @click="openNewModal()">Fermer</button>
-              </footer>
-            </div>
+          <div class="modal-card modal-complement"
+               :class="{ 'is-invisible': (state_extra !== 'organ-selected'), 'is-active': (state_extra === 'organ-selected') }">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Info en plus - {{ this.new_donor.organ }}</p>
+              <button class="delete" aria-label="close" @click="closeModal(false)"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <div class="kidney-form" :class="{ 'is-invisible': (active_form !== 'kidney')}">
+                1
+              </div>
+              <div class="lung-form" :class="{ 'is-invisible': (active_form !== 'lung')}">
+                2
+              </div>
+              <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
+                <div class="form-input required">
+                  <label class="label">Nombre de tumeurs</label>
+                  <input v-model="new_donor.complementary_data['tumors_number']" type="text"
+                         class="cypress-last-name-donor input is-info" required/>
+                </div>
+                <div class="form-input required">
+                  <label class="label">Plus grosse tumeur</label>
+                  <input v-model="new_donor.complementary_data['biggest_tumor_size']" type="text"
+                         class="cypress-last-name-donor input is-info" required/>
+                </div>
+                <div class="form-input required">
+                  <label class="label">Alpha fétoprotéine</label>
+                  <input v-model="new_donor.complementary_data['alpha_fetoprotein']" type="text"
+                         class="cypress-last-name-donor input is-info" required/>
+                </div>
+              </div>
+              <div class="heart-form" :class="{ 'is-invisible': (active_form !== 'heart')}">
+                4
+              </div>
+            </section>
+            <footer class="modal-card-foot organia-modal-footer">
+            </footer>
           </div>
         </div>
-        <div class="modal" :class="{ 'is-invisible': (state !== 'edit'), 'is-active': (state === 'edit') }">
+        <div class="modal edit-donor-modal"
+             :class="{ 'is-invisible': (state !== 'edit'), 'is-active': (state === 'edit') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -382,78 +369,44 @@
               <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
-              <form @submit.prevent="submitForm()" class="show-requireds">
+              <form @submit.prevent="EditDonor" class="show-requireds">
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
                     <input class="input is-info" v-model="to_edit.person.first_name" placeholder="first_name"
-                      type="text" required />
+                           type="text" required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Nom de Famille</label>
                     <input class="input is-info" v-model="to_edit.person.last_name" placeholder="last_name" type="text"
-                      required />
+                           required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Date de naissance</label>
-                    <input v-model="to_edit.person.birthday" placeholder="birthday" type="date" class="input is-info" />
+                    <input v-model="to_edit.person.birth_date" placeholder="birth_date" type="date"
+                           class="input is-info"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Organe</label>
-                    <select v-model="to_edit.donor.organ" id="organ-select" required class="button is-info is-light">
+                    <select v-model="to_edit.organ_type" id="organ-select" required class="button is-info is-light">
                       <option v-for="element in all_organs" :key="element">
                         {{ element }}
                       </option>
                     </select>
                   </div>
-                  <div class="form-input small">
+                  <div class="form-input small required">
                     <label class="label">Date d'admission</label>
-                    <input v-model="to_edit.donor.start_date" placeholder="start date" type="date" />
-                  </div>
-                  <div class="form-input small">
-                    <label class="label">Date de fin</label>
-                    <input v-model="to_edit.donor.end_date" placeholder="end date" type="date" class="input is-info" />
-                  </div>
-                  <div class="form-input small">
-                    <label class="label">Nombre de tumeurs</label>
-                    <input v-model="to_edit.donor.tumors_number" placeholder="0" type="text" class="input is-info" />
-                  </div>
-                  <div class="form-input small required">
-                    <label class="label">Le patient est sous dialyse ?</label>
-                    <select v-model="to_edit.donor.isDialyse" name="dialyse" id="dialyse-select"
-                      class="button is-info is-light" required>
-                      <option value="true">Oui</option>
-                      <option value="false">Non</option>
-
-                    </select>
-                  </div>
-                  <div class="form-input small">
-                    <label class="label">Date de début de dialyse</label>
-                    <input v-model="to_edit.donor.startDateDialyse" placeholder="start date" type="date"
-                      class="input is-info" />
-                  </div>
-                  <div class="form-input small">
-                    <label class="label">Date de fin de dialyse</label>
-                    <input v-model="to_edit.donor.endDateDialyse" placeholder="start date" type="date"
-                      class="input is-info" />
-                  </div>
-                  <div class="form-input small required">
-                    <label class="label">A-t-il effectué une retransplantation ?</label>
-                    <select v-model="to_edit.donor.isRetransplantation" name="retransplantation"
-                      id="transplantation-select" class="button is-info is-light" required>
-                      <option value="true">Oui</option>
-                      <option value="false">Non</option>
-                    </select>
+                    <input v-model="to_edit.start_date" class="input is-info" placeholder="start date" type="date"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Description</label>
                     <input class="input is-info" v-model="to_edit.person.description" placeholder="description"
-                      type="text" />
+                           type="text"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Groupe sanguin</label>
                     <select v-model="to_edit.person.abo" name="abo" id="abo-select" class="button is-info is-light"
-                      required>
+                            required>
                       <option value="A">A</option>
                       <option value="B">B</option>
                       <option value="O">O</option>
@@ -463,7 +416,7 @@
                   <div class="form-input small required">
                     <label class="label">Rhésus</label>
                     <select class="button is-info is-light" v-model="to_edit.person.rhesus" name="rhesus"
-                      id="rhesus-select" required>
+                            id="rhesus-select" required>
                       <option value="+">+</option>
                       <option value="-">-</option>
                     </select>
@@ -471,14 +424,14 @@
                   <div class="form-input small required">
                     <label class="label">Sexe</label>
                     <select v-model="to_edit.person.gender" name="gender" id="gender-select"
-                      class="button is-info is-light" required>
+                            class="button is-info is-light" required>
                       <option value="MALE">MALE</option>
                       <option value="FEMALE">FEMALE</option>
                     </select>
                   </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
-                    <textarea class="textarea" v-model="to_edit.donor.notes" placeholder="notes" />
+                    <textarea class="textarea" v-model="to_edit.notes" placeholder="notes"/>
                   </div>
                   <p class="required-notice">* Obligatoire</p>
                 </div>
@@ -487,14 +440,54 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                @click="updatePerson()">Enregistrer
+                      @click="updatePerson()">Enregistrer
               </button>
-              <button type="button" class="button is-danger ml-6" @click="delete_donor">
+              <button type="button" class="button is-danger ml-6" @click="deleteDonor">
                 Supprimer
               </button>
               <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
             </footer>
           </div>
+          <div class="modal-card modal-complement"
+               :class="{ 'is-invisible': (state_extra !== 'organ-selected'), 'is-active': (state_extra === 'organ-selected') }">
+            <header class="modal-card-head organia-modal-head">
+              <p class="modal-card-title  has-text-white">Info en plus - {{ this.new_donor.organ }}</p>
+              <button class="delete" aria-label="close" @click="closeModal(false)"></button>
+            </header>
+            <section class="modal-card-body organia-modal-body">
+              <div class="kidney-form" :class="{ 'is-invisible': (active_form !== 'kidney')}">
+                1
+              </div>
+              <div class="lung-form" :class="{ 'is-invisible': (active_form !== 'lung')}">
+                2
+              </div>
+              <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
+                <div class="form-input required">
+                  <label class="label">Nombre de tumeurs</label>
+                  <input v-model="to_edit.liver['tumors_number']" type="text"
+                         class="cypress-last-name-donor input is-info" required/>
+                </div>
+                <div class="form-input small required">
+                  <label class="label">Plus grosse tumeur</label>
+                  <input v-model="to_edit.liver['biggest_tumor_size']" type="text"
+                         class="cypress-last-name-donor input is-info" required/>
+                </div>
+                <div class="form-input small required">
+                  <label class="label">Alpha fétoprotéine</label>
+                  <input v-model="to_edit.liver['alpha_fetoprotein']" type="text"
+                         class="cypress-last-name-donor input is-info" required/>
+                </div>
+              </div>
+              <div class="heart-form" :class="{ 'is-invisible': (active_form !== 'heart')}">
+                4
+              </div>
+
+
+            </section>
+            <footer class="modal-card-foot organia-modal-footer">
+            </footer>
+          </div>
+
         </div>
         <div class="modal" :class="{ 'is-invisible': (state !== 'chat'), 'is-active': (state === 'chat') }">
           <div class="modal-background">
@@ -507,7 +500,7 @@
                   <div class="columns">
                     <div class="column">
                       <input class="input is-info" placeholder="Titre de la conversation" type="text"
-                        v-model="chatName" />
+                             v-model="chatName"/>
                     </div>
                   </div>
                   <div class="columns">
@@ -515,7 +508,7 @@
                       <div class="box">
                         <button class="button is-medium is-fullwidth elements">Liste d'utilisateurs</button>
                         <button class="button is-info is-light person-box" v-for="person in personsNotAdded"
-                          :key="person">
+                                :key="person">
                           <p class="username">{{ `${person.last_name} ${person.first_name}` }}</p>
                           <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
                         </button>
@@ -553,22 +546,22 @@
               <div class="match-container">
                 <table class="table-match">
                   <thead>
-                    <tr>
-                      <th>Prénom</th>
-                      <th>Nom de famille</th>
-                      <th>Date de naissance</th>
-                      <th>Sexe</th>
-                      <th>Score</th>
-                    </tr>
+                  <tr>
+                    <th>Prénom</th>
+                    <th>Nom de famille</th>
+                    <th>Date de naissance</th>
+                    <th>Sexe</th>
+                    <th>Score</th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="donor in this.TreatData(donors)" :key="donor">
-                      <td>{{ donor.person.first_name }}</td>
-                      <td>{{ donor.person.last_name }}</td>
-                      <td>{{ donor.person.birthday }}</td>
-                      <td>{{ donor.person.gender }}</td>
-                      <td>{{ donor.score }}</td>
-                    </tr>
+                  <tr v-for="donor in this.TreatData(donors)" :key="donor">
+                    <td>{{ donor.person.first_name }}</td>
+                    <td>{{ donor.person.last_name }}</td>
+                    <td>{{ donor.person.birth_date }}</td>
+                    <td>{{ donor.person.gender }}</td>
+                    <td>{{ donor.score }}</td>
+                  </tr>
                   </tbody>
                 </table>
                 <div class="card donor-card">
@@ -582,8 +575,6 @@
                   </div>
                 </div>
               </div>
-
-
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
@@ -603,7 +594,7 @@ import jsPDF from 'jspdf';
 import translate from "@/translate"
 
 export default {
-  components: { SideBar, ApplicationNavbar },
+  components: {SideBar, ApplicationNavbar},
   name: "donors-panel",
   data() {
     return {
@@ -622,12 +613,7 @@ export default {
       donorsBackup: [],
       nb_by_page: 5,
       page: 0,
-      to_edit: {
-        donor: {},
-        person: {},
-        all_organs: [],
-        tumors_number: 0,
-      },
+      active_form: '',
       to_match: {
         id: 0,
         donor: {},
@@ -635,25 +621,34 @@ export default {
         all_organs: [],
         tumors_number: 0,
       },
+      to_edit: {
+        first_name: "",
+        last_name: "",
+        birth_date: "",
+        description: "",
+        person_id: undefined,
+        person: {},
+        start_date: "",
+        notes: "",
+        organ_type: "",
+        organ: {},
+        blood_type: "",
+        rhesus: "",
+        gender: "",
+      },
       new_donor: {
         first_name: "",
         last_name: "",
-        birthday: "",
+        birth_date: "",
         description: "",
-        supervisor_id: 0,
         person_id: undefined,
         start_date: "",
         notes: "",
         organ: "",
         blood_type: "",
         rhesus: "",
-        tumors_number: "",
-        isDialyse: "",
-        isRetransplantation: "",
-        startDateDialyse: undefined,
-        endDateDialyse: undefined,
-        alpha_fetoprotein: "",
         gender: "",
+        complementary_data: {},
       },
       all_organs: [],
     };
@@ -675,37 +670,37 @@ export default {
     },
     getMe() {
       this.$http.get("/users/me")
-        .then((response) => {
-          this.me = response.data
-        })
+          .then((response) => {
+            this.me = response.data
+          })
     },
     getAllUsers() {
       this.$http
-        .get("/users/")
-        .then((response) => {
-          this.personsNotAdded = response.data
-        })
+          .get("/users/")
+          .then((response) => {
+            this.personsNotAdded = response.data
+          })
     },
     getAllDonors() {
       this.$http
-        .get("/listings/?type=donor")
-        .then((response) => {
-          response.data.forEach((element) => {
-            element.person.created_at = new Date(
-              element.person.created_at
-            ).toDateString();
+          .get("/listings/?type=donor")
+          .then((response) => {
+            response.data.forEach((element) => {
+              element.person.created_at = new Date(
+                  element.person.created_at
+              ).toDateString();
+            });
+            this.donors = response.data;
+            this.donorsBackup = this.donors;
+            this.updatePage()
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$toast.error(
+                "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+            setTimeout(this.$toast.clear, 3000);
           });
-          this.donors = response.data;
-          this.donorsBackup = this.donors;
-          this.updatePage()
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + translate[error.response.data.msg]
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
     },
     nextPage() {
       if (Math.ceil(this.donorsBackup.length / this.nb_by_page) > (this.page + 1)) {
@@ -737,7 +732,7 @@ export default {
       let y = 15
       doc.text("Bilan d'informations Donneur", 15, y);
       doc.text("Prénom: " + this.currentDonor.person.first_name, 20, y + 10);
-      doc.text("Date de naissance: " + this.currentDonor.person.birthday, 20, y + 20);
+      doc.text("Date de naissance: " + this.currentDonor.person.birth_date, 20, y + 20);
       doc.text("Sexe: " + this.currentDonor.person.gender, 20, y + 30);
       doc.text("Organe: " + this.currentDonor.organ, 20, y + 40);
       doc.text("Type sanguin: " + this.currentDonor.person.blood_type, 20, y + 50);
@@ -748,28 +743,48 @@ export default {
     },
     getDonorMatchByID(id) {
       this.$http
-        .get(`/listings/${id}`)
-        .then((response) => {
-          this.to_match.donor = response.data;
-          this.to_match.person = response.data.person;
-        })
-        .catch((error) => {
-          console.log(error)
-          this.$toast.error(
-            "Erreur lors de la connexion : " + translate[error.response.data.msg]
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
+          .get(`/listings/${id}`)
+          .then((response) => {
+            this.to_match.donor = response.data;
+            this.to_match.person = response.data.person;
+          })
+          .catch((error) => {
+            console.log(error)
+            this.$toast.error(
+                "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+            setTimeout(this.$toast.clear, 3000);
+          });
     },
     openChatModal() {
       this.state = "chat"
     },
     openEditModal(id) {
       this.state = "edit"
-      this.getDonorByID(id)
+      this.getDonorByID(id).then(() => {
+        this.state_extra = 'organ-selected'
+        console.log(this.to_edit)
+        switch (this.to_edit.organ) {
+          case 'KIDNEY':
+            this.active_form = 'kidney'
+            break;
+          case 'HEART':
+            this.active_form = 'heart'
+            break;
+          case 'LUNG':
+            this.active_form = 'lung'
+            break;
+          case 'LIVER':
+            this.active_form = 'liver'
+            break;
+        }
+      })
+
     },
     closeModal() {
       this.state = "";
+      this.state_extra = "";
+      this.active_form = "";
     },
     openMatchModal(id) {
       //Match by id
@@ -778,8 +793,8 @@ export default {
     },
     checkNull(a, b) {
       if (
-        a.person[this.sortingKey] == null &&
-        b.person[this.sortingKey] == null
+          a.person[this.sortingKey] == null &&
+          b.person[this.sortingKey] == null
       )
         return 0;
       if (a.person[this.sortingKey] == null) return 1;
@@ -790,35 +805,35 @@ export default {
       if (["first_name", "last_name", "gender", "blood_type"].includes(this.sortingKey)) {
         this.donors.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-            b.person[this.sortingKey] == null)
+              b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return a.person[this.sortingKey].localeCompare(
-              b.person[this.sortingKey]
+                b.person[this.sortingKey]
             );
           return b.person[this.sortingKey].localeCompare(
-            a.person[this.sortingKey]
+              a.person[this.sortingKey]
           );
         });
-      } else if (["birthday", "created_at"].includes(this.sortingKey)) {
+      } else if (["birth_date", "created_at"].includes(this.sortingKey)) {
         this.donors.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-            b.person[this.sortingKey] == null)
+              b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder)
             return Date.parse(a.person[this.sortingKey]) >
-              Date.parse(b.person[this.sortingKey])
+            Date.parse(b.person[this.sortingKey])
+                ? -1
+                : 1;
+          return Date.parse(b.person[this.sortingKey]) >
+          Date.parse(a.person[this.sortingKey])
               ? -1
               : 1;
-          return Date.parse(b.person[this.sortingKey]) >
-            Date.parse(a.person[this.sortingKey])
-            ? -1
-            : 1;
         });
       } else if (this.sortingKey === "organ") {
         this.donors.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
-            b.person[this.sortingKey] == null)
+              b.person[this.sortingKey] == null)
             return this.checkNull(a, b);
           if (this.sortingOrder) return a.organ.localeCompare(b.organ);
           return b.organ.localeCompare(a.organ);
@@ -846,199 +861,150 @@ export default {
       this.state = "new"
     },
     getDonorByID(id) {
-      this.$http
-        .get(`/listings/${id}`)
-        .then((response) => {
-          this.to_edit.donor = response.data;
-          this.to_edit.person = response.data.person;
-        })
-        .catch((error) => {
-          console.log(error)
-          this.$toast.error(
-            "Erreur lors de la connexion : " + translate[error.response.data.msg]
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
-    },
-
-    delete_donor() {
-      this.$http
-        .delete(`/listings/${this.id}`)
-        .then(() => {
-          this.$http
-            .delete(`/persons/${this.person.id}`)
-            .then(() => {
-              this.$toast.success("Suppression effectué");
-              this.$router.push("/donors");
-            })
-            .catch((error) => {
-              console.log(error);
-              this.$toast.error(
+      return this.$http
+          .get(`/listings/${id}`)
+          .then((response) => {
+            console.log(response.data)
+            this.to_edit = response.data;
+          })
+          .catch((error) => {
+            console.log("nonon")
+            console.log(error)
+            this.$toast.error(
                 "Erreur lors de la connexion : " + translate[error.response.data.msg]
-              );
-              setTimeout(this.$toast.clear, 3000);
-            });
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + translate[error.response.data.msg]
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
+            );
+            setTimeout(this.$toast.clear, 3000);
+          });
     },
-    submitForm() {
+    deleteDonor() {
+      console.log(this.to_edit)
       this.$http
-        .post(`/listings/${this.id}`, {
-          notes: this.donor.notes,
-          organ: this.donor.organ,
-          person_id: this.id,
-          ...(this.donor.start_date
-            ? { start_date: this.donor.start_date }
-            : {}),
-          ...(this.donor.end_date
-            ? { end_date: this.donor.end_date }
-            : {}),
-          ...(this.donor.notes ? { notes: this.donor.notes } : {}),
-          ...(this.donor.tumors_number ? { rhesus: this.donor.tumors_number } : {}),
-          isDialyse: this.donor.isDialyse,
-          isRetransplantation: this.donor.isRetransplantation,
-          ...(this.donor.startDateDialyse ? { startDateDialyse: this.donor.startDateDialyse } : {}),
-          ...(this.donor.endDateDialyse ? { endDateDialyse: this.donor.endDateDialyse } : {}),
-        })
-        .then(() => {
-          this.updatePerson();
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.data.msg.includes("is already taken")) {
-            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+          .delete(`/listings/${this.to_edit.id}`)
+          .then(() => {
+            this.$http
+                .delete(`/person/${this.to_edit.person.id}`)
+                .then(() => {
+                  this.$toast.success("Suppression person effectuée");
+                  setTimeout(this.$toast.clear, 3000);
+                  this.closeModal()
+                  this.getAllDonors()
+                })
+                .catch((error) => {
+                  console.log(error);
+                  this.$toast.error(
+                      "Erreur lors de la suppression : " + translate[error.response.data.msg]
+                  );
+                  setTimeout(this.$toast.clear, 3000);
+                });
+            this.$toast.success("Suppression listing effectuée");
+            setTimeout(this.$toast.clear, 3000);
+            this.closeModal()
+            this.getAllDonors()
+          })
+          .catch((error) => {
+            console.log(error);
             this.$toast.error(
-              "Erreur lors de la connexion : " + error.response.data.msg
+                "Erreur lors de la suppression : " + translate[error.response.data.msg]
             );
-          } else {
+            setTimeout(this.$toast.clear, 3000);
+          });
+    },
+    EditDonor() {
+      this.$http
+          .post(`/listings/${this.id}/`, {
+            ...(this.to_edit.start_date ? {start_date: this.to_edit.start_date} : {}),
+            ...(this.to_edit.notes ? {notes: this.to_edit.notes} : {}),
+            organ_type: this.to_edit.organ,
+            type: "DONOR",
+            person_id: this.to_edit.person_id,
+            organ: this.new_donor.complementary_data,
+          })
+          .then(() => {
+            this.updatePerson();
+          })
+          .catch((error) => {
+            console.log(error);
             this.$toast.error(
-              "Erreur lors de la connexion : " + translate[error.response.data.msg]
+                "Erreur lors de la modification : " + error.response.data.msg
             );
-          }
-          setTimeout(this.$toast.clear, 3000);
-        });
+            setTimeout(this.$toast.clear, 3000);
+          });
     },
     updatePerson() {
       this.to_edit.person.isDialyse = this.donor.isDialyse
       this.$http
-        .post(`/persons/${this.to_edit.person.id}`, {
-          first_name: this.to_edit.person.first_name,
-          last_name: this.to_edit.person.last_name,
-          birthday: this.to_edit.person.birthday,
-          ...(this.to_edit.person.description
-            ? { description: this.to_edit.person.description }
-            : {}),
-          supervisor_id: this.to_edit.person.supervisor_id,
-          ...(this.to_edit.person.abo ? { abo: this.to_edit.person.abo } : {}),
-          ...(this.to_edit.person.rhesus ? { rhesus: this.to_edit.person.rhesus } : {}),
-          ...(this.to_edit.person.gender ? { gender: this.to_edit.person.gender } : {}),
-          ...(this.to_edit.person.isDialyse ? { isDialyse: this.to_edit.person.isDialyse } : {}),
-          ...(this.to_edit.person.isRetransplantation ? { isRetransplantation: this.to_edit.person.isRetransplantation } : {}),
-          ...(this.to_edit.person.startDateDialyse ? { startDateDialyse: this.to_edit.person.startDateDialyse } : {}),
-          ...(this.to_edit.person.endDateDialyse ? { endDateDialyse: this.to_edit.person.endDateDialyse } : {}),
-        })
-        .then(() => {
-          this.$router.push("/donors");
-          this.closeModal()
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.data.msg.includes("is already taken")) {
-            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+          .post(`/person/${this.to_edit.person.id}`, {
+            first_name: this.to_edit.first_name,
+            last_name: this.to_edit.last_name,
+            birth_date: this.to_edit.birth_date,
+            ...(this.to_edit.description ? {description: this.to_edit.description} : {}),
+            ...(this.to_edit.blood_type ? {abo: this.to_edit.blood_type} : {}),
+            ...(this.to_edit.rhesus ? {rhesus: this.to_edit.rhesus} : {}),
+            ...(this.to_edit.gender ? {gender: this.to_edit.gender} : {}),
+          })
+          .then(() => {
+            this.closeModal()
+          })
+          .catch((error) => {
+            console.log(error);
             this.$toast.error(
-              "Erreur lors de la connexion : " + error.response.data.msg
+                "Erreur lors de la modification : " + error.response.data.msg
             );
-          } else {
-            this.$toast.error(
-              "Erreur lors de la connexion : " + translate[error.response.data.msg]
-            );
-          }
-          setTimeout(this.$toast.clear, 3000);
-        });
+            setTimeout(this.$toast.clear, 3000);
+          });
     },
     selectOrgan() {
-      console.log(this.new_donor.organ)
       this.state_extra = 'organ-selected'
-    }
-    ,
-    createPerson() {
-      this.new_donor.tumors_number = 0;
-      this.$http
-        .post("/persons", {
-          first_name: this.new_donor.first_name,
-          last_name: this.new_donor.last_name,
-          birthday: this.new_donor.birthday,
-          ...(this.new_donor.description ? { description: this.new_donor.description } : {}),
-          supervisor_id: this.new_donor.supervisor_id,
-          ...(this.new_donor.blood_type ? { abo: this.new_donor.blood_type } : {}),
-          ...(this.new_donor.rhesus ? { rhesus: this.new_donor.rhesus } : {}),
-          ...(this.new_donor.tumors_number ? { tumors_number: this.new_donor.tumors_number } : {}),
-          ...(this.new_donor.isDialyse ? { isDialyse: this.new_donor.isDialyse } : {}),
-          ...(this.new_donor.isRetransplantation ? { isRetransplantation: this.new_donor.isRetransplantation } : {}),
-          ...(this.new_donor.startDateDialyse ? { startDateDialyse: this.new_donor.startDateDialyse } : {}),
-          ...(this.new_donor.endDateDialyse ? { endDateDialyse: this.new_donor.endDateDialyse } : {}),
-          ...(this.new_donor.gender ? { gender: this.new_donor.gender } : {}),
-        })
-        .then((response) => {
-          this.new_donor.person_id = response.data.id;
-          this.createDonor();
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.data.msg.includes("is already taken")) {
-            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
-            this.$toast.error(
-              "Erreur lors de la connexion : " + error.response.data.msg
-            );
-          } else {
-            this.$toast.error(
-              "Erreur lors de la connexion : " + translate[error.response.data.msg]
-            );
-          }
-          setTimeout(this.$toast.clear, 3000);
-        });
+      switch (this.new_donor.organ) {
+        case 'KIDNEY':
+          this.active_form = 'kidney'
+          break;
+        case 'HEART':
+          this.active_form = 'heart'
+          break;
+        case 'LUNG':
+          this.active_form = 'lung'
+          break;
+        case 'LIVER':
+          this.active_form = 'liver'
+          break;
+      }
     },
     createDonor() {
+      let person = {
+        first_name: this.new_donor.first_name,
+        last_name: this.new_donor.last_name,
+        birth_date: this.new_donor.birth_date,
+        ...(this.new_donor.gender ? {gender: this.new_donor.gender} : {}),
+      }
       this.$http
-        .post("/listings", {
-          ...(this.new_donor.start_date ? { start_date: this.new_donor.start_date } : {}),
-          ...(this.new_donor.notes ? { notes: this.new_donor.notes } : {}),
-          organ: this.new_donor.organ,
-          donor: true,
-          person_id: this.new_donor.person_id,
-          tumors_number: this.new_donor.tumors_number,
-          isDialyse: this.new_donor.isDialyse,
-          isRetransplantation: this.new_donor.isRetransplantation,
-        })
-        .then(() => {
-          this.$router.push("/donors");
-          this.getAllDonors()
-          this.closeModal()
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.data.msg.includes("is already taken")) {
-            error.response.data.msg = error.response.data.msg.replace("is already taken", "est déjà utilisé")
+          .post("/listings/", {
+            person: person,
+            ...(this.new_donor.description ? {description: this.new_donor.description} : {}),
+            ...(this.new_donor.blood_type ? {abo: this.new_donor.blood_type} : {}),
+            ...(this.new_donor.rhesus ? {rhesus: this.new_donor.rhesus} : {}),
+            ...(this.new_donor.start_date ? {start_date: this.new_donor.start_date} : {}),
+            ...(this.new_donor.notes ? {notes: this.new_donor.notes} : {}),
+            organ_type: this.new_donor.organ,
+            type: "DONOR",
+            person_id: this.new_donor.person_id,
+            organ: this.new_donor.complementary_data,
+          })
+          .then(() => {
+            this.$toast.success("Création du donneur réussie");
+            setTimeout(this.$toast.clear, 3000);
+          })
+          .catch((error) => {
+            console.log(error);
             this.$toast.error(
-              "Erreur lors de la connexion : " + error.response.data.msg
+                "Erreur lors de la création : " + error.response.data.msg
             );
-          } else {
-            this.$toast.error(
-              "Erreur lors de la connexion : " + translate[error.response.data.msg]
-            );
-          }
-          setTimeout(this.$toast.clear, 3000);
-        });
+            setTimeout(this.$toast.clear, 3000);
+          });
     },
     TreatData(d_donors) {
       //check if d_receivers is valid (not undefined, not null, not empty)
-      if(!d_donors || d_donors.length === 0 || Array.isArray(d_donors) === false) {
+      if (!d_donors || d_donors.length === 0 || Array.isArray(d_donors) === false) {
         return [];
       }
       d_donors.map(elem => {
@@ -1046,24 +1012,24 @@ export default {
       })
 
       d_donors.sort(
-        (p1, p2) => (p1.score < p2.score) ? 1 : (p1.score > p2.score) ? -1 : 0);
+          (p1, p2) => (p1.score < p2.score) ? 1 : (p1.score > p2.score) ? -1 : 0);
       d_donors = d_donors.slice(0, 5)
 
       return d_donors
     },
     getAllOrgans() {
       this.$http
-        .get("/listings/organs")
-        .then((response) => {
-          this.all_organs = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$toast.error(
-            "Erreur lors de la connexion : " + translate[error.response.data.msg]
-          );
-          setTimeout(this.$toast.clear, 3000);
-        });
+          .get("/listings/organs")
+          .then((response) => {
+            this.all_organs = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$toast.error(
+                "Erreur lors de la connexion : " + translate[error.response.data.msg]
+            );
+            setTimeout(this.$toast.clear, 3000);
+          });
     },
   },
   watch: {
@@ -1198,14 +1164,35 @@ td {
   margin-top: 20px;
 }
 
-.modal-complement {
+.modal-group {
   position: absolute;
-  left: 49%;
-  top: 7%;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.modal-complement {
+  width: 20%;
+  height: 100%;
   z-index: 100;
-  width: 30vw;
 }
+
 .is-shifted {
-  left: -50%;
+  left: 0px;
 }
+
+.new-donor-modal {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-donor-modal {
+  display: flex;
+  flex-direction: row;
+}
+
 </style>

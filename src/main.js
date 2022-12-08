@@ -20,8 +20,4 @@ const app = createApp(App)
     .use(moment)
     .use(VueTelInput)
 
-
-app.config.errorHandler = () => null;
-app.config.warnHandler = () => null;
-
 app.mount('#app')
