@@ -43,7 +43,6 @@
             <th>ABO</th>
             <th>Organe</th>
             <th>Éditer</th>
-            <th>Match</th>
           </tr>
           </thead>
           <tbody>
@@ -56,11 +55,6 @@
             <td>
               <div @click="openEditModal(receiver.id)">
                 <i class="fas fa-edit button is-primary cypress-edit-receiver"></i>
-              </div>
-            </td>
-            <td>
-              <div @click="openMatchModal(receiver.id)">
-                <i class="fa-brands fa-searchengin button is-primary"></i>
               </div>
             </td>
           </tr>
@@ -889,53 +883,6 @@
             </div>
           </div>
         </div>
-        <div class="modal" :class="{ 'is-invisible': (state !== 'match'), 'is-active': (state === 'match') }">
-          <div class="modal-background"></div>
-          <div class="modal-card match-modal">
-            <header class="modal-card-head organia-modal-head">
-              <p class="modal-card-title  has-text-white">Match</p>
-              <button class="delete" aria-label="close" @click="closeModal()"></button>
-            </header>
-            <section class="modal-card-body organia-modal-body">
-              <div class="match-container">
-                <table class="table-match">
-                  <thead>
-                  <tr>
-                    <th>Prénom</th>
-                    <th>Nom de famille</th>
-                    <th>Date de naissance</th>
-                    <th>Sexe</th>
-                    <th>Score</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr v-for="match in this.matches" :key="match">
-                    <td>{{ match.person.first_name }}</td>
-                    <td>{{ match.person.last_name }}</td>
-                    <td>{{ match.person.birth_date }}</td>
-                    <td>{{ match.person.gender }}</td>
-                    <td>{{ match.score }}</td>
-                  </tr>
-                  </tbody>
-                </table>
-                <div class="card receiver-card">
-                  <div class=" user-card">
-                    <div class="content">
-                      <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" height="150" width="150" alt="">
-                      <div>Id du patient : {{ this.to_match.id || "" }}</div>
-                      <div>Nom : {{ this.to_match.person.last_name || "" }}</div>
-                      <div>Prénom : {{ this.to_match.person.first_name || "" }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-            <footer class="modal-card-foot organia-modal-footer">
-              <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
-            </footer>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -965,17 +912,6 @@ export default {
       nb_by_page: 5,
       page: 0,
       active_form: '',
-      matches: [],
-      to_match: {
-        id: undefined,
-        person: {},
-        start_date: "",
-        notes: "",
-        organ_type: "",
-        organ: {},
-        weight_kg: 0,
-        height_cm: 0,
-      },
       to_edit: {
         person_id: undefined,
         person: {},
@@ -1093,21 +1029,6 @@ export default {
       }
       doc.save(pdfName + ".pdf");
     },
-    getDonorMatchByID(id) {
-      this.$http
-          .get(`/listings/${id}`)
-          .then((response) => {
-            this.to_match.receiver = response.data;
-            this.to_match.person = response.data.person;
-          })
-          .catch((error) => {
-            console.log(error)
-            this.$toast.error(
-                "Erreur lors de la connexion : " + translate[error.response.data.msg]
-            );
-            setTimeout(this.$toast.clear, 3000);
-          });
-    },
     translate(organ) {
       return translate[organ]
     },
@@ -1140,15 +1061,6 @@ export default {
       this.state = "";
       this.state_extra = "";
       this.active_form = "";
-    },
-    openMatchModal(id) {
-      this.to_match_id = id;
-      this.getMatches().then((response) => {
-        this.matches = response.data;
-      }).catch(() => {
-        this.matches = []
-      });
-      this.state = "match"
     },
     checkNull(a, b) {
       if (
@@ -1360,22 +1272,6 @@ export default {
             setTimeout(this.$toast.clear, 3000);
           });
     },
-    getMatches() {
-      return this.$http
-          .get(`/listings/${this.to_match_id}/matches`)
-          .then((response) => {
-            this.$toast.success("Récupération des matchs réussie");
-            this.to_match = response.data.receiver
-            setTimeout(this.$toast.clear, 3000);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$toast.error(
-                "Erreur lors de la Récupération : " + error.response.data.msg
-            );
-            setTimeout(this.$toast.clear, 3000);
-          });
-    },
     getAllOrgans() {
       this.$http
           .get("/listings/organs")
@@ -1490,47 +1386,12 @@ td {
   margin-top: -1px;
 }
 
-.match-modal {
-  width: 90%;
-  height: 90%;
-}
-
-.receiver-card {
-  width: 33%;
-  height: 400px;
-  padding: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0;
-}
-
 .modal-card-body {
   border: none
 }
 
-.match-container {
-  display: flex;
-  flex-direction: row;
-  mso-padding-between: 10px;
-}
-
-.table-match {
-  width: 800px;
-}
-
 .pages {
   margin-top: 20px;
-}
-
-.modal-group {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 .modal-complement {
