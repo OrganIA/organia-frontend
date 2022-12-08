@@ -93,7 +93,11 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Type d'évènement</label>
-                    <input v-model="event_type" placeholder="Type d'évènement" class="cypress-event-type" required />
+                    <select v-model="event_type" name="gender" id="gender-select"
+                            class="button is-info is-light cypress-event-type" required>
+                      <option value="rdvDonneur">rdvDonneur</option>
+                      <option value="rdvReceveur">rdvReceveur</option>
+                    </select>
                   </div>
                   <p class="required-notice">* Obligatoire</p>
                 </div>
@@ -131,7 +135,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Titre</label>
-                    <input class="input cypress-edit-title" v-model="calendar.title" placeholder="Titre" required />
+                    <input class="input is-info cypress-edit-title" v-model="calendar.title" placeholder="Titre" required />
                   </div>
                   <div class="form-input small required">
                     <label class="label">Description</label>
@@ -189,6 +193,9 @@ export default {
       title: "",
       calendar: {},
       to_edit_id: 0,
+      event_type: '',
+      start_date: '',
+      end_date: '',
     };
   },
   created() {

@@ -106,7 +106,7 @@
                 </div>
                 <div class="column is-half">
                   <p class="button is-medium is-fullwidth elements">Date de naissance</p>
-                  <button class="button is-info is-light contents">{{ currentReceiver.person.birthday }}</button>
+                  <button class="button is-info is-light contents">{{ currentReceiver.person.birth_date }}</button>
                 </div>
               </div>
               <div class="columns">
@@ -235,8 +235,7 @@
             </footer>
           </div>
         </div>
-        <div class="modal cypress-new-modal"
-             :class="{ 'is-invisible': (state !== 'new'), 'is-active': (state === 'new') }">
+        <div class="modal cypress-new-modal" :class="{ 'is-invisible': (state !== 'new'), 'is-active': (state === 'new') }">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head organia-modal-head">
@@ -258,7 +257,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Date de naissance</label>
-                    <input v-model="new_receiver.birthday" placeholder="birthday" type="date"
+                    <input v-model="new_receiver.birth_date" placeholder="birth_date" type="date"
                            class="cypress-new-birth-date input is-info" required/>
                   </div>
                   <div class="form-input small required">
@@ -274,38 +273,6 @@
                     <label class="label">Date d'admission</label>
                     <input v-model="new_receiver.start_date" placeholder="start date" type="date"
                            class="cypress-new-admission-date input is-info" required/>
-                  </div>
-                  <div class="form-input small">
-                    <label class="label">Nombre de tumeurs</label>
-                    <input v-model="new_receiver.tumors_number" placeholder="0" type="text"
-                           class="cypress-new-tumors-number input is-info"/>
-                  </div>
-                  <div class="form-input small required">
-                    <label class="label">Le patient est sous dialyse ?</label>
-                    <select v-model="new_receiver.isDialyse" name="dialyse" id="dialyse-select"
-                            class="cypress-new-is-dialyse button is-info is-light" required>
-                      <option value="true">Oui</option>
-                      <option value="false">Non</option>
-                    </select>
-                  </div>
-                  <div class="form-input small required">
-                    <label class="label">A-t-il effectué une retransplantation ?</label>
-                    <select v-model="new_receiver.isRetransplantation" name="retransplantation"
-                            id="transplantation-select" class="cypress-new-is-retransplantation button is-info is-light"
-                            required>
-                      <option value="true">Oui</option>
-                      <option value="false">Non</option>
-                    </select>
-                  </div>
-                  <div class="form-input small">
-                    <label class="label">Date de début de dialyse</label>
-                    <input v-model="new_receiver.startDateDialyse" placeholder="start date" type="date"
-                           class="cypress-new-beginning-dialyse input is-info"/>
-                  </div>
-                  <div class="form-input small">
-                    <label class="label">Date de fin de dialyse</label>
-                    <input v-model="new_receiver.endDateDialyse" placeholder="start date" type="date"
-                           class="cypress-new-end-dialyse input is-info"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Description</label>
@@ -367,22 +334,22 @@
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
-                    <input class="input is-info cypress-receiver-edit-firstname" v-model="to_edit.person.first_name"
+                    <input class="input is-info cypress-receiver-edit-firstname" v-model="to_edit.first_name"
                            placeholder="first_name"
                            type="text" required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Nom de Famille</label>
-                    <input class="input is-info" v-model="to_edit.person.last_name" placeholder="last_name" type="text"
+                    <input class="input is-info" v-model="to_edit.last_name" placeholder="last_name" type="text"
                            required/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Date de naissance</label>
-                    <input v-model="to_edit.person.birthday" placeholder="birthday" type="date" class="input is-info"/>
+                    <input v-model="to_edit.birth_date" placeholder="birth_date" type="date" class="input is-info"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Organe</label>
-                    <select v-model="to_edit.receiver.organ" id="organ-select" required class="button is-info is-light">
+                    <select v-model="to_edit.organ" id="organ-select" required class="button is-info is-light">
                       <option v-for="element in all_organs" :key="element">
                         {{ element }}
                       </option>
@@ -390,20 +357,20 @@
                   </div>
                   <div class="form-input small">
                     <label class="label">Date d'admission</label>
-                    <input v-model="to_edit.receiver.start_date" placeholder="start date" type="date"/>
+                    <input v-model="to_edit.start_date" placeholder="start date" type="date"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Date de fin</label>
-                    <input v-model="to_edit.receiver.end_date" placeholder="end date" type="date"
+                    <input v-model="to_edit.end_date" placeholder="end date" type="date"
                            class="input is-info"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Nombre de tumeurs</label>
-                    <input v-model="to_edit.receiver.tumors_number" placeholder="0" type="text" class="input is-info"/>
+                    <input v-model="to_edit.tumors_number" placeholder="0" type="text" class="input is-info"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Le patient est sous dialyse ?</label>
-                    <select v-model="to_edit.receiver.isDialyse" name="dialyse" id="dialyse-select"
+                    <select v-model="to_edit.isDialyse" name="dialyse" id="dialyse-select"
                             class="button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -411,17 +378,17 @@
                   </div>
                   <div class="form-input small">
                     <label class="label">Date de début de dialyse</label>
-                    <input v-model="to_edit.receiver.startDateDialyse" placeholder="start date" type="date"
+                    <input v-model="to_edit.startDateDialyse" placeholder="start date" type="date"
                            class="input is-info"/>
                   </div>
                   <div class="form-input small">
                     <label class="label">Date de fin de dialyse</label>
-                    <input v-model="to_edit.receiver.endDateDialyse" placeholder="start date" type="date"
+                    <input v-model="to_edit.endDateDialyse" placeholder="start date" type="date"
                            class="input is-info"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">A-t-il effectué une retransplantation ?</label>
-                    <select v-model="to_edit.receiver.isRetransplantation" name="retransplantation"
+                    <select v-model="to_edit.isRetransplantation" name="retransplantation"
                             id="transplantation-select" class="button is-info is-light" required>
                       <option value="true">Oui</option>
                       <option value="false">Non</option>
@@ -429,12 +396,12 @@
                   </div>
                   <div class="form-input small">
                     <label class="label">Description</label>
-                    <input class="input is-info" v-model="to_edit.person.description" placeholder="description"
+                    <input class="input is-info" v-model="to_edit.description" placeholder="description"
                            type="text"/>
                   </div>
                   <div class="form-input small required">
                     <label class="label">Groupe sanguin</label>
-                    <select v-model="to_edit.person.abo" name="abo" id="abo-select" class="button is-info is-light"
+                    <select v-model="to_edit.abo" name="abo" id="abo-select" class="button is-info is-light"
                             required>
                       <option value="A">A</option>
                       <option value="B">B</option>
@@ -444,7 +411,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Rhésus</label>
-                    <select class="button is-info is-light" v-model="to_edit.person.rhesus" name="rhesus"
+                    <select class="button is-info is-light" v-model="to_edit.rhesus" name="rhesus"
                             id="rhesus-select" required>
                       <option value="+">+</option>
                       <option value="-">-</option>
@@ -452,7 +419,7 @@
                   </div>
                   <div class="form-input small required">
                     <label class="label">Sexe</label>
-                    <select v-model="to_edit.person.gender" name="gender" id="gender-select"
+                    <select v-model="to_edit.gender" name="gender" id="gender-select"
                             class="button is-info is-light" required>
                       <option value="MALE">MALE</option>
                       <option value="FEMALE">FEMALE</option>
@@ -460,7 +427,7 @@
                   </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
-                    <textarea class="textarea" v-model="to_edit.receiver.notes" placeholder="notes"/>
+                    <textarea class="textarea" v-model="to_edit.notes" placeholder="notes"/>
                   </div>
                   <p class="required-notice">* Obligatoire</p>
                 </div>
@@ -501,7 +468,7 @@
                   <tr v-for="receiver in this.TreatData(receivers)" :key="receiver">
                     <td>{{ receiver.person.first_name }}</td>
                     <td>{{ receiver.person.last_name }}</td>
-                    <td>{{ receiver.person.birthday }}</td>
+                    <td>{{ receiver.person.birth_date }}</td>
                     <td>{{ receiver.person.gender }}</td>
                     <td>{{ receiver.score }}</td>
                   </tr>
@@ -579,6 +546,7 @@
 import SideBar from "@/components/SideBar";
 import ApplicationNavbar from "@/components/ApplicationNavbar";
 import jsPDF from 'jspdf';
+import translate from "@/translate";
 
 export default {
   components: {SideBar, ApplicationNavbar},
@@ -603,13 +571,6 @@ export default {
       personsToAdd: [],
       chatName: "",
       me: {},
-      to_edit: {
-        id: 0,
-        receiver: {},
-        person: {},
-        all_organs: [],
-        tumors_number: 0,
-      },
       to_match: {
         id: 0,
         receiver: {},
@@ -617,25 +578,33 @@ export default {
         all_organs: [],
         tumors_number: 0,
       },
-      new_receiver: {
+      to_edit: {
         first_name: "",
         last_name: "",
-        birthday: "",
+        birth_date: "",
         description: "",
-        supervisor_id: 0,
         person_id: undefined,
         start_date: "",
         notes: "",
         organ: "",
         blood_type: "",
         rhesus: "",
-        tumors_number: "",
-        isDialyse: "",
-        isRetransplantation: "",
-        startDateDialyse: undefined,
-        endDateDialyse: undefined,
-        alpha_fetoprotein: "",
         gender: "",
+        complementary_data: {},
+      },
+      new_receiver: {
+        first_name: "",
+        last_name: "",
+        birth_date: "",
+        description: "",
+        person_id: undefined,
+        start_date: "",
+        notes: "",
+        organ: "",
+        blood_type: "",
+        rhesus: "",
+        gender: "",
+        complementary_data: {},
       },
       all_organs: "",
     };
@@ -654,7 +623,7 @@ export default {
       let y = 15
       doc.text("Bilan d'informations Receveur", 15, y);
       doc.text("Prénom: " + this.currentReceiver.person.first_name, 20, y + 10);
-      doc.text("Date de naissance: " + this.currentReceiver.person.birthday, 20, y + 20);
+      doc.text("Date de naissance: " + this.currentReceiver.person.birth_date, 20, y + 20);
       doc.text("Sexe: " + this.currentReceiver.person.gender, 20, y + 30);
       doc.text("Organe: " + this.currentReceiver.organ, 20, y + 40);
       doc.text("Type sanguin: " + this.currentReceiver.person.blood_type, 20, y + 50);
@@ -752,17 +721,18 @@ export default {
       this.$http
           .get("/listings/?type=receiver")
           .then((response) => {
-            response.data.forEach((element) => {
-              element.person.created_at = new Date(
-                  element.person.created_at
-              ).toDateString();
-            });
+            console.log(response.data)
+            //response.data.forEach((element) => {
+            //  element.person.created_at = new Date(
+            //      element.person.created_at
+            //  ).toDateString();
+            //});
             this.receivers = response.data;
-            this.receivers.forEach((receiver) => {
-              this.getReceiverScore(receiver)
-            })
+            //this.receivers.forEach((receiver) => {
+            //  this.getReceiverScore(receiver)
+            //})
             this.receiversBackup = this.receivers;
-            this.updatePage()
+            //this.updatePage()
           })
           .catch((error) => {
             console.log(error);
@@ -835,7 +805,7 @@ export default {
               a.person[this.sortingKey]
           );
         });
-      } else if (["birthday", "created_at"].includes(this.sortingKey)) {
+      } else if (["birth_date", "created_at"].includes(this.sortingKey)) {
         this.receivers.sort((a, b) => {
           if (a.person[this.sortingKey] == null ||
               b.person[this.sortingKey] == null)
@@ -924,21 +894,12 @@ export default {
     submitForm() {
       this.$http
           .post(`/listings/${this.id}`, {
-            notes: this.receiver.notes,
-            organ: this.receiver.organ,
-            person_id: this.id,
-            ...(this.receiver.start_date
-                ? {start_date: this.receiver.start_date}
-                : {}),
-            ...(this.receiver.end_date
-                ? {end_date: this.receiver.end_date}
-                : {}),
-            ...(this.receiver.notes ? {notes: this.receiver.notes} : {}),
-            ...(this.receiver.tumors_number ? {rhesus: this.receiver.tumors_number} : {}),
-            isDialyse: this.receiver.isDialyse,
-            isRetransplantation: this.receiver.isRetransplantation,
-            ...(this.receiver.startDateDialyse ? {startDateDialyse: this.receiver.startDateDialyse} : {}),
-            ...(this.receiver.endDateDialyse ? {endDateDialyse: this.receiver.endDateDialyse} : {}),
+            ...(this.to_edit.start_date ? {start_date: this.to_edit.start_date} : {}),
+            ...(this.to_edit.notes ? {notes: this.to_edit.notes} : {}),
+            organ: this.to_edit.organ,
+            type: "receiver",
+            person_id: this.to_edit.person_id,
+            complementary_data: this.to_edit.complementary_data,
           })
           .then(() => {
             this.updatePerson();
@@ -951,57 +912,58 @@ export default {
       this.to_edit.person.isDialyse = this.receiver.isDialyse
       this.$http
           .post(`/listings/${this.to_edit.id}`, {
-            first_name: this.to_edit.person.first_name,
-            last_name: this.to_edit.person.last_name,
-            birthday: this.to_edit.person.birthday,
-            ...(this.to_edit.person.description
-                ? {description: this.to_edit.person.description}
-                : {}),
-            supervisor_id: this.to_edit.person.supervisor_id,
-            ...(this.to_edit.person.abo ? {abo: this.to_edit.person.abo} : {}),
-            ...(this.to_edit.person.rhesus ? {rhesus: this.to_edit.person.rhesus} : {}),
-            ...(this.to_edit.person.gender ? {gender: this.to_edit.person.gender} : {}),
-            ...(this.to_edit.person.isDialyse ? {isDialyse: this.to_edit.person.isDialyse} : {}),
-            ...(this.to_edit.person.isRetransplantation ? {isRetransplantation: this.to_edit.person.isRetransplantation} : {}),
-            ...(this.to_edit.person.startDateDialyse ? {startDateDialyse: this.to_edit.person.startDateDialyse} : {}),
-            ...(this.to_edit.person.endDateDialyse ? {endDateDialyse: this.to_edit.person.endDateDialyse} : {}),
+            first_name: this.to_edit.first_name,
+            last_name: this.to_edit.last_name,
+            birth_date: this.to_edit.birth_date,
+            ...(this.to_edit.description ? {description: this.to_edit.description} : {}),
+            ...(this.to_edit.blood_type ? {abo: this.to_edit.blood_type} : {}),
+            ...(this.to_edit.rhesus ? {rhesus: this.to_edit.rhesus} : {}),
+            ...(this.to_edit.gender ? {gender: this.to_edit.gender} : {}),
           })
           .then(() => {
-            this.$router.push("/receivers");
             this.getAllReceivers()
             this.closeModal()
-
           })
           .catch((error) => {
             console.log(error);
           });
     },
-    createReceiver() {
-      this.new_receiver.tumors_number = 0;
+    createPerson() {
       this.$http
-          .post("/listings/", {
+          .post("/person/", {
             first_name: this.new_receiver.first_name,
             last_name: this.new_receiver.last_name,
-            birthday: this.new_receiver.birthday,
+            birth_date: this.new_receiver.birth_date,
             ...(this.new_receiver.description ? {description: this.new_receiver.description} : {}),
-            supervisor_id: this.new_receiver.supervisor_id,
             ...(this.new_receiver.blood_type ? {abo: this.new_receiver.blood_type} : {}),
             ...(this.new_receiver.rhesus ? {rhesus: this.new_receiver.rhesus} : {}),
-            ...(this.new_receiver.tumors_number ? {tumors_number: this.new_receiver.tumors_number} : {}),
-            ...(this.new_receiver.startDateDialyse ? {startDateDialyse: this.new_receiver.startDateDialyse} : {}),
-            ...(this.new_receiver.endDateDialyse ? {endDateDialyse: this.new_receiver.endDateDialyse} : {}),
             ...(this.new_receiver.gender ? {gender: this.new_receiver.gender} : {}),
-            ...(this.new_receiver.start_date ? {start_date: this.new_receiver.start_date} : {}),
-            ...(this.new_receiver.notes ? {notes: this.new_receiver.notes} : {}),
-            organ: this.new_receiver.organ,
-            type: "receiver",
-            person_id: this.new_receiver.person_id,
-            tumors_number: this.new_receiver.tumors_number,
-            is_under_dialysis: this.new_receiver.isDialyse,
-            isRetransplantation: this.new_receiver.isRetransplantation,
           })
           .then((response) => {
             this.new_receiver.person_id = response.data.id;
+            this.createReceiver();
+          })
+          .catch((error) => {
+            this.$toast.error(
+                "Erreur lors de la création du patient : " + translate[error.response.data.msg]
+            );
+            setTimeout(this.$toast.clear, 3000);
+          });
+    },
+    createReceiver() {
+      this.$http
+          .post("/listings/", {
+            ...(this.new_receiver.start_date ? {start_date: this.new_receiver.start_date} : {}),
+            ...(this.new_receiver.notes ? {notes: this.new_receiver.notes} : {}),
+            organ: this.new_receiver.organ,
+            type: "RECEIVER",
+            person_id: this.new_receiver.person_id,
+            complementary_data: this.new_receiver.complementary_data,
+          })
+          .then((response) => {
+            console.log(response);
+            this.closeModal()
+            this.getAllReceivers()
           })
           .catch((error) => {
             console.log(error);
