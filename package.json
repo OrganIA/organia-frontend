@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:e2e": "npx cypress open",
-    "test:run": "npx cypress run --headless --config baseUrl=http://organia.francecentral.cloudapp.azure.com:8000/",
+    "test:run": "npx cypress run --headless --config baseUrl=https://dev.organia.savatier.fr/",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

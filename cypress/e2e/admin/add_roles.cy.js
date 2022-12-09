@@ -1,7 +1,7 @@
 import { emailGenerator } from "../../utils"
 var email = emailGenerator();
 
-describe('Add roles success', () => {
+describe('Add role', () => {
   it('Tries to add a role should succeed', () => {
     cy.visit(Cypress.config().baseUrl)
 

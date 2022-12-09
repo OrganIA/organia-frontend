@@ -2,29 +2,29 @@ describe('Create chat from donor', () => {
     it('Try to create chat from a donor', () => {
         cy.visit(Cypress.config().baseUrl)
 
-        cy.get('.cypress-to-login').click()
-
         cy.get('.cypress-email')
-            .type('test@irama.com')
+            .type('saber@saber.com')
 
         cy.get('.cypress-password')
-            .type('irama')
+            .type('saber')
 
+        cy.intercept({ method: 'POST', url: '**/auth/login' }).as('login')
         cy.get('.cypress-submit-login').click()
+        cy.wait('@login', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
 
         cy.get('.cypress-patient-gestionary').realClick();
         cy.get('.cypress-to-donors').click();
-        cy.get('.cypress-donor-row').first().find(".cypress-info-donor-modal").click();
-        cy.get(".cypress-info-donor-modal")
-        cy.get(".cypress-info-body").scrollTo("bottom")
+        cy.get('.cypress-donor-row').first().find(".cypress-edit-donor").click();
+        cy.get(".edit-donor-modal")
+        cy.get(".cypress-edit-body").scrollTo("bottom")
         cy.get(".cypress-donor-chat-modal").click()
 
         cy.get('.cypress-chat-title')
-            .type('Conversation : Doneurs')
-            .should('have.value', 'Conversation : Doneurs')
-  
-        cy.get('.cypress-nonadd-user').first().select(0)
-  
+            .type('Doneurs')
+            .should('have.value', 'Doneurs')
+
+        cy.get('.cypress-non-add-user').first().click()
+
         cy.get('.cypress-save').click()
     })
 })
