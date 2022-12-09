@@ -21,21 +21,6 @@
               <l-popup :content="item.content"></l-popup>
             </l-marker>
           </l-map>
-          <div class="ui cards">
-            <div class="card ui fluid" v-for="item in filteredHospitals" :key="item.id" @click="clickHospital">
-              <div class="content">
-                <div class="meta">
-                  <p>
-                    {{ item.name }}
-                    <br />
-                    Numéro de téléphone: {{ item.phone_number }}
-                    <br />
-                    Nombre de patient: {{ item.patients_count }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
