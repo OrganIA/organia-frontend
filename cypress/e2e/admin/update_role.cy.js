@@ -1,4 +1,4 @@
-describe('Add roles success', () => {
+describe('Update role', () => {
   it('Tries to update a role should succeed', () => {
     cy.visit(Cypress.config().baseUrl)
 
@@ -14,8 +14,7 @@ describe('Add roles success', () => {
 
     cy.url().should('eq', `${Cypress.config().baseUrl}landing`)
 
-    cy.get('.cypress-admin-menu').realClick();
-    cy.get('.cypress-to-roles').realClick();
+    cy.visit(Cypress.config().baseUrl + 'administrator/role')
 
     cy.url().should('eq', Cypress.config().baseUrl + 'administrator/role')
     cy.get(".cypress-roles-row").eq(2).find(".cypress-manage-users").click()

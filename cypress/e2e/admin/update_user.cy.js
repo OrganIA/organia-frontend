@@ -12,10 +12,7 @@ describe('Update user', () => {
         cy.get('.cypress-submit-login').click()
         cy.wait('@login', { timeout: 20000 }).its('response.statusCode').should('equal', 200)
 
-        cy.url().should('eq', `${Cypress.config().baseUrl}landing`)
-
-        cy.get('.cypress-admin-menu').realClick();
-        cy.get('.cypress-to-users').realClick();
+        cy.visit(Cypress.config().baseUrl + 'administrator')
 
         cy.url().should('eq', Cypress.config().baseUrl + 'administrator')
         cy.get(".cypress-user-row").first().find(".cypress-user-edit").click()

@@ -460,7 +460,7 @@
               <p class="modal-card-title  has-text-white">Éditer un receveur</p>
               <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
-            <section class="modal-card-body organia-modal-body">
+            <section class="modal-card-body organia-modal-body cypress-edit-body">
               <form @submit.prevent="EditDonor" class="show-requireds">
                 <div class="form-fields">
                   <div class="form-input small required">
@@ -847,7 +847,7 @@
                 <div class="container">
                   <div class="columns">
                     <div class="column">
-                      <input class="input is-info" placeholder="Titre de la conversation" type="text"
+                      <input class="input is-info cypress-chat-title" placeholder="Titre de la conversation" type="text"
                              v-model="chatName"/>
                     </div>
                   </div>
@@ -858,7 +858,7 @@
                         <button class="button is-info is-light person-box" v-for="person in personsNotAdded"
                                 :key="person">
                           <p class="username">{{ `${person.lastname} ${person.firstname}` }}</p>
-                          <i class="fas fa-plus-circle add-button" @click="addPerson(person)"></i>
+                          <i class="fas fa-plus-circle add-button cypress-non-add-user" @click="addPerson(person)"></i>
                         </button>
                       </div>
                     </div>
@@ -875,7 +875,7 @@
                 </div>
                 <br>
                 <footer>
-                  <button class="button is-success is-light btn-margin" @click="saveChat()">Enregistrer</button>
+                  <button class="button is-success is-light btn-margin cypress-save" @click="saveChat()">Enregistrer</button>
                   <button class="button is-danger is-light btn-margin " @click="resetChat(to_edit)">Retour</button>
                 </footer>
               </section>
@@ -1066,6 +1066,7 @@ export default {
     },
     openChatModal() {
       this.state = "chat"
+      this.personsNotAdded = this.personsNotAdded.filter((p) => p.id !== this.me.id)
     },
     openEditModal(id) {
       this.state = "edit"
