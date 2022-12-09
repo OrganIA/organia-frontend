@@ -154,6 +154,10 @@
                     <label class="label">Taille en cm</label>
                     <input v-model="new_donor.height_cm" type="number" class="input is-info"/>
                   </div>
+                  <div class="form-input small required">
+                    <label class="label">ID de l'hôpital du patient</label>
+                    <input v-model="new_donor.hospital_id" type="number" class="input is-info"/>
+                  </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
                     <textarea v-model="new_donor.notes" placeholder="notes" class="textarea cypress-note-donor"/>
@@ -332,6 +336,11 @@
                     <input v-model="new_donor.organ['pulmonary_capilary_wedge_pressure']" type="number"
                            class="input is-info"/>
                   </div>
+                  <div class="form-input required">
+                    <label class="label">Créatinine</label>
+                    <input v-model="new_donor.organ['creatinine']" type="number"
+                           class="cypress-last-name-receiver input is-info" required/>
+                  </div>
                 </div>
                 <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
                   <div class="form-input required">
@@ -347,11 +356,6 @@
                   <div class="form-input required">
                     <label class="label">Alpha fétoprotéine</label>
                     <input v-model="new_donor.organ['alpha_fetoprotein']" type="text"
-                           class="cypress-last-name-donor input is-info" required/>
-                  </div>
-                  <div class="form-input required">
-                    <label class="label">Créatinine</label>
-                    <input v-model="new_donor.organ['creatinine']" type="number"
                            class="cypress-last-name-donor input is-info" required/>
                   </div>
                 </div>
@@ -535,6 +539,10 @@
                     <label class="label">Taille en cm</label>
                     <input v-model="to_edit.height_cm" type="number" class="input is-info"/>
                   </div>
+                  <div class="form-input small required">
+                    <label class="label">ID de l'hôpital du patient</label>
+                    <input v-model="to_edit['hospital']['id']" type="number" class="input is-info"/>
+                  </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
                     <textarea class="textarea" v-model="to_edit.notes" placeholder="notes"/>
@@ -563,7 +571,7 @@
           <div class="modal-card modal-complement"
                :class="{ 'is-invisible': (state_extra !== 'organ-selected'), 'is-active': (state_extra === 'organ-selected') }">
             <header class="modal-card-head organia-modal-head">
-              <p class="modal-card-title  has-text-white">Info en plus - {{ this.new_donor.organ }}</p>
+              <p class="modal-card-title  has-text-white">Info en plus - {{ this.new_donor.organ_type }}</p>
               <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
@@ -720,6 +728,11 @@
                     <input v-model="to_edit.organ['carbon_dioxide_partial_pressure']" type="number"
                            class="input is-info"/>
                   </div>
+                  <div class="form-input required">
+                    <label class="label">Créatinine</label>
+                    <input v-model="to_edit.organ['creatinine']" type="number"
+                           class="cypress-last-name-receiver input is-info" required/>
+                  </div>
                 </div>
                 <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
                   <div class="form-input required">
@@ -727,12 +740,12 @@
                     <input v-model="to_edit.organ['tumors_count']" type="text"
                            class="cypress-last-name-donor input is-info" required/>
                   </div>
-                  <div class="form-input small required">
+                  <div class="form-input required">
                     <label class="label">Plus grosse tumeur</label>
                     <input v-model="to_edit.organ['biggest_tumor_size']" type="text"
                            class="cypress-last-name-donor input is-info" required/>
                   </div>
-                  <div class="form-input small required">
+                  <div class="form-input required">
                     <label class="label">Alpha fétoprotéine</label>
                     <input v-model="to_edit.organ['alpha_fetoprotein']" type="text"
                            class="cypress-last-name-donor input is-info" required/>
@@ -980,6 +993,8 @@ export default {
         height_cm: 0,
       },
       to_edit: {
+        hospital_id: -1,
+        hospital: {},
         person_id: undefined,
         person: {},
         start_date: "",
@@ -990,6 +1005,7 @@ export default {
         height_cm: 0,
       },
       new_donor: {
+        hospital_id: '',
         first_name: "",
         last_name: "",
         birth_date: "",
@@ -1137,7 +1153,7 @@ export default {
       this.state = "edit"
       this.getDonorByID(id).then(() => {
         this.state_extra = 'organ-selected'
-        console.log(this.to_edit)
+        this.to_edit.hospital_id = (this.to_edit.hospital === null) ? -1 : this.to_edit.hospital.id
         switch (this.to_edit.organ_type) {
           case 'KIDNEY':
             this.active_form = 'kidney'
@@ -1294,6 +1310,7 @@ export default {
         organ: this.to_edit.organ,
         weight_kg: this.to_edit.weight_kg,
         height_cm: this.to_edit.height_cm,
+        hospital_id: this.to_edit.hospital_id,
       })
       console.log({
         person: person,
@@ -1304,6 +1321,7 @@ export default {
         organ: this.to_edit.organ,
         weight_kg: this.to_edit.weight_kg,
         height_cm: this.to_edit.height_cm,
+        hospital_id: this.to_edit.hospital_id,
       })
       this.$http
           .post(`/listings/${this.to_edit.id}`, {
@@ -1313,6 +1331,9 @@ export default {
             organ_type: this.to_edit.organ_type,
             type: "DONOR",
             organ: this.to_edit.organ,
+            weight_kg: this.to_edit.weight_kg,
+            height_cm: this.to_edit.height_cm,
+            hospital_id: this.to_edit['hospital']['id'],
           })
           .then(() => {
             this.$toast.success("Modification du donneur réussie");
@@ -1365,6 +1386,7 @@ export default {
         organ: this.new_donor.organ,
         weight_kg: this.new_donor.weight_kg,
         height_cm: this.new_donor.height_cm,
+        hospital_id: this.new_donor.hospital_id,
       })
       this.$http
           .post("/listings/", {
@@ -1376,6 +1398,7 @@ export default {
             organ: this.new_donor.organ,
             weight_kg: this.new_donor.weight_kg,
             height_cm: this.new_donor.height_cm,
+            hospital_id: this.new_donor.hospital_id,
           })
           .then(() => {
             this.$toast.success("Création du donneur réussie");
