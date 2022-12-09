@@ -310,7 +310,7 @@
                   </div>
                   <div class="form-input required">
                     <label class="label">Pression partielle CO2 augmente de 15%?</label>
-                    <select v-model="new_receiver.organ['carbone_dioxide_partial_pressure_15_percent_increase']"
+                    <select v-model="new_receiver.organ['carbon_dioxide_partial_pressure_15_percent_increase']"
                             class="button is-info is-light"
                             required>
                       <option :value='true'>Oui</option>

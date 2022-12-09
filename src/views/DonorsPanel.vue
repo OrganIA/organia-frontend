@@ -316,7 +316,7 @@
                   </div>
                   <div class="form-input required">
                     <label class="label">Pression partielle CO2 augmente de 15%?</label>
-                    <select v-model="new_donor.organ['carbone_dioxide_partial_pressure_15_percent_increase']"
+                    <select v-model="new_donor.organ['carbon_dioxide_partial_pressure_15_percent_increase']"
                             class="button is-info is-light"
                             required>
                       <option :value='true'>Oui</option>
@@ -340,6 +340,11 @@
                     <label class="label">Créatinine</label>
                     <input v-model="new_donor.organ['creatinine']" type="number"
                            class="cypress-last-name-receiver input is-info" required/>
+                  </div>
+                  <div class="form-input required">
+                    <label class="label">Pression partielle en dioxyde de carbone</label>
+                    <input v-model="new_donor.organ['carbon_dioxide_partial_pressure']" type="number"
+                           class="input is-info" required/>
                   </div>
                 </div>
                 <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
@@ -993,7 +998,7 @@ export default {
         height_cm: 0,
       },
       to_edit: {
-        hospital_id: -1,
+        hospital_id: 1,
         hospital: {},
         person_id: undefined,
         person: {},
