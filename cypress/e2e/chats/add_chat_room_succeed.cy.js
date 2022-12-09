@@ -23,7 +23,7 @@ describe('Add chat room', () => {
       .type('Conversation de test')
       .should('have.value', 'Conversation de test')
 
-    cy.get('.cypress-nonadd-user').first().select(0)
+    cy.get('.cypress-nonadd-user').select(0)
 
     cy.get('.cypress-save').click()
 
