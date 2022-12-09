@@ -25,6 +25,7 @@
           <table class="is-organia-table">
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Nom</th>
                 <th>Ville</th>
                 <th>Numéro de téléphone</th>
@@ -34,6 +35,7 @@
             </thead>
             <tbody>
               <tr class="cypress-hospital-check" v-for="hospital in hospitals" :key="hospital">
+                <td>{{ hospital.id }}</td>
                 <td>{{ hospital.name }}</td>
                 <td>{{ hospital.city.name }}</td>
                 <td>{{ hospital.phone_number }}</td>
@@ -129,6 +131,11 @@
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
                 v-on:click="submitEditForm()">Ajouter
               </button>
+
+              <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn is-danger"
+                v-on:click="deleteHospital()">Supprimer
+              </button>
+
               <button class="button modal-admin-btn" v-on:click="openEditModal(false, undefined)">Fermer</button>
             </footer>
           </div>
@@ -217,6 +224,23 @@ export default {
         return;
       }
       this.editstate = "";
+    },
+    deleteHospital() {
+      this.$http
+          .delete(`/hospitals/${this.hospital.id}`)
+          .then(() => {
+            this.$toast.success("Suppression hôpital effectuée");
+            setTimeout(this.$toast.clear, 3000);
+            this.openEditModal(false)
+            this.getAllHospitals()
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$toast.error(
+                "Erreur lors de la suppression : " + translate[error.response.data.msg]
+            );
+            setTimeout(this.$toast.clear, 3000);
+          });
     },
     submitForm() {
       this.$http

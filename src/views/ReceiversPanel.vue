@@ -78,7 +78,7 @@
               <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
-              <form @submit.prevent="createDonor()" class="show-requireds">
+              <form @submit.prevent="createReceiver()" class="show-requireds">
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
@@ -148,6 +148,10 @@
                     <label class="label">Taille en cm</label>
                     <input v-model="new_receiver.height_cm" type="number" class="input is-info"/>
                   </div>
+                  <div class="form-input small required">
+                    <label class="label">ID de l'hôpital du patient</label>
+                    <input v-model="new_receiver.hospital_id" type="number" class="input is-info"/>
+                  </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
                     <textarea v-model="new_receiver.notes" placeholder="notes" class="textarea cypress-note-receiver"/>
@@ -159,7 +163,7 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      @click="createDonor()">Ajouter
+                      @click="createReceiver()">Ajouter
               </button>
               <button class="button modal-admin-btn" @click="closeModal()">Fermer</button>
             </footer>
@@ -322,6 +326,11 @@
                     </select>
                   </div>
                   <div class="form-input required">
+                    <label class="label">Créatinine</label>
+                    <input v-model="new_receiver.organ['creatinine']" type="number"
+                           class="cypress-last-name-receiver input is-info" required/>
+                  </div>
+                  <div class="form-input required">
                     <label class="label">Pression pulmonaire au niveau des capillaires ?</label>
                     <input v-model="new_receiver.organ['pulmonary_capilary_wedge_pressure']" type="number"
                            class="input is-info"/>
@@ -343,11 +352,7 @@
                     <input v-model="new_receiver.organ['alpha_fetoprotein']" type="text"
                            class="cypress-last-name-receiver input is-info" required/>
                   </div>
-                  <div class="form-input required">
-                    <label class="label">Créatinine</label>
-                    <input v-model="new_receiver.organ['creatinine']" type="number"
-                           class="cypress-last-name-receiver input is-info" required/>
-                  </div>
+
                 </div>
                 <div class="heart-form" :class="{ 'is-invisible': (active_form !== 'heart')}">
                   <label class="label">Type d'urgence</label>
@@ -461,7 +466,7 @@
               <button class="delete" aria-label="close" @click="closeModal()"></button>
             </header>
             <section class="modal-card-body organia-modal-body cypress-edit-body">
-              <form @submit.prevent="EditDonor" class="show-requireds">
+              <form @submit.prevent="EditReceiver" class="show-requireds">
                 <div class="form-fields">
                   <div class="form-input small required">
                     <label class="label">Prénom</label>
@@ -529,6 +534,10 @@
                     <label class="label">Taille en cm</label>
                     <input v-model="to_edit.height_cm" type="number" class="input is-info"/>
                   </div>
+                  <div class="form-input small required">
+                    <label class="label">ID de l'hôpital du patient</label>
+                    <input v-model="to_edit.hospital_id" type="number" class="input is-info"/>
+                  </div>
                   <div class="form-input small">
                     <label class="label">Notes</label>
                     <textarea class="textarea" v-model="to_edit.notes" placeholder="notes"/>
@@ -540,9 +549,9 @@
             </section>
             <footer class="modal-card-foot organia-modal-footer">
               <button type="submit" class="cypress-add button modal-admin-btn modal-add-role-btn"
-                      @click="EditDonor">Enregistrer
+                      @click="EditReceiver">Enregistrer
               </button>
-              <button type="button" class="button modal-admin-btn modal-add-role-btn is-danger ml-6" @click="deleteDonor">
+              <button type="button" class="button modal-admin-btn modal-add-role-btn is-danger ml-6" @click="deleteReceiver">
                 Supprimer
               </button>
               <button class="button modal-admin-btn modal-add-role-btn large-btn-modal cypress-receiver-chat-modal" @click="openChatModal()">
@@ -557,7 +566,7 @@
           <div class="modal-card modal-complement"
                :class="{ 'is-invisible': (state_extra !== 'organ-selected'), 'is-active': (state_extra === 'organ-selected') }">
             <header class="modal-card-head organia-modal-head">
-              <p class="modal-card-title  has-text-white">Info en plus - {{ this.new_receiver.organ }}</p>
+              <p class="modal-card-title  has-text-white">Info en plus - {{ this.new_receiver.organ_type }}</p>
               <button class="delete" aria-label="close" @click="closeModal(false)"></button>
             </header>
             <section class="modal-card-body organia-modal-body">
@@ -714,6 +723,11 @@
                     <input v-model="to_edit.organ['carbon_dioxide_partial_pressure']" type="number"
                            class="input is-info"/>
                   </div>
+                  <div class="form-input required">
+                    <label class="label">Créatinine</label>
+                    <input v-model="to_edit.organ['creatinine']" type="number"
+                           class="cypress-last-name-receiver input is-info" required/>
+                  </div>
                 </div>
                 <div class="liver-form" :class="{ 'is-invisible': (active_form !== 'liver')}">
                   <div class="form-input required">
@@ -721,12 +735,12 @@
                     <input v-model="to_edit.organ['tumors_count']" type="text"
                            class="cypress-last-name-receiver input is-info" required/>
                   </div>
-                  <div class="form-input small required">
+                  <div class="form-input required">
                     <label class="label">Plus grosse tumeur</label>
                     <input v-model="to_edit.organ['biggest_tumor_size']" type="text"
                            class="cypress-last-name-receiver input is-info" required/>
                   </div>
-                  <div class="form-input small required">
+                  <div class="form-input required">
                     <label class="label">Alpha fétoprotéine</label>
                     <input v-model="to_edit.organ['alpha_fetoprotein']" type="text"
                            class="cypress-last-name-receiver input is-info" required/>
@@ -915,6 +929,8 @@ export default {
       page: 0,
       active_form: '',
       to_edit: {
+        hospital_id: -1,
+        hospital: {},
         person_id: undefined,
         person: {},
         start_date: "",
@@ -925,6 +941,7 @@ export default {
         height_cm: 0,
       },
       new_receiver: {
+        hospital: {},
         first_name: "",
         last_name: "",
         birth_date: "",
@@ -945,7 +962,7 @@ export default {
   },
   created() {
     this.getAllOrgans()
-    this.getAllDonors();
+    this.getAllReceivers();
     this.getAllUsers();
     this.getMe();
     this.new_receiver.tumors_count = 0;
@@ -1004,7 +1021,7 @@ export default {
             setTimeout(this.$toast.clear, 3000);
         });
     },
-    getAllDonors() {
+    getAllReceivers() {
       this.$http
           .get("/listings/?type=receiver")
           .then((response) => {
@@ -1070,7 +1087,8 @@ export default {
     },
     openEditModal(id) {
       this.state = "edit"
-      this.getDonorByID(id).then(() => {
+      this.getReceiverByID(id).then(() => {
+        this.to_edit.hospital_id = (this.to_edit.hospital === null) ? -1 : this.to_edit.hospital.id
         this.state_extra = 'organ-selected'
         switch (this.to_edit.organ_type) {
           case 'KIDNEY':
@@ -1162,7 +1180,7 @@ export default {
     openNewModal() {
       this.state = "new"
     },
-    getDonorByID(id) {
+    getReceiverByID(id) {
       return this.$http
           .get(`/listings/${id}`)
           .then((response) => {
@@ -1177,14 +1195,14 @@ export default {
             setTimeout(this.$toast.clear, 3000);
           });
     },
-    deleteDonor() {
+    deleteReceiver() {
       this.$http
           .delete(`/listings/${this.to_edit.id}`)
           .then(() => {
             this.$toast.success("Suppression listing effectuée");
             setTimeout(this.$toast.clear, 3000);
             this.closeModal()
-            this.getAllDonors()
+            this.getAllReceivers()
           })
           .catch((error) => {
             console.log(error);
@@ -1194,7 +1212,7 @@ export default {
             setTimeout(this.$toast.clear, 3000);
           });
     },
-    EditDonor() {
+    EditReceiver() {
       let person = {
         first_name: this.to_edit.person.first_name,
         last_name: this.to_edit.person.last_name,
@@ -1213,6 +1231,7 @@ export default {
         organ: this.to_edit.organ,
         weight_kg: this.to_edit.weight_kg,
         height_cm: this.to_edit.height_cm,
+        hospital_id: this.to_edit.hospital_id,
       })
       this.$http
           .post(`/listings/${this.to_edit.id}`, {
@@ -1224,12 +1243,13 @@ export default {
             organ: this.to_edit.organ,
             weight_kg: this.to_edit.weight_kg,
             height_cm: this.to_edit.height_cm,
+            hospital_id: this.to_edit.hospital_id,
           })
           .then(() => {
             this.$toast.success("Modification du receveur réussie");
             setTimeout(this.$toast.clear, 3000);
             this.closeModal()
-            this.getAllDonors()
+            this.getAllReceivers()
           })
           .catch((error) => {
             console.log(error);
@@ -1257,7 +1277,7 @@ export default {
           break;
       }
     },
-    createDonor() {
+    createReceiver() {
       let person = {
         first_name: this.new_receiver.first_name,
         last_name: this.new_receiver.last_name,
@@ -1276,6 +1296,7 @@ export default {
         organ: this.new_receiver.organ,
         weight_kg: this.new_receiver.weight_kg,
         height_cm: this.new_receiver.height_cm,
+        hospital_id: this.new_receiver.hospital_id,
       })
       this.$http
           .post("/listings/", {
@@ -1287,12 +1308,13 @@ export default {
             organ: this.new_receiver.organ,
             weight_kg: this.new_receiver.weight_kg,
             height_cm: this.new_receiver.height_cm,
+            hospital_id: this.new_receiver.hospital_id,
           })
           .then(() => {
             this.$toast.success("Création du receveur réussie");
             setTimeout(this.$toast.clear, 3000);
             this.closeModal()
-            this.getAllDonors()
+            this.getAllReceivers()
           })
           .catch((error) => {
             console.log(error);
