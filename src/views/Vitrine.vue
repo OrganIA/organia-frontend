@@ -34,9 +34,15 @@
       <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control">
-            <router-link to="/login" class=" navbar-item button nav-button is-rounded back-button">
+            <button @click="(e) => {
+              if (this.$store.getters.getID === 0) {
+                this.$router.push('/login')
+              } else {
+                this.$router.push('/landing')
+              }
+            }" to="/landing" class=" navbar-item button nav-button is-rounded back-button">
               Retour
-            </router-link>
+            </button>
           </p>
         </div>
       </div>

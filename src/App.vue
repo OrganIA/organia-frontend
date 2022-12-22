@@ -48,7 +48,7 @@ export default {
       this.getMe();
     } else {
       this.$router.isReady().then(() => {
-        if (this.$route.path != "/register" && this.$route.path != "/" && this.$route.path != "/team")
+        if (this.$route.path != "/register" && this.$route.path != "/" && this.$route.path != "/vitrine")
           this.$router.push("/");
       });
     }
